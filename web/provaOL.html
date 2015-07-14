@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="http://openlayers.org/en/v3.4.0/css/ol.css" type="text/css">
+    <style>
+      html, body, .map {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+    </style>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/proj4js/2.2.1/proj4.js" type="text/javascript"></script>
+    <script src="http://www.icc.cat/extension/icc/design/icc/javascript/25831.js" type="text/javascript"></script>
+    <script src="http://openlayers.org/en/v3.4.0/build/ol.js" type="text/javascript"></script>
+    <title>Visor demo ICGC - OL 3</title>
+  </head>
+  <body>
+    <div id="map" class="map"></div>
+    <script type="text/javascript">
+        var projection = ol.proj.get('EPSG:25831');
+        projection.setExtent([257904,4484796,535907,4751795]);
+
+        var extent = [257904,4484796,535907,4751795];
+        var layers = [
+                  new ol.layer.Tile({
+                    extent: extent,
+                    source: new ol.source.TileWMS({
+                      url: 'http://mapcache.icc.cat/map/bases/service?',
+                      params: {
+                        'LAYERS': 'topo'
+                      }
+                    })
+                  })
+        ];
+
+        var map = new ol.Map({
+          layers: layers,
+          target: 'map',
+          view: new ol.View({
+            projection: projection,
+            center: [396905,4618292],
+            resolutions: [275,100,50,25,10,5,2,1,0.5,],
+            extent: extent,
+            zoom: 0
+          })
+        });
+        
+    </script>
+  </body>
+</html>
