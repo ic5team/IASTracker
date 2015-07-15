@@ -23,20 +23,45 @@
         projection.setExtent([257904,4484796,535907,4751795]);
 
         var extent = [257904,4484796,535907,4751795];
-        var layers = [
+        var layers = [[
+                  new ol.layer.Tile({
+                    extent: extent,
+                    source: new ol.source.TileWMS({
+                      urls: ['http://mapcache.icc.cat/map/bases/service?'],
+                      params: {
+                        'LAYERS': 'topo',
+                        'STYLES': '',
+                        'VERSION': '1.3.0'
+                      },
+                      gutter: 0,
+                      logo: undefined,
+                      attributions: [ new ol.Attribution({
+                      	html: 'All maps © ' +
+						'<a href="http://www.icc.cat/">ICC</a>'
+                      })]
+                    })
+                  })],[
                   new ol.layer.Tile({
                     extent: extent,
                     source: new ol.source.TileWMS({
                       url: 'http://mapcache.icc.cat/map/bases/service?',
                       params: {
-                        'LAYERS': 'topo'
+                        'LAYERS': 'orto'
                       }
                     })
-                  })
+                  })]
         ];
 
+        var controls = [
+			new ol.control.Attribution({
+				collapsed: false,
+				collapsible: false
+
+			})
+        	];
+
         var map = new ol.Map({
-          layers: layers,
+          layers: layers[0],
           target: 'map',
           view: new ol.View({
             projection: projection,
@@ -46,6 +71,7 @@
             zoom: 0
           })
         });
+
         
     </script>
   </body>
