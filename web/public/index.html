@@ -1,0 +1,676 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+	    <meta charset="UTF-8">
+	    	<title>
+			   IASTracker	
+	     </title>
+
+	
+		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+		<script src="//code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+
+		
+		<link media="all" type="text/css" rel="stylesheet" href="http://www.bergaactiva.cat/bootstrap/css/bootstrap.min.css">
+		<link media="all" type="text/css" rel="stylesheet" href="http://www.bergaactiva.cat/css/font-awesome/css/font-awesome.min.css">
+		<link media="all" type="text/css" rel="stylesheet" href="http://www.bergaactiva.cat/css/map-icons/css/map-icons.css">
+		<link media="all" type="text/css" rel="stylesheet" href="//fonts.googleapis.com/css?family=Raleway:400,600,300">
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+		
+		<link media="all" type="text/css" rel="stylesheet" href="http://www.bergaactiva.cat/css/docs.min.css">
+		<link media="all" type="text/css" rel="stylesheet" href="http://www.bergaactiva.cat/css/templates.css">
+		<link media="all" type="text/css" rel="stylesheet" href="http://www.bergaactiva.cat/css/turisme.css">
+
+		<script src="http://www.bergaactiva.cat/js/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+		<script src="http://www.bergaactiva.cat/js/turisme.js"></script>
+
+		<script src="http://www.bergaactiva.cat/js/turismeactiu.api.js"></script>
+
+    <script src="./js/bootstrap-switch.min.js"></script>
+    <link rel="stylesheet" href="./css/bootstrap-switch.min.css" />
+		
+		
+
+	
+			<!-- Open Graph data -->
+		<meta property="og:title" content="Berga Activa"></meta>
+		<meta property="og:type" content="article"></meta>
+		<meta property="og:url" content="http://www.bergaactiva.cat/"></meta>
+		<meta property="og:image" content=" http://www.bergaactiva.cat/images/thumbs/ajuntaments/ajuntament_de_berga-logo.png"></meta>
+		<meta property="og:description" content="Portal de turisme esportiu de l'Ajuntament de Berga"></meta>
+		<meta property="og:site_name" content="Site Name, i.e. Moz" /meta property="fb:admins" content="Facebook numeric ID"></meta>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!--<meta name="google-translate-customization" content="5e32328a1d80ad49-cc48aa75f5e2c685-g635acf76ac0fbe7c-13"></meta>-->
+    <style>
+             html, body, .map {
+             margin: 0;
+             padding: 0;
+             width: 100%;
+             height: 100%;
+             }         
+             .leaflet-top .leaflet-control {
+                  margin-top: 70px;
+              }
+          </style>
+      <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+      <script src="./leaflet-plugins-1.3.0/layer/tile/Bing.js"></script>
+      <script src="./leaflet-plugins-1.3.0/layer/tile/Google.js"></script>
+      <script src="http://rawgithub.com/kartena/Proj4Leaflet/master/lib/proj4-compressed.js" type="text/javascript"></script>
+      <script src="https://rawgithub.com/kartena/Proj4Leaflet/master/src/proj4leaflet.js" type="text/javascript"></script>
+	
+	</head>
+	<body>
+			<div id="fb-root"></div>		
+			
+		<nav class="navbar navbar-default" role="navigation" id="profile-bar">
+      <div class="container" style="padding: 0;">
+        <div class="collapse navbar-collapse" style="padding: 0;">
+          <ul class="nav navbar-nav">
+            <li>
+              <a href="http://europa.eu">
+                <img src="./img/europeFlag.jpg" class="navbar-user-img" pull-left="pull-left" id="imgPerfilBarra" alt="europa">
+              </a>
+            </li>
+             <li>
+              <a href="http://icc.cat">
+                <img src="./img/ic5Logo.jpg" class="navbar-user-img" pull-left="pull-left" id="imgPerfilBarra" alt="ic5"> Sobre nosaltres
+              </a>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav" style="float: right;">
+            <li id="navbar-loguejat">
+              <a href="http://127.0.0.1/IASTracker/usuaris/ibesora">
+                <img src="http://www.bergaactiva.cat/images/thumbs/usuaris/ibesora.PNG" class="navbar-user-img" pull-right="pull-right" id="imgPerfilBarra" alt="ibesora">ibesora
+              </a>
+              <div id="nivell-usuari" class="arrow_box menu_box hidden">
+                <div style="padding: 10px;">
+                  <div style="padding: 10px; border-bottom: 1px solid #EEE; margin-bottom: 10px;">
+                    Observacions validades<span class="pull-right">80%</span>
+                    Observacions pendents de validar<span class="pull-right">3</span>
+                  </div>
+                  <div>
+                    <ul class="nav nav-pills nav-stacked">
+                      <li><a href="http://127.0.0.1/IASTracker/usuaris/ibesora/configuracio">Configuració</a></li>
+                      <li><a href="http://127.0.0.1/IASTracker/logout">Tancar sessió</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li id="navbar-adm">
+              <a href="http://127.0.0.1/IASTracker/adm.html"><i class="fa fa-lock"></i>Administració</a>
+            </li>
+            <li>
+              <a href="#">
+                <img src="./img/cat.png" class="navbar-user-img" pull-right="pull-right" id="imgPerfilBarra" alt="Català">
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <img src="./img/france.gif" class="navbar-user-img" pull-right="pull-right" id="imgPerfilBarra" alt="Français">
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <img src="./img/eng.jpg" class="navbar-user-img" pull-right="pull-right" id="imgPerfilBarra" alt="English">
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+
+		<!-- PAGE HEADER -->
+        <div id="map" class="map" style="position: initial;">
+          <div id="controls" style="position: absolute;z-index: 1; left: 100px; top: 100px; background-color:white; width: 310px;">
+            <!-- Nav tabs -->
+            <ul id="tabsControls" class="nav nav-tabs" role="tablist">
+              <li role="presentation" class="active"><a href="#layersControl" aria-controls="layersControl" role="tab" data-toggle="tab"><img src="img/layers.png"/></a></li>
+              <li role="presentation"><a href="#filter" aria-controls="filter" role="tab" data-toggle="tab"><i class="fa fa-2x fa-filter"></i></a></li>
+              <li role="presentation"><a href="#ias" aria-controls="ias" role="tab" data-toggle="tab"><i class="fa fa-2x fa-list"></i></a></li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content" style="margin: 10px;">
+              <div role="tabpanel" class="tab-pane active" id="layersControl"></div>
+              <div role="tabpanel" class="tab-pane" id="filter">
+                <div class="row">
+                  <div class="form-group col-md-12" id="form-sexe">
+                    <span><b>Per taxonomia</b> <br /></span>
+                    <label for="input-grup">Grup</label>
+                    <select name="Sexe" id="input-grup" class="form-control">
+                      <option value="1" >Taxó 1</option>
+                      <option value="2" >Taxó 2</option>
+                      <option value="3" >Taxó 3</option>
+                      <option value="4" >Taxó 4</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-md-12" id="form-data">
+                    <span><b>Per data</b> <br /></span>
+                    <label for="input-inicial">Inicial</label>
+                    <input type="text" class="form-control" id="input-inicial" value="" placeholder="dd/mm/aaaa">
+                    <label for="input-final">Final</label>
+                    <input type="text" class="form-control" id="input-final" value="" placeholder="dd/mm/aaaa">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-md-12" id="form-sexe">
+                    <span><b>Per localització</b> <br /></span>
+                    <label for="input-estat">Estat</label>
+                    <select name="Sexe" id="input-estat" class="form-control">
+                      <option value="1" >Espanya</option>
+                      <option value="2" >Bèlgica</option>
+                    </select>
+                    <label for="input-regio">Regió</label>
+                    <select name="Sexe" id="input-regio" class="form-control">
+                      <option value="1" >Catalunya</option>
+                      <option value="2" >Aragó</option>
+                      <option value="2" >Cantàbria</option>
+                    </select>
+                    <label for="input-area">Àrea</label>
+                    <select name="Sexe" id="input-area" class="form-control">
+                      <option value="1" >Montserrat</option>
+                      <option value="2" >Pedraforca</option>
+                      <option value="2" >Montseny</option>
+                      <option value="2" >Delta de l'Ebre</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="ias">
+                <div class="row">
+                  <div class="form-group col-md-12" id="form-sexe">
+                    <span><b>Taxonomia</b> <br /></span>
+                    <label for="input-grup">Grup</label>
+                    <select name="Sexe" id="input-grup" class="form-control">
+                      <option value="1" >Totes</option>
+                      <option value="1" >Taxó 1</option>
+                      <option value="2" >Taxó 2</option>
+                      <option value="3" >Taxó 3</option>
+                      <option value="4" >Taxó 4</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row" style="text-align: center;">
+                  <div class="col-md-12">
+                    <div class="btn-group" role="group" aria-label="...">
+                      <button type="button" class="btn btn-default">Nom comú</button>
+                      <button type="button" class="btn btn-default">Nom científic</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                  <div class="col-md-3">
+                    <img src="./img/pomacea.jpg" style="width: 50px;"/>
+                  </div>
+                  <div class="col-md-6" style="text-align: center; margin-top: 5px;">
+                    <a href="#" onclick="veureFitxaIAS()">Cargol poma <i class="fa fa-info-circle"></i></a>
+                  </div>
+                  <div class="col-md-3">
+                    <input type="checkbox" name="my-checkbox" checked>
+                  </div>
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                  <div class="col-md-3">
+                    <img src="./img/mosquit.jpg" style="width: 50px;"/>
+                  </div>
+                  <div class="col-md-6" style="text-align: center; margin-top: 5px;">
+                    <a href="#" onclick="veureFitxaIAS()">Mosquit tigre <i class="fa fa-info-circle"></i></a>
+                  </div>
+                  <div class="col-md-3">
+                    <input type="checkbox" name="my-checkbox" checked>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+            <script type="text/javascript">
+
+              
+              $('#tabsControls a').click(function (e) {
+                          e.preventDefault()
+                          $(this).tab('show')
+                        })
+              $("[name='my-checkbox']").bootstrapSwitch({size: 'mini'});
+
+              function veureFitxaIAS()
+              {
+
+                $('#infoModal').modal();
+                 var openStreetMaps2 = L.tileLayer("http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png", 
+                  {
+            attribution: '&copy; <a href="http://osm.org/copyright" title="OpenStreetMap" target="_blank">OpenStreetMap</a> contributors | Tiles Courtesy of <a href="http://www.mapquest.com/" title="MapQuest" target="_blank">MapQuest</a> <img src="http://developer.mapquest.com/content/osm/mq_logo.png" width="16" height="16">',
+            subdomains: "1234",
+            zIndex: 1
+            });
+                var mapaInterior = L.map('mapaIAS', {
+                        layers: openStreetMaps2,
+                        continuousWorld: true,
+                        worldCopyJump: false,
+                        center: center,
+                        zoom: 2,
+                        });
+
+                        var baseMaps2 = {
+                                "OSM": openStreetMaps
+                        };
+                        var overlayMaps2 = {
+                                     
+                        };
+                       var control2 = L.control.layers(baseMaps2, overlayMaps2, {collapsed: false,
+                        autoZIndex: false}).addTo(mapaInterior);
+
+              }
+
+              function computeLayers(e)
+              {
+
+                var z = map.getZoom();
+                var bounds = map.getBounds();
+                var layerSW = L.latLng(40.48456, 0.02884);
+                var layerNE = L.latLng(42.91822, 3.46619);
+                var layerBounds = L.latLngBounds(layerSW, layerNE);
+                var contains = bounds.contains(layerBounds);
+                var intersects = bounds.intersects(layerBounds);
+
+                if((z >= 5 && z <= 18) && intersects)
+                {
+
+                  control.addOverlay(serveiTopoCache, "Topogràfic ICC");
+                  control.addOverlay(serveitopoGrisCache, "Topogràfic gris ICC");
+                  control.addOverlay(serveiOrtoCache, "Ortofoto ICC");
+
+                }
+                else
+                {
+
+                  control.removeLayer(serveiTopoCache);
+                  control.removeLayer(serveitopoGrisCache);
+                  control.removeLayer(serveiOrtoCache);
+
+                }
+
+                $('#data').html('Bounds: ' + bounds.toBBoxString() + ' Zoom: ' + z + ' Contains: ' + contains + ' Intersects: ' + intersects);
+
+              }
+
+              function onClick(e)
+              {
+
+                var z = map.getZoom();
+                var bounds = map.getBounds();
+                $('#data').html('Bounds: ' + bounds.toBBoxString() + ' Zoom: ' + z + ' Click on: ' + e.latlng.toString());
+
+              }
+
+                 var center = [41.82045, 1.54907];
+                 var crs25831 = new L.Proj.CRS('EPSG:25831','+proj=utm +zone=31 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs',
+                          {
+                               resolutions: [1100, 550, 275, 100, 50, 25, 10, 5, 2, 1, 0.5, 0.25]
+                          }
+                 );
+
+                 var serveiTopoCache = L.tileLayer.wms("http://mapcache.icc.cat/map/bases/service?", {
+                        layers: 'topo',
+                        format: 'image/png',
+                        transparent: true,
+                        crs: crs25831,
+                        continuousWorld: true,
+                        attribution: 'Institut Cartogràfic i Geològic de Catalunya -ICGC',
+                        zIndex: 3
+                  });
+
+                 var serveiOrtoCache = L.tileLayer.wms("http://mapcache.icc.cat/map/bases/service?", {
+                        layers: 'orto',
+                        format: 'image/png',
+                        transparent:true,
+                        crs: crs25831,
+                        continuousWorld: true,
+                        attribution: 'Institut Cartogràfic i Geològic de Catalunya -ICGC',
+                        zIndex: 2
+                  });
+
+                  var serveitopoGrisCache = L.tileLayer.wms("http://mapcache.icc.cat/map/bases/service?", {
+                        layers: 'topogris',
+                        format: 'image/png',
+                        transparent: true,
+                        crs: crs25831,
+                        continuousWorld: true,
+                        attribution: 'Institut Cartogràfic i Geològic de Catalunya -ICGC',
+                        zIndex: 4
+                  });
+
+                  var openStreetMaps = L.tileLayer("http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png", 
+                  {
+            attribution: '&copy; <a href="http://osm.org/copyright" title="OpenStreetMap" target="_blank">OpenStreetMap</a> contributors | Tiles Courtesy of <a href="http://www.mapquest.com/" title="MapQuest" target="_blank">MapQuest</a> <img src="http://developer.mapquest.com/content/osm/mq_logo.png" width="16" height="16">',
+            subdomains: "1234",
+            zIndex: 1
+            });
+
+                  var googleMapsRoadmap = L.Google('ROADMAP');
+                  var googleMapsSatellite = L.Google('SATELLITE');
+                  var googleMapsHybrid = L.Google('HYBRID');
+                  var googleMapsTerrain = L.Google('TERRAIN');
+                  var bing = L.BingLayer();
+
+                  var osmOrtoICC = L.layerGroup([openStreetMaps, serveiOrtoCache]);
+                  var osmTopoICC = L.layerGroup([serveiTopoCache, openStreetMaps]);
+                  var osmTopoGrisICC = L.layerGroup([openStreetMaps, serveitopoGrisCache]);
+                  var map = L.map('map', {
+                        layers: openStreetMaps,
+                        continuousWorld: true,
+                        worldCopyJump: false,
+                        center: center,
+                        zoom: 2,
+                        });
+
+                        var baseMaps = {
+                                "OSM": openStreetMaps,
+                                 /* "Topogràfic": serveiTopoCache,
+                                     "Topogràfic gris": serveitopoGrisCache,
+                                     "Ortofoto": serveiOrtoCache,
+                                     "GM Roadmap": googleMapsRoadmap,
+                                     "GM Satellite": googleMapsSatellite,
+                                     "GM Hybrid": googleMapsHybrid,
+                                     "GM Terrain": googleMapsTerrain*/
+                        };
+                        var overlayMaps = {
+                                     
+                        };
+                       var control = L.control.layers(baseMaps, overlayMaps, {collapsed: false,
+                        autoZIndex: false});
+                       control.addTo(map);
+                       control._container.remove();
+                       $('#layersControl').html(control.onAdd(map));
+                       map.on('moveend', computeLayers);
+                       map.on('zoomend', computeLayers);
+                       map.on('click', onClick);
+
+                       var circle = L.circle([42.1189, 1.8869], 50, {
+                          color: 'red',
+                          fillColor: '#f03',
+                          fillOpacity: 0.5
+                      }).addTo(map);
+
+                       var marker = L.marker([42.1189, 1.8869]).addTo(map);
+
+                  $('#controls').draggable({
+                start: function() {
+                  map.dragging.disable();
+                },
+                stop: function() {
+                  map.dragging.enable();
+                }
+              });
+              </script>
+
+	<div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="width: 1000px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <div>Informació de la IAS</div>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <h2>Cargol poma</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <img src="./img/pomacea.jpg" />
+          </div>
+          <div class="col-md-8">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ut malesuada leo, quis facilisis erat. Suspendisse sagittis dolor ac aliquet tempus. Praesent non augue dapibus, congue nunc sit amet, aliquet nulla. Pellentesque non magna eu lectus lacinia hendrerit condimentum a libero.
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            Vestibulum augue felis, efficitur maximus pulvinar in, aliquam et nibh. Donec a efficitur orci. Vivamus maximus rutrum leo id lobortis. Nulla eu tincidunt orci. Aliquam non bibendum purus. Morbi dapibus, neque vel venenatis accumsan, ante elit luctus nisl, sed bibendum nisl lorem id quam. Nunc at erat vitae nunc tincidunt dignissim.
+
+Fusce nec mauris orci. Nam rhoncus consequat pellentesque. Integer ligula dolor, sollicitudin vitae feugiat ac, suscipit eu mi. Phasellus accumsan velit odio. Maecenas semper dolor id ullamcorper interdum. Cras hendrerit, libero eu scelerisque ultricies, purus sem luctus eros, tristique pharetra magna diam vitae quam. Maecenas leo risus, molestie eget ligula et, ultricies consequat leo. Sed suscipit sapien at ante commodo consequat. Cras vulputate, justo non ultricies condimentum, lorem velit scelerisque velit, vel molestie sapien nisl ac lectus. Proin eget posuere magna.
+
+Mauris vel ullamcorper purus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam mauris ex, suscipit sit amet volutpat quis, aliquet in tellus. Sed non diam in justo aliquet feugiat eget vitae lorem. Sed tortor justo, rhoncus eget nisl vitae, tincidunt fermentum risus. Sed ut erat lectus. Nullam leo urna, egestas a sem mollis, tincidunt sagittis massa. Curabitur ut eros vitae lectus laoreet accumsan. Sed elementum, turpis pulvinar euismod mattis, justo lectus rhoncus ante, a vehicula justo ante at augue. Duis ultrices dignissim odio, ut congue erat. Proin sit amet dignissim velit, vitae pulvinar leo. Nam lorem libero, laoreet sed risus a, eleifend mollis nunc. Aenean vitae turpis ut odio tincidunt egestas vitae id enim.
+
+Nullam at lacus efficitur, gravida nibh eget, consequat nibh. Duis varius, ligula quis fermentum tempus, mauris risus sodales ligula, et maximus eros nibh quis justo. Cras pharetra aliquam tortor non egestas. Nam imperdiet enim pretium lacus mattis sollicitudin. Proin lacinia, risus rutrum ornare fringilla, tortor tellus efficitur est, quis imperdiet metus elit in sapien. Vivamus felis est, pretium a molestie laoreet, porta non magna. Nulla dolor tortor, euismod in rhoncus in, hendrerit vitae ante. Proin commodo magna velit, et convallis felis egestas ac. Donec gravida commodo porta.
+          </div>
+        </div>
+        <div class="row" style="margin-top: 15px;">
+          <div class="col-md-6">
+            <i class="fa fa-3x fa-check"></i> 35 observacions validades
+          </div>
+          <div class="col-md-6">
+            <i class="fa fa-3x fa-exclamation"></i>3 observacions pendents
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div id="mapaIAS" class="map" style="height: 500px;"></div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+	<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">	LOGIN
+</h4>
+      </div>
+      <div class="modal-body">
+        
+        	<div class="row">
+		<div class="col-md-12">
+			<a class="btn btn-block btn-social btn-facebook" href="login/fb">
+				<i class="fa fa-twitter"></i> Entrar amb Facebook
+			</a>
+			
+			<div class="row">
+				<div class="col-md-4">
+					<hr>
+				</div>
+				<div class="col-md-4 text-center" style="margin-top: 10px;">o bé</div>
+				<div class="col-md-4">
+					<hr>
+				</div>
+			</div>
+			<form name="loginForm" role="form" action="http://www.bergaactiva.cat/v1/K7guwruXe4afAp8uwach3fabUsTEyepr/ajuntaments/login" method="POST">
+				<div class="form-group has-error">
+					<input name="email" type="text" class="form-control block" placeholder="Correu electrònic o nom d'usuari">
+					<span class="help-block">Error.</span>
+				</div>
+				<div class="form-group has-error">
+					<input name="password" type="password" class="form-control block" placeholder="Contrasenya">
+					<span class="help-block">Error.</span>
+				</div>
+				<label>
+					<input type="checkbox" value="forever">
+					Recorda'm
+				</label>
+				<br><br>
+				<div class="btn btn-lg btn-block btn-default" onclick="document.forms['loginForm'].submit();">Entrar</div>
+				<br>
+				<p class="text-center">Encara no estàs registrat? <a href="http://www.bergaactiva.cat/signup">REGISTRA'T</a></p>
+			</form>
+		</div>
+	</div>
+
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+	<div class="modal fade" id="login-usuari-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width:30%; max-width:1000px">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" onclick="tancarModal()" aria-hidden="true">&times;</button>
+	        <h4 class="modal-title" id="titol-modal-login"></h4>
+	      </div>
+	      <div class="modal-body">
+	      	<div class="row" id="loginUsuari">
+				<div class="col-md-12">
+					<a class="btn btn-block btn-facebook-login" href="http://www.bergaactiva.cat/login/fb">
+						<i class="fa fa-facebook"></i> Entrar amb Facebook
+					</a>
+					
+					<div class="row">
+						<div class="col-md-4">
+							<hr>
+						</div>
+						<div class="col-md-4 text-center" style="margin-top: 10px;">o bé</div>
+						<div class="col-md-4">
+							<hr>
+						</div>
+					</div>
+					<form role="form">
+						<div class="form-group" id="form-email">
+							<label for="email">Correu electrònic*</label>
+							<input name="email" type="text" class="form-control block" placeholder="Correu electrònic" id="input-email">
+							<span id="error-email" class="help-block hidden">Error.</span>
+						</div>
+						<div class="form-group" id="form-password">
+							<label for="email">Contrasenya*</label>
+							<input name="password" type="password" class="form-control block" placeholder="Contrasenya" id="input-password">
+							<span id="error-password" class="help-block hidden">Error.</span>
+						</div>
+						<label>
+							<input type="checkbox" value="forever" id="checkForever">
+							Recorda'm
+						</label>
+						<br><br>
+						<div class="btn btn-lg btn-block btn-default" onclick="loginUsuari()">Entrar</div>
+						<br>
+						<p class="text-center">Encara no estàs registrat? <a style="cursor:pointer" onclick="mostraRegistraUsuari()">REGISTRA'T</a></p>
+						<p class="text-center">Has oblidat la contrasenya? <a style="cursor:pointer" onclick="mostraRecordarContrasenya()">RECORDA</a></p>
+					</form>
+				</div>
+			</div> 
+
+			<div class="row hidden" id="registreUsuari">
+				<div class="col-md-12">
+					<form role="form">
+						<div class="form-group" id="form-email2">
+							<label for="email">Correu electrònic*</label>
+							<input name="email2" type="text" class="form-control block" placeholder="Correu electrònic" id="input-email2">
+							<span id="error-email2" class="help-block hidden">Error.</span>
+						</div>
+						<br><br>
+						<div class="btn btn-lg btn-block btn-default" onclick="registrarUsuari()">Registrar</div>
+						<br>
+						<p class="text-center">Ja tens un usuari? <a style="cursor:pointer" onclick="mostraAccedirUsuari()">ACCEDEIX</a></p>
+						<p class="text-center">Has oblidat la contrasenya? <a style="cursor:pointer" onclick="mostraRecordarContrasenya()">RECORDA</a></p>
+					</form>
+				</div>
+			</div>
+
+			<div class="row hidden" id="finalRegistre">
+				<div class="col-md-12">
+					<form role="form">
+						<div class="form-group" style="text-align: center">
+							<i class="fa fa-check" style="color:#449d44; font-size: 130px;"></i>
+							<h4 id="text-modal-confirma"></h4>
+						</div>
+						<br><br>
+						<div class="btn btn-lg btn-block btn-default" onclick="tancarModal()">Acceptar</div>
+						<br>
+						
+					</form>
+				</div>
+			</div>
+
+			<div class="row hidden" id="recuperarContrasenya">
+				<div class="col-md-12">
+					<form role="form">
+						<div class="form-group" id="form-email3">
+							<label for="email">Correu electrònic*</label>
+							<input name="email3" type="text" class="form-control block" placeholder="Correu electrònic" id="input-email3">
+							<span id="error-email3" class="help-block hidden">Error.</span>
+						</div>
+						<br><br>
+						<div class="btn btn-lg btn-block btn-default" onclick="recuperaContrasenya()">Recuperar</div>
+						<br>
+						<p class="text-center">Encara no estàs registrat? <a style="cursor:pointer" onclick="mostraRegistraUsuari()">REGISTRA'T</a></p>
+						<p class="text-center">Ja tens un usuari? <a style="cursor:pointer" onclick="mostraAccedirUsuari()">ACCEDEIX</a></p>
+					</form>
+				</div>
+			</div>
+	      </div>
+	    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+	<div class="modal fade" id="contacteOk" style="z-index:1052"tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="width: 400px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 id="modal-title">MISSATGE ENVIAT</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12" style="text-align: center;">
+
+            <i class="fa fa-check" style="font-size: 60px; margin: auto;"></i>
+
+            <h5 style="text-align: center;" id="modal-text">MISSATGE ENVIAT CORRECTAMENT</h5>
+            <p style="width: 300px; margin: auto;">El teu missatge s'ha enviat correctament.</p>
+            <div id="confirmar-container" style="width: 100%; text-align: center; margin-top: 30px;">
+              <div class="btn btn-success" id="missatge-modal-acceptar" data-dismiss="modal">Acceptar</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+	
+	 
+
+
+					<script src="http://www.bergaactiva.cat/js/ajuntaments.tipusRutes.js"></script>
+							<script src="http://www.bergaactiva.cat/js/ajuntaments.indretsE.js"></script>
+							<script src="http://www.bergaactiva.cat/js/ajuntaments.tipusPE.js"></script>
+							<script src="http://www.bergaactiva.cat/js/ajuntaments.api.js"></script>
+			
+		    				<script>
+			var idAj = 1;
+			var idUserLogat = 2;
+			var idUsrSistema = 2;
+			var dadesCompletades = '1';
+			var nomUsuariFb = '';
+			var cognomUsuariFb = '';
+			var urlImgUsuari = 'fotos/web/user.png';
+			var urlPublic = "http://www.bergaactiva.cat/";
+			var urlImg = "http://www.bergaactiva.cat/images/";
+			var nickUsuari = 'ibesora';
+			var fotoFonsWeb = 'ajuntaments/ajuntament_de_berga-fons.png';
+			$('body').css('background-image', 'url('+ urlImg + 'fotos/' +fotoFonsWeb +')');
+		</script>
+		<script src="//connect.facebook.net/ca_ES/sdk.js#xfbml=1&appId=787669284590689&version=v2.0" id="facebook-jssdk"></script>
+		<script src="//platform.twitter.com/widgets.js" if="twitter-wjs"></script>
+		
+		
+
+	
+        <script src="http://www.bergaactiva.cat/js/pages/login.js"></script>
+        <script src="http://www.bergaactiva.cat/js/forms/login.js"></script>
+        <script src="http://www.bergaactiva.cat/js/usuaris.api.js"></script>
+        <script src="http://www.bergaactiva.cat/js/ajuntaments.usuaris.js"></script>
+
+  <script src="http://www.bergaactiva.cat/js/pages/home.js"></script>
+
+	
+	
+
+	</body>
+</html>

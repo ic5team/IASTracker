@@ -2,3 +2,18 @@ Modificar bootstrap/start.php pq app->detectEnvironment retorni 'production'
 Modificar .env.php amb les dades del servidor de producció
 Eliminar .env.local.php, .env.icc.php i .env.ub.php
 Canviar app.php perquè la url apunti on toca, canviar el timezone i el locale
+
+
+rutes al provaLeaflet.html
+http://127.0.0.1/IASTracker/usuaris/ibesora
+http://127.0.0.1/IASTracker/usuaris/ibesora/configuracio
+http://127.0.0.1/IASTracker/logout
+http://127.0.0.1/IASTracker/adm/
+
+preguntes: 
+Sobre nosaltres -> On porta?
+Logo IC5
+Logo IASTracker
+Definir filtres
+Contacte?
+Idiomes. Què passa si un idioma no té tots els textos traduits?
