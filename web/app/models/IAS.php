@@ -1,6 +1,10 @@
 <?php
 
+use Illuminate\Database\Eloquent\SoftDeletingTrait;
+
 class IAS extends Eloquent {
+
+	use SoftDeletingTrait;
 
 	/**
 	 * The database table used by the model.
@@ -8,7 +12,6 @@ class IAS extends Eloquent {
 	 * @var string
 	 */
 	protected $table = 'IAS';
-	protected $softDelete = true;
 
 	/**
 	 * The attributes excluded from the model's JSON form.

@@ -14,7 +14,7 @@ return array(
 	*/
 
 	'debug' => true,
-	'url' => 'http://127.0.0.1/IASTracker/public/',
+	'url' => 'http://127.0.0.1/IASTracker/',
 	'providers' => append_config(array(
 		'Way\Generators\GeneratorsServiceProvider',
 	))

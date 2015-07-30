@@ -2,7 +2,7 @@
 
 return array(
 
-	'dbHost' => 'localhost',
+	'dbHost' => '127.0.0.1',
 	'db' => '',
 	'dbUserName' => '',
 	'dbPassword' => ''

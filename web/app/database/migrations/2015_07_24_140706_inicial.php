@@ -244,6 +244,7 @@ class Inicial extends Migration {
 			$table->rememberToken();
 			$table->boolean('amIExpert');
 			$table->boolean('isExpert');
+			$table->boolean('isAdmin');
 			$table->timestamp('lastConnection');
 			$table->timestamps();
 			$table->softDeletes();

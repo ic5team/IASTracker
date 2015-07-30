@@ -88,3 +88,55 @@ Route::filter('csrf', function()
 		throw new Illuminate\Session\TokenMismatchException;
 	}
 });
+
+/*
+|--------------------------------------------------------------------------
+| AJAX Filters
+|--------------------------------------------------------------------------
+|
+| The following filters are used to verify that the request sent is an ajax
+| request checking if the logged user is an admin or not
+|
+*/
+
+Route::filter('ajax.admin', function()
+{
+
+	if(!Request::ajax())
+		return Response::make('Unauthorized', 401);
+
+	if (Auth::guest())
+	{
+
+		return Response::make('Unauthorized', 401);
+
+	}
+	else if(Auth::user()->isAdmin)
+	{
+
+		//Follow through
+
+	}
+
+});
+
+Route::filter('ajax.auth', function()
+{
+
+	if(!Request::ajax())
+		return Response::make('Unauthorized', 401);
+
+	if (Auth::guest())
+	{
+
+		return Response::make('Unauthorized', 401);
+
+	}
+	else
+	{
+
+		//Follow through
+
+	}
+
+});

@@ -1,0 +1,1 @@
+Una pantalla on marqui les coses que falten (per exemple avisos quan falta una traducció)

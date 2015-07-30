@@ -11,7 +11,11 @@
 |
 */
 
-Route::get('/', function()
-{
-	return View::make('hello');
-});
+	Route::resource('IAS', 'IASController');
+	Route::resource('IASTaxon', 'IASTaxonController');
+	Route::resource('language', 'LanguagesController');
+	Route::resource('observation', 'ObservationController');
+	Route::resource('region', 'RegionController');
+	Route::resource('repository', 'RepositoryController');
+	Route::resource('status', 'StatusController');
+	Route::resource('user', 'UserController');
