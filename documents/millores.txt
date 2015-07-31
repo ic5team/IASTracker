@@ -1,1 +1,6 @@
 Una pantalla on marqui les coses que falten (per exemple avisos quan falta una traducció)
+Canviar les imatges de les observacions
+Pantalla d'usuari
+Les arees poden estar entre estats
+Taula de IAS preferides
+La llista d'IAS d'una zona és ordenada

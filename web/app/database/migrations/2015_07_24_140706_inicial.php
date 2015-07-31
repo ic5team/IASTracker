@@ -141,6 +141,7 @@ class Inicial extends Migration {
 			$table->increments('id');
 			$table->integer('IASId')->unsigned();
 			$table->integer('regionId')->unsigned();
+			$table->integer('orderId')->unsigned();
 			$table->integer('creatorId')->unsigned()->nullable();
 			$table->timestamps();
 		});
@@ -250,6 +251,14 @@ class Inicial extends Migration {
 			$table->softDeletes();
 		});
 
+		Schema::create('PreferredIAS', function(Blueprint $table)
+		{
+			$table->increments('id');
+			$table->integer('IASId')->unsigned();
+			$table->integer('userId')->unsigned();
+			$table->timestamps();
+		});
+
 	}
 
 	/**
@@ -281,6 +290,7 @@ class Inicial extends Migration {
 		Schema::drop('StatusTexts');
 		Schema::drop('Validators');
 		Schema::drop('Users');
+		Schema::drop('PreferredIAS');
 
 	}
 

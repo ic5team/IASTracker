@@ -181,6 +181,14 @@ class CreateForeignKeys extends Migration {
 				->onDelete('cascade');
 		});
 
+		Schema::table('PreferredIAS', function(Blueprint $table)
+		{
+			$table->foreign('IASId')->references('id')->on('IAS')
+				->onDelete('cascade');
+			$table->foreign('userId')->references('id')->on('Users')
+				->onDelete('cascade');
+		});
+
 	}
 
 	/**

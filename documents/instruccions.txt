@@ -16,4 +16,4 @@ Logo IC5
 Logo IASTracker
 Definir filtres
 Contacte?
-Idiomes. Què passa si un idioma no té tots els textos traduits?
+Idiomes. Què passa si un idioma no té tots els textos traduits? A un per defecte + avís

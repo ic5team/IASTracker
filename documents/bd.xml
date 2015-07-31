@@ -304,6 +304,9 @@
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="Regions" row="id" />
 </row>
+<row name="order" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
 <row name="creatorId" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -311,7 +314,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="433" y="689" name="Regions">
+<table x="432" y="714" name="Regions">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -537,6 +540,22 @@
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="1226" y="385" name="PreferredIAS">
+<row name="id" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="IASId" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="IAS" row="id" />
+</row>
+<row name="userId" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="Users" row="id" />
+</row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>
