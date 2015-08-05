@@ -1,6 +1,6 @@
 <?php
 
-class RepositoryController extends BaseController {
+class RepositoryController extends RequestController {
 
 	/**
 	 * Display a listing of the resource.

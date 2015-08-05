@@ -1,6 +1,6 @@
 <?php
 
-class LanguageController extends BaseController {
+class LanguageController extends RequestController {
 
 	/**
 	 * Display a listing of the resource.

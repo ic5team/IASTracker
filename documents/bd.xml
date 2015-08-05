@@ -32,10 +32,10 @@
 		<type label="SET" length="1" sql="SET" quote=""/>
 		<type label="Bit" length="0" sql="bit" quote=""/>
 	</group>
-</datatypes><table x="21" y="10" name="MapProvider">
+</datatypes><table x="231" y="10" name="MapProvider">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
-<default>NULL</default><relation table="WMSMapProvider" row="MapProviderId" />
+<default>NULL</default><relation table="WMSMapProvider" row="mapProviderId" />
 </row>
 <row name="url" null="0" autoincrement="0">
 <datatype>VARCHAR</datatype>
@@ -43,8 +43,8 @@
 <row name="attribution" null="0" autoincrement="0">
 <datatype>MEDIUMTEXT</datatype>
 <default>'NULL'</default></row>
-<row name="description" null="1" autoincrement="0">
-<datatype>VARCHAR</datatype>
+<row name="subdomains" null="1" autoincrement="0">
+<datatype>MEDIUMTEXT</datatype>
 <default>NULL</default></row>
 <row name="zIndex" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
@@ -74,8 +74,8 @@
 <part>id</part>
 </key>
 </table>
-<table x="196" y="10" name="WMSMapProvider">
-<row name="MapProviderId" null="1" autoincrement="1">
+<table x="406" y="10" name="WMSMapProvider">
+<row name="mapProviderId" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
 <row name="layers" null="0" autoincrement="0">
@@ -95,10 +95,10 @@
 <default>NULL</default><relation table="CRS" row="id" />
 </row>
 <key type="PRIMARY" name="">
-<part>MapProviderId</part>
+<part>mapProviderId</part>
 </key>
 </table>
-<table x="397" y="125" name="CRS">
+<table x="607" y="125" name="CRS">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -131,7 +131,7 @@
 </key>
 <comment>Veure https://github.com/kartena/Proj4Leaflet</comment>
 </table>
-<table x="204" y="223" name="Grid10x10">
+<table x="414" y="223" name="Grid10x10">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -353,7 +353,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="550" y="124" name="Languages">
+<table x="760" y="124" name="Languages">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -536,8 +536,20 @@
 <part>id</part>
 </key>
 </table>
-<table x="786" y="314" name="new table">
+<table x="942" y="128" name="Configuration">
 <row name="id" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="privacyStatement" null="1" autoincrement="0">
+<datatype>MEDIUMTEXT</datatype>
+<default>NULL</default></row>
+<row name="acknowledgment" null="1" autoincrement="0">
+<datatype>MEDIUMTEXT</datatype>
+<default>NULL</default></row>
+<row name="languageId" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="creatorId" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
 <key type="PRIMARY" name="">
@@ -556,6 +568,27 @@
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="Users" row="id" />
 </row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="19" y="11" name="MapProviderTexts">
+<row name="id" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="mapProviderId" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="MapProvider" row="id" />
+</row>
+<row name="languageId" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="text" null="1" autoincrement="0">
+<datatype>MEDIUMTEXT</datatype>
+<default>NULL</default></row>
+<row name="creatorId" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>

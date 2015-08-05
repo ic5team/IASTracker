@@ -1,6 +1,6 @@
 <?php
 
-class StatusController extends BaseController {
+class StatusController extends RequestController {
 
 	/**
 	 * Display a listing of the resource.

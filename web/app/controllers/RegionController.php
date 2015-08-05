@@ -1,6 +1,6 @@
 <?php
 
-class RegionController extends BaseController {
+class RegionController extends RequestController {
 
 	/**
 	 * Display a listing of the resource.

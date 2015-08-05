@@ -19,3 +19,5 @@
 	Route::resource('repository', 'RepositoryController');
 	Route::resource('status', 'StatusController');
 	Route::resource('user', 'UserController');
+
+	Route::get('/', array('as' => 'inici', 'uses' => 'IndexController@showIndex'));

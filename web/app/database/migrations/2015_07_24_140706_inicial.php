@@ -18,14 +18,14 @@ class Inicial extends Migration {
 			$table->increments('id');
 			$table->string('url', 255);
 			$table->text('attribution')->nullable();
-			$table->text('description')->nullable();
+			$table->string('subdomains', 255)->nullable();
 			$table->integer('zIndex')->unsigned()->nullable();
 			$table->decimal('SWBoundLat','9','6')->nullable();
 			$table->decimal('SWBoundLon','9','6')->nullable();
 			$table->decimal('NEBoundLat','9','6')->nullable();
 			$table->decimal('NEBoundLon','9','6')->nullable();
-			$table->integer('minZoom')->unsigned();
-			$table->integer('maxZoom')->unsigned();
+			$table->integer('minZoom')->unsigned()->nullable();
+			$table->integer('maxZoom')->unsigned()->nullable();
 			$table->integer('creatorId')->unsigned()->nullable();
 			$table->timestamps();
 		});
@@ -42,16 +42,26 @@ class Inicial extends Migration {
 			$table->unique(array('mapProviderId'));
 		});
 
+		Schema::create('MapProviderTexts', function(Blueprint $table)
+		{
+			$table->increments('id');
+			$table->integer('mapProviderId')->unsigned()->nullable();
+			$table->integer('languageId')->unsigned()->nullable();
+			$table->text('text');
+			$table->integer('creatorId')->unsigned()->nullable();
+			$table->timestamps();
+		});
+
 		Schema::create('CRS', function(Blueprint $table)
 		{
 			$table->increments('id');
 			$table->string('code', 255);
 			$table->string('proj4def', 255);
-			$table->string('origin', 255);
-			$table->string('transformation', 255);
-			$table->string('scales', 255);
-			$table->string('resolutions', 255);
-			$table->string('bounds', 255);
+			$table->string('origin', 255)->nullable();
+			$table->string('transformation', 255)->nullable();
+			$table->string('scales', 255)->nullable();
+			$table->string('resolutions', 255)->nullable();
+			$table->string('bounds', 255)->nullable();
 			$table->integer('creatorId')->unsigned()->nullable();
 			$table->timestamps();
 		});
@@ -60,12 +70,22 @@ class Inicial extends Migration {
 		{
 			$table->increments('id');
 			$table->string('name', 255);
+			$table->string('locale', 255);
 			$table->string('flagURL', 255);
 			$table->integer('creatorId')->unsigned()->nullable();
 			$table->timestamps();
 			$table->softDeletes();
 		});
 
+		Schema::create('Configuration', function(Blueprint $table)
+		{
+			$table->increments('id');
+			$table->text('privacyStatement');
+			$table->text('acknowledgment');
+			$table->integer('languageId')->unsigned()->nullable();
+			$table->integer('creatorId')->unsigned()->nullable();
+			$table->timestamps();
+		});
 
 		Schema::create('Grid10x10', function(Blueprint $table)
 		{
@@ -232,15 +252,13 @@ class Inicial extends Migration {
 		Schema::create('Users', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->integer('languageId')->unsigned();
+			$table->integer('languageId')->unsigned()->nullable();
 			$table->string('username', 255);
 			$table->string('password', 255);
 			$table->string('mail', 255);
-			$table->string('name', 255);
-			$table->string('middleName', 255);
-			$table->string('lastName', 255);
+			$table->string('fullName', 255);
 			$table->boolean('isActive');
-			$table->string('activationKey', 255);
+			$table->string('activationKey', 255)->nullable();
 			$table->string('photoURL', 255);
 			$table->rememberToken();
 			$table->boolean('amIExpert');
@@ -271,8 +289,10 @@ class Inicial extends Migration {
 		
 		Schema::drop('MapProvider');
 		Schema::drop('WMSMapProvider');
+		Schema::drop('MapProviderTexts');
 		Schema::drop('CRS');
 		Schema::drop('Languages');
+		Schema::drop('Configuration');
 		Schema::drop('Grid10x10');
 		Schema::drop('IASImagesTexts');
 		Schema::drop('IASImages');

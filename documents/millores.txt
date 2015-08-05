@@ -4,3 +4,6 @@ Pantalla d'usuari
 Les arees poden estar entre estats
 Taula de IAS preferides
 La llista d'IAS d'una zona és ordenada
+Nom dels idiomes a la base de dades
+Afegir ordre de preferència dels idiomes per si algun text no hi és
+Canviar tots els .js per la versió minimitzada

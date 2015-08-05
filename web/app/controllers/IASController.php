@@ -1,6 +1,6 @@
 <?php
 
-class IASController extends BaseController {
+class IASController extends RequestController {
 
 	/**
 	* Returns a list of all the elements

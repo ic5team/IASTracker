@@ -1,6 +1,6 @@
 <?php
 
-class IASTaxonController extends BaseController {
+class IASTaxonController extends RequestController {
 
 	/**
 	 * Display a listing of the resource.

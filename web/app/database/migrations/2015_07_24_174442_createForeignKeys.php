@@ -27,6 +27,16 @@ class CreateForeignKeys extends Migration {
 				->onDelete('cascade');
 		});
 
+		Schema::table('MapProviderTexts', function(Blueprint $table)
+		{
+			$table->foreign('mapProviderId')->references('id')->on('MapProvider')
+				->onDelete('cascade');
+			$table->foreign('languageId')->references('id')->on('Languages')
+				->onDelete('cascade');
+			$table->foreign('creatorId')->references('id')->on('Users')
+				->onDelete('cascade');
+		});
+
 		Schema::table('CRS', function(Blueprint $table)
 		{
 			$table->foreign('creatorId')->references('id')->on('Users')
@@ -39,6 +49,14 @@ class CreateForeignKeys extends Migration {
 				->onDelete('cascade');
 		});
 
+		Schema::table('Configuration', function(Blueprint $table)
+		{
+
+			$table->foreign('languageId')->references('id')->on('Users')
+				->onDelete('cascade');
+			$table->foreign('creatorId')->references('id')->on('Users')
+				->onDelete('cascade');
+		});
 
 		Schema::table('Grid10x10', function(Blueprint $table)
 		{
@@ -178,7 +196,7 @@ class CreateForeignKeys extends Migration {
 		Schema::table('Users', function(Blueprint $table)
 		{
 			$table->foreign('languageId')->references('id')->on('Languages')
-				->onDelete('cascade');
+				->onDelete('set null');
 		});
 
 		Schema::table('PreferredIAS', function(Blueprint $table)
@@ -210,6 +228,13 @@ class CreateForeignKeys extends Migration {
 			$table->dropForeign('WMSMapProvider_CRSId_foreign');
 		});
 
+		Schema::table('MapProviderTexts', function(Blueprint $table)
+		{
+			$table->dropForeign('MapProviderTexts_mapProviderId_foreign');
+			$table->dropForeign('MapProviderTexts_languageId_foreign');
+			$table->dropForeign('MapProviderTexts_creatorId_foreign');
+		});
+
 		Schema::table('CRS', function(Blueprint $table)
 		{
 			$table->dropForeign('CRS_creatorId_foreign');
@@ -220,6 +245,11 @@ class CreateForeignKeys extends Migration {
 			$table->dropForeign('Languages_creatorId_foreign');
 		});
 
+		Schema::table('Configuration', function(Blueprint $table)
+		{
+			$table->dropForeign('Configuration_languageId_foreign');
+			$table->dropForeign('Configuration_creatorId_foreign');
+		});
 
 		Schema::table('Grid10x10', function(Blueprint $table)
 		{
