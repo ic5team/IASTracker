@@ -6,5 +6,6 @@
 	</head>
 	<body>
 		@yield('body')
+		@yield('footer_includes')
 	</body>
 </html>
