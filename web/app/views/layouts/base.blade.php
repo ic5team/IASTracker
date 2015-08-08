@@ -2,22 +2,8 @@
 
 @section('head')
 	<title>
-		@yield('title') | <?php echo $data->webName; ?>
-		
+		@yield('title')
 	</title>
-
-	@section('head_includes')
-
-		{{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js'); }}
-		{{ HTML::script('//code.jquery.com/ui/1.10.4/jquery-ui.min.js'); }}
-		{{ HTML::script('/js/plugins/bootstrap/js/bootstrap.min.js'); }}
-
-		<link rel="shortcut icon" href="<?php echo Config::get('app.publicURL'); ?>/favicon.ico" type="image/x-icon">
-
-		{{ HTML::style('bootstrap/css/bootstrap.min.css'); }}
-		{{ HTML::style('//fonts.googleapis.com/css?family=Raleway:400,600,300'); }}
-
-	@show
 
 	@section('page-metas')
 		<!-- Open Graph data -->
@@ -30,8 +16,6 @@
 	@show
 
 @stop
-
-
 
 @section('body')
 	@section('page_header')
