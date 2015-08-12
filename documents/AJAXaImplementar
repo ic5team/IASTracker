@@ -1,0 +1,3 @@
+Mapa:
+	LListat de taxons pel filtre (id, nom)
+	LListat d'IAS pel filtre d'observacions (id, Imatge, nom, nom cientific, short info)

@@ -15,7 +15,7 @@ class BaseController extends Controller {
 	{
 
 		$userData = $this->getLoggedUserData();
-		$platformData = $this->getPlatformaData();
+		$platformData = $this->getPlatformData();
 
 		return (object) array_merge((array) $userData, (array) $platformData);
 
@@ -54,6 +54,29 @@ class BaseController extends Controller {
 	{
 
 		$data = new stdClass();
+		$configData = Configuration::find(0);
+
+		$data->logo = $configData->logoURL;
+		$data->logoAlt = $configData->logoAlt;
+		$data->webName = $configData->webName;
+		$data->description = $configData->description;
+
+		unset($configData);
+		
+		$data->languages = array();
+		$languages = Language::idAscending()->get();
+		$numLanguages = count($languages);
+		for($i=0; $i<$numLanguages; ++$i)
+		{
+
+			$obj = new stdClass();
+			$obj->locale = $languages[$i]->locale;
+			$obj->img = $languages[$i]->flagURL;
+			$obj->name = $languages[$i]->name;
+			$data->languages[] = $obj;
+
+		}
+
 
 		return $data;
 

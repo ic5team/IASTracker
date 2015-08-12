@@ -15,6 +15,7 @@ return array(
 
 	'debug' => true,
 	'url' => 'http://127.0.0.1/IASTracker/',
+	'urlImg' => 'http://127.0.0.1/IASTracker/img/',
 	'providers' => append_config(array(
 		'Way\Generators\GeneratorsServiceProvider',
 	))

@@ -49,7 +49,7 @@ class CreateForeignKeys extends Migration {
 				->onDelete('cascade');
 		});
 
-		Schema::table('Configuration', function(Blueprint $table)
+		Schema::table('ConfigurationTexts', function(Blueprint $table)
 		{
 
 			$table->foreign('languageId')->references('id')->on('Users')
@@ -245,10 +245,10 @@ class CreateForeignKeys extends Migration {
 			$table->dropForeign('Languages_creatorId_foreign');
 		});
 
-		Schema::table('Configuration', function(Blueprint $table)
+		Schema::table('ConfigurationTexts', function(Blueprint $table)
 		{
-			$table->dropForeign('Configuration_languageId_foreign');
-			$table->dropForeign('Configuration_creatorId_foreign');
+			$table->dropForeign('ConfigurationTexts_languageId_foreign');
+			$table->dropForeign('ConfigurationTexts_creatorId_foreign');
 		});
 
 		Schema::table('Grid10x10', function(Blueprint $table)

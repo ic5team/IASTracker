@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder {
 		$this->call('UsersTableSeeder');
 		$this->call('LanguagesTableSeeder');
 		$this->call('MapProviderTableSeeder');
+		$this->call('MapProviderTextsTableSeeder');
 		$this->call('CRSTableSeeder');
 		$this->call('WMSMapProviderTableSeeder');
 		$this->call('ValidatorsTableSeeder');
@@ -112,7 +113,7 @@ class LanguagesTableSeeder extends Seeder {
 		DB::table('Languages')->insert(array(
 			'id'  => 1,
 			'name' => 'CAT',
-			'locale' => 'CA',
+			'locale' => 'ca',
 			'flagURL' => 'cat.png',
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
@@ -134,6 +135,36 @@ class LanguagesTableSeeder extends Seeder {
 			'name' => 'EN',
 			'locale' => 'en',
 			'flagURL' => 'eng.jpg',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+	}
+}
+
+class MapProviderTextsTableSeeder extends Seeder {
+ 
+	public function run()
+	{
+	
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 1,
+			'mapProviderId' => 1, 
+			'languageId' => 1,
+			'text' => 'Mapa d\'OSM',
+			'name' => 'OSM'
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 1,
+			'mapProviderId' => 2, 
+			'languageId' => 1,
+			'text' => 'Mapa topogràfic de l\'ICC',
+			'name' => 'Topogràfic ICC'
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime

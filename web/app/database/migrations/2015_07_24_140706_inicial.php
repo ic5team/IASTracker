@@ -48,6 +48,7 @@ class Inicial extends Migration {
 			$table->integer('mapProviderId')->unsigned()->nullable();
 			$table->integer('languageId')->unsigned()->nullable();
 			$table->text('text');
+			$table->string('name', 255);
 			$table->integer('creatorId')->unsigned()->nullable();
 			$table->timestamps();
 		});
@@ -77,13 +78,23 @@ class Inicial extends Migration {
 			$table->softDeletes();
 		});
 
-		Schema::create('Configuration', function(Blueprint $table)
+		Schema::create('ConfigurationTexts', function(Blueprint $table)
 		{
 			$table->increments('id');
 			$table->text('privacyStatement');
 			$table->text('acknowledgment');
 			$table->integer('languageId')->unsigned()->nullable();
 			$table->integer('creatorId')->unsigned()->nullable();
+			$table->timestamps();
+		});
+
+		Schema::create('Configuration', function(Blueprint $table)
+		{
+			$table->increments('id');
+			$table->string('logoURL', 255);
+			$table->string('logoAlt', 255);
+			$table->string('webName', 255);
+			$table->text('description');
 			$table->timestamps();
 		});
 
@@ -292,6 +303,7 @@ class Inicial extends Migration {
 		Schema::drop('MapProviderTexts');
 		Schema::drop('CRS');
 		Schema::drop('Languages');
+		Schema::drop('ConfigurationTexts');
 		Schema::drop('Configuration');
 		Schema::drop('Grid10x10');
 		Schema::drop('IASImagesTexts');

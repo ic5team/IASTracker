@@ -1,20 +1,15 @@
-@extends("layouts.base")
-	
-@section('footer_includes')
-	@parent
-@stop
+@extends("layouts.map")
  
 @section("title")
-	{{Lang:get('ui.inici')}}
+	{{Lang::get('ui.inici')}}
 @stop
 
 @section('section-title')
-	{{Lang:get('ui.inici')}}
+	{{Lang::get('ui.inici')}}
 @stop
 
 @section('main_wrapper')
-	<div class="full-width">
-	</div>
+	@parent
 	@include('layouts.modals.signup')
 	@include('layouts.modals.login')
 	@include('layouts.modals.base')

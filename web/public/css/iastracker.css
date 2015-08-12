@@ -1,0 +1,42 @@
+.navbar-default {
+	background-color: #FFF;
+}
+
+#navbar-no-loguejat {
+	margin-top: 15px;
+}
+
+#navbar-no-loguejat > button {
+	width: 45%;
+}
+
+.languages-bar {
+	float: right;
+}
+
+#barra-buscador {
+	margin-top: 15px;
+}
+
+#divLogoBarra {
+	width: 100%; 
+	text-align:center; 
+	margin-top: 15px;
+}
+
+.mapControls {
+	position: absolute;
+	z-index: 1;
+	left: 100px; 
+	top: 100px; 
+	background-color:white; 
+	width: 310px;
+	border: #DDDDDD;
+	border-width: thin;
+	border-style: solid;
+	padding: 10px;
+}
+
+.leaflet-top .leaflet-control {
+	margin-top: 70px;
+}

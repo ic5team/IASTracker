@@ -2,11 +2,13 @@
 
 class IndexController extends BaseController {
 
-	public function index()
+	public function showIndex()
 	{
 
 		$data = $this->getBasicData();
-		$data->js = array("mapVisualization.js", "iastracker.js");
+
+		$languageId = Language::locale(App::getLocale())->first()->id;
+		$data->signupClause = ConfigurationTexts::language($languageId)->first()->privacyStatement;
 
 		return View::make("public/index", array('data' => $data));
 

@@ -1,8 +1,17 @@
 @extends('layouts.master')
 
 @section('header_includes')
+	{{ HTML::style('css/bootstrap.min.css'); }}
+	{{ HTML::style('css/font-awesome.min.css'); }}
+	{{ HTML::style('//fonts.googleapis.com/css?family=Raleway:400,600,300'); }}
+	{{ HTML::style('css/iastracker.css'); }}
+@stop
+
+@section('footer_includes')
 	{{ HTML::script('//code.jquery.com/jquery-1.11.0.min.js'); }}
-	{{ HTML::script('//code.jquery.com/jquery-1.11.0.min.js'); }}
+	{{ HTML::script('//code.jquery.com/ui/1.10.4/jquery-ui.min.js'); }}
+	{{ HTML::script('js/bootstrap.min.js'); }}
+	{{ HTML::script('js/bootstrap-switch.min.js'); }}
 @stop
 
 @section('head')
@@ -29,26 +38,11 @@
 	@show
 
 	@yield('main_wrapper')
+	@yield('footer_includes')
 
-<?php
-	if(isset($data->js))
-	{
-	
-		for($i=0; $i<count($data->js); ++$i)
-		{
-?>
-			{{ HTML::script('js/'.$data->js[$i]); }}
-<?php
-		}	
-	}
-?>
-
-	@section('footer_includes')
-		{{-- SCRIPTS DEL FOOTER --}}
-		<script>
-			var urlPublic = "<?php echo Config::get('app.urlPublic'); ?>";
-			var urlImg = "<?php echo Config::get('app.urlImg'); ?>";
-		</script>
-	@show
+	<script>
+		var urlPublic = "<?php echo Config::get('app.urlPublic'); ?>";
+		var urlImg = "<?php echo Config::get('app.urlImg'); ?>";
+	</script>
 @stop
 
