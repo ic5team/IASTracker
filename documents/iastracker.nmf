@@ -1,0 +1,805 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NmfDocument xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Culture="en-US" Version="900">
+  <ChildItems />
+  <Presentation>
+    <Basemaps />
+    <Slides />
+  </Presentation>
+  <Map Name="iastracker">
+    <Attribution />
+    <Description>&lt;style&gt;body { font-family:Arial; font-size:x-small; } h1 { font-family:Arial; font-size:x-large; } h2 { font-family:Arial; font-size:large; } h3 { font-family:Arial; font-size:medium; } h4 { font-family:Arial; font-size:small; } h5 { font-family:Arial; font-size:x-small; } p { font-family:Arial; font-size:x-small } code { font-family:Courier New; font-size:x-small } kbd { font-family:Courier New; font-size:x-small } samp { font-family:Courier New; font-size:x-small } tt { font-family:Courier New; font-size:x-small } img { border-bottom-style:none; border-left-style:none; border-right-style:none; border-top-style:none } td{width: auto;vertical-align: top;padding-right: 2em;border: 1px solid #CCCCCC;} table {border-collapse: collapse;border: 1px solid #999999;width: auto;font-family: Arial;font-size: x-small;}.fname{text-align:right;color:#000000;background:#edf8ff;font-weight:bold;}.even{background:#edf8ff;}&lt;/style&gt;</Description>
+    <ChildItems>
+      <FeatureLayer Id="bd7f77f7-322f-495a-847e-5a4f644e0b54" Name="IASTracker_Regions_WGS84" Visible="false" DrawIndex="0">
+        <PopupSizePosition>
+          <ApplySize>false</ApplySize>
+          <PopupSize>
+            <Width>340</Width>
+            <Height>160</Height>
+          </PopupSize>
+          <PopupPosition>Automatic</PopupPosition>
+        </PopupSizePosition>
+        <Behavior3D>Draped</Behavior3D>
+        <Transparency>50</Transparency>
+        <CacheName>FeatureLayer_IASTracker_Regions_WGS84_336eb3dd-bb8f-4d25-a4cd-6bf9c17e8f16</CacheName>
+        <DataSourceProperties DataSourceType="File">
+          <DatasetName />
+          <Path>C:\workspace\GitHub\IASTracker\documents\isaac_20150805\shape_Regions\IASTracker_Regions_WGS84.shp</Path>
+        </DataSourceProperties>
+        <SimpleRenderer>
+          <Symbol BaseSymbolId="YellowSolidFill" SymbolType="Fill" />
+        </SimpleRenderer>
+        <PopupProperties>
+          <PopupType>PopupFields</PopupType>
+          <PopupFields>
+            <string>IASRid</string>
+            <string>IASR_NAME</string>
+            <string>IASR_OBS</string>
+            <string>IASR_ORDER</string>
+          </PopupFields>
+          <ShowTips>false</ShowTips>
+          <PrimaryField>IASR_NAME</PrimaryField>
+          <HyperlinkField />
+        </PopupProperties>
+      </FeatureLayer>
+      <FeatureLayer Id="b68bbe72-07f7-47c2-88db-ec68f0037ff8" Name="IASTracker_Regions_LCC" DrawIndex="1">
+        <PopupSizePosition>
+          <ApplySize>false</ApplySize>
+          <PopupSize>
+            <Width>340</Width>
+            <Height>160</Height>
+          </PopupSize>
+          <PopupPosition>Automatic</PopupPosition>
+        </PopupSizePosition>
+        <Behavior3D>Draped</Behavior3D>
+        <Transparency>50</Transparency>
+        <CacheName>FeatureLayer_IASTracker_Regions_LCC_a5d85806-a4c1-498d-a92b-46cf33aa5ec7</CacheName>
+        <DataSourceProperties DataSourceType="File">
+          <DatasetName />
+          <Path>C:\workspace\GitHub\IASTracker\documents\isaac_20150805\shape_Regions\IASTracker_Regions_LCC.shp</Path>
+        </DataSourceProperties>
+        <SimpleRenderer>
+          <Symbol BaseSymbolId="YellowSolidFill" SymbolType="Fill" />
+        </SimpleRenderer>
+        <PopupProperties>
+          <PopupType>PopupFields</PopupType>
+          <PopupFields>
+            <string>IASRid</string>
+            <string>IASR_NAME</string>
+            <string>IASR_OBS</string>
+            <string>IASR_ORDER</string>
+          </PopupFields>
+          <ShowTips>false</ShowTips>
+          <PrimaryField>IASR_NAME</PrimaryField>
+          <HyperlinkField />
+        </PopupProperties>
+      </FeatureLayer>
+      <ServiceLayer Id="e263a564-78ec-407d-b3b8-ded7d353ca51" Name="Capes topografiques" Visible="false" DrawIndex="2">
+        <PopupSizePosition>
+          <ApplySize>false</ApplySize>
+          <PopupSize>
+            <Width>340</Width>
+            <Height>160</Height>
+          </PopupSize>
+          <PopupPosition>Automatic</PopupPosition>
+        </PopupSizePosition>
+        <CacheName>http___mapcache_icc_cat_map_bases_service__e18b1ffl_png</CacheName>
+        <ChildItems>
+          <ServiceChildLayer Id="5488f68d-12ea-4684-9c02-0242cf71943d" Name="Layers">
+            <ChildItems>
+              <ServiceChildLayer Id="054d2391-4bc3-40d8-9242-231a6a1b77b3" Name="Capes topografiques - gris" Hide="true">
+                <ChildItems />
+              </ServiceChildLayer>
+              <ServiceChildLayer Id="00450a8f-400f-4fff-b191-8fecd60fb594" Name="Capes topografiques">
+                <ChildItems />
+              </ServiceChildLayer>
+              <ServiceChildLayer Id="6e1d8eed-8cee-4580-bf48-97250fc7f195" Name="Capes ortofotografiques - gris" Hide="true">
+                <ChildItems />
+              </ServiceChildLayer>
+              <ServiceChildLayer Id="c1d63945-fe27-48d1-8933-e92b0eb813a0" Name="Capes ortofotografiques" Hide="true">
+                <ChildItems />
+              </ServiceChildLayer>
+            </ChildItems>
+          </ServiceChildLayer>
+        </ChildItems>
+        <IsBaseMapReferenceLayer>false</IsBaseMapReferenceLayer>
+        <ServiceConnectionProperties ServiceType="Wms">
+          <Url>http://mapcache.icc.cat/map/bases/service?</Url>
+          <SubServiceName>Capes topografiques</SubServiceName>
+        </ServiceConnectionProperties>
+      </ServiceLayer>
+      <ServiceLayer Id="73242ab4-aed7-441a-b9ac-c5a4fa2fd165" Name="Capes ortofotografiques - gris" Visible="false" DrawIndex="3">
+        <PopupSizePosition>
+          <ApplySize>false</ApplySize>
+          <PopupSize>
+            <Width>340</Width>
+            <Height>160</Height>
+          </PopupSize>
+          <PopupPosition>Automatic</PopupPosition>
+        </PopupSizePosition>
+        <CacheName>http___mapcache_icc_cat_map_bases_service__e18b1ffl_png</CacheName>
+        <ChildItems>
+          <ServiceChildLayer Id="815b2ce0-412f-46fd-b00c-9567a1f2f1ee" Name="Layers">
+            <ChildItems>
+              <ServiceChildLayer Id="f630d1d0-3ab4-41ce-aa8e-d6c768774171" Name="Capes topografiques - gris" Hide="true">
+                <ChildItems />
+              </ServiceChildLayer>
+              <ServiceChildLayer Id="4dde0d26-8f12-4d4b-9403-e36f20d6fe2f" Name="Capes topografiques" Hide="true">
+                <ChildItems />
+              </ServiceChildLayer>
+              <ServiceChildLayer Id="f96651e8-0489-4c13-9226-dbdf66803592" Name="Capes ortofotografiques - gris">
+                <ChildItems />
+              </ServiceChildLayer>
+              <ServiceChildLayer Id="7b39d7c1-ef72-4c8a-aa4e-35878862ec8e" Name="Capes ortofotografiques" Hide="true">
+                <ChildItems />
+              </ServiceChildLayer>
+            </ChildItems>
+          </ServiceChildLayer>
+        </ChildItems>
+        <IsBaseMapReferenceLayer>false</IsBaseMapReferenceLayer>
+        <ServiceConnectionProperties ServiceType="Wms">
+          <Url>http://mapcache.icc.cat/map/bases/service?</Url>
+          <SubServiceName>Capes ortofotografiques - gris</SubServiceName>
+        </ServiceConnectionProperties>
+      </ServiceLayer>
+      <ServiceLayer Id="250a27b4-9c87-4564-b324-2139479fcc3e" Name="Capes ortofotografiques" Visible="false" DrawIndex="4">
+        <PopupSizePosition>
+          <ApplySize>false</ApplySize>
+          <PopupSize>
+            <Width>340</Width>
+            <Height>160</Height>
+          </PopupSize>
+          <PopupPosition>Automatic</PopupPosition>
+        </PopupSizePosition>
+        <CacheName>http___mapcache_icc_cat_map_bases_service__e18b1ffl_png</CacheName>
+        <ChildItems>
+          <ServiceChildLayer Id="868402f2-2f94-4fdc-831e-05d42c792cba" Name="Layers">
+            <ChildItems>
+              <ServiceChildLayer Id="c0743322-7e15-4379-a062-e9539d26ad1a" Name="Capes topografiques - gris" Hide="true">
+                <ChildItems />
+              </ServiceChildLayer>
+              <ServiceChildLayer Id="92fa6396-34f3-4be9-9b81-c33e43049c1b" Name="Capes topografiques" Hide="true">
+                <ChildItems />
+              </ServiceChildLayer>
+              <ServiceChildLayer Id="6dafb645-fa11-4d12-8888-e293368ee459" Name="Capes ortofotografiques - gris" Hide="true">
+                <ChildItems />
+              </ServiceChildLayer>
+              <ServiceChildLayer Id="be2210fe-1f78-4cac-8238-bf243381a48b" Name="Capes ortofotografiques">
+                <ChildItems />
+              </ServiceChildLayer>
+            </ChildItems>
+          </ServiceChildLayer>
+        </ChildItems>
+        <IsBaseMapReferenceLayer>false</IsBaseMapReferenceLayer>
+        <ServiceConnectionProperties ServiceType="Wms">
+          <Url>http://mapcache.icc.cat/map/bases/service?</Url>
+          <SubServiceName>Capes ortofotografiques</SubServiceName>
+        </ServiceConnectionProperties>
+        <PopupProperties>
+          <PopupType>None</PopupType>
+        </PopupProperties>
+      </ServiceLayer>
+      <ServiceLayer Id="063b9dc8-523d-472a-9995-8f7a4232a333" Name="ORTHO_2012_2013" Visible="false" DrawIndex="5">
+        <PopupSizePosition>
+          <ApplySize>false</ApplySize>
+          <PopupSize>
+            <Width>340</Width>
+            <Height>160</Height>
+          </PopupSize>
+          <PopupPosition>Automatic</PopupPosition>
+        </PopupSizePosition>
+        <Description>WMS</Description>
+        <CacheName>http___geoservices_wallonie_be_arcgis_services_IMAGERIE_ORTHO_2012_2013_MapServer_WmsServer__1fb90dfl_png</CacheName>
+        <ChildItems>
+          <ServiceChildLayer Id="32fdf4b2-719b-46d1-b9ad-76e52efcf9e2" Name="Layers">
+            <ChildItems>
+              <ServiceChildLayer Id="144fd9ae-1a8f-4019-8e31-0c45d67439b0" Name="ORTHO_2012_2013">
+                <ChildItems />
+              </ServiceChildLayer>
+            </ChildItems>
+          </ServiceChildLayer>
+        </ChildItems>
+        <IsBaseMapReferenceLayer>false</IsBaseMapReferenceLayer>
+        <ServiceConnectionProperties ServiceType="Wms">
+          <Url>http://geoservices.wallonie.be/arcgis/services/IMAGERIE/ORTHO_2012_2013/MapServer/WmsServer?</Url>
+          <SubServiceName>ORTHO_2012_2013</SubServiceName>
+        </ServiceConnectionProperties>
+      </ServiceLayer>
+      <ServiceLayer Id="6add5ae7-c937-4d4d-961e-70ab2f1553fa" Name="Mapa topogràfic de Catalunya 1:5.000" Visible="false" DrawIndex="6">
+        <PopupSizePosition>
+          <ApplySize>false</ApplySize>
+          <PopupSize>
+            <Width>340</Width>
+            <Height>160</Height>
+          </PopupSize>
+          <PopupPosition>Automatic</PopupPosition>
+        </PopupSizePosition>
+        <Description>Es tracta d'un únic WMS que conté tots els mapes i les ortofotos vigents de l'ICGC organitzats per capes.</Description>
+        <CacheName>http___geoserveis_icc_cat_icc_mapesbase_wms_service__b1359afl_png</CacheName>
+        <ChildItems>
+          <ServiceChildLayer Id="6d7ff957-f4cf-43b8-bf07-a983d6480d88" Name="Mapes disponibles">
+            <ChildItems>
+              <ServiceChildLayer Id="919832a9-9869-4447-953f-e283933d66c2" Name="Imatge satèl·lit de Catalunya 1:250.000" Hide="true">
+                <ChildItems />
+              </ServiceChildLayer>
+              <ServiceChildLayer Id="d8445cee-48d1-40ba-add7-cf77f33d088c" Name="Ortofoto infraroja de Catalunya 1:5.000 vigent" Hide="true">
+                <ChildItems />
+              </ServiceChildLayer>
+              <ServiceChildLayer Id="cf5f2b89-73be-48db-b665-fd20839ff3b4" Name="Ortofoto infraroja de Catalunya 1:25.000 vigent" Hide="true">
+                <ChildItems />
+              </ServiceChildLayer>
+              <ServiceChildLayer Id="9054b34d-4f27-46f9-9d2f-fe8a6051cd0e" Name="Ortofoto infraroja de Catalunya 1:2.500 vigent" Hide="true">
+                <ChildItems />
+              </ServiceChildLayer>
+              <ServiceChildLayer Id="abe3209c-d400-4ea4-9f50-633370d0e79f" Name="Ortofoto de Catalunya 1:5.000 vigent" Hide="true">
+                <ChildItems />
+              </ServiceChildLayer>
+              <ServiceChildLayer Id="e21ca114-8d91-4b20-9e5b-453339720dee" Name="Ortofoto de Catalunya 1:25.000 vigent" Hide="true">
+                <ChildItems />
+              </ServiceChildLayer>
+              <ServiceChildLayer Id="15d04fb7-3b01-4baa-8f9b-cdfe5ca84b0c" Name="Ortofoto de Catalunya 1:2.500 vigent" Hide="true">
+                <ChildItems />
+              </ServiceChildLayer>
+              <ServiceChildLayer Id="4fad26bf-e49c-424b-845c-5fe05187ddc0" Name="Ortofoto de Catalunya 1:1000 vigent" Hide="true">
+                <ChildItems />
+              </ServiceChildLayer>
+              <ServiceChildLayer Id="fa8a95e4-42b5-49fc-a846-88ffe5df265d" Name="Ortofoto de fons de valls de Catalunya 1:2.500 (cobertura parcial)" Hide="true">
+                <ChildItems />
+              </ServiceChildLayer>
+              <ServiceChildLayer Id="c05ac660-6f24-43b0-bf31-095b9345153f" Name="Mapa topogràfic de Catalunya 1:5.000">
+                <ChildItems />
+              </ServiceChildLayer>
+              <ServiceChildLayer Id="8d79d083-bd40-42f2-9490-4a90665d1bd3" Name="Mapa topogràfic de Catalunya 1:50.000" Hide="true" Visible="false">
+                <ChildItems />
+              </ServiceChildLayer>
+              <ServiceChildLayer Id="6acda43e-ae53-4f91-8cdd-2c64d80965b1" Name="Mapa topogràfic de Catalunya 1:500.000" Hide="true" Visible="false">
+                <ChildItems />
+              </ServiceChildLayer>
+              <ServiceChildLayer Id="b30080fe-142e-4e5b-bbbd-76223493a754" Name="Mapa topogràfic de Catalunya 1:25.000" Hide="true" Visible="false">
+                <ChildItems />
+              </ServiceChildLayer>
+              <ServiceChildLayer Id="002d24b3-e926-41e2-aea4-4b3b92e3250f" Name="Mapa topogràfic de Catalunya 1:250.000" Hide="true" Visible="false">
+                <ChildItems />
+              </ServiceChildLayer>
+              <ServiceChildLayer Id="f3f2ec16-05d5-432c-ae5c-122dcd4f432f" Name="Mapa topogràfic de Catalunya 1:10.000" Hide="true" Visible="false">
+                <ChildItems />
+              </ServiceChildLayer>
+              <ServiceChildLayer Id="0a3ee2a7-7833-4233-be60-db92cc4bac7b" Name="Mapa topogràfic de Catalunya 1:1.000.000" Hide="true" Visible="false">
+                <ChildItems />
+              </ServiceChildLayer>
+            </ChildItems>
+          </ServiceChildLayer>
+        </ChildItems>
+        <IsBaseMapReferenceLayer>false</IsBaseMapReferenceLayer>
+        <ServiceConnectionProperties ServiceType="Wms">
+          <Url>http://geoserveis.icc.cat/icc_mapesbase/wms/service?</Url>
+          <SubServiceName>Mapa topogràfic de Catalunya 1:5.000</SubServiceName>
+        </ServiceConnectionProperties>
+      </ServiceLayer>
+      <ServiceLayer Id="7bb65a8c-c1f4-46e1-8ec1-8920a624102a" Name="Ortofoto de Catalunya 1:2.500 vigent" Visible="false" DrawIndex="7">
+        <PopupSizePosition>
+          <ApplySize>false</ApplySize>
+          <PopupSize>
+            <Width>340</Width>
+            <Height>160</Height>
+          </PopupSize>
+          <PopupPosition>Automatic</PopupPosition>
+        </PopupSizePosition>
+        <Description>Es tracta d'un únic WMS que conté tots els mapes i les ortofotos vigents de l'ICGC organitzats per capes.</Description>
+        <CacheName>http___geoserveis_icc_cat_icc_mapesbase_wms_service__b1359afl_png</CacheName>
+        <ChildItems>
+          <ServiceChildLayer Id="5d70a8c5-1a5d-4c93-8985-63cc0c98c717" Name="Mapes disponibles">
+            <ChildItems>
+              <ServiceChildLayer Id="147019d1-41c7-4a3b-964c-fe141158ba41" Name="Imatge satèl·lit de Catalunya 1:250.000" Hide="true">
+                <ChildItems />
+              </ServiceChildLayer>
+              <ServiceChildLayer Id="deb42690-3402-4c4f-96d6-068de495ff82" Name="Ortofoto infraroja de Catalunya 1:5.000 vigent" Hide="true">
+                <ChildItems />
+              </ServiceChildLayer>
+              <ServiceChildLayer Id="dde51040-4819-4ed6-bf67-7cdd95af9204" Name="Ortofoto infraroja de Catalunya 1:25.000 vigent" Hide="true">
+                <ChildItems />
+              </ServiceChildLayer>
+              <ServiceChildLayer Id="c5e24a98-a976-4b04-be21-e621929b11cd" Name="Ortofoto infraroja de Catalunya 1:2.500 vigent" Hide="true">
+                <ChildItems />
+              </ServiceChildLayer>
+              <ServiceChildLayer Id="e55a546d-417a-4f13-88a7-9f7c42e3e0fd" Name="Ortofoto de Catalunya 1:5.000 vigent" Hide="true">
+                <ChildItems />
+              </ServiceChildLayer>
+              <ServiceChildLayer Id="b96760a1-3e04-4150-9c97-822b2c8dfd42" Name="Ortofoto de Catalunya 1:25.000 vigent" Hide="true">
+                <ChildItems />
+              </ServiceChildLayer>
+              <ServiceChildLayer Id="3a4727f2-fbe7-4e77-be59-517ea5ade900" Name="Ortofoto de Catalunya 1:2.500 vigent">
+                <ChildItems />
+              </ServiceChildLayer>
+              <ServiceChildLayer Id="567c92d7-065e-45ac-9989-ec49846462cb" Name="Ortofoto de Catalunya 1:1000 vigent" Hide="true">
+                <ChildItems />
+              </ServiceChildLayer>
+              <ServiceChildLayer Id="0ab784cc-0b44-4ac1-8b80-005de6005118" Name="Ortofoto de fons de valls de Catalunya 1:2.500 (cobertura parcial)" Hide="true">
+                <ChildItems />
+              </ServiceChildLayer>
+              <ServiceChildLayer Id="eff9a298-b481-48dd-9d02-b97ed167b42e" Name="Mapa topogràfic de Catalunya 1:5.000" Hide="true">
+                <ChildItems />
+              </ServiceChildLayer>
+              <ServiceChildLayer Id="4d735949-1293-4b07-a730-ddb57dbd84a5" Name="Mapa topogràfic de Catalunya 1:50.000" Hide="true" Visible="false">
+                <ChildItems />
+              </ServiceChildLayer>
+              <ServiceChildLayer Id="6a5e3c91-0440-4045-a73a-c936ac04345c" Name="Mapa topogràfic de Catalunya 1:500.000" Hide="true" Visible="false">
+                <ChildItems />
+              </ServiceChildLayer>
+              <ServiceChildLayer Id="a432f20d-5e6f-489c-9128-fcab92309217" Name="Mapa topogràfic de Catalunya 1:25.000" Hide="true" Visible="false">
+                <ChildItems />
+              </ServiceChildLayer>
+              <ServiceChildLayer Id="813641d2-ca81-4382-8dad-32fb60ba9d42" Name="Mapa topogràfic de Catalunya 1:250.000" Hide="true" Visible="false">
+                <ChildItems />
+              </ServiceChildLayer>
+              <ServiceChildLayer Id="066a9278-649c-4e8e-8898-ff4da70fcf46" Name="Mapa topogràfic de Catalunya 1:10.000" Hide="true" Visible="false">
+                <ChildItems />
+              </ServiceChildLayer>
+              <ServiceChildLayer Id="84c5ed72-8609-4f15-b04c-b42dcfa2dd72" Name="Mapa topogràfic de Catalunya 1:1.000.000" Hide="true" Visible="false">
+                <ChildItems />
+              </ServiceChildLayer>
+            </ChildItems>
+          </ServiceChildLayer>
+        </ChildItems>
+        <IsBaseMapReferenceLayer>false</IsBaseMapReferenceLayer>
+        <ServiceConnectionProperties ServiceType="Wms">
+          <Url>http://geoserveis.icc.cat/icc_mapesbase/wms/service?</Url>
+          <SubServiceName>Ortofoto de Catalunya 1:2.500 vigent</SubServiceName>
+        </ServiceConnectionProperties>
+      </ServiceLayer>
+      <ServiceLayer Id="dbaef335-ce54-42bb-8656-f69a31bbb3f2" Name="Orto ràpids" Visible="false" DrawIndex="8">
+        <PopupSizePosition>
+          <ApplySize>false</ApplySize>
+          <PopupSize>
+            <Width>340</Width>
+            <Height>160</Height>
+          </PopupSize>
+          <PopupPosition>Automatic</PopupPosition>
+        </PopupSizePosition>
+        <CacheName>http___geoserveis_icc_cat_icc_mapesmultibase_utm_wms_service__e18b1ffl_png</CacheName>
+        <ChildItems>
+          <ServiceChildLayer Id="97f1da6f-8db6-4f75-9f64-a89b6e45e1cd" Name="Layers">
+            <ChildItems>
+              <ServiceChildLayer Id="c7d798d0-557c-496f-a79d-e1bd4938d047" Name="Capes topografiques - gris" Hide="true">
+                <ChildItems />
+              </ServiceChildLayer>
+              <ServiceChildLayer Id="73e790ff-7345-41b3-9eb7-4345580911c7" Name="Capes topografiques" Hide="true">
+                <ChildItems />
+              </ServiceChildLayer>
+              <ServiceChildLayer Id="991d2240-fcf0-4e3b-a548-11217f03e4c9" Name="Capes ortofotografiques - gris" Hide="true">
+                <ChildItems />
+              </ServiceChildLayer>
+              <ServiceChildLayer Id="d996c7f6-f71b-4623-b112-da0feb27a69a" Name="Capes ortofotografiques">
+                <ChildItems />
+              </ServiceChildLayer>
+            </ChildItems>
+          </ServiceChildLayer>
+        </ChildItems>
+        <IsBaseMapReferenceLayer>false</IsBaseMapReferenceLayer>
+        <ServiceConnectionProperties ServiceType="Wms">
+          <Url>http://geoserveis.icc.cat/icc_mapesmultibase/utm/wms/service?</Url>
+          <SubServiceName>Capes ortofotografiques</SubServiceName>
+        </ServiceConnectionProperties>
+      </ServiceLayer>
+      <ServiceLayer Id="b30e4706-71a1-43fa-834e-47f7fb095f79" Name="Corine Landcover" Visible="false" DrawIndex="9">
+        <PopupSizePosition>
+          <ApplySize>false</ApplySize>
+          <PopupSize>
+            <Width>340</Width>
+            <Height>160</Height>
+          </PopupSize>
+          <PopupPosition>Automatic</PopupPosition>
+        </PopupSizePosition>
+        <Description>WMS</Description>
+        <CacheName>http___land_discomap_eea_europa_eu_arcgis_services_Land_CLC2006_Dyna_LAEA_MapServer_WmsServer__1d9c55fl_png</CacheName>
+        <ChildItems>
+          <ServiceChildLayer Id="fd8f5500-274f-47c5-88cf-80cb290d3894" Name="Corine Landcover 2006 (CLC2006) LAEA">
+            <ChildItems>
+              <ServiceChildLayer Id="58ba44cd-7b9e-4242-8d80-2fa75511edb9" Name="Contours">
+                <ChildItems>
+                  <ServiceChildLayer Id="5a3db7f3-0898-4cb9-ba27-85ac7634944b" Name="Artificial Surfaces (vector)">
+                    <ChildItems />
+                  </ServiceChildLayer>
+                  <ServiceChildLayer Id="0fe0d1a3-cfd9-4241-be79-bce2e8ca1498" Name="Agricultural Areas (vector)">
+                    <ChildItems />
+                  </ServiceChildLayer>
+                  <ServiceChildLayer Id="fcdada67-f47b-415d-8b57-f70e6172b2e2" Name="Forest Semi Natural Areas (vector)">
+                    <ChildItems />
+                  </ServiceChildLayer>
+                  <ServiceChildLayer Id="e9eaeb35-3dd9-414c-ad03-9e5e01cbac08" Name="Wetlands Contours (vector)">
+                    <ChildItems />
+                  </ServiceChildLayer>
+                  <ServiceChildLayer Id="b6e1b0d2-9d8a-4f9e-8ea1-3103a08bf778" Name="WaterBodies (vector)">
+                    <ChildItems />
+                  </ServiceChildLayer>
+                </ChildItems>
+              </ServiceChildLayer>
+              <ServiceChildLayer Id="89c0e0d1-249d-4244-bce4-563869d95402" Name="Artificial Surfaces">
+                <ChildItems>
+                  <ServiceChildLayer Id="ec57550f-1deb-4ded-a08d-94d759ee85dd" Name="Artificial Surfaces (raster)">
+                    <ChildItems />
+                  </ServiceChildLayer>
+                  <ServiceChildLayer Id="90c11cf2-0f35-403e-9e64-f15a14dabe0a" Name="Artificial Surfaces (vector)">
+                    <ChildItems />
+                  </ServiceChildLayer>
+                </ChildItems>
+              </ServiceChildLayer>
+              <ServiceChildLayer Id="70db114e-f3ad-4049-b0b6-e9d16d33eb04" Name="Agricultural Areas">
+                <ChildItems>
+                  <ServiceChildLayer Id="83c80d7c-04a9-49a2-a682-c7a790e2ea3b" Name="Agricultural Areas (raster)">
+                    <ChildItems />
+                  </ServiceChildLayer>
+                  <ServiceChildLayer Id="a30be727-052d-4fbf-9592-9a2c8d64caab" Name="Agricultural Areas (vector)">
+                    <ChildItems />
+                  </ServiceChildLayer>
+                </ChildItems>
+              </ServiceChildLayer>
+              <ServiceChildLayer Id="57feff2d-3065-48cb-91f2-ba5334a2601b" Name="Forest Semi Natural Areas">
+                <ChildItems>
+                  <ServiceChildLayer Id="160e9b52-6c09-4c2b-b21e-51eb598172b6" Name="Forest Semi Natural Areas (raster)">
+                    <ChildItems />
+                  </ServiceChildLayer>
+                  <ServiceChildLayer Id="359dec1f-fa1f-4f44-8eeb-a5778763f61c" Name="Forest Semi Natural Areas (vector)" Visible="false">
+                    <ChildItems />
+                  </ServiceChildLayer>
+                </ChildItems>
+              </ServiceChildLayer>
+              <ServiceChildLayer Id="ab0a7fc7-d18f-45ef-a759-fbbce52c6f63" Name="Wetlands" Visible="false">
+                <ChildItems>
+                  <ServiceChildLayer Id="09e02880-d6b6-4257-a85d-dae1b01b4898" Name="Wetlands (raster)" Visible="false">
+                    <ChildItems />
+                  </ServiceChildLayer>
+                  <ServiceChildLayer Id="00881b79-2128-4e11-a121-a8648e46ddf1" Name="Wetlands (vector)" Visible="false">
+                    <ChildItems />
+                  </ServiceChildLayer>
+                </ChildItems>
+              </ServiceChildLayer>
+              <ServiceChildLayer Id="b2c8bf3a-d3d7-45f2-8b93-05746c0e5c9f" Name="Waterbodies" Visible="false">
+                <ChildItems>
+                  <ServiceChildLayer Id="7e02bcbd-98ee-4bbf-8422-58c4517f2e22" Name="Waterbodies (raster)" Visible="false">
+                    <ChildItems />
+                  </ServiceChildLayer>
+                  <ServiceChildLayer Id="9ee429ad-5339-45b9-9836-29a0fa512dd0" Name="WaterBodies (vector)" Visible="false">
+                    <ChildItems />
+                  </ServiceChildLayer>
+                </ChildItems>
+              </ServiceChildLayer>
+            </ChildItems>
+          </ServiceChildLayer>
+        </ChildItems>
+        <IsBaseMapReferenceLayer>false</IsBaseMapReferenceLayer>
+        <ServiceConnectionProperties ServiceType="Wms">
+          <Url>http://land.discomap.eea.europa.eu/arcgis/services/Land/CLC2006_Dyna_LAEA/MapServer/WmsServer?</Url>
+        </ServiceConnectionProperties>
+      </ServiceLayer>
+      <FeatureLayer Id="c5b81a59-9eef-4460-bbc3-e135e1edc509" Name="NUTS_RG_01M_2013" Visible="false" DrawIndex="10">
+        <PopupSizePosition>
+          <ApplySize>false</ApplySize>
+          <PopupSize>
+            <Width>340</Width>
+            <Height>160</Height>
+          </PopupSize>
+          <PopupPosition>Automatic</PopupPosition>
+        </PopupSizePosition>
+        <Behavior3D>Draped</Behavior3D>
+        <Transparency>50</Transparency>
+        <CacheName>FeatureLayer_NUTS_RG_01M_2013_0f26a46b-73e5-425e-9be1-8e965297ab57</CacheName>
+        <DataSourceProperties DataSourceType="File">
+          <DatasetName />
+          <Path>C:\workspace\GitHub\IASTracker\documents\NUTS_2013_SHP\data\NUTS_RG_01M_2013.shp</Path>
+        </DataSourceProperties>
+        <SimpleRenderer>
+          <Symbol BaseSymbolId="YellowSolidFill" SymbolType="Fill" />
+        </SimpleRenderer>
+        <PopupProperties>
+          <PopupType>PopupFields</PopupType>
+          <PopupFields>
+            <string>NUTS_ID</string>
+            <string>STAT_LEVL_</string>
+            <string>SHAPE_AREA</string>
+            <string>SHAPE_LEN</string>
+          </PopupFields>
+          <ShowTips>false</ShowTips>
+          <PrimaryField>NUTS_ID</PrimaryField>
+          <HyperlinkField />
+        </PopupProperties>
+      </FeatureLayer>
+      <FeatureLayer Id="cc2e7753-f6c2-4c28-95c7-c8769dc83f5a" Name="NUTS_LB_2013" Visible="false" DrawIndex="11">
+        <PopupSizePosition>
+          <ApplySize>false</ApplySize>
+          <PopupSize>
+            <Width>340</Width>
+            <Height>160</Height>
+          </PopupSize>
+          <PopupPosition>Automatic</PopupPosition>
+        </PopupSizePosition>
+        <Behavior3D>Draped</Behavior3D>
+        <CacheName>FeatureLayer_NUTS_LB_2013_df171cdc-733b-4955-b832-d2f2b943c8b7</CacheName>
+        <DataSourceProperties DataSourceType="File">
+          <DatasetName />
+          <Path>C:\workspace\GitHub\IASTracker\documents\NUTS_2013_SHP\data\NUTS_LB_2013.shp</Path>
+        </DataSourceProperties>
+        <SimpleRenderer>
+          <Symbol BaseSymbolId="OrangeStickpinMarker" SymbolType="Marker" />
+        </SimpleRenderer>
+        <PopupProperties>
+          <PopupType>PopupFields</PopupType>
+          <PopupFields>
+            <string>NUTS_ID</string>
+            <string>LAT</string>
+            <string>LON</string>
+            <string>STAT_LEVL_</string>
+          </PopupFields>
+          <ShowTips>false</ShowTips>
+          <PrimaryField>NUTS_ID</PrimaryField>
+          <HyperlinkField />
+        </PopupProperties>
+      </FeatureLayer>
+      <FeatureLayer Id="ce3f90a9-c1f0-4427-b4de-83a3444f3c16" Name="NUTS_BN_01M_2013" Visible="false" DrawIndex="12">
+        <PopupSizePosition>
+          <ApplySize>false</ApplySize>
+          <PopupSize>
+            <Width>340</Width>
+            <Height>160</Height>
+          </PopupSize>
+          <PopupPosition>Automatic</PopupPosition>
+        </PopupSizePosition>
+        <Behavior3D>Draped</Behavior3D>
+        <CacheName>FeatureLayer_NUTS_BN_01M_2013_e690f93d-8d18-4451-af2a-8cd8768ba78d</CacheName>
+        <DataSourceProperties DataSourceType="File">
+          <DatasetName />
+          <Path>C:\workspace\GitHub\IASTracker\documents\NUTS_2013_SHP\data\NUTS_BN_01M_2013.shp</Path>
+        </DataSourceProperties>
+        <SimpleRenderer>
+          <Symbol BaseSymbolId="YellowSolidLine" SymbolType="Line" />
+        </SimpleRenderer>
+        <PopupProperties>
+          <PopupType>PopupFields</PopupType>
+          <PopupFields>
+            <string>EU_FLAG</string>
+            <string>EFTA_FLAG</string>
+            <string>CC_FLAG</string>
+            <string>STAT_LEVL_</string>
+            <string>NUTS_BN_ID</string>
+            <string>COAS_FLAG</string>
+            <string>OTHR_CNTR_</string>
+            <string>SHAPE_LEN</string>
+          </PopupFields>
+          <ShowTips>false</ShowTips>
+          <PrimaryField>EU_FLAG</PrimaryField>
+          <HyperlinkField />
+        </PopupProperties>
+      </FeatureLayer>
+      <FeatureLayer Id="7c53c2ee-78bb-4e09-b4aa-3b449aa2bb35" Name="CNTR_RG_03M_2014" Visible="false" DrawIndex="13">
+        <PopupSizePosition>
+          <ApplySize>false</ApplySize>
+          <PopupSize>
+            <Width>340</Width>
+            <Height>160</Height>
+          </PopupSize>
+          <PopupPosition>Automatic</PopupPosition>
+        </PopupSizePosition>
+        <Behavior3D>Draped</Behavior3D>
+        <Transparency>50</Transparency>
+        <CacheName>FeatureLayer_CNTR_RG_03M_2014_2007638c-8921-4791-bb50-0da73ea7b767</CacheName>
+        <DataSourceProperties DataSourceType="File">
+          <DatasetName />
+          <Path>C:\workspace\GitHub\IASTracker\documents\CNTR_2014_03M_SH\CNTR_2014_03M_SH\CNTR_2014_03M_SH\Data\CNTR_RG_03M_2014.shp</Path>
+        </DataSourceProperties>
+        <SimpleRenderer>
+          <Symbol BaseSymbolId="YellowSolidFill" SymbolType="Fill" />
+        </SimpleRenderer>
+        <PopupProperties>
+          <PopupType>PopupFields</PopupType>
+          <PopupFields>
+            <string>CNTR_ID</string>
+            <string>SHAPE_AREA</string>
+            <string>SHAPE_LEN</string>
+          </PopupFields>
+          <ShowTips>false</ShowTips>
+          <PrimaryField>CNTR_ID</PrimaryField>
+          <HyperlinkField />
+        </PopupProperties>
+      </FeatureLayer>
+      <FeatureLayer Id="123ff782-891e-4636-99ae-53d659078777" Name="CNTR_LB_2014" Visible="false" DrawIndex="14">
+        <PopupSizePosition>
+          <ApplySize>false</ApplySize>
+          <PopupSize>
+            <Width>340</Width>
+            <Height>160</Height>
+          </PopupSize>
+          <PopupPosition>Automatic</PopupPosition>
+        </PopupSizePosition>
+        <Behavior3D>Draped</Behavior3D>
+        <CacheName>FeatureLayer_CNTR_LB_2014_af3aff20-a540-4e5d-8516-e32b703ece84</CacheName>
+        <DataSourceProperties DataSourceType="File">
+          <DatasetName />
+          <Path>C:\workspace\GitHub\IASTracker\documents\CNTR_2014_03M_SH\CNTR_2014_03M_SH\CNTR_2014_03M_SH\Data\CNTR_LB_2014.shp</Path>
+        </DataSourceProperties>
+        <SimpleRenderer>
+          <Symbol BaseSymbolId="OrangeStickpinMarker" SymbolType="Marker" />
+        </SimpleRenderer>
+        <PopupProperties>
+          <PopupType>PopupFields</PopupType>
+          <PopupFields>
+            <string>CNTR_ID</string>
+            <string>LAT</string>
+            <string>LON</string>
+          </PopupFields>
+          <ShowTips>false</ShowTips>
+          <PrimaryField>CNTR_ID</PrimaryField>
+          <HyperlinkField />
+        </PopupProperties>
+      </FeatureLayer>
+      <FeatureLayer Id="d9a8e8f8-df61-4ab6-ae59-d06c5420c9f8" Name="CNTR_CAPT_PT_2014" Visible="false" DrawIndex="15">
+        <PopupSizePosition>
+          <ApplySize>false</ApplySize>
+          <PopupSize>
+            <Width>340</Width>
+            <Height>160</Height>
+          </PopupSize>
+          <PopupPosition>Automatic</PopupPosition>
+        </PopupSizePosition>
+        <Behavior3D>Draped</Behavior3D>
+        <CacheName>FeatureLayer_CNTR_CAPT_PT_2014_032fe53d-2cc4-4eab-bd09-023fc436d1d4</CacheName>
+        <DataSourceProperties DataSourceType="File">
+          <DatasetName />
+          <Path>C:\workspace\GitHub\IASTracker\documents\CNTR_2014_03M_SH\CNTR_2014_03M_SH\CNTR_2014_03M_SH\Data\CNTR_CAPT_PT_2014.shp</Path>
+        </DataSourceProperties>
+        <SimpleRenderer>
+          <Symbol BaseSymbolId="OrangeStickpinMarker" SymbolType="Marker" />
+        </SimpleRenderer>
+        <PopupProperties>
+          <PopupType>PopupFields</PopupType>
+          <PopupFields>
+            <string>CNTR_ID</string>
+            <string>CAPT_NAME</string>
+            <string>NAME_LATN</string>
+            <string>NAME_ASCI</string>
+            <string>NAME_HTML</string>
+            <string>NAME_ENGL</string>
+            <string>LAT</string>
+            <string>LON</string>
+          </PopupFields>
+          <ShowTips>false</ShowTips>
+          <PrimaryField>CAPT_NAME</PrimaryField>
+          <HyperlinkField />
+        </PopupProperties>
+      </FeatureLayer>
+      <FeatureLayer Id="a1a625a3-0cab-4f67-af8b-eab8a6655c87" Name="CNTR_BN_03M_2014" Visible="false" DrawIndex="16">
+        <PopupSizePosition>
+          <ApplySize>false</ApplySize>
+          <PopupSize>
+            <Width>340</Width>
+            <Height>160</Height>
+          </PopupSize>
+          <PopupPosition>Automatic</PopupPosition>
+        </PopupSizePosition>
+        <Behavior3D>Draped</Behavior3D>
+        <CacheName>FeatureLayer_CNTR_BN_03M_2014_ed4d81c4-f58e-4bed-aab9-ef4b2b17d2b1</CacheName>
+        <DataSourceProperties DataSourceType="File">
+          <DatasetName />
+          <Path>C:\workspace\GitHub\IASTracker\documents\CNTR_2014_03M_SH\CNTR_2014_03M_SH\CNTR_2014_03M_SH\Data\CNTR_BN_03M_2014.shp</Path>
+        </DataSourceProperties>
+        <SimpleRenderer>
+          <Symbol BaseSymbolId="YellowSolidLine" SymbolType="Line" />
+        </SimpleRenderer>
+        <PopupProperties>
+          <PopupType>PopupFields</PopupType>
+          <PopupFields>
+            <string>CNTR_BN_ID</string>
+            <string>EU_FLAG</string>
+            <string>EFTA_FLAG</string>
+            <string>CC_FLAG</string>
+            <string>COAS_FLAG</string>
+            <string>OTHR_CNTR_</string>
+            <string>DATA_SRC_C</string>
+            <string>SHAPE_LEN</string>
+          </PopupFields>
+          <ShowTips>false</ShowTips>
+          <PrimaryField>CNTR_BN_ID</PrimaryField>
+          <HyperlinkField />
+        </PopupProperties>
+      </FeatureLayer>
+    </ChildItems>
+    <Viewpoint>
+      <Envelope CoordinateSystem="102100" XMin="87602.9830321309" YMin="5064558.67201129" XMax="340398.595504324" YMax="5224230.81239787" />
+    </Viewpoint>
+    <Basemap Id="252dd89a-7fd4-42cb-8dc4-e92462d975b4" Name="Basemap (Imagery)">
+      <ChildItems>
+        <ServiceLayer Id="bb5b2524-4992-4d4e-b7f6-2f66b4f4ec74" Name="Imagery" DrawIndex="0">
+          <PopupSizePosition>
+            <ApplySize>false</ApplySize>
+            <PopupSize>
+              <Width>340</Width>
+              <Height>160</Height>
+            </PopupSize>
+            <PopupPosition>Automatic</PopupPosition>
+          </PopupSizePosition>
+          <Description>This map presents low-resolution imagery for the world and high-resolution imagery for the United States and other areas around the world. The map includes NASA Blue Marble: Next Generation 500m resolution imagery at small scales (above 1:1,000,000), i-cubed 15m eSAT imagery at medium-to-large scales (down to 1:70,000) for the world, and USGS 15m Landsat imagery for Antarctica.  The map features i-cubed Nationwide Prime 1m or better resolution imagery for the contiguous United States, Getmapping 1m resolution imagery for Great Britain, AeroGRID 1m to 2m resolution imagery for several countries in Europe, IGN 1m resolution imagery for Spain, IGP 1m resolution imagery for Portugal, and GeoEye IKONOS 1m resolution imagery for Hawaii, parts of Alaska, and several hundred metropolitan areas around the world.  Additionally, imagery contributed by the GIS User Community has been added in Alaska, New York and Virginia.
+
+i-cubed Nationwide Prime is a seamless, color  mosaic of various commercial and government imagery sources, including Aerials Express 0.3 to 0.6m resolution imagery for metropolitan areas and the best  available United States Department of Agriculture (USDA) National Agriculture Imagery Program (NAIP) imagery and enhanced versions of United States Geological Survey (USGS) Digital Ortho Quarter Quad (DOQQ) imagery for other areas. 
+
+For more information on this map, visit us online at http://goto.arcgisonline.com/maps/World_Imagery</Description>
+          <Attribution>Source: Esri, DigitalGlobe, GeoEye, Earthstar Geographics, CNES/Airbus DS, USDA, USGS, AEX, Getmapping, Aerogrid, IGN, IGP, swisstopo, and the GIS User Community</Attribution>
+          <Behavior3D>Draped</Behavior3D>
+          <CacheName>http___services_arcgisonline_com_arcgis_services_World_Imagery_-8884391253857</CacheName>
+          <ChildItems>
+            <ServiceChildLayer Id="db2944d4-0493-4b39-94cf-dd3ce27aa602" Name="World Imagery">
+              <ChildItems />
+            </ServiceChildLayer>
+            <ServiceChildLayer Id="eb8658ef-bc8e-4aed-a192-96edb6531ec7" Name="Low Resolution 15m Imagery">
+              <ChildItems />
+            </ServiceChildLayer>
+            <ServiceChildLayer Id="2a5394b0-a836-457d-bf2d-d63b4f607858" Name="High Resolution 60cm Imagery">
+              <ChildItems />
+            </ServiceChildLayer>
+            <ServiceChildLayer Id="db6f2cde-f0ee-47ac-a7cc-e88e4b99b9cf" Name="High Resolution 30cm Imagery">
+              <ChildItems />
+            </ServiceChildLayer>
+            <ServiceChildLayer Id="f16a8d8f-c755-4994-9040-f598188f19a1" Name="Citations">
+              <ChildItems />
+            </ServiceChildLayer>
+          </ChildItems>
+          <IsBaseMapReferenceLayer>false</IsBaseMapReferenceLayer>
+          <ServiceConnectionProperties ServiceType="GlobeServer">
+            <Url>http://services.arcgisonline.com/arcgis/services</Url>
+            <SubServiceName>Imagery</SubServiceName>
+            <ServiceName>I3_Imagery_Prime_World</ServiceName>
+          </ServiceConnectionProperties>
+          <PopupProperties>
+            <PopupType>PopupFields</PopupType>
+          </PopupProperties>
+        </ServiceLayer>
+        <ServiceLayer Id="975576b3-4d95-4755-a108-25747ec9f908" Name="Elevation (30m)" DrawIndex="2">
+          <PopupSizePosition>
+            <ApplySize>false</ApplySize>
+            <PopupSize>
+              <Width>340</Width>
+              <Height>160</Height>
+            </PopupSize>
+            <PopupPosition>Automatic</PopupPosition>
+          </PopupSizePosition>
+          <Attribution>Source: USGS</Attribution>
+          <Behavior3D>ElevationSource</Behavior3D>
+          <ChildItems />
+          <IsBaseMapReferenceLayer>false</IsBaseMapReferenceLayer>
+          <ServiceConnectionProperties ServiceType="GlobeServer">
+            <Url>http://services.arcgisonline.com/arcgis/services</Url>
+            <SubServiceName>Elevation (30m)</SubServiceName>
+            <ServiceName>Elevation/USGS_Elevation_US</ServiceName>
+          </ServiceConnectionProperties>
+        </ServiceLayer>
+        <ServiceLayer Id="f3d1178a-0922-4ca0-9284-181f91d5b6c9" Name="Elevation (90m/1km)" DrawIndex="1">
+          <PopupSizePosition>
+            <ApplySize>false</ApplySize>
+            <PopupSize>
+              <Width>340</Width>
+              <Height>160</Height>
+            </PopupSize>
+            <PopupPosition>Automatic</PopupPosition>
+          </PopupSizePosition>
+          <Attribution>Source: NASA, NGA, USGS</Attribution>
+          <Behavior3D>ElevationSource</Behavior3D>
+          <ChildItems />
+          <IsBaseMapReferenceLayer>false</IsBaseMapReferenceLayer>
+          <ServiceConnectionProperties ServiceType="GlobeServer">
+            <Url>http://services.arcgisonline.com/arcgis/services</Url>
+            <SubServiceName>Elevation (90m/1km)</SubServiceName>
+            <ServiceName>Elevation/ESRI_Elevation_World</ServiceName>
+          </ServiceConnectionProperties>
+        </ServiceLayer>
+      </ChildItems>
+    </Basemap>
+    <GeographicTransformations3D>
+      <GeographicTransformation Name="NAD_1927_To_NAD_1983_NADCON" ToCoordinateSystemID="4269" FromCoordinateSystemID="4267" />
+    </GeographicTransformations3D>
+    <GeographicTransformations2D>
+      <GeographicTransformation Name="NAD_1927_To_NAD_1983_NADCON" ToCoordinateSystemID="4269" FromCoordinateSystemID="4267" />
+    </GeographicTransformations2D>
+    <CoordinateSystem2D ID="102100" />
+  </Map>
+  <Properties DisplayMode="Display2D">
+    <StoreAuthentication>true</StoreAuthentication>
+    <ScreenOverlay />
+  </Properties>
+</NmfDocument>
