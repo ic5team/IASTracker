@@ -9,6 +9,8 @@ class WMSMapProvider extends Eloquent {
 	 */
 	protected $table = 'WMSMapProvider';
 
+	protected $primaryKey = 'mapProviderId';
+
 	/**
 	 * The attributes excluded from the model's JSON form.
 	 *

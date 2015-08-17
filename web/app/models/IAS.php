@@ -18,7 +18,7 @@ class IAS extends Eloquent {
 	 *
 	 * @var array
 	 */
-	protected $hidden = array();
+	protected $hidden = array('creatorId', 'created_at', 'updated_at');
 
 }
 
