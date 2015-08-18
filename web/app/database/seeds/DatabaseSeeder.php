@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder {
 		$this->call('CRSTableSeeder');
 		$this->call('WMSMapProviderTableSeeder');
 		$this->call('ValidatorsTableSeeder');
+		$this->call('ConfigurationTableSeeder');
+		$this->call('ConfigurationTextsTableSeeder');
 
 	}
 
@@ -31,7 +33,7 @@ class MapProviderTableSeeder extends Seeder {
 		DB::table('MapProvider')->insert(array(
 			'id'  => 1,
 			'url' => 'http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png',
-			'attribution' => '&copy; <a href="http://osm.org/copyright" title="OpenStreetMap" target="_blank">OpenStreetMap</a> contributors | Tiles Courtesy of <a href="http://www.mapquest.com/" title="MapQuest" target="_blank">MapQuest</a> <img src="http://developer.mapquest.com/content/osm/mq_logo.png" width="16" height="16">',
+			'attribution' => '&copy; <a href=\"http://osm.org/copyright\" title=\"OpenStreetMap\" target=\"_blank\">OpenStreetMap</a> contributors | Tiles Courtesy of <a href=\"http://www.mapquest.com/\" title=\"MapQuest\" target=\"_blank\">MapQuest</a> <img src=\"http://developer.mapquest.com/content/osm/mq_logo.png\" width=\"16\" height=\"16\">',
 			'zIndex' => 1,
 			'SWBoundLat' => null,
 			'SWBoundLon' => null,
@@ -41,6 +43,7 @@ class MapProviderTableSeeder extends Seeder {
 			'maxZoom' => null,
 			'creatorId' => 1,
 			'subdomains' => '1234',
+			'isOverlay' => false,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime
 		));
@@ -58,6 +61,7 @@ class MapProviderTableSeeder extends Seeder {
 			'maxZoom' => 18,
 			'creatorId' => 1,
 			'subdomains' => null,
+			'isOverlay' => true,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime
 		));
@@ -76,7 +80,7 @@ class WMSMapProviderTableSeeder extends Seeder {
 			'format' => 'image/png',
 			'transparent' => true,
 			'continuousWorld' => true,
-			'CRSId' => 1,
+			'crsId' => 1,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime
 		));
@@ -95,8 +99,8 @@ class CRSTableSeeder extends Seeder {
 			'proj4def' => '+proj=utm +zone=31 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs',
 			'origin' => null,
 			'transformation' => null,
-			'scales' => '1100;550;275;100;50;25;10;5;2;1;0.5;0.25',
-			'resolutions' => null,
+			'scales' => null,
+			'resolutions' => '[1100,550,275,100,50,25,10,5,2,1,0.5,0.25]',
 			'bounds' => null,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime
@@ -153,18 +157,18 @@ class MapProviderTextsTableSeeder extends Seeder {
 			'mapProviderId' => 1, 
 			'languageId' => 1,
 			'text' => 'Mapa d\'OSM',
-			'name' => 'OSM'
+			'name' => 'OSM',
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime
 		));
 
 		DB::table('MapProviderTexts')->insert(array(
-			'id'  => 1,
+			'id'  => 2,
 			'mapProviderId' => 2, 
 			'languageId' => 1,
 			'text' => 'Mapa topogràfic de l\'ICC',
-			'name' => 'Topogràfic ICC'
+			'name' => 'Topogràfic ICC',
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime
@@ -208,6 +212,45 @@ class ValidatorsTableSeeder extends Seeder {
 		DB::table('Validators')->insert(array(
 			'userId'  => 1,
 			'organization' => 'Alter Sport',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+	}
+}
+
+class ConfigurationTableSeeder extends Seeder {
+ 
+	public function run()
+	{
+	
+		DB::table('Configuration')->insert(array(
+			'id'  => 1,
+			'logoURL' => 'iasLogo.PNG',
+			'logoAlt' => 'Logo IASTracker',
+			'webName' => 'IASTracker',
+			'centerLat' => '41.82045',
+			'centerLon' => '1.54907',
+			'defaultLanguageId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+	}
+}
+
+class ConfigurationTextsTableSeeder extends Seeder {
+ 
+	public function run()
+	{
+	
+		DB::table('ConfigurationTexts')->insert(array(
+			'id'  => 1,
+			'privacyStatement' => 'Text de privacitat',
+			'acknowledgment' => 'Text de credits',
+			'description' => 'Text de sobre nosaltres',
+			'languageId' => 1,
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime

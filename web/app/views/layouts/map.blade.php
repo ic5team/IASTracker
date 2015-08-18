@@ -13,8 +13,9 @@
 	{{ HTML::script('js/proj4leaflet.js'); }}
 	{{ HTML::script('js/iastrackermap.js'); }}
 	<script>
-		var mapDescriptors = JSON.parse( {{$data->mapProviders}} );
-		var crsDescriptors = JSON.parse( {{$data->crsDescriptors}} );
+		var mapDescriptors = {{$data->mapProviders}};
+		var crsDescriptors = JSON.parse( '{{$data->crsDescriptors}}' );
+		var mapCenter = JSON.parse('{{$data->center}}');
 		var mapHandler = new MapHandler("map", "#layersControl", "#controls", mapDescriptors, crsDescriptors);
 	</script>
 @stop

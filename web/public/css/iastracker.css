@@ -4,13 +4,14 @@
 
 #navbar-no-loguejat {
 	margin-top: 15px;
+	width: 80%;
 }
 
 #navbar-no-loguejat > button {
 	width: 45%;
 }
 
-.languages-bar {
+#languages-bar {
 	float: right;
 }
 
@@ -18,10 +19,8 @@
 	margin-top: 15px;
 }
 
-#divLogoBarra {
-	width: 100%; 
-	text-align:center; 
-	margin-top: 15px;
+#logo-and-user-bar {
+	width: 100%;
 }
 
 .mapControls {
@@ -40,3 +39,36 @@
 .leaflet-top .leaflet-control {
 	margin-top: 70px;
 }
+
+.wrapper{
+	width: 100%;
+	margin: 0 auto;
+}
+.wrapmiddle{
+	float: left;
+	width: 100%;
+}
+.middle{
+	margin-right:500px;
+	margin-left:362px;
+}
+.left{
+	float: left;
+	width: 362px;
+	margin-left: -100%;
+}
+.right{
+	float: left;
+	width: 500px;
+	margin-left: -500px;
+}
+
+.map {
+	height:100vh;
+}
+
+body {
+   padding: 0px;
+   margin: 0px;
+}
+

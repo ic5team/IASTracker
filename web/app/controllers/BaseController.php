@@ -54,7 +54,7 @@ class BaseController extends Controller {
 	{
 
 		$data = new stdClass();
-		$configData = Configuration::find(0);
+		$configData = Configuration::find(1);
 
 		$data->logo = $configData->logoURL;
 		$data->logoAlt = $configData->logoAlt;

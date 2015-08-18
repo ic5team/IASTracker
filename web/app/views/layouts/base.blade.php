@@ -38,7 +38,6 @@
 	@show
 
 	@yield('main_wrapper')
-	@yield('footer_includes')
 
 	<script>
 		var urlPublic = "<?php echo Config::get('app.urlPublic'); ?>";

@@ -18,14 +18,14 @@ class Language extends Eloquent {
 	protected $hidden = array();
 
 	public function scopeLocale($query, $locale)
-    {
+	{
 
-        return $query->where('locale', '=', $locale);
+		return $query->where('locale', '=', $locale);
         
-    }
+	}
 
-    public function scopeIdAscending($query)
-    {
+	public function scopeIdAscending($query)
+	{
 
 		return $query->orderBy('id','ASC');
 

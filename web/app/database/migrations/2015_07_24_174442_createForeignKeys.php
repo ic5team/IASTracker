@@ -23,7 +23,7 @@ class CreateForeignKeys extends Migration {
 		{
 			$table->foreign('mapProviderId')->references('id')->on('MapProvider')
 				->onDelete('cascade');
-			$table->foreign('CRSId')->references('id')->on('CRS')
+			$table->foreign('crsId')->references('id')->on('CRS')
 				->onDelete('cascade');
 		});
 

@@ -26,6 +26,7 @@ class Inicial extends Migration {
 			$table->decimal('NEBoundLon','9','6')->nullable();
 			$table->integer('minZoom')->unsigned()->nullable();
 			$table->integer('maxZoom')->unsigned()->nullable();
+			$table->boolean('isOverlay');
 			$table->integer('creatorId')->unsigned()->nullable();
 			$table->timestamps();
 		});
@@ -37,7 +38,7 @@ class Inicial extends Migration {
 			$table->string('format', 255);
 			$table->boolean('transparent');
 			$table->boolean('continuousWorld');
-			$table->integer('CRSId')->unsigned()->nullable();
+			$table->integer('crsId')->unsigned()->nullable();
 			$table->timestamps();
 			$table->unique(array('mapProviderId'));
 		});
@@ -83,6 +84,7 @@ class Inicial extends Migration {
 			$table->increments('id');
 			$table->text('privacyStatement');
 			$table->text('acknowledgment');
+			$table->text('description');
 			$table->integer('languageId')->unsigned()->nullable();
 			$table->integer('creatorId')->unsigned()->nullable();
 			$table->timestamps();
@@ -94,7 +96,9 @@ class Inicial extends Migration {
 			$table->string('logoURL', 255);
 			$table->string('logoAlt', 255);
 			$table->string('webName', 255);
-			$table->text('description');
+			$table->decimal('centerLat','9','6');
+			$table->decimal('centerLon','9','6');
+			$table->integer('defaultLanguageId')->unsigned();
 			$table->timestamps();
 		});
 
