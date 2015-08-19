@@ -1,5 +1,7 @@
 .navbar-default {
 	background-color: #FFF;
+	margin-bottom: 0px;
+	height: 70px;
 }
 
 #navbar-no-loguejat {
@@ -64,7 +66,7 @@
 }
 
 .map {
-	height:100vh;
+	height:calc(100vh - 70px);;
 }
 
 body {

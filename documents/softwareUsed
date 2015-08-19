@@ -12,3 +12,5 @@ Software:
 	D3 BSD
 	Leaflet shapefile MIT
 	Catiline MIT
+	Moment.js MIT
+	Bootstrap (+collapse, +transition) MIT

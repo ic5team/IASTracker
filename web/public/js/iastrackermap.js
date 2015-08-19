@@ -16,8 +16,7 @@ function MapHandler(mapId, layersControlId, controlsId, mapDescriptors, crsDescr
 
 	this.map = L.map(mapId, {
 		layers: this.layers[0].leafletData,
-		continuousWorld: true,
-		worldCopyJump: false,
+		worldCopyJump: true,
 		center: mapCenter,
 		zoom: 2,
 	});
@@ -26,7 +25,7 @@ function MapHandler(mapId, layersControlId, controlsId, mapDescriptors, crsDescr
 		{collapsed: false, autoZIndex: false});
 	this.controls.addTo(this.map);
 	this.controls._container.remove();
-	$(layersControlId).html(this.controls.onAdd(this.map));
+	$('#'+layersControlId).html(this.controls.onAdd(this.map));
 	this.map.on('moveend', function(e) {
 		self.computeLayers(e)
 	});
@@ -36,7 +35,9 @@ function MapHandler(mapId, layersControlId, controlsId, mapDescriptors, crsDescr
 
 	this.computeLayers();
 
-	$(controlsId).draggable({
+	L.DomEvent.disableClickPropagation(L.DomUtil.get(controlsId));
+
+	$('#'+controlsId).draggable({
 		start: function() {
 			self.map.dragging.disable();
 		},
