@@ -27,7 +27,7 @@ class IndexController extends BaseController {
 
 		//Get the map providers
 		$mapProvidersArray = array();
-		$mapProviders = MapProvider::all();
+		$mapProviders = MapProvider::idAscending()->get();
 		for($i=0; $i<count($mapProviders); ++$i)
 		{
 

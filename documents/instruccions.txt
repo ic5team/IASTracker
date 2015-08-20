@@ -7,3 +7,4 @@ Escapar el camp attribution de MapProvider
 Escapar el camp name de MapProviderTexts
 Escapar el camp text de MapProviderTexts
 El camp resolutions de CRS ha de ser un string en format JSON [,,,,]
+Les funcions en AJAX han de tornar l'html amb l'error si s'escau

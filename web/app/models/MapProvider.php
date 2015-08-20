@@ -16,6 +16,13 @@ class MapProvider extends Eloquent {
 	 */
 	protected $hidden = array();
 
+	public function scopeIdAscending($query)
+	{
+
+		return $query->orderBy('id','ASC');
+
+	}
+	
 }
 
 ?>

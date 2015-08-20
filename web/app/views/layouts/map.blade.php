@@ -18,16 +18,14 @@
 	{{ HTML::script('js/collapse.js'); }}
 	{{ HTML::script('js/bootstrap-datetimepicker.min.js'); }}
 	{{ HTML::script('js/iastrackermap.js'); }}
+	{{ HTML::script('js/iastracker.api.js'); }}
 	<script>
 		var mapDescriptors = {{$data->mapProviders}};
 		var crsDescriptors = JSON.parse( '{{$data->crsDescriptors}}' );
 		var mapCenter = JSON.parse('{{$data->center}}');
-		var mapHandler = new MapHandler("map", "layersControl", "controls", mapDescriptors, crsDescriptors);
-		$('.datetimepicker').datetimepicker({
-			locale: 'ca',
-			format: 'DD/MM/YYYY'
-		});
+		var api = new IASTracker("<?php echo Config::get('app.urlPublic'); ?>");
 	</script>
+	{{ HTML::script('js/pages/index.js'); }}
 @stop
 
 @section('main_wrapper')
@@ -97,21 +95,9 @@
 						</div>
 					</div>
 					<div role="tabpanel" class="tab-pane" id="ias">
-						<div class="row">
-							<div class="form-group col-md-12">
-								<span><b>{{Lang::get('ui.taxonomy')}}</b> <br /></span>
-								<label for="input-grup">{{Lang::get('ui.group')}}</label>
-								<select name="taxonomy" id="input-grup" class="form-control">
-									<option value="0" >{{Lang::get('ui.all')}}</option>
-								</select>
-							</div>
-						</div>
-						<div class="row" style="text-align: center;">
-							<div class="col-md-12">
-								<div class="btn-group" role="group" aria-label="...">
-									<button type="button" class="btn btn-default">{{Lang::get('ui.commonName')}}</button>
-									<button type="button" class="btn btn-default">{{Lang::get('ui.scientificName')}}</button>
-								</div>
+						<div class="row" style="text-align: center; margin-top: 20px;" id="iasContents">
+							<div class="col-md-12" >
+								{{ HTML::image('img/loader.gif', 'Loading...'); }}
 							</div>
 						</div>
 					</div>

@@ -37,14 +37,7 @@ function MapHandler(mapId, layersControlId, controlsId, mapDescriptors, crsDescr
 
 	L.DomEvent.disableClickPropagation(L.DomUtil.get(controlsId));
 
-	$('#'+controlsId).draggable({
-		start: function() {
-			self.map.dragging.disable();
-		},
-		stop: function() {
-			self.map.dragging.enable();
-		}
-	});
+	$('#'+controlsId).draggable();
 
 }
 
