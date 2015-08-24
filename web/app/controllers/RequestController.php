@@ -1,6 +1,6 @@
 <?php
 
-class RequestController extends BaseController {
+abstract class RequestController extends BaseController {
 
 	/**
 	* Returns a list of all the elements
@@ -8,7 +8,7 @@ class RequestController extends BaseController {
 	* @param num The number of elements on the list
 	* @return A JSON Response
 	*/
-	abstract protected function list($first, $num);
+	abstract protected function elements($first, $num);
 
 	/**
 	* Returns a view with list of all the elements
@@ -41,12 +41,6 @@ class RequestController extends BaseController {
 	* @return Response
 	*/
 	abstract protected function showResourceView($id);
-
-	/**
-	* Returns a view where the element can be edited
-	* @return Response
-	*/
-	abstract protected function showEditForm();
 
 	/**
 	* Updates the data
@@ -102,7 +96,7 @@ class RequestController extends BaseController {
 		if(Request::ajax())
 		{
 
-			return $this->list($first, $num);
+			return $this->elements($first, $num);
 
 		}
 		else
@@ -160,7 +154,7 @@ class RequestController extends BaseController {
 			{
 
 				return Response::json(array('ok' => 0, 'msg' => Lang::get('errors.errorCreatingElement'), 
-					'internalMsg' => $e->getMessage()))
+					'internalMsg' => $e->getMessage()));
 
 			}
 
@@ -237,7 +231,7 @@ class RequestController extends BaseController {
 			{
 
 				return Response::json(array('ok' => 0, 'msg' => Lang::get('errors.errorUpdatingElement'), 
-					'internalMsg' => $e->getMessage()))
+					'internalMsg' => $e->getMessage()));
 
 			}
 
@@ -274,7 +268,7 @@ class RequestController extends BaseController {
 			{
 
 				return Response::json(array('ok' => 0, 'msg' => Lang::get('errors.errorDeletingElement'), 
-					'internalMsg' => $e->getMessage()))
+					'internalMsg' => $e->getMessage()));
 
 			}
 

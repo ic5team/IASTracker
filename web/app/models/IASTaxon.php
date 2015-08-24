@@ -7,7 +7,7 @@ class IASTaxon extends Eloquent {
 	 *
 	 * @var string
 	 */
-	protected $table = 'IASTaxon';
+	protected $table = 'IASTaxons';
 
 	/**
 	 * The attributes excluded from the model's JSON form.
@@ -15,6 +15,13 @@ class IASTaxon extends Eloquent {
 	 * @var array
 	 */
 	protected $hidden = array();
+
+	public function scopeWithLanguageId($query, $languageId)
+	{
+
+		return $query->where('languageId', '=', $languageId);
+        
+	}
 
 }
 

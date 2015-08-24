@@ -21,7 +21,7 @@ class MapProviderText extends Eloquent {
 
 		return $query->where('mapProviderId', '=', $mapId)
 			->where('languageId', '=', $languageId);
-        
+
 	}
 
 }

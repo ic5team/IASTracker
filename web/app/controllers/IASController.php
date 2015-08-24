@@ -8,7 +8,7 @@ class IASController extends RequestController {
 	* @param num The number of elements on the list
 	* @return A JSON Response
 	*/
-	protected function list($first, $num)
+	protected function elements($first, $num)
 	{
 
 		$elements = getElements($first, $num);
@@ -89,11 +89,11 @@ class IASController extends RequestController {
 	protected function updateResource($id)
 	{
 
-		$element = getElemens($id);
+		$element = getElement($id);
 
 		//Update the data
 
-		$element->touch()
+		$element->touch();
 		$element->save();
 
 	}
@@ -132,6 +132,92 @@ class IASController extends RequestController {
 	{
 
 		return IAS::find($id);
+
+	}
+
+	protected function getFilter()
+	{
+
+		if(Request::ajax())
+		{
+
+			$data = array();
+			$taxonomies = array();
+			$taxonomies[-1] = Lang::get('ui.taxonomiesAll');
+
+			$languageId = Language::locale(App::getLocale())->first()->id;
+			$configuration = Configuration::find(1);
+			$defaultLanguageId = $configuration->defaultLanguageId;
+
+			$ias = IAS::all();
+			for($i=0; $i<count($ias); ++$i)
+			{
+
+				$current = $ias[$i];
+				$obj = new stdClass();
+
+				$obj = $current;
+				if(null != $current->portraitImageId)
+				{
+
+					$img = IASImage::find($current->portraitImageId);
+					$obj->image = $img->URL;
+					$obj->imageAttribution = $img->attribution;
+					$imgText = IASImageText::withIASAndLanguageId(
+						$current->id, $languageId)->first();
+					if(null == $imgText)
+					{
+
+						$imgText = IASImageText::withIASAndLanguageId(
+							$current->id, $defaultLanguageId)->first();
+
+					}
+					$obj->imageText = $imgText->text;
+
+					$iasDesc = IASDescription::withIASAndLanguageId(
+						$current->id, $languageId)->first();
+					if(null == $iasDesc)
+					{
+
+						$iasDesc = IASDescription::withIASAndLanguageId(
+							$current->id, $defaultLanguageId)->first();
+
+					}
+					$obj->name = $iasDesc->name;
+					$obj->desc = $iasDesc->shortDescription;
+					
+
+					unset($img);
+					unset($imgText);
+					unset($iasDesc);
+
+				}
+
+				$data[] = $obj;
+
+			}
+
+			unset($ias);
+
+			$taxons = IASTaxon::withLanguageId($languageId)->get();
+			if(null == $taxonomies)
+				$taxons = IASTaxon::withLanguageId($defaultLanguageId)->get();
+			for($i=0; $i<count($taxons); ++$i)
+			{
+
+				$taxonomies[$taxons->id] = $taxons->name;
+
+			}
+			unset($iasTaxons);
+
+			$output = new stdClass();
+			$output->html = View::make("public/filter", array('data' => $data, 
+				'taxonomies' => $taxonomies))->render();
+			$output->data = $data;
+
+			return json_encode($output);
+
+		}
 
 	}
 

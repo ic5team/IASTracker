@@ -229,7 +229,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="454" y="410" name="IAS">
+<table x="436" y="358" name="IAS">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -240,6 +240,9 @@
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="IASTaxons" row="id" />
 </row>
+<row name="protraitImageId" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
 <row name="creatorId" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>

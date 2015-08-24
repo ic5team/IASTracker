@@ -5,3 +5,4 @@ $('.datetimepicker').datetimepicker({
 	format: 'DD/MM/YYYY'
 });
 api.getIASMapFilter("#iasContents", function(data) { iasList = data; });
+$(".IASCheck").bootstrapSwitch();

@@ -16,6 +16,14 @@ class IASDescription extends Eloquent {
 	 */
 	protected $hidden = array();
 
+	public function scopeWithIASAndLanguageId($query, $IASId, $languageId)
+	{
+
+		return $query->where('IASId', '=', $IASId)
+			->where('languageId', '=', $languageId);
+        
+	}
+
 }
 
 ?>

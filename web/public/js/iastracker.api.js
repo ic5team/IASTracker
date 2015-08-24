@@ -48,7 +48,7 @@ IASTracker.prototype.AJAXRequest = function(url, id, doneFunction, method, value
 		})
 		.done(function(data, textStatus, jqXHR) {
 
-			data = data;
+			data = JSON.parse(data);
 			if(!data.hasOwnProperty('error'))
 			{
 

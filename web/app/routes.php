@@ -21,3 +21,11 @@
 	Route::resource('user', 'UserController');
 
 	Route::get('/', array('as' => 'inici', 'uses' => 'IndexController@showIndex'));
+
+/*
+|--------------------------------------------------------------------------
+| AJAX
+|--------------------------------------------------------------------------
+*/
+
+	Route::get('/v1/IASFilter', array('uses' => 'IASController@getFilter'));
