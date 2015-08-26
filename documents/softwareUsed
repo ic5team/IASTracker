@@ -1,6 +1,5 @@
 Software:
-	Leaflet.js
-	https://github.com/shramov/leaflet-plugins MIT
+	Leaflet.js + plugins MIT
 	MapQuest OSM
 	JQuery MIT
 	MapIcons MIT
@@ -10,7 +9,7 @@ Software:
 	Animate.css MIT
 	Cal-heatmap MIT
 	D3 BSD
-	Leaflet shapefile MIT
-	Catiline MIT
 	Moment.js MIT
 	Bootstrap (+collapse, +transition) MIT
+	Leaflet shapefile https://github.com/calvinmetcalf/leaflet.shapefile MIT
+	Catiline https://github.com/calvinmetcalf/catiline MIT
