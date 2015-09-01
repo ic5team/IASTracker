@@ -63,9 +63,22 @@ class IASController extends RequestController {
 	protected function resource($id)
 	{
 
+		$languageId = Language::locale(App::getLocale())->first()->id;
+		$configuration = Configuration::find(1);
+		$defaultLanguageId = $configuration->defaultLanguageId;
+
+		$data = new stdClass();
 		$element = $this->getElement($id);
+		$descriptionData = $element->getDescriptionData($languageId, $defaultLanguageId);
+		$data = (object) array_merge((array) $data, (array) $descriptionData);
+		$data->latinName = $element->latinName;
+		$data->taxons = $element->getTaxons();
+		$imageData = $element->getImageData($languageId, $defaultLanguageId);
+		$data = (object) array_merge((array) $data, (array) $imageData);
+		$data->relatedDBs = $element->getRelatedDBs();
+
 		if(NULL != $element)
-			return Response::json($element);
+			return View::make('public/IAS/element', array('data' => $data));
 
 	}
 
@@ -156,42 +169,13 @@ class IASController extends RequestController {
 				$current = $ias[$i];
 				$obj = new stdClass();
 
-				$obj = $current;
-				if(null != $current->portraitImageId)
-				{
+				$imageData = $current->getImageData($languageId, $defaultLanguageId);
+				$obj = (object) array_merge((array) $obj, (array) $imageData);
+				$descData = $current->getDescriptionData($languageId, $defaultLanguageId);
+				$obj = (object) array_merge((array) $obj, (array) $descData);
 
-					$img = IASImage::find($current->portraitImageId);
-					$obj->image = $img->URL;
-					$obj->imageAttribution = $img->attribution;
-					$imgText = IASImageText::withIASAndLanguageId(
-						$current->id, $languageId)->first();
-					if(null == $imgText)
-					{
-
-						$imgText = IASImageText::withIASAndLanguageId(
-							$current->id, $defaultLanguageId)->first();
-
-					}
-					$obj->imageText = $imgText->text;
-
-					$iasDesc = IASDescription::withIASAndLanguageId(
-						$current->id, $languageId)->first();
-					if(null == $iasDesc)
-					{
-
-						$iasDesc = IASDescription::withIASAndLanguageId(
-							$current->id, $defaultLanguageId)->first();
-
-					}
-					$obj->name = $iasDesc->name;
-					$obj->desc = $iasDesc->shortDescription;
-					
-
-					unset($img);
-					unset($imgText);
-					unset($iasDesc);
-
-				}
+				unset($imageData);
+				unset($descData);
 
 				$data[] = $obj;
 

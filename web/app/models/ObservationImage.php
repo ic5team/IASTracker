@@ -16,6 +16,14 @@ class ObservationImage extends Eloquent {
 	 */
 	protected $hidden = array();
 
+	public function scopeWithUserId($query, $userId)
+	{
+
+		return $query->join('Observations', 'ObservationImages.observationId', 
+			'=', 'Observations.id')->where('userId', '=', $userId);
+
+	}
+
 }
 
 ?>

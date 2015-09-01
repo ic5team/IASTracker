@@ -16,6 +16,27 @@ class Observation extends Eloquent {
 	 */
 	protected $hidden = array();
 
+	public function scopeWithUserId($query, $userId)
+	{
+
+		return $query->where('userId', '=', $userId);
+
+	}
+
+	public function scopeValidated($query)
+	{
+
+		return $query->where('validatorId', '!=', 'null');
+
+	}
+
+	public function scopeLastCreated($query)
+	{
+
+		return $query->orderBy('created_at', 'desc')->take(1);
+
+	}
+
 }
 
 ?>

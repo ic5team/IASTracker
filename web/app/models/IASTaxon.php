@@ -20,7 +20,7 @@ class IASTaxon extends Eloquent {
 	{
 
 		return $query->where('languageId', '=', $languageId);
-        
+
 	}
 
 }
