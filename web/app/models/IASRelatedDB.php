@@ -16,6 +16,18 @@ class IASRelatedDB extends Eloquent {
 	 */
 	protected $hidden = array();
 
+	public function scopeWithIASId($query, $IASId)
+	{
+
+		return $query->where('IASId', '=', $IASId);
+
+	}
+
+	public function repository()
+	{
+		return $this->hasOne('Repository', 'id', 'repoId');
+	}
+
 }
 
 ?>

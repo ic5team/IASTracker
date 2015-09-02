@@ -11,7 +11,7 @@ class UserController extends RequestController {
 	protected function elements($first, $num)
 	{
 
-		$elements = getElements($first, $num);
+		$elements = $this->getElements($first, $num);
 		return Response::json($elements->toJson());
 
 	}
@@ -25,7 +25,7 @@ class UserController extends RequestController {
 	protected function showListView($first, $num)
 	{
 
-		$elements = getElements($first, $num);
+		$elements = $this->getElements($first, $num);
 		return Response::view('adm/User/list', array('data' => $elements));
 
 	}
@@ -78,7 +78,7 @@ class UserController extends RequestController {
 			$configuration = Configuration::find(1);
 			$defaultLanguageId = $configuration->defaultLanguageId;
 			$ias = $element->getObservedIAS($languageId, $defaultLanguageId);
-			return View::make('public/User/element', array('data' => $element, 'ias' => $ias));
+			return View::make('public/User/element', array('data' => $data, 'ias' => $ias));
 
 		}
 
@@ -92,7 +92,7 @@ class UserController extends RequestController {
 	protected function showResourceView($id)
 	{
 
-		$element = getElemens($id);
+		$element = $this->getElements($id);
 		return Response::view('adm/User/element', array('data' => $element));
 
 	}
@@ -104,7 +104,7 @@ class UserController extends RequestController {
 	protected function updateResource($id)
 	{
 
-		$element = getElement($id);
+		$element = $this->getElement($id);
 
 		//Update the data
 
@@ -120,7 +120,7 @@ class UserController extends RequestController {
 	protected function deleteResource($id)
 	{
 
-		IAS::destroy($id);
+		User::destroy($id);
 
 	}
 
@@ -133,7 +133,7 @@ class UserController extends RequestController {
 	protected function getElements($first, $num)
 	{
 
-		return IAS::orderBy('latinName')
+		return User::orderBy('username')
 			->skip($first)->take($num)->get();
 
 	}
@@ -146,7 +146,7 @@ class UserController extends RequestController {
 	protected function getElement($id)
 	{
 
-		return IAS::find($id);
+		return User::find($id);
 
 	}
 

@@ -11,7 +11,7 @@ class IASController extends RequestController {
 	protected function elements($first, $num)
 	{
 
-		$elements = getElements($first, $num);
+		$elements = $this->getElements($first, $num);
 		return Response::json($elements->toJson());
 
 	}
@@ -25,7 +25,7 @@ class IASController extends RequestController {
 	protected function showListView($first, $num)
 	{
 
-		$elements = getElements($first, $num);
+		$elements = $this->getElements($first, $num);
 		return Response::view('adm/IAS/list', array('data' => $elements));
 
 	}
@@ -69,16 +69,24 @@ class IASController extends RequestController {
 
 		$data = new stdClass();
 		$element = $this->getElement($id);
-		$descriptionData = $element->getDescriptionData($languageId, $defaultLanguageId);
-		$data = (object) array_merge((array) $data, (array) $descriptionData);
-		$data->latinName = $element->latinName;
-		$data->taxons = $element->getTaxons();
-		$imageData = $element->getImageData($languageId, $defaultLanguageId);
-		$data = (object) array_merge((array) $data, (array) $imageData);
-		$data->relatedDBs = $element->getRelatedDBs();
 
-		if(NULL != $element)
-			return View::make('public/IAS/element', array('data' => $data));
+		if(null != $element)
+		{
+
+			$data->description = $element->getDescriptionData($languageId, $defaultLanguageId);
+			$data->latinName = $element->latinName;
+			$data->taxons = $element->getTaxons();
+			$data->image = $element->getDefaultImageData($languageId, $defaultLanguageId);
+			$data->relatedDBs = $element->getRelatedDBs();
+			$data->images = $element->getImageData($languageId, $defaultLanguageId);
+
+			$output = new stdClass();
+			$output->html = View::make('public/IAS/element', array('data' => $data))->render();
+			$output->data = $id;
+
+			return json_encode($output);
+
+		}
 
 	}
 
@@ -90,7 +98,7 @@ class IASController extends RequestController {
 	protected function showResourceView($id)
 	{
 
-		$element = getElemens($id);
+		$element = $this->getElements($id);
 		return Response::view('adm/IAS/element', array('data' => $element));
 
 	}
@@ -102,7 +110,7 @@ class IASController extends RequestController {
 	protected function updateResource($id)
 	{
 
-		$element = getElement($id);
+		$element = $this->getElement($id);
 
 		//Update the data
 
@@ -169,10 +177,10 @@ class IASController extends RequestController {
 				$current = $ias[$i];
 				$obj = new stdClass();
 
-				$imageData = $current->getImageData($languageId, $defaultLanguageId);
-				$obj = (object) array_merge((array) $obj, (array) $imageData);
-				$descData = $current->getDescriptionData($languageId, $defaultLanguageId);
-				$obj = (object) array_merge((array) $obj, (array) $descData);
+				$obj->image = $current->getDefaultImageData($languageId, $defaultLanguageId);
+				$obj->description = $current->getDescriptionData($languageId, $defaultLanguageId);
+				$obj->latinName = $current->latinName;
+				$obj->id = $current->id;
 
 				unset($imageData);
 				unset($descData);
@@ -184,15 +192,15 @@ class IASController extends RequestController {
 			unset($ias);
 
 			$taxons = IASTaxon::withLanguageId($languageId)->get();
-			if(null == $taxonomies)
+			if(null == $taxons)
 				$taxons = IASTaxon::withLanguageId($defaultLanguageId)->get();
 			for($i=0; $i<count($taxons); ++$i)
 			{
 
-				$taxonomies[$taxons->id] = $taxons->name;
+				$taxonomies[$taxons[$i]->id] = $taxons[$i]->name;
 
 			}
-			unset($iasTaxons);
+			unset($taxons);
 
 			$output = new stdClass();
 			$output->html = View::make("public/filter", array('data' => $data, 
@@ -200,6 +208,21 @@ class IASController extends RequestController {
 			$output->data = $data;
 
 			return json_encode($output);
+
+		}
+
+	}
+
+	protected function getObservations($id)
+	{
+
+		if(Request::ajax())
+		{
+
+			$elements = Observation::withIASId($id)
+				->orderBy('id')->get();
+
+			return Response::json($elements->toJson());
 
 		}
 

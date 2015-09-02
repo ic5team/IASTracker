@@ -29,3 +29,7 @@
 */
 
 	Route::get('/v1/IASFilter', array('uses' => 'IASController@getFilter'));
+	Route::get('/v1/Observations', array('uses' => 'ObservationController@index'));
+	Route::get('/v1/Observations/{id}', array('uses' => 'ObservationController@show'));
+	Route::get('/v1/IAS/{id}', array('uses' => 'IASController@show'));
+	Route::get('/v1/IAS/{id}/Observations', array('uses' => 'IASController@getObservations'));

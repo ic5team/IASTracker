@@ -24,8 +24,15 @@ function MapHandler(mapId, layersControlId, controlsId, mapDescriptors, crsDescr
 	this.controls = L.control.layers(this.baseMaps, this.overlayMaps, 
 		{collapsed: false, autoZIndex: false});
 	this.controls.addTo(this.map);
-	this.controls._container.remove();
-	$('#'+layersControlId).html(this.controls.onAdd(this.map));
+
+	if(null !== layersControlId)
+	{
+
+		this.controls._container.remove();
+		$('#'+layersControlId).html(this.controls.onAdd(this.map));
+
+	}
+
 	this.map.on('moveend', function(e) {
 		self.computeLayers(e)
 	});
@@ -35,9 +42,13 @@ function MapHandler(mapId, layersControlId, controlsId, mapDescriptors, crsDescr
 
 	this.computeLayers();
 
-	L.DomEvent.disableClickPropagation(L.DomUtil.get(controlsId));
+	if(null !== controlsId)
+	{
 
-	$('#'+controlsId).draggable();
+		L.DomEvent.disableClickPropagation(L.DomUtil.get(controlsId));
+		$('#'+controlsId).draggable();
+
+	}
 
 }
 
@@ -222,8 +233,11 @@ MapHandler.prototype.computeLayers = function(e)
 
 }
 
-MapHandler.prototype.addMarker = function(lat, lon, accuracy, color, fillColor, opacity)
+MapHandler.prototype.addMarker = function(lat, lon, accuracy, color, fillColor, 
+	opacity, options, callback)
 {
+
+	var cbFunction = (callback !== 'undefined' ? callback : null);
 
 	var circle = L.circle([lat, lon], accuracy, 
 		{
@@ -232,6 +246,9 @@ MapHandler.prototype.addMarker = function(lat, lon, accuracy, color, fillColor, 
 			fillOpacity: opacity
 		}).addTo(this.map);
 
-	var marker = L.marker([lat, lon]).addTo(this.map);
+	var marker = L.marker([lat, lon], options).addTo(this.map);
+
+	if(null != cbFunction)
+		marker.on('click', cbFunction);
 
 }

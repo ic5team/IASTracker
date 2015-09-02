@@ -2,6 +2,7 @@
 
 @section('header_includes')
 	@parent
+	{{ HTML::style('css/lightbox.css'); }}
 	{{ HTML::style('css/leaflet.css'); }}
 	{{ HTML::style('css/bootstrap-switch.min.css'); }}
 	{{ HTML::style('css/bootstrap-datetimepicker.min.css'); }}
@@ -9,6 +10,7 @@
 
 @section('footer_includes')
 	@parent
+	{{ HTML::script('js/lightbox.min.js'); }}
 	{{ HTML::script('js/leaflet.js'); }}
 	{{ HTML::script('js/proj4-compressed.js'); }}
 	{{ HTML::script('js/proj4leaflet.js'); }}
@@ -96,7 +98,7 @@
 					</div>
 					<div role="tabpanel" class="tab-pane" id="ias">
 						<div class="row" style="text-align: center; margin-top: 20px;" id="iasContents">
-							<div class="col-md-12" >
+							<div class="col-md-12">
 								{{ HTML::image('img/loader.gif', 'Loading...'); }}
 							</div>
 						</div>
@@ -104,5 +106,6 @@
 				</div>
 			</div>
 		</div>
+		@include('layouts.modals.base')
 	</div>
 @stop

@@ -16,6 +16,14 @@ class StatusText extends Eloquent {
 	 */
 	protected $hidden = array();
 
+	public function scopeWithStatusAndLanguageId($query, $statusId, $languageId)
+	{
+
+		return $query->where('statusId', '=', $statusId)
+			->where('languageId', '=', $languageId);
+	
+	}
+
 }
 
 ?>

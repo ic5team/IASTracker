@@ -20,32 +20,71 @@ class IAS extends Eloquent {
 	 */
 	protected $hidden = array('creatorId', 'created_at', 'updated_at');
 
-	public function getImageData($languageId, $defaultLanguageId)
+	public function getDefaultImageData($languageId, $defaultLanguageId)
 	{
 
 		$obj = new stdClass();
 
-		if(null != $this->portraitImageId)
+		if(null != $this->defaultImageId)
 		{
 
-			$img = IASImage::find($this->portraitImageId);
-			$obj->image = $img->URL;
-			$obj->imageAttribution = $img->attribution;
-			$imgText = IASImageText::withIASAndLanguageId(
-				$this->id, $languageId)->first();
+			$img = IASImage::find($this->defaultImageId);
+			$obj->url = $img->URL;
+			$obj->attribution = $img->attribution;
+			$imgText = IASImageText::withIASImageAndLanguageId(
+				$img->id, $languageId)->first();
 			if(null == $imgText)
 			{
 
-				$imgText = IASImageText::withIASAndLanguageId(
-					$this->id, $defaultLanguageId)->first();
+				$imgText = IASImageText::withIASImageAndLanguageId(
+					$img->id, $defaultLanguageId)->first();
 
 			}
-			
-			$obj->imageText = $imgText->text;
+
+			if(null != $imgText)
+				$obj->text = $imgText->text;
+			else
+				$obj->text = "";
 
 		}
 
 		return $obj;
+
+	}
+
+	public function getImageData($languageId, $defaultLanguageId)
+	{
+
+		$data = array();
+		$images = IASImage::withIASId($this->id)->get();
+
+		for($i=0; $i<count($images); ++$i)
+		{
+
+			$obj = new stdClass();
+			$img = $images[$i];
+			$obj->url = $img->URL;
+			$obj->attribution = $img->attribution;
+			$imgText = IASImageText::withIASImageAndLanguageId(
+				$img->id, $languageId)->first();
+			if(null == $imgText)
+			{
+
+				$imgText = IASImageText::withIASImageAndLanguageId(
+					$img->id, $defaultLanguageId)->first();
+
+			}
+
+			if(null != $imgText)
+				$obj->text = $imgText->text;
+			else
+				$obj->text = "";
+
+			$data[] = $obj;
+
+		}
+
+		return $data;
 
 	}
 
@@ -85,6 +124,27 @@ class IAS extends Eloquent {
 			$taxonId = $taxon->parentTaxonId;
 
 			$data[] = $taxon;
+
+		}
+
+		return $data;
+
+	}
+
+	public function getRelatedDBs()
+	{
+
+		$data = array();
+		$related = IASRelatedDB::withIASId($this->id)->get();
+
+		for($i=0; $i<count($related); ++$i)
+		{
+
+			$relatedDB = $related[$i];
+			$repo = $relatedDB->repository;
+			$relatedDB->repoName = $repo->name;
+			$relatedDB->repoURL = $repo->URL;
+			$data[] = $relatedDB;
 
 		}
 

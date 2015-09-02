@@ -16,6 +16,21 @@ class Status extends Eloquent {
 	 */
 	protected $hidden = array();
 
+	public function getDescription($languageId, $defaultLanguageId)
+	{
+
+		$iasDesc = StatusText::withStatusAndLanguageId(
+			$this->id, $languageId)->first();
+		if(null == $iasDesc)
+		{
+
+			$iasDesc = StatusText::withStatusAndLanguageId(
+				$this->id, $defaultLanguageId)->first();
+
+		}
+
+	}
+
 }
 
 ?>

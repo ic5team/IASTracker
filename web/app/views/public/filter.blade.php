@@ -19,17 +19,17 @@
 
 		$current = $data[$i];
 ?>
-
-		<div class="col-md-2">
-			{{ HTML::image($current->image, $current->imageText); }}
-		</div>
-		<div class="col-md-7">
-			{{$current->scientificName}}
-		</div>
-		<div class="col-md-3">
-			<input type="checkbox" id="IASCheck{{$i}}" class="IASCheck" onclick="activeIAS({{$i}});" checked>
-		</div>
-
+<div class="row">
+	<div class="col-md-2">
+		{{ HTML::image(Config::get('app.urlImg').$current->image->url, $current->image->text, array('style' => 'width: 20px;')); }}
+	</div>
+	<div class="col-md-7" onclick="veureIAS({{$current->id}})" style="cursor:pointer;">
+		{{$current->latinName}}
+	</div>
+	<div class="col-md-3">
+		<input type="checkbox" id="IASCheck{{$i}}" class="IASCheck" onclick="activeIAS({{$i}});" checked>
+	</div>
+</div>
 <?php
 
 	}

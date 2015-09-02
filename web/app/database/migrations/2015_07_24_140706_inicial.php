@@ -135,6 +135,7 @@ class Inicial extends Migration {
 			$table->string('latinName',255);
 			$table->integer('taxonId')->unsigned();
 			$table->timestamps();
+			$table->integer('defaultImageId')->unsigned()->nullable();
 			$table->integer('creatorId')->unsigned()->nullable();
 			$table->softDeletes();
 		});
@@ -210,7 +211,7 @@ class Inicial extends Migration {
 			$table->integer('validatorId')->unsigned()->nullable();
 			$table->integer('statusId')->unsigned();
 			$table->text('notes');
-			$table->timestamp('validatorTS');
+			$table->timestamp('validatorTS')->nullable();
 			$table->decimal('latitude', 9, 6);
 			$table->decimal('longitude', 9, 6);
 			$table->decimal('elevation', 6, 2);

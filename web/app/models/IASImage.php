@@ -16,6 +16,13 @@ class IASImage extends Eloquent {
 	 */
 	protected $hidden = array();
 
+	public function scopeWithIASId($query, $IASId)
+	{
+
+		return $query->where('IASId', '=', $IASId);
+
+	}
+
 }
 
 ?>

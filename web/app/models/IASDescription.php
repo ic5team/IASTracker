@@ -21,7 +21,7 @@ class IASDescription extends Eloquent {
 
 		return $query->where('IASId', '=', $IASId)
 			->where('languageId', '=', $languageId);
-        
+	
 	}
 
 }

@@ -16,10 +16,10 @@ class IASImageText extends Eloquent {
 	 */
 	protected $hidden = array();
 
-	public function scopeWithIASAndLanguageId($query, $IASId, $languageId)
+	public function scopeWithIASImageAndLanguageId($query, $IASIId, $languageId)
 	{
 
-		return $query->where('IASId', '=', $IASId)
+		return $query->where('IASIId', '=', $IASIId)
 			->where('languageId', '=', $languageId);
         
 	}

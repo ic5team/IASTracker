@@ -74,3 +74,11 @@ body {
    margin: 0px;
 }
 
+#contentModal .modal-content
+{
+
+	height: 600px;
+	overflow: auto;
+
+}
+
