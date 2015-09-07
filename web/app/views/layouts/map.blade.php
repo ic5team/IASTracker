@@ -113,23 +113,29 @@
 				</div>
 				<div class="row">
 					<div class="col-md-12">
-						<input type="checkbox" id="observedCheckBox" class="IASCheck" onclick="" checked>
+						<input type="checkbox" id="observedCheckBox" class="IASCheck" onclick="showObservations()" checked>
 						<span>{{Lang::get('ui.invasorObserved')}}</span>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-12">
-						<input type="checkbox" id="validatedCheckBox" class="IASCheck" onclick="" checked>
+						<input type="checkbox" id="validatedCheckBox" class="IASCheck" onclick="showValidatedObservations()" checked>
 						<span>{{Lang::get('ui.observationValidated')}}</span>
 					</div>
 				</div>
+<?php
+	if(Auth::check())
+	{
+?>
 				<div class="row">
 					<div class="col-md-12">
-						<input type="checkbox" id="userObsCheckBox" class="IASCheck" onclick="" checked>
+						<input type="checkbox" id="userObsCheckBox" class="IASCheck" onclick="showOnlyUserObservations()">
 						<span>{{Lang::get('ui.userObsOnly')}}</span>
 					</div>
 				</div>
 <?php
+	}
+
 	$numExternal = count($data->externalSources);
 	if(0 < $numExternal)
 	{

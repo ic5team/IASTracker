@@ -40,6 +40,7 @@
 	@yield('main_wrapper')
 
 	<script>
+		var loggedUserId = <?php echo (property_exists($data, 'usrId') ? $data->usrId : -1 ); ?>;
 		var urlPublic = "<?php echo Config::get('app.urlPublic'); ?>";
 		var urlImg = "<?php echo Config::get('app.urlImg'); ?>";
 	</script>

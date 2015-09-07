@@ -41,6 +41,7 @@ class BaseController extends Controller {
 			$data->isValidator = (0 < $user->validators()->count());
 			$data->observationNumber = 0;
 			$data->verifiedObservations = 0;
+			$data->usrId = $user->id;
 
 			unset($user);
 

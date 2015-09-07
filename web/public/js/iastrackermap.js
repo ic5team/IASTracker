@@ -241,7 +241,7 @@ MapHandler.prototype.computeLayers = function(e)
 
 }
 
-MapHandler.prototype.addMarker = function(lat, lon, accuracy, color, fillColor, 
+MapHandler.prototype.createMarker = function(lat, lon, accuracy, color, fillColor, 
 	opacity, options, callback, icon)
 {
 
@@ -262,11 +262,29 @@ MapHandler.prototype.addMarker = function(lat, lon, accuracy, color, fillColor,
 
 	}
 
-	marker = L.marker([lat, lon], options).addTo(this.map);
+	marker = L.marker([lat, lon], options);
 
-	var circle = L.circle([lat, lon], accuracy, circleOptions).addTo(this.map);
+	var circle = L.circle([lat, lon], accuracy, circleOptions);
 
 	if(null != cbFunction)
 		marker.on('click', cbFunction);
+
+	return {marker : marker, circle: circle};
+
+}
+
+MapHandler.prototype.addMarker = function(markerObj)
+{
+
+	markerObj.marker.addTo(this.map);
+	markerObj.circle.addTo(this.map);
+
+}
+
+MapHandler.prototype.removeMarker = function(markerObj)
+{
+
+	map.removeLayer(markerObj.marker);
+	map.removeLayer(markerObj.circle);
 
 }
