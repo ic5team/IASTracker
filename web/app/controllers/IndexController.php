@@ -68,6 +68,8 @@ class IndexController extends BaseController {
 		$center[] = $configuration->centerLat;
 		$center[] = $configuration->centerLon;
 		$data->center = json_encode($center);
+		
+		$data->externalSources = array();
 
 		return View::make("public/index", array('data' => $data));
 

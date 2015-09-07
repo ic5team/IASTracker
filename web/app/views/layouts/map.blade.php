@@ -97,11 +97,74 @@
 						</div>
 					</div>
 					<div role="tabpanel" class="tab-pane" id="ias">
-						<div class="row" style="text-align: center; margin-top: 20px;" id="iasContents">
-							<div class="col-md-12">
+						<div class="row" style="text-align: center; margin-top: 20px;">
+							<div class="col-md-12" id="iasContents">
 								{{ HTML::image('img/loader.gif', 'Loading...'); }}
 							</div>
 						</div>
+					</div>
+				</div>
+			</div>
+			<div id="observationsControls" class="obsControls ui-draggable">
+				<div class="row">
+					<div class="form-group col-md-12">
+						<h4>{{Lang::get('ui.iasTrackerObservations')}}</h4>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<input type="checkbox" id="observedCheckBox" class="IASCheck" onclick="" checked>
+						<span>{{Lang::get('ui.invasorObserved')}}</span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<input type="checkbox" id="validatedCheckBox" class="IASCheck" onclick="" checked>
+						<span>{{Lang::get('ui.observationValidated')}}</span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<input type="checkbox" id="userObsCheckBox" class="IASCheck" onclick="" checked>
+						<span>{{Lang::get('ui.userObsOnly')}}</span>
+					</div>
+				</div>
+<?php
+	$numExternal = count($data->externalSources);
+	if(0 < $numExternal)
+	{
+?>
+				<div class="row">
+					<div class="form-group col-md-12">
+						<h4>{{Lang::get('ui.otherSourcesObservations')}}</h4>
+					</div>
+				</div>
+<?php
+		for($i=0; $i<$numExternal; ++$i)
+		{
+
+			$current = $data->externalSources[$i];
+?>
+				<div class="row">
+					<div class="col-md-12">
+						<input type="checkbox" id="external{{$i}}" class="IASCheck" onclick="" checked>
+						<span>{{$current->name}}</span>
+					</div>
+				</div>
+<?php
+		}
+
+	}
+?>
+				<div class="row">
+					<div class="form-group col-md-12">
+						<h4>{{Lang::get('ui.iasTrackerAreas')}}</h4>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<input type="checkbox" id="areasCheckBox" class="IASCheck" onclick="" checked>
+						<span>{{Lang::get('ui.showAreas')}}</span>
 					</div>
 				</div>
 			</div>

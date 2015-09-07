@@ -38,6 +38,18 @@
 	padding: 10px;
 }
 
+.obsControls {
+	position: absolute;
+	z-index: 1;
+	left: calc(100vw - 300px); 
+	top: 300px; 
+	background-color:white; 
+	border: #DDDDDD;
+	border-width: thin;
+	border-style: solid;
+	padding: 10px;
+}
+
 .leaflet-top .leaflet-control {
 	margin-top: 70px;
 }
@@ -82,3 +94,18 @@ body {
 
 }
 
+.redCircle {
+	width: 50px;
+	height: 50px;
+	-webkit-border-radius: 25px;
+	-moz-border-radius: 25px;
+	border-radius: 25px; 
+}
+
+.greenCircle {
+    width: 50px;
+    height: 50px;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    border-radius: 25px; 
+}

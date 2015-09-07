@@ -8,11 +8,12 @@
 <div class="row" style="text-align: center;">
 	<div class="col-md-12">
 		<div class="btn-group" role="group" aria-label="...">
-			<button type="button" class="btn btn-default active">{{Lang::get('ui.commonName')}}</button>
-			<button type="button" class="btn btn-default">{{Lang::get('ui.scientificName')}}</button>
+			<button type="button" class="btn btn-default">{{Lang::get('ui.commonName')}}</button>
+			<button type="button" class="btn btn-default active">{{Lang::get('ui.scientificName')}}</button>
 		</div>
 	</div>
 </div>
+<br />
 <?php
 	for($i=0; $i<count($data); ++$i)
 	{
@@ -20,10 +21,10 @@
 		$current = $data[$i];
 ?>
 <div class="row">
-	<div class="col-md-2">
+	<div class="col-md-2" onclick="veureIAS({{$current->id}})" style="cursor:pointer;">
 		{{ HTML::image(Config::get('app.urlImg').$current->image->url, $current->image->text, array('style' => 'width: 20px;')); }}
 	</div>
-	<div class="col-md-7" onclick="veureIAS({{$current->id}})" style="cursor:pointer;">
+	<div class="col-md-6" onclick="veureIAS({{$current->id}})" style="cursor:pointer;">
 		{{$current->latinName}}
 	</div>
 	<div class="col-md-3">

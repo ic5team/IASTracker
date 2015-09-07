@@ -1,59 +1,38 @@
 <div class="row">
-	<div class="col-md-12">
-		<h1>Observació</h1>
+	<div class="col-md-12" style="text-align: left;font-size: 32px;">
+		<i class="fa fa-2x fa-eye" style="margin-right: 15px;"></i>{{Lang::get('ui.observation')}}
 		<i class="{{$data->status->icon}}"></i>
 	</div>
 </div>
 <div class="row">
-	<div class="col-md-4">
+	<div class="col-md-12">
+		<div style="display:inline-block; font-size:32px; color:#5cb85c; font-weight: bold;">{{ $data->description->name }}</div>
+		<div style="display:inline-block; color:#337ab7; font-weight: bold;">{{ $data->latinName }}</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-5">
 		<div class="row">
 			<div class="col-md-12">
-				{{ HTML::image(Config::get('app.urlImg').$data->image->url, '', array("style" => "width: 100px;"))}}
+				{{ HTML::image(Config::get('app.urlImg').$data->image->url, '', array("style" => "width: 300px;"))}}
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-12">
+			<div class="col-md-12" style="font-weight: bold; font-size: 12px;">
 				{{ $data->image->text.' '.$data->image->attribution }}
 			</div>
 		</div>
 	</div>
+	<div class="col-md-7">
+		<div class="row">
+			<div class="col-md-12" style="text-align: left;">
+				{{ $data->notes }}
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row" style="margin-top: 15px;">
 	<div class="col-md-8">
-		<div class="row">
-			<div class="col-md-12">
-				<h1>{{ $data->description->name }}</h1>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-12">
-				<h1>{{ $data->latinName }}</h1>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-12">
-<?php
-	$num = count($data->taxons);
-	$str = array();
-	for($i=0; $i<$num; ++$i)
-	{
-
-		$current = $data->taxons[$i];
-		$str[] = $current->name;
-
-	}
-
-	echo implode($str, ',');
-?>
-			</div>
-		</div>
-	</div>
-</div>
-<div class="row">
-	<div class="col-md-12">
-		{{ $data->notes }}
-	</div>
-</div>
-<div class="row">
-	<div class="col-md-9">
 <?php
 	$numImg = count($data->images);
 	$num = ($numImg < 8 ? $numImg : 8);
@@ -79,7 +58,7 @@
 	echo implode($str, '');
 ?>
 	</div>
-	<div class="col-md-3">
+	<div class="col-md-4">
 		<div class="row">
 			<div class="col-md-4">
 				{{ HTML::image(Config::get('app.urlImg').$data->user->photoURL, '', array("style" => "width: 100px;"))}}

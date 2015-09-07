@@ -21,7 +21,7 @@ class IASImageText extends Eloquent {
 
 		return $query->where('IASIId', '=', $IASIId)
 			->where('languageId', '=', $languageId);
-        
+
 	}
 
 }

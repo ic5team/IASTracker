@@ -1,17 +1,11 @@
 <div class="row">
-	<div class="col-md-6">
-		<div class="row">
-			<div class="col-md-12">
-				<h1>{{ $data->description->name }}</h1>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-12">
-				<h1>{{ $data->latinName }}</h1>
-			</div>
-		</div>
+	<div class="col-md-12">
+		<div style="display:inline-block; font-size:32px; color:#5cb85c; font-weight: bold;">{{ $data->description->name }}</div>
+		<div style="display:inline-block; color:#337ab7; font-weight: bold;">{{ $data->latinName }}</div>
 	</div>
-	<div class="col-md-6">
+</div>
+<div class="row">
+	<div class="col-md-12">
 <?php
 	$num = count($data->taxons);
 	$str = array();
@@ -28,20 +22,21 @@
 ?>
 	</div>
 </div>
-<div class="row">
-	<div class="col-md-4">
+<div class="row" style="margin-top:15px;">
+	<div class="col-md-5">
 		<div class="row">
 			<div class="col-md-12">
-				{{ HTML::image(Config::get('app.urlImg').$data->image->url, '', array('style'=>'width: 100px;'))}}
+				{{ HTML::image(Config::get('app.urlImg').$data->image->url, '', array('style'=>'width: 300px;'))}}
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-12">
+			<div class="col-md-12" style="font-weight: bold; font-size: 12px;">
 				{{ $data->image->text.' '.$data->image->attribution }}
 			</div>
 		</div>
 	</div>
-	<div class="col-md-8">
+	<div class="col-md-7" style="text-align:left;margin-top:40px;">
+		<i class="fa fa-2x fa-info-circle"></i>
 		{{ $data->description->shortDescription }}
 	</div>
 </div>
