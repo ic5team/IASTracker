@@ -71,7 +71,24 @@ class IndexController extends BaseController {
 		
 		$data->externalSources = array();
 
-		return View::make("public/index", array('data' => $data));
+		$taxonomies = array();
+		$taxons = IASTaxon::withLanguageId($languageId)->get();
+		if(null == $taxons)
+			$taxons = IASTaxon::withLanguageId($defaultLanguageId)->get();
+		for($i=0; $i<count($taxons); ++$i)
+		{
+
+			$taxonomies[$taxons[$i]->id] = $taxons[$i]->name;
+
+		}
+
+		$states = array();
+		$regions = array();
+		$areas = array();
+
+		return View::make("public/index", array('data' => $data, 
+			'taxonomies' => $taxonomies, 'states' => $states, 
+			'regions' => $regions, 'areas' => $areas));
 
 	}
 

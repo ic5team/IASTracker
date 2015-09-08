@@ -6,12 +6,51 @@ class ObservationController extends RequestController {
 	* Returns a list of all the elements
 	* @param first The first element of the listing
 	* @param num The number of elements on the list
+	* @uses $_GET['taxonomyId'] The filtered taxonomy id
+	* @uses $_GET['fromDate'] The starting date of the search interval  
+	* @uses $_GET['toDate'] The ending date of the search interval
+	* @uses $_GET['stateId'] The filtered state id
+	* @uses $_GET['regionId'] The filtered region id
+	* @uses $_GET['areaId'] The filtered area id
 	* @return A JSON Response
 	*/
 	protected function elements($first, $num)
 	{
 
-		$elements = $this->getElements($first, $num);
+		$taxonomyId = Input::has('taxonomyId') ? Input::get('taxonomyId') : -1;
+		$fromDate = Input::has('fromDate') ? Input::get('fromDate') : '1970-01-01';
+		$toDate = Input::has('toDate') ? Input::get('toDate') : (new DateTime())->format('Y-m-d');
+		$stateId = Input::has('stateId') ? Input::get('stateId') : -1;
+		$regionId = Input::has('regionId') ? Input::get('regionId') : -1;
+		$areaId = Input::has('areaId') ? Input::get('areaId') : -1;
+
+		$areas = array();
+		if(-1 != $areaId)
+		{
+
+			$areas[] = Area::find($areaId);
+
+		}
+		else if(-1 != $regionId)
+		{
+
+			$areas = RegionAreas::withRegionId($regionId);
+
+		}
+		else if(-1 != $stateId)
+		{
+
+			$areas = State::getAreas();
+
+		}
+
+		$areaIds = array();
+		for($i=0; $i<count($areas); ++$i)
+			$areaIds[] = $areas[$i]->areaId;
+
+		$elements = $this->getFilteredElements($first, $num, $taxonomyId, $fromDate, 
+			$toDate, $areaIds);
+
 		return Response::json($elements->toJson());
 
 	}
@@ -142,6 +181,28 @@ class ObservationController extends RequestController {
 
 		return Observation::orderBy('id')
 			->skip($first)->take($num)->get();
+
+	}
+
+	/**
+	* Gets all the filtered elements
+	* @param first The first element of the listing
+	* @param num The number of elements on the list
+	* @param taxonomyId The filtered taxonomy id
+	* @param fromDate The starting date of the search interval  
+	* @param toDate The ending date of the search interval
+	* @param areasId A string with the areas identifiers
+	* @return An array of models
+	*/
+	protected function getFilteredElements($first, $num, $taxonomyId, $fromDate, $toDate,
+			$areasId)
+	{
+
+		$values = Observation::filtered($taxonomyId, $fromDate, $toDate,
+			$areasId)->orderBy('Observations.id')
+			->skip($first)->take($num)->get();
+
+		return $values;
 
 	}
 

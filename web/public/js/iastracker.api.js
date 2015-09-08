@@ -106,6 +106,16 @@ IASTracker.prototype.getObservations = function(doneFunction, destinationId)
 
 }
 
+IASTracker.prototype.getFilteredObservations = function(params, doneFunction, destinationId)
+{
+
+	var completeURL = this.observations.entryPoint;
+	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
+
+	return this.AJAXRequest(completeURL, destId, doneFunction, 'GET', params);
+
+}
+
 IASTracker.prototype.getIASObservation = function(observationId, doneFunction, destinationId)
 {
 

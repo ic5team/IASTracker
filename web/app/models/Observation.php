@@ -19,21 +19,21 @@ class Observation extends Eloquent {
 	public function scopeWithUserId($query, $userId)
 	{
 
-		return $query->where('userId', '=', $userId);
+		return $query->where('Observations.userId', '=', $userId);
 
 	}
 
 	public function scopeWithIASId($query, $userId)
 	{
 
-		return $query->where('IASId', '=', $userId);
+		return $query->where('Observations.IASId', '=', $userId);
 
 	}
 
 	public function scopeValidated($query)
 	{
 
-		return $query->where('validatorId', '!=', 'null');
+		return $query->where('Observations.validatorId', '!=', 'null');
 
 	}
 
@@ -71,6 +71,28 @@ class Observation extends Eloquent {
 		$status = Status::find($this->statusId);
 		$status->text = $status->getDescription($languageId, $defaultLanguageId);
 		return $status;
+
+	}
+
+	public function scopeFiltered($query, $taxonomyId, $fromDate, $toDate,
+			$areaIds)
+	{
+
+		$newQuery = $query;
+		if(-1 != $taxonomyId)
+			$newQuery = $query->join('IAS', 'IASId', '=', 'IAS.id')->where('IAS.taxonId', '=', $taxonomyId);
+
+		$newQuery = $newQuery->where('Observations.created_at', '>=', $fromDate.' 00:00:00');
+		$newQuery = $newQuery->where('Observations.created_at', '<=', $toDate.' 23:59:59');
+
+		if(0 != count($areaIds))
+		{
+
+			$newQuery = $newQuery->whereIn('areaId', $areaIds);
+
+		}
+
+		return $newQuery->select('Observations.*');
 
 	}
 

@@ -284,7 +284,7 @@ MapHandler.prototype.addMarker = function(markerObj)
 MapHandler.prototype.removeMarker = function(markerObj)
 {
 
-	map.removeLayer(markerObj.marker);
-	map.removeLayer(markerObj.circle);
+	this.map.removeLayer(markerObj.marker);
+	this.map.removeLayer(markerObj.circle);
 
 }

@@ -172,12 +172,21 @@ class Inicial extends Migration {
 			$table->timestamps();
 		});
 
-		Schema::create('IASRegions', function(Blueprint $table)
+		Schema::create('IASAreas', function(Blueprint $table)
 		{
 			$table->increments('id');
 			$table->integer('IASId')->unsigned();
-			$table->integer('regionId')->unsigned();
+			$table->integer('areaId')->unsigned();
 			$table->integer('orderId')->unsigned();
+			$table->integer('creatorId')->unsigned()->nullable();
+			$table->timestamps();
+		});
+
+		Schema::create('Areas', function(Blueprint $table)
+		{
+			$table->increments('id');
+			$table->string('shapeFileURL', 255);
+			$table->string('name', 255);
 			$table->integer('creatorId')->unsigned()->nullable();
 			$table->timestamps();
 		});
@@ -187,7 +196,24 @@ class Inicial extends Migration {
 			$table->increments('id');
 			$table->string('shapeFileURL', 255);
 			$table->string('name', 255);
-			$table->integer('parentRegionId')->unsigned()->nullable();
+			$table->integer('stateId')->unsigned()->nullable();
+			$table->integer('creatorId')->unsigned()->nullable();
+			$table->timestamps();
+		});
+
+		Schema::create('RegionAreas', function(Blueprint $table)
+		{
+			$table->increments('id');
+			$table->integer('areaId')->unsigned();
+			$table->integer('regionId')->unsigned();
+			$table->timestamps();
+		});
+
+		Schema::create('States', function(Blueprint $table)
+		{
+			$table->increments('id');
+			$table->string('shapeFileURL', 255);
+			$table->string('name', 255);
 			$table->integer('creatorId')->unsigned()->nullable();
 			$table->timestamps();
 		});
@@ -216,15 +242,14 @@ class Inicial extends Migration {
 			$table->decimal('longitude', 9, 6);
 			$table->decimal('elevation', 6, 2);
 			$table->decimal('accuracy', 6, 2);
-			$table->integer('thumbsUp');
-			$table->integer('thumbsDown');
+			$table->integer('areaId')->nullable();
 			$table->timestamps();
 		});
 
-		Schema::create('IASRegionsValidators', function(Blueprint $table)
+		Schema::create('IASAreasValidators', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->integer('IASRId')->unsigned();
+			$table->integer('IASAId')->unsigned();
 			$table->integer('validatorId')->unsigned();
 			$table->integer('creatorId')->unsigned()->nullable();
 			$table->timestamps();
@@ -317,11 +342,14 @@ class Inicial extends Migration {
 		Schema::drop('Repositories');
 		Schema::drop('IASRelatedDBs');
 		Schema::drop('IASDescriptions');
-		Schema::drop('IASRegions');
+		Schema::drop('IASAreas');
+		Schema::drop('Areas');
 		Schema::drop('Regions');
+		Schema::drop('RegionAreas');
+		Schema::drop('States');
 		Schema::drop('IASTaxons');
 		Schema::drop('Observations');
-		Schema::drop('IASRegionsValidators');
+		Schema::drop('IASAreasValidators');
 		Schema::drop('ObservationImages');
 		Schema::drop('Status');
 		Schema::drop('StatusTexts');

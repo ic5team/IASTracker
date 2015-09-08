@@ -20,6 +20,19 @@ $(document).ready(function () {
 		format: 'DD/MM/YYYY'
 	});
 	$(".IASCheck").bootstrapSwitch({size: 'mini'});
+	$(".IASCheck").each(function(index) {
+
+		var functionString = $(this).attr('onclick');
+		if("" != functionString)
+		{
+
+			var func = window[functionString];
+			$(this).on('switchChange.bootstrapSwitch', func);
+
+		}
+
+	});
+
 	api.getIASMapFilter(function(data) { iasList = data; $(".IASCheck").bootstrapSwitch({size: 'mini'});}, "#iasContents");
 	api.getObservations(addObservationMarkers);
 	loadingImage = $('#contentModalContents').html();
@@ -31,9 +44,10 @@ function addObservationMarkers(data)
 
 	var numObservacions = data.length;
 	observations = data;
-	observationMarkers = new Array();
-	validatedMarkers = new Array();
-	userMarkers = new Array();
+	userObservationsMarkers = new Array();
+	userValidatedMarkers = new Array();
+	otherUsersObservationsMarkers = new Array();
+	otherUsersValidatedMarkers = new Array();
 
 	for(var i=0; i<numObservacions; ++i)
 	{
@@ -58,7 +72,6 @@ function addObservationMarkers(data)
 
 			marker = mapHandler.createMarker(current.latitude, current.longitude, 
 				current.accuracy, 'red', '#f03', 0.5, {id : current.id}, onMarkerClick);
-			observationMarkers.push(marker);
 
 			if(current.userId != loggedUserId)
 				otherUsersObservationsMarkers.push(marker);
@@ -72,10 +85,11 @@ function addObservationMarkers(data)
 	showObservations();
 	showValidatedObservations();
 
-	$("#observedCheckBox").removeAttr("disabled");
-	$("#validatedCheckBox").removeAttr("disabled");
-	$("#userObsCheckBox").removeAttr("disabled");
+	$("#observedCheckBox").bootstrapSwitch('disabled', false);
+	$("#validatedCheckBox").bootstrapSwitch('disabled', false);
+	$("#userObsCheckBox").bootstrapSwitch('disabled', false);
 
+	$('#overlay').hide();
 }
 
 function onMarkerClick(e)
@@ -158,7 +172,7 @@ function constructValidatedIcon()
 function showObservations()
 {
 
-	var onlyUserObs = $('#userObsCheckBox').is(':checked');
+	var onlyUserObs = (-1 != loggedUserId) && $('#userObsCheckBox').is(':checked');
 	showObservationsAux(onlyUserObs);
 
 }
@@ -166,7 +180,7 @@ function showObservations()
 function showValidatedObservations()
 {
 
-	var onlyUserObs = $('#userObsCheckBox').is(':checked');
+	var onlyUserObs = (-1 != loggedUserId) && $('#userObsCheckBox').is(':checked');
 	showValidatedAux(onlyUserObs);
 
 }
@@ -174,7 +188,7 @@ function showValidatedObservations()
 function showOnlyUserObservations()
 {
 
-	var onlyUserObs = $('#userObsCheckBox').is(':checked');
+	var onlyUserObs = (-1 != loggedUserId) && $('#userObsCheckBox').is(':checked');
 	showObservationsAux(onlyUserObs);
 	showValidatedAux(onlyUserObs);
 
@@ -183,7 +197,7 @@ function showOnlyUserObservations()
 function showObservationsAux( onlyUserObs )
 {
 
-	if($('#userObsCheckBox').is(':checked'))
+	if($('#observedCheckBox').is(':checked'))
 	{
 
 		for(var i=0; i<userObservationsMarkers.length; ++i)
@@ -279,6 +293,66 @@ function showValidatedAux( onlyUserObs )
 			}
 
 		}
+
+	}
+
+}
+
+function filterObs()
+{
+
+	clearObservations();
+	$('#overlay').show();
+
+	var taxonomyId = $('#input-group').val();
+	var fromDate = $('#fromDate').val();
+	var toDate = $('#toDate').val();
+	var stateId = $('#input-state').val();
+	var regionId = $('#input-region').val();
+	var areaId = $('#input-area').val();
+
+	api.getFilteredObservations( 
+		{
+			taxonomyId : taxonomyId,
+			fromDate : fromDate,
+			toDate : toDate,
+			stateId : stateId,
+			regionId : regionId,
+			areaId : areaId
+		}
+		,addObservationMarkers
+	);
+
+}
+
+function clearObservations()
+{
+
+	for(var i=0; i<userObservationsMarkers.length; ++i)
+	{
+
+		mapHandler.removeMarker(userObservationsMarkers[i]);
+
+	}
+
+	for(var i=0; i<otherUsersObservationsMarkers.length; ++i)
+	{
+
+		mapHandler.removeMarker(otherUsersObservationsMarkers[i]);
+
+	}
+
+	for(var i=0; i<userValidatedMarkers.length; ++i)
+	{
+
+		mapHandler.removeMarker(userValidatedMarkers[i]);
+
+	}
+
+	for(var i=0; i<otherUsersValidatedMarkers.length; ++i)
+	{
+
+		mapHandler.removeMarker(otherUsersValidatedMarkers[i]);
 
 	}
 

@@ -298,7 +298,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="432" y="555" name="IASRegions">
+<table x="432" y="555" name="IASAreas">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -306,9 +306,9 @@
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="IAS" row="id" />
 </row>
-<row name="regionId" null="1" autoincrement="0">
+<row name="areaId" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
-<default>NULL</default><relation table="Regions" row="id" />
+<default>NULL</default><relation table="Area" row="id" />
 </row>
 <row name="order" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
@@ -320,7 +320,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="432" y="714" name="Regions">
+<table x="432" y="714" name="Area">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -329,9 +329,6 @@
 <default>NULL</default></row>
 <row name="name" null="1" autoincrement="0">
 <datatype>VARCHAR</datatype>
-<default>NULL</default></row>
-<row name="parentRegionId" null="1" autoincrement="0">
-<datatype>INTEGER</datatype>
 <default>NULL</default></row>
 <row name="creatorId" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
@@ -346,7 +343,7 @@
 <default>NULL</default></row>
 <row name="IASRId" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
-<default>NULL</default><relation table="IASRegions" row="id" />
+<default>NULL</default><relation table="IASAreas" row="id" />
 </row>
 <row name="validatorId" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
@@ -424,6 +421,9 @@
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
 <row name="thumbsDown" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="areaId" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
 <key type="PRIMARY" name="">
@@ -628,6 +628,60 @@
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
 <row name="defaultLanguageId" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="435" y="954" name="Region">
+<row name="id" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="shapeFileURL" null="1" autoincrement="0">
+<datatype>VARCHAR</datatype>
+<default>NULL</default></row>
+<row name="name" null="1" autoincrement="0">
+<datatype>VARCHAR</datatype>
+<default>NULL</default></row>
+<row name="stateId" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="State" row="id" />
+</row>
+<row name="creatorId" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="401" y="844" name="RegionAreas">
+<row name="id" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="areaId" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="Area" row="id" />
+</row>
+<row name="regionId" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="Region" row="id" />
+</row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="245" y="968" name="State">
+<row name="id" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="shapeFileURL" null="1" autoincrement="0">
+<datatype>VARCHAR</datatype>
+<default>NULL</default></row>
+<row name="name" null="1" autoincrement="0">
+<datatype>VARCHAR</datatype>
+<default>NULL</default></row>
+<row name="creatorId" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
 <key type="PRIMARY" name="">

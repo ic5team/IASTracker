@@ -54,8 +54,20 @@
 							<div class="form-group col-md-12">
 								<span><b>{{Lang::get('ui.taxonomy')}}</b> <br /></span>
 								<label for="input-grup">{{Lang::get('ui.group')}}</label>
-								<select name="taxonomy" id="input-grup" class="form-control">
-									<option value="0" >{{Lang::get('ui.all')}}</option>
+								<select name="taxonomy" id="input-group" class="form-control">
+									<option value="-1" >{{Lang::get('ui.all')}}</option>
+<?php
+	$keys = array_keys($taxonomies);
+	$numTaxonomies = count($keys);
+	$str = array();
+	for($i=0; $i<$numTaxonomies; ++$i)
+	{
+
+		$str[] = '<option value="'.$keys[$i].'">'.$taxonomies[$keys[$i]].'</option>';
+
+	}
+	echo implode(' ', $str);
+?>
 								</select>
 							</div>
 						</div>
@@ -81,18 +93,59 @@
 						<div class="row">
 							<div class="form-group col-md-12">
 								<span><b>{{Lang::get('ui.location')}}</b> <br /></span>
-								<label for="input-grup">{{Lang::get('ui.state')}}</label>
-								<select name="state" id="input-grup" class="form-control">
-									<option value="0" >{{Lang::get('ui.allStates')}}</option>
+								<label for="input-state">{{Lang::get('ui.state')}}</label>
+								<select name="state" id="input-state" class="form-control">
+									<option value="-1" >{{Lang::get('ui.allStates')}}</option>
+<?php
+	$keys = array_keys($states);
+	$numStates = count($keys);
+	$str = array();
+	for($i=0; $i<$numStates; ++$i)
+	{
+
+		$str[] = '<option value="'.$keys[$i].'">'.$states[$keys[$i]].'</option>';
+
+	}
+	echo implode(' ', $str);
+?>
 								</select>
-								<label for="input-grup">{{Lang::get('ui.region')}}</label>
-								<select name="regions" id="input-grup" class="form-control">
-									<option value="0" >{{Lang::get('ui.allRegions')}}</option>
+								<label for="input-regions">{{Lang::get('ui.region')}}</label>
+								<select name="regions" id="input-regions" class="form-control">
+									<option value="-1" >{{Lang::get('ui.allRegions')}}</option>
+<?php
+	$keys = array_keys($regions);
+	$numRegions = count($keys);
+	$str = array();
+	for($i=0; $i<$numRegions; ++$i)
+	{
+
+		$str[] = '<option value="'.$keys[$i].'">'.$regions[$keys[$i]].'</option>';
+
+	}
+	echo implode(' ', $str);
+?>
 								</select>
-								<label for="input-grup">{{Lang::get('ui.areas')}}</label>
-								<select name="areas" id="input-grup" class="form-control">
-									<option value="0" >{{Lang::get('ui.allAreas')}}</option>
+								<label for="input-area">{{Lang::get('ui.areas')}}</label>
+								<select name="areas" id="input-area" class="form-control">
+									<option value="-1" >{{Lang::get('ui.allAreas')}}</option>
+<?php
+	$keys = array_keys($areas);
+	$numAreas = count($keys);
+	$str = array();
+	for($i=0; $i<$numAreas; ++$i)
+	{
+
+		$str[] = '<option value="'.$keys[$i].'">'.$areas[$keys[$i]].'</option>';
+
+	}
+	echo implode(' ', $str);
+?>
 								</select>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<button role="button" class="btn btn-large btn-primary" type="button" onclick="filterObs()">{{Lang::get('ui.filter')}}</button>
 							</div>
 						</div>
 					</div>
@@ -113,13 +166,13 @@
 				</div>
 				<div class="row">
 					<div class="col-md-12">
-						<input type="checkbox" id="observedCheckBox" class="IASCheck" onclick="showObservations()" checked>
+						<input type="checkbox" id="observedCheckBox" class="IASCheck" onclick="showObservations" checked>
 						<span>{{Lang::get('ui.invasorObserved')}}</span>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-12">
-						<input type="checkbox" id="validatedCheckBox" class="IASCheck" onclick="showValidatedObservations()" checked>
+						<input type="checkbox" id="validatedCheckBox" class="IASCheck" onclick="showValidatedObservations" checked>
 						<span>{{Lang::get('ui.observationValidated')}}</span>
 					</div>
 				</div>
@@ -129,7 +182,7 @@
 ?>
 				<div class="row">
 					<div class="col-md-12">
-						<input type="checkbox" id="userObsCheckBox" class="IASCheck" onclick="showOnlyUserObservations()">
+						<input type="checkbox" id="userObsCheckBox" class="IASCheck" onclick="showOnlyUserObservations">
 						<span>{{Lang::get('ui.userObsOnly')}}</span>
 					</div>
 				</div>
@@ -173,6 +226,12 @@
 						<span>{{Lang::get('ui.showAreas')}}</span>
 					</div>
 				</div>
+			</div>
+		</div>
+		<div id="overlay" syle="display: none;">
+			<div class="spinner">
+				<div class="double-bounce1"></div>
+				<div class="double-bounce2"></div>
 			</div>
 		</div>
 		@include('layouts.modals.base')
