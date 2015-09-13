@@ -35,7 +35,7 @@
 		{{$current->latinName}}
 	</div>
 	<div class="col-md-3">
-		<input type="checkbox" id="IASCheck{{$i}}" class="IASCheck" onclick="activeIAS" data="{{$i}}" checked>
+		<input type="checkbox" id="IASCheck{{$current->id}}" class="IASCheck" onclick="activeIAS" data="{{$current->id}}" checked>
 	</div>
 </div>
 <?php

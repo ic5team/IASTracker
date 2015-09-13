@@ -288,3 +288,17 @@ MapHandler.prototype.removeMarker = function(markerObj)
 	this.map.removeLayer(markerObj.circle);
 
 }
+
+MapHandler.prototype.addLayer = function(layer)
+{
+
+	layer.addTo(this.map);
+
+}
+
+MapHandler.prototype.removeLayer = function(layer)
+{
+
+	this.map.removeLayer(layer);
+
+}

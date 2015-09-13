@@ -83,9 +83,21 @@ class IndexController extends BaseController {
 		}
 
 		$states = State::active(true)->ordered()->get();
+		$shapes = Area::zOrder()->get();
+		$shapeURLs = array();
+		$shapeNames = array();
+		for($i=0; $i<count($shapes); ++$i)
+		{
+
+			$shapeURLs[] = $shapes[$i]->shapeFileURL;
+			$shapeNames[$shapes[$i]->id] = $shapes[$i]->name;
+
+		}
 
 		return View::make("public/index", array('data' => $data, 
-			'taxonomies' => $taxonomies, 'states' => $states));
+			'taxonomies' => $taxonomies, 'states' => $states,
+			'shapes' => json_encode($shapeURLs),
+			'shapeNames' => json_encode($shapeNames)));
 
 	}
 

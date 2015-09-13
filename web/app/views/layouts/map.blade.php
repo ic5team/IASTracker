@@ -19,6 +19,8 @@
 	{{ HTML::script('js/transition.js'); }}
 	{{ HTML::script('js/collapse.js'); }}
 	{{ HTML::script('js/bootstrap-datetimepicker.min.js'); }}
+	{{ HTML::script('js/catiline.js'); }}
+	{{ HTML::script('js/leaflet.shapefile.js'); }}
 	{{ HTML::script('js/iastrackermap.js'); }}
 	{{ HTML::script('js/iastracker.api.js'); }}
 	<script>
@@ -26,6 +28,8 @@
 		var crsDescriptors = JSON.parse( '{{$data->crsDescriptors}}' );
 		var mapCenter = JSON.parse('{{$data->center}}');
 		var api = new IASTracker("<?php echo Config::get('app.urlPublic'); ?>");
+		var shapes = {{$shapes}};
+		var shapeNames = {{$shapeNames}};
 	</script>
 	{{ HTML::script('js/pages/index.js'); }}
 @stop
@@ -194,7 +198,7 @@
 				</div>
 				<div class="row">
 					<div class="col-md-12">
-						<input type="checkbox" id="areasCheckBox" class="IASCheck" onclick="" checked>
+						<input type="checkbox" id="areasCheckBox" class="IASCheck" onclick="showAreas">
 						<span>{{Lang::get('ui.showAreas')}}</span>
 					</div>
 				</div>

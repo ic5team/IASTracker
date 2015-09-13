@@ -712,7 +712,7 @@ class ObservationsTableSeeder extends Seeder {
 			'notes' => 'Observation text',
 			'validatorTS' => new DateTime,
 			'latitude' => '42.118900',
-			'longitude' => '1.886900',
+			'longitude' => '1.865000',
 			'elevation' => '1998.00',
 			'accuracy' => 50,
 			'created_at' => new DateTime,   

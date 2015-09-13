@@ -20,7 +20,8 @@ class Area extends Eloquent {
 	{
 
 		return $query->join('StateAreas', 'areaId', '=', 'Areas.id')
-			->where('StateAreas.stateId', '=', $stateId);
+			->where('StateAreas.stateId', '=', $stateId)
+			->select('Areas.*');
 
 	}
 
@@ -28,7 +29,8 @@ class Area extends Eloquent {
 	{
 
 		return $query->join('RegionAreas', 'areaId', '=', 'Areas.id')
-			->where('RegionAreas.regionId', '=', $regionId);
+			->where('RegionAreas.regionId', '=', $regionId)
+			->select('Areas.*');
 
 	}
 
@@ -36,6 +38,13 @@ class Area extends Eloquent {
 	{
 
 		return $query->orderBy('Areas.name', 'ASC');
+
+	}
+
+	public function scopeZOrder($query)
+	{
+
+		return $query->orderBy('Areas.zIndex', 'ASC');
 
 	}
 

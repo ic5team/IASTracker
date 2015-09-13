@@ -7,6 +7,7 @@ var userObservationsMarkers = null;
 var userValidatedMarkers = null;
 var otherUsersObservationsMarkers = null;
 var otherUsersValidatedMarkers = null;
+var shapeLayers = null;
 
 $(document).ready(function () {
 
@@ -22,9 +23,13 @@ $(document).ready(function () {
 		format: 'DD/MM/YYYY'
 	});
 
-	api.getIASMapFilter(function(data) { iasList = data; configureSwitch();}, "#iasContents");
-	api.getObservations(addObservationMarkers);
+	api.getIASMapFilter(function(data) { 
+		iasList = data; 
+		configureSwitch();
+		api.getObservations(addObservationMarkers);
+	}, "#iasContents");
 	loadingImage = $('#contentModalContents').html();
+	configureShapes();
 
 });
 
@@ -113,7 +118,7 @@ function addObservationMarkers(data)
 
 			var greenIcon = constructValidatedIcon();
 			marker = mapHandler.createMarker(current.latitude, current.longitude, 
-				current.accuracy, 'red', '#f03', 0.5, {id : current.id}, onMarkerClick, greenIcon);
+				current.accuracy, 'red', '#f03', 0.5, {id : current.id, IASId: current.IASId}, onMarkerClick, greenIcon);
 
 			if(current.userId != loggedUserId)
 				otherUsersValidatedMarkers.push(marker);
@@ -125,7 +130,7 @@ function addObservationMarkers(data)
 		{
 
 			marker = mapHandler.createMarker(current.latitude, current.longitude, 
-				current.accuracy, 'red', '#f03', 0.5, {id : current.id}, onMarkerClick);
+				current.accuracy, 'red', '#f03', 0.5, {id : current.id, IASId: current.IASId}, onMarkerClick);
 
 			if(current.userId != loggedUserId)
 				otherUsersObservationsMarkers.push(marker);
@@ -144,6 +149,7 @@ function addObservationMarkers(data)
 	$("#userObsCheckBox").bootstrapSwitch('disabled', false);
 
 	$('#overlay').hide();
+
 }
 
 function onMarkerClick(e)
@@ -259,7 +265,9 @@ function showObservationsAux( onlyUserObs )
 		for(var i=0; i<userObservationsMarkers.length; ++i)
 		{
 
-			mapHandler.addMarker(userObservationsMarkers[i]);
+			var current = userObservationsMarkers[i];
+			if($('#IASCheck' + current.marker.options.IASId).is(':checked'))
+				mapHandler.addMarker(current);
 
 		}
 
@@ -269,7 +277,9 @@ function showObservationsAux( onlyUserObs )
 			for(var i=0; i<otherUsersObservationsMarkers.length; ++i)
 			{
 
-				mapHandler.addMarker(otherUsersObservationsMarkers[i]);
+				var current = otherUsersObservationsMarkers[i];
+				if($('#IASCheck' + current.marker.options.IASId).is(':checked'))
+					mapHandler.addMarker(otherUsersObservationsMarkers[i]);
 
 			}
 
@@ -282,7 +292,9 @@ function showObservationsAux( onlyUserObs )
 		for(var i=0; i<userObservationsMarkers.length; ++i)
 		{
 
-			mapHandler.removeMarker(userObservationsMarkers[i]);
+			var current = userObservationsMarkers[i];
+			if($('#IASCheck' + current.marker.options.IASId).is(':checked'))
+				mapHandler.removeMarker(userObservationsMarkers[i]);
 
 		}
 
@@ -292,7 +304,9 @@ function showObservationsAux( onlyUserObs )
 			for(var i=0; i<otherUsersObservationsMarkers.length; ++i)
 			{
 
-				mapHandler.removeMarker(otherUsersObservationsMarkers[i]);
+				var current = otherUsersObservationsMarkers[i];
+				if($('#IASCheck' + current.marker.options.IASId).is(':checked'))
+					mapHandler.removeMarker(otherUsersObservationsMarkers[i]);
 
 			}
 
@@ -311,7 +325,9 @@ function showValidatedAux( onlyUserObs )
 		for(var i=0; i<userValidatedMarkers.length; ++i)
 		{
 
-			mapHandler.addMarker(userValidatedMarkers[i]);
+			var current = userValidatedMarkers[i];
+			if($('#IASCheck' + current.marker.options.IASId).is(':checked'))
+				mapHandler.addMarker(userValidatedMarkers[i]);
 
 		}
 
@@ -321,7 +337,9 @@ function showValidatedAux( onlyUserObs )
 			for(var i=0; i<otherUsersValidatedMarkers.length; ++i)
 			{
 
-				mapHandler.addMarker(otherUsersValidatedMarkers[i]);
+				var current = otherUsersValidatedMarkers[i];
+				if($('#IASCheck' + current.marker.options.IASId).is(':checked'))
+					mapHandler.addMarker(otherUsersValidatedMarkers[i]);
 
 			}
 
@@ -334,7 +352,9 @@ function showValidatedAux( onlyUserObs )
 		for(var i=0; i<userValidatedMarkers.length; ++i)
 		{
 
-			mapHandler.removeMarker(userValidatedMarkers[i]);
+			var current = userValidatedMarkers[i];
+			if($('#IASCheck' + current.marker.options.IASId).is(':checked'))
+				mapHandler.removeMarker(userValidatedMarkers[i]);
 
 		}
 
@@ -344,7 +364,9 @@ function showValidatedAux( onlyUserObs )
 			for(var i=0; i<otherUsersValidatedMarkers.length; ++i)
 			{
 
-				mapHandler.removeMarker(otherUsersValidatedMarkers[i]);
+				var current = otherUsersValidatedMarkers[i];
+				if($('#IASCheck' + current.marker.options.IASId).is(':checked'))
+					mapHandler.removeMarker(otherUsersValidatedMarkers[i]);
 
 			}
 
@@ -364,8 +386,8 @@ function filterObs()
 	var fromDate = $('#fromDate').val();
 	var toDate = $('#toDate').val();
 	var stateId = $('#input-state').val();
-	var regionId = $('#input-region').val();
-	var areaId = $('#input-area').val();
+	var regionId = $('#input-regions').val();
+	var areaId = $('#input-areas').val();
 
 	api.getFilteredObservations( 
 		{
@@ -414,9 +436,211 @@ function clearObservations()
 
 }
 
-function activeIAS(i)
+function activeIAS(id)
 {
 
-	alert('clicked');
+	if($('#IASCheck'+id).is(':checked'))
+	{
+
+		if(!$('#userObsCheckBox').is(':checked'))
+		{
+
+			if($('#validatedCheckBox').is(':checked'))
+			{
+
+				for(var i=0; i<otherUsersValidatedMarkers.length; ++i)
+				{
+
+					var current = otherUsersValidatedMarkers[i];
+					if(current.marker.options.IASId == id)
+						mapHandler.addMarker(current);
+
+				}
+
+			}
+
+			if($('#observedCheckBox').is(':checked'))
+			{
+
+				for(var i=0; i<otherUsersObservationsMarkers.length; ++i)
+				{
+
+					var current = otherUsersObservationsMarkers[i];
+					if(current.marker.options.IASId == id)
+						mapHandler.addMarker(current);
+
+				}
+
+			}
+
+		}
+
+		if($('#validatedCheckBox').is(':checked'))
+		{
+
+			for(var i=0; i<userValidatedMarkers.length; ++i)
+			{
+
+				var current = userValidatedMarkers[i];
+				if(current.marker.options.IASId == id)
+					mapHandler.addMarker(current);
+
+			}
+
+		}
+
+		if($('#observedCheckBox').is(':checked'))
+		{
+
+			for(var i=0; i<userObservationsMarkers.length; ++i)
+			{
+
+				var current = userObservationsMarkers[i];
+				if(current.marker.options.IASId == id)
+					mapHandler.addMarker(current);
+
+			}
+
+		}
+
+	}
+	else
+	{
+
+		if(!$('#userObsCheckBox').is(':checked'))
+		{
+
+			if($('#validatedCheckBox').is(':checked'))
+			{
+
+				for(var i=0; i<otherUsersValidatedMarkers.length; ++i)
+				{
+
+					var current = otherUsersValidatedMarkers[i];
+					if(current.marker.options.IASId == id)
+						mapHandler.removeMarker(current);
+
+				}
+
+			}
+
+			if($('#observedCheckBox').is(':checked'))
+			{
+
+				for(var i=0; i<otherUsersObservationsMarkers.length; ++i)
+				{
+
+					var current = otherUsersObservationsMarkers[i];
+					if(current.marker.options.IASId == id)
+						mapHandler.removeMarker(current);
+
+				}
+
+			}
+
+		}
+
+		if($('#validatedCheckBox').is(':checked'))
+		{
+
+			for(var i=0; i<userValidatedMarkers.length; ++i)
+			{
+
+				var current = userValidatedMarkers[i];
+				if(current.marker.options.IASId == id)
+					mapHandler.removeMarker(current);
+
+			}
+
+		}
+
+		if($('#observedCheckBox').is(':checked'))
+		{
+
+			for(var i=0; i<userObservationsMarkers.length; ++i)
+			{
+
+				var current = userObservationsMarkers[i];
+				if(current.marker.options.IASId == id)
+					mapHandler.removeMarker(current);
+
+			}
+
+		}
+
+	}
+
+}
+
+function configureShapes()
+{
+
+	shapeLayers = new Array();
+	for(var i=0; i<shapes.length; ++i)
+	{
+
+		var current = shapes[i];
+		var layer = new L.Shapefile(current, {
+			style : function(feature) {
+				return {
+					"color": randomColor(),
+					"weight": 4,
+					"opacity": 1
+					};
+			},
+			onEachFeature: function(feature, layer) {
+				layer.bindPopup("" + shapeNames[feature.properties.IASRID]);
+			}
+		});
+		shapeLayers.push(layer);
+
+	}
+
+}
+
+function randomColor() {
+    // HSV to RBG adapted from: http://mjijackson.com/2008/02/rgb-to-hsl-and-rgb-to-hsv-color-model-conversion-algorithms-in-javascript
+    var r, g, b;
+    var h = Math.random();
+    var i = ~~(h * 6);
+    var f = h * 6 - i;
+    var q = 1 - f;
+    switch(i % 6){
+        case 0: r = 1; g = f; b = 0; break;
+        case 1: r = q; g = 1; b = 0; break;
+        case 2: r = 0; g = 1; b = f; break;
+        case 3: r = 0; g = q; b = 1; break;
+        case 4: r = f; g = 0; b = 1; break;
+        case 5: r = 1; g = 0; b = q; break;
+    }
+    var c = "#" + ("00" + (~ ~(r * 255)).toString(16)).slice(-2) + ("00" + (~ ~(g * 255)).toString(16)).slice(-2) + ("00" + (~ ~(b * 255)).toString(16)).slice(-2);
+    return (c);
+}
+
+function showAreas()
+{
+
+	if($('#areasCheckBox').is(':checked'))
+	{
+
+		for(var i=0; i<shapeLayers.length; ++i)
+		{
+
+			mapHandler.addLayer(shapeLayers[i]);
+
+		}
+
+	}
+	else
+	{
+
+		for(var i=0; i<shapeLayers.length; ++i)
+		{
+
+			mapHandler.removeLayer(shapeLayers[i]);
+
+		}
+
+	}	
 
 }

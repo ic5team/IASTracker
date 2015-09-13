@@ -24,29 +24,44 @@ class ObservationController extends RequestController {
 		$regionId = Input::has('regionId') ? Input::get('regionId') : -1;
 		$areaId = Input::has('areaId') ? Input::get('areaId') : -1;
 
-		$areas = array();
+		
+		$areaIds = array();
 		if(-1 != $areaId)
 		{
 
-			$areas[] = Area::find($areaId);
+			$area = Area::find($areaId);
+			$areaIds[] = $area->id;
 
 		}
 		else if(-1 != $regionId)
 		{
 
-			$areas = RegionAreas::withRegionId($regionId);
+			$areas = array();
+			$areas = RegionArea::withRegionId($regionId)->get();
+
+			for($i=0; $i<count($areas); ++$i)
+				$areaIds[] = $areas[$i]->areaId;
 
 		}
 		else if(-1 != $stateId)
 		{
 
-			$areas = State::getAreas();
+			$areas = array();
+			$areas = StateArea::withStateId($stateId)->get();
+
+			for($i=0; $i<count($areas); ++$i)
+				$areaIds[] = $areas[$i]->areaId;
 
 		}
+		else
+		{
 
-		$areaIds = array();
-		for($i=0; $i<count($areas); ++$i)
-			$areaIds[] = $areas[$i]->areaId;
+			$areas = Area::all();
+
+			for($i=0; $i<count($areas); ++$i)
+				$areaIds[] = $areas[$i]->id;
+
+		}
 
 		$elements = $this->getFilteredElements($first, $num, $taxonomyId, $fromDate, 
 			$toDate, $areaIds);
