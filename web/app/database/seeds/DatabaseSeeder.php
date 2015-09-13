@@ -552,6 +552,8 @@ class IASImagesTableSeeder extends Seeder {
 		));
 
 	}
+
+
 }
 
 class IASImagesTextTableSeeder extends Seeder {
@@ -701,7 +703,7 @@ class ObservationsTableSeeder extends Seeder {
 	public function run()
 	{
 	
-		DB::table('Observations')->insert(array(
+		DB::table('observations')->insert(array(
 			'id'  => 4,
 			'IASId' => 1,
 			'userId' => 1,
@@ -717,7 +719,7 @@ class ObservationsTableSeeder extends Seeder {
 			'updated_at' => new DateTime
 		));
 
-		DB::table('Observations')->insert(array(
+		DB::table('observations')->insert(array(
 			'id'  => 7,
 			'IASId' => 2,
 			'userId' => 1,
@@ -733,6 +735,8 @@ class ObservationsTableSeeder extends Seeder {
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime
 		));
+
+		DB::statement('UPDATE observations SET geom=(SELECT ST_SetSRID(ST_MakePoint(longitude, latitude), 4326));');
 
 	}
 

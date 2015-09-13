@@ -1,0 +1,143 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.2.5
+-- Dumped by pg_dump version 9.2.5
+-- Started on 2015-08-05 15:25:43
+
+SET statement_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 172 (class 1259 OID 36888)
+-- Name: IAS; Type: TABLE; Schema: public; Owner: iastracker; Tablespace: 
+--
+
+CREATE TABLE "IAS" (
+    id integer NOT NULL,
+    "latinName" character varying(255) NOT NULL,
+    "taxonId" integer NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    "creatorId" integer,
+    deleted_at timestamp without time zone
+);
+
+
+ALTER TABLE public."IAS" OWNER TO iastracker;
+
+--
+-- TOC entry 187 (class 1259 OID 36938)
+-- Name: IAS_id_seq; Type: SEQUENCE; Schema: public; Owner: iastracker
+--
+
+CREATE SEQUENCE "IAS_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public."IAS_id_seq" OWNER TO iastracker;
+
+--
+-- TOC entry 2038 (class 0 OID 0)
+-- Dependencies: 187
+-- Name: IAS_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: iastracker
+--
+
+ALTER SEQUENCE "IAS_id_seq" OWNED BY "IAS".id;
+
+
+--
+-- TOC entry 1921 (class 2604 OID 37298)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: iastracker
+--
+
+ALTER TABLE ONLY "IAS" ALTER COLUMN id SET DEFAULT nextval('"IAS_id_seq"'::regclass);
+
+
+--
+-- TOC entry 2032 (class 0 OID 36888)
+-- Dependencies: 172
+-- Data for Name: IAS; Type: TABLE DATA; Schema: public; Owner: iastracker
+--
+
+COPY "IAS" (id, "latinName", "taxonId", created_at, updated_at, "creatorId", deleted_at) FROM stdin;
+6	Dreissena polymorpha	2	2015-08-04 13:27:00	2015-08-04 13:27:00	\N	\N
+7	Rhynchophorus ferrugineus	3	2015-08-04 13:27:00	2015-08-04 13:27:00	\N	\N
+8	Procambarus clarkii	4	2015-08-04 13:27:00	2015-08-04 13:27:00	\N	\N
+9	Trachemys scripta	5	2015-08-04 13:27:00	2015-08-04 13:27:00	\N	\N
+10	Estrilda astrild	6	2015-08-04 13:27:00	2015-08-04 13:27:00	\N	\N
+11	Myocastor coypus	7	2015-08-04 13:27:00	2015-08-04 13:27:00	\N	\N
+12	Carpobrotus spp.	0	2015-08-04 13:27:00	2015-08-04 13:27:00	\N	\N
+0	Agave americana	0	2015-08-04 13:27:00	2015-08-04 13:27:00	\N	\N
+1	Ailanthus altissima	0	2015-08-04 13:27:00	2015-08-04 13:21:00	\N	\N
+3	Cortaderia selloana	0	2015-08-04 13:27:00	2015-08-04 13:27:00	\N	\N
+4	Opuntia spp.	0	2015-08-04 13:27:00	2015-08-04 13:27:00	\N	\N
+5	Senecio angulatus	0	2015-08-04 13:27:00	2015-08-04 13:27:00	\N	\N
+13	Mustela vison	7	2015-08-04 13:27:00	2015-08-04 13:27:00	\N	\N
+14	Cotoneaster horizontalis	0	2015-08-04 13:27:00	2015-08-04 13:27:00	\N	\N
+15	Heracleum mantegazzianum	0	2015-08-04 13:27:00	2015-08-04 13:27:00	\N	\N
+16	Phytolacca americana	0	2015-08-04 13:27:00	2015-08-04 13:27:00	\N	\N
+17	Myiopsitta monachus	6	2015-08-04 13:27:00	2015-08-04 13:27:00	\N	\N
+18	Psittacula krameri	6	2015-08-04 13:27:00	2015-08-04 13:27:00	\N	\N
+19	Psittacula eupatria	6	2015-08-04 13:27:00	2015-08-04 13:27:00	\N	\N
+20	Procyon lotor	7	2015-08-04 13:27:00	2015-08-04 13:27:00	\N	\N
+21	Pomacea insularum	2	2015-08-04 13:27:00	2015-08-04 13:27:00	\N	\N
+\.
+
+
+--
+-- TOC entry 2039 (class 0 OID 0)
+-- Dependencies: 187
+-- Name: IAS_id_seq; Type: SEQUENCE SET; Schema: public; Owner: iastracker
+--
+
+SELECT pg_catalog.setval('"IAS_id_seq"', 2, true);
+
+
+--
+-- TOC entry 1923 (class 2606 OID 37056)
+-- Name: IAS_pkey; Type: CONSTRAINT; Schema: public; Owner: iastracker; Tablespace: 
+--
+
+ALTER TABLE ONLY "IAS"
+    ADD CONSTRAINT "IAS_pkey" PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1924 (class 2606 OID 37089)
+-- Name: ias_creatorid_foreign; Type: FK CONSTRAINT; Schema: public; Owner: iastracker
+--
+
+ALTER TABLE ONLY "IAS"
+    ADD CONSTRAINT ias_creatorid_foreign FOREIGN KEY ("creatorId") REFERENCES "Users"(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 1925 (class 2606 OID 37094)
+-- Name: ias_taxonid_foreign; Type: FK CONSTRAINT; Schema: public; Owner: iastracker
+--
+
+ALTER TABLE ONLY "IAS"
+    ADD CONSTRAINT ias_taxonid_foreign FOREIGN KEY ("taxonId") REFERENCES "IASTaxons"(id) ON DELETE CASCADE;
+
+
+-- Completed on 2015-08-05 15:25:44
+
+--
+-- PostgreSQL database dump complete
+--
+

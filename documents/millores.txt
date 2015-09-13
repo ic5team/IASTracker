@@ -2,9 +2,43 @@ Una pantalla on marqui les coses que falten (per exemple avisos quan falta una t
 Canviar les imatges de les observacions
 Pantalla d'usuari
 Les arees poden estar entre estats
-Taula de IAS preferides
 La llista d'IAS d'una zona és ordenada
-Nom dels idiomes a la base de dades
-Afegir ordre de preferència dels idiomes per si algun text no hi és
 Canviar tots els .js per la versió minimitzada
 Fer categories segons els % de validació (noms de biolegs famosos?)
+
+Relació area i observació múltiple. Una Obs pot estar en més d'una IAS
+Taxons, IAS de la taula de taxons del backup
+Passar taula d'idiomes a la Blanca
+Afegir descripcions dels repositoris
+Afegir espanyol
+App de beta
+Muntar mapes al servidor
+
+
+	Al afegir una observació s'ha de fer la intersecció del punt amb 
+aquestes dades. També necessitem el shape de cada àrea per ensenyar-les.
+	Necessitem un shape per cada regió per generar el polígon per posar-lo 
+a la bd. Al afegir una àrea es passa a polígon (com???) i es calcula si hi 
+ha intersecció entre l'àrea i els polígons de les regions per crear les 
+relacions.
+
+Obrir consola PSQL (Plugins -> PSQL Console al PGAdmin)
+Importar dades
+psql --username=iastracker -d IASTrackerDB -f estats.sql
+psql --username=iastracker -d IASTrackerDB -f regions.sql
+psql --username=iastracker -d IASTrackerDB -f areas.sql
+
+SELECT UpdateGeometrySRID('cntr_rg_03m_2014_wgs84','geom',4326);
+INSERT INTO "States"("name", "cntr_id", "isActive", "creatorId", "created_at", "updated_at", "geom") SELECT "name_gaul", "cntr_id", FALSE, 1, NOW(), NOW(), "geom" FROM cntr_rg_03m_2014_wgs84 WHERE poli_org_c != 99;
+DROP TABLE cntr_rg_03m_2014_wgs84;
+SELECT UpdateGeometrySRID('nuts_rg_01m_2013_levl_2_wgs84','geom',4326);
+INSERT INTO "regions"("name", "stateId", "isActive", "creatorId", "created_at", "updated_at", "geom") SELECT b."name_asci", (SELECT id FROM "States" WHERE b."cntr_code"="cntr_id"), FALSE, 1, NOW(), NOW(), b."geom" FROM nuts_rg_01m_2013_levl_2_wgs84 b;
+DROP TABLE nuts_rg_01m_2013_levl_2_wgs84;
+SELECT UpdateGeometrySRID('iastracker_regions_wgs84','geom',4326);
+INSERT INTO "Areas"("shapeFileURL", "name", "zIndex", "creatorId", "created_at", "updated_at", "geom") SELECT '', "iasr_name", "iasr_order", 1, NOW(), NOW(), "geom" FROM iastracker_regions_wgs84;
+DROP TABLE iastracker_regions_wgs84;
+INSERT INTO "RegionAreas"("areaId", "regionId", "created_at", "updated_at") SELECT a.id, r.id, NOW(), NOW() FROM "Areas" a, "regions" r WHERE ST_Intersects(a.geom, r.geom);
+INSERT INTO "StateAreas"("areaId", "stateId", "created_at", "updated_at") SELECT a.id, s.id, NOW(), NOW() FROM "Areas" a, "States" s WHERE ST_Intersects(a.geom, s.geom);
+UPDATE "States" SET "isActive"=TRUE WHERE "name" IN ('Spain', 'Belgium', 'Mexico');
+UPDATE "regions" SET "isActive"=TRUE WHERE "stateId" IN (52, 22, 150);
+INSERT INTO "ObservationAreas"("observationId", "areaId") VALUES()

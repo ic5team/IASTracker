@@ -140,7 +140,7 @@ class CreateForeignKeys extends Migration {
 				->onDelete('cascade');
 		});
 
-		Schema::table('Observations', function(Blueprint $table)
+		Schema::table('observations', function(Blueprint $table)
 		{
 			$table->foreign('IASId')->references('id')->on('IAS');
 			$table->foreign('userId')->references('id')->on('Users')
@@ -150,6 +150,12 @@ class CreateForeignKeys extends Migration {
 			$table->foreign('validatorId')->references('userId')->on('Validators')
 				->onDelete('set null');
 			$table->foreign('statusId')->references('id')->on('Status')
+				->onDelete('cascade');
+		});
+
+		Schema::table('ObservationAreas', function(Blueprint $table)
+		{
+			$table->foreign('observationId')->references('id')->on('observations')
 				->onDelete('cascade');
 			$table->foreign('areaId')->references('id')->on('Areas')
 				->onDelete('cascade');
@@ -167,7 +173,7 @@ class CreateForeignKeys extends Migration {
 
 		Schema::table('ObservationImages', function(Blueprint $table)
 		{
-			$table->foreign('observationId')->references('id')->on('Observations')
+			$table->foreign('observationId')->references('id')->on('observations')
 				->onDelete('cascade');
 		});
 
@@ -213,11 +219,19 @@ class CreateForeignKeys extends Migration {
 		{
 			$table->foreign('areaId')->references('id')->on('Areas')
 				->onDelete('cascade');
-			$table->foreign('regionId')->references('id')->on('Regions')
+			$table->foreign('regionId')->references('id')->on('regions')
 				->onDelete('cascade');
 		});
 
-		Schema::table('Regions', function(Blueprint $table)
+		Schema::table('StateAreas', function(Blueprint $table)
+		{
+			$table->foreign('areaId')->references('id')->on('Areas')
+				->onDelete('cascade');
+			$table->foreign('stateId')->references('id')->on('States')
+				->onDelete('cascade');
+		});
+
+		Schema::table('regions', function(Blueprint $table)
 		{
 			$table->foreign('stateId')->references('id')->on('States')
 				->onDelete('cascade');
@@ -338,14 +352,19 @@ class CreateForeignKeys extends Migration {
 			$table->dropForeign('IASTaxons_creatorId_foreign');
 		});
 
-		Schema::table('Observations', function(Blueprint $table)
+		Schema::table('observations', function(Blueprint $table)
 		{
-			$table->dropForeign('Observations_IASRId_foreign');
-			$table->dropForeign('Observations_userId_foreign');
-			$table->dropForeign('Observations_languageId_foreign');
-			$table->dropForeign('Observations_validatorId_foreign');
-			$table->dropForeign('Observations_statusId_foreign');
-			$table->dropForeign('Observations_areaId_foreign');
+			$table->dropForeign('observations_IASRId_foreign');
+			$table->dropForeign('observations_userId_foreign');
+			$table->dropForeign('observations_languageId_foreign');
+			$table->dropForeign('observations_validatorId_foreign');
+			$table->dropForeign('observations_statusId_foreign');
+		});
+
+		Schema::table('ObservationAreas', function(Blueprint $table)
+		{
+			$table->dropForeign('ObservationAreas_observationId_foreign');
+			$table->dropForeign('ObservationAreas_areaId_foreign');
 		});
 
 		Schema::table('IASAreasValidators', function(Blueprint $table)
@@ -395,10 +414,16 @@ class CreateForeignKeys extends Migration {
 			$table->dropForeign('RegionAreas_regionId_foreign');
 		});
 
-		Schema::table('Regions', function(Blueprint $table)
+		Schema::table('StateAreas', function(Blueprint $table)
 		{
-			$table->dropForeign('Regions_stateId_foreign');
-			$table->dropForeign('Regions_creatorId_foreign');
+			$table->dropForeign('StateAreas_areaId_foreign');
+			$table->dropForeign('StateAreas_stateId_foreign');
+		});
+
+		Schema::table('regions', function(Blueprint $table)
+		{
+			$table->dropForeign('regions_stateId_foreign');
+			$table->dropForeign('regions_creatorId_foreign');
 		});
 
 		Schema::table('States', function(Blueprint $table)

@@ -199,7 +199,7 @@ class ObservationController extends RequestController {
 	{
 
 		$values = Observation::filtered($taxonomyId, $fromDate, $toDate,
-			$areasId)->orderBy('Observations.id')
+			$areasId)->orderBy('observations.id')
 			->skip($first)->take($num)->get();
 
 		return $values;

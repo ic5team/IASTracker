@@ -145,6 +145,7 @@ class Inicial extends Migration {
 			$table->increments('id');
 			$table->string('name',255);
 			$table->string('URL',255);
+			$table->text('description')->nullable();
 			$table->integer('creatorId')->unsigned()->nullable();
 			$table->timestamps();
 		});
@@ -187,16 +188,17 @@ class Inicial extends Migration {
 			$table->increments('id');
 			$table->string('shapeFileURL', 255);
 			$table->string('name', 255);
+			$table->integer('zIndex');
 			$table->integer('creatorId')->unsigned()->nullable();
 			$table->timestamps();
 		});
 
-		Schema::create('Regions', function(Blueprint $table)
+		Schema::create('regions', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('shapeFileURL', 255);
 			$table->string('name', 255);
 			$table->integer('stateId')->unsigned()->nullable();
+			$table->boolean('isActive');
 			$table->integer('creatorId')->unsigned()->nullable();
 			$table->timestamps();
 		});
@@ -212,9 +214,18 @@ class Inicial extends Migration {
 		Schema::create('States', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('shapeFileURL', 255);
 			$table->string('name', 255);
+			$table->string('cntr_id', 20);
+			$table->boolean('isActive');
 			$table->integer('creatorId')->unsigned()->nullable();
+			$table->timestamps();
+		});
+
+		Schema::create('StateAreas', function(Blueprint $table)
+		{
+			$table->increments('id');
+			$table->integer('areaId')->unsigned();
+			$table->integer('stateId')->unsigned();
 			$table->timestamps();
 		});
 
@@ -228,7 +239,7 @@ class Inicial extends Migration {
 			$table->timestamps();
 		});
 
-		Schema::create('Observations', function(Blueprint $table)
+		Schema::create('observations', function(Blueprint $table)
 		{
 			$table->increments('id');
 			$table->integer('IASId')->unsigned();
@@ -242,8 +253,8 @@ class Inicial extends Migration {
 			$table->decimal('longitude', 9, 6);
 			$table->decimal('elevation', 6, 2);
 			$table->decimal('accuracy', 6, 2);
-			$table->integer('areaId')->nullable();
 			$table->timestamps();
+
 		});
 
 		Schema::create('IASAreasValidators', function(Blueprint $table)
@@ -252,6 +263,14 @@ class Inicial extends Migration {
 			$table->integer('IASAId')->unsigned();
 			$table->integer('validatorId')->unsigned();
 			$table->integer('creatorId')->unsigned()->nullable();
+			$table->timestamps();
+		});
+
+		Schema::create('ObservationAreas', function(Blueprint $table)
+		{
+			$table->increments('id');
+			$table->integer('observationId')->unsigned();
+			$table->integer('areaId')->unsigned();
 			$table->timestamps();
 		});
 
@@ -318,6 +337,12 @@ class Inicial extends Migration {
 			$table->timestamps();
 		});
 
+		DB::statement('CREATE EXTENSION postgis');
+		DB::statement("SELECT AddGeometryColumn ('observations','geom',4326,'POINT',2)");
+		DB::statement("SELECT AddGeometryColumn ('regions','geom',4326,'MULTIPOLYGON',2)");
+		DB::statement("SELECT AddGeometryColumn ('Areas','geom',4326,'MULTIPOLYGON',2)");
+		DB::statement("SELECT AddGeometryColumn ('States','geom',4326,'MULTIPOLYGON',2)");
+
 	}
 
 	/**
@@ -344,12 +369,14 @@ class Inicial extends Migration {
 		Schema::drop('IASDescriptions');
 		Schema::drop('IASAreas');
 		Schema::drop('Areas');
-		Schema::drop('Regions');
+		Schema::drop('regions');
 		Schema::drop('RegionAreas');
 		Schema::drop('States');
+		Schema::drop('StateAreas');
 		Schema::drop('IASTaxons');
-		Schema::drop('Observations');
+		Schema::drop('observations');
 		Schema::drop('IASAreasValidators');
+		Schema::drop('ObservationAreas');
 		Schema::drop('ObservationImages');
 		Schema::drop('Status');
 		Schema::drop('StatusTexts');
