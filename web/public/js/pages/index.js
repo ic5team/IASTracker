@@ -14,11 +14,60 @@ $(document).ready(function () {
 	$("#validatedCheckBox").attr("disabled", true);
 	$("#userObsCheckBox").attr("disabled", true);
 
+	$('#input-state').change(onStateChanged);
+
 	mapHandler = new MapHandler("map", mapDescriptors, crsDescriptors, "layersControl", "controls", "observationsControls");
 	$('.datetimepicker').datetimepicker({
 		locale: 'ca',
 		format: 'DD/MM/YYYY'
 	});
+
+	api.getIASMapFilter(function(data) { iasList = data; configureSwitch();}, "#iasContents");
+	api.getObservations(addObservationMarkers);
+	loadingImage = $('#contentModalContents').html();
+
+});
+
+function onStateChanged()
+{
+
+	$('#regionAndAreaSelect').hide();
+	$('#filterSelectLoader').show();
+	var id = $('#input-state').val();
+	api.getStateRegions(id, stateRegionsOk, '#regionAndAreaSelect');
+
+}
+
+function stateRegionsOk(data)
+{
+
+	$('#input-regions').change(onRegionChanged);
+	$('#filterSelectLoader').hide();
+	$('#regionAndAreaSelect').show();
+
+}
+
+function onRegionChanged()
+{
+
+	$('#areaSelect').hide();
+	$('#filterSelectLoader').show();
+	var id = $('#input-regions').val();
+	api.getRegionAreas(id, areaRegionsOk, '#areaSelect');
+
+}
+
+function areaRegionsOk(data)
+{
+
+	$('#filterSelectLoader').hide();
+	$('#areaSelect').show();
+
+}
+
+function configureSwitch()
+{
+
 	$(".IASCheck").bootstrapSwitch({size: 'mini'});
 	$(".IASCheck").each(function(index) {
 
@@ -27,17 +76,22 @@ $(document).ready(function () {
 		{
 
 			var func = window[functionString];
-			$(this).on('switchChange.bootstrapSwitch', func);
+			if("function" === typeof func)
+			{
+
+				var arg = $(this).attr('data');
+				if(undefined !== typeof arg)
+					$(this).on('switchChange.bootstrapSwitch', function() { func.apply(null, [arg]); });
+				else
+					$(this).on('switchChange.bootstrapSwitch', func);
+
+			}
 
 		}
 
 	});
 
-	api.getIASMapFilter(function(data) { iasList = data; $(".IASCheck").bootstrapSwitch({size: 'mini'});}, "#iasContents");
-	api.getObservations(addObservationMarkers);
-	loadingImage = $('#contentModalContents').html();
-
-});
+}
 
 function addObservationMarkers(data)
 {
@@ -102,7 +156,7 @@ function onMarkerClick(e)
 
 }
 
-function veureIAS(id)
+function showIAS(id)
 {
 
 	$('#contentModalContents').html(loadingImage);
@@ -133,22 +187,24 @@ function addIASMarkers(data)
 	{
 
 		var current = data[i];
+		var marker;
 		if(1 == current.statusId)
 		{
 
 			var greenIcon = constructValidatedIcon();
-			iasMapHandler.addMarker(current.latitude, current.longitude, 
-				current.accuracy, 'red', '#f03', 0.5, {id : current.id}, null, greenIcon);
+			marker = iasMapHandler.createMarker(current.latitude, current.longitude, 
+				current.accuracy, 'red', '#f03', 0.5, {id : current.id}, onMarkerClick, greenIcon);
 
 		}
 		else
 		{
 
-			iasMapHandler.addMarker(current.latitude, current.longitude, 
-				current.accuracy, 'red', '#f03', 0.5, {id : current.id});
+			marker = iasMapHandler.createMarker(current.latitude, current.longitude, 
+				current.accuracy, 'red', '#f03', 0.5, {id : current.id}, onMarkerClick);
 
 		}
-		
+
+		iasMapHandler.addMarker(marker);
 
 	}
 
@@ -355,5 +411,12 @@ function clearObservations()
 		mapHandler.removeMarker(otherUsersValidatedMarkers[i]);
 
 	}
+
+}
+
+function activeIAS(i)
+{
+
+	alert('clicked');
 
 }

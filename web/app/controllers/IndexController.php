@@ -82,13 +82,10 @@ class IndexController extends BaseController {
 
 		}
 
-		$states = array();
-		$regions = array();
-		$areas = array();
+		$states = State::active(true)->ordered()->get();
 
 		return View::make("public/index", array('data' => $data, 
-			'taxonomies' => $taxonomies, 'states' => $states, 
-			'regions' => $regions, 'areas' => $areas));
+			'taxonomies' => $taxonomies, 'states' => $states));
 
 	}
 

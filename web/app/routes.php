@@ -33,3 +33,5 @@
 	Route::get('/v1/Observations/{id}', array('uses' => 'ObservationController@show'));
 	Route::get('/v1/IAS/{id}', array('uses' => 'IASController@show'));
 	Route::get('/v1/IAS/{id}/Observations', array('uses' => 'IASController@getObservations'));
+	Route::get('/v1/States/{id}/Regions', array('uses' => 'StateController@getRegions'));
+	Route::get('/v1/Regions/{id}/Areas', array('uses' => 'RegionController@getAreas'));

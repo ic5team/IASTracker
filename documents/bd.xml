@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<!-- SQL XML created by WWW SQL Designer, http://code.google.com/p/wwwsqldesigner/ -->
-<!-- Active URL: http://127.0.0.1/SQLDesignerOriginal/ -->
+<!-- SQL XML created by WWW SQL Designer, https://github.com/ondras/wwwsqldesigner/ -->
+<!-- Active URL: http://127.0.0.1/sqldesigner/ -->
 <sql>
 <datatypes db="mysql">
 	<group label="Numeric" color="rgb(238,238,170)">
@@ -197,6 +197,9 @@
 <row name="URL" null="0" autoincrement="0">
 <datatype>VARCHAR</datatype>
 <default>'NULL'</default></row>
+<row name="descripcio" null="1" autoincrement="0">
+<datatype>VARCHAR</datatype>
+<default>NULL</default></row>
 <row name="creatorId" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -229,7 +232,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="436" y="358" name="IAS">
+<table x="454" y="410" name="IAS">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -240,9 +243,6 @@
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="IASTaxons" row="id" />
 </row>
-<row name="defaultImageId" null="1" autoincrement="0">
-<datatype>INTEGER</datatype>
-<default>NULL</default></row>
 <row name="creatorId" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -306,9 +306,9 @@
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="IAS" row="id" />
 </row>
-<row name="areaId" null="1" autoincrement="0">
+<row name="regionId" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
-<default>NULL</default><relation table="Area" row="id" />
+<default>NULL</default><relation table="Areas" row="id" />
 </row>
 <row name="order" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
@@ -320,7 +320,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="432" y="714" name="Area">
+<table x="432" y="714" name="Areas">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -329,6 +329,12 @@
 <default>NULL</default></row>
 <row name="name" null="1" autoincrement="0">
 <datatype>VARCHAR</datatype>
+<default>NULL</default></row>
+<row name="geom" null="1" autoincrement="0">
+<datatype>VARCHAR</datatype>
+<default>NULL</default></row>
+<row name="zIndex" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
 <default>NULL</default></row>
 <row name="creatorId" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
@@ -376,7 +382,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="583" y="663" name="Observations">
+<table x="608" y="687" name="observations">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -416,15 +422,6 @@
 <default>NULL</default></row>
 <row name="accuracy" null="1" autoincrement="0">
 <datatype>DECIMAL</datatype>
-<default>NULL</default></row>
-<row name="thumbsUp" null="1" autoincrement="0">
-<datatype>INTEGER</datatype>
-<default>NULL</default></row>
-<row name="thumbsDown" null="1" autoincrement="0">
-<datatype>INTEGER</datatype>
-<default>NULL</default></row>
-<row name="areaId" null="1" autoincrement="0">
-<datatype>INTEGER</datatype>
 <default>NULL</default></row>
 <key type="PRIMARY" name="">
 <part>id</part>
@@ -536,7 +533,7 @@
 <default>NULL</default></row>
 <row name="observationId" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
-<default>NULL</default><relation table="Observations" row="id" />
+<default>NULL</default><relation table="observations" row="id" />
 </row>
 <row name="URL" null="1" autoincrement="0">
 <datatype>VARCHAR</datatype>
@@ -553,9 +550,6 @@
 <datatype>MEDIUMTEXT</datatype>
 <default>NULL</default></row>
 <row name="acknowledgment" null="1" autoincrement="0">
-<datatype>MEDIUMTEXT</datatype>
-<default>NULL</default></row>
-<row name="description" null="1" autoincrement="0">
 <datatype>MEDIUMTEXT</datatype>
 <default>NULL</default></row>
 <row name="languageId" null="1" autoincrement="0">
@@ -608,7 +602,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="1151" y="126" name="Configuration">
+<table x="1183" y="127" name="Configuration">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -621,69 +615,98 @@
 <row name="webName" null="1" autoincrement="0">
 <datatype>VARCHAR</datatype>
 <default>NULL</default></row>
-<row name="CenterLat" null="1" autoincrement="0">
-<datatype>DECIMAL</datatype>
-<default>NULL</default></row>
-<row name="CenterLon" null="1" autoincrement="0">
-<datatype>INTEGER</datatype>
-<default>NULL</default></row>
-<row name="defaultLanguageId" null="1" autoincrement="0">
-<datatype>INTEGER</datatype>
-<default>NULL</default></row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>
 </table>
-<table x="435" y="954" name="Region">
+<table x="412" y="1059" name="Regions">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
-<row name="shapeFileURL" null="1" autoincrement="0">
+<row name="name" null="1" autoincrement="0">
 <datatype>VARCHAR</datatype>
 <default>NULL</default></row>
-<row name="name" null="1" autoincrement="0">
+<row name="geom" null="1" autoincrement="0">
 <datatype>VARCHAR</datatype>
 <default>NULL</default></row>
 <row name="stateId" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="State" row="id" />
 </row>
-<row name="creatorId" null="1" autoincrement="0">
-<datatype>INTEGER</datatype>
+<row name="isActive" null="1" autoincrement="0">
+<datatype>BINARY</datatype>
 <default>NULL</default></row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>
 </table>
-<table x="401" y="844" name="RegionAreas">
+<table x="416" y="888" name="RegionAreas">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
 <row name="areaId" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
-<default>NULL</default><relation table="Area" row="id" />
+<default>NULL</default><relation table="Areas" row="id" />
 </row>
 <row name="regionId" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
-<default>NULL</default><relation table="Region" row="id" />
+<default>NULL</default><relation table="Regions" row="id" />
 </row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>
 </table>
-<table x="245" y="968" name="State">
+<table x="216" y="1128" name="State">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
-<row name="shapeFileURL" null="1" autoincrement="0">
+<row name="name" null="1" autoincrement="0">
 <datatype>VARCHAR</datatype>
 <default>NULL</default></row>
-<row name="name" null="1" autoincrement="0">
+<row name="cntr_id" null="1" autoincrement="0">
+<datatype>VARCHAR</datatype>
+<default>NULL</default></row>
+<row name="isActive" null="1" autoincrement="0">
+<datatype>BINARY</datatype>
+<default>NULL</default></row>
+<row name="geom" null="1" autoincrement="0">
 <datatype>VARCHAR</datatype>
 <default>NULL</default></row>
 <row name="creatorId" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="606" y="1006" name="ObservationAreas">
+<row name="id" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="observationId" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="observations" row="id" />
+</row>
+<row name="areaId" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="Areas" row="id" />
+</row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="216" y="944" name="StateAreas">
+<row name="id" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="areaId" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="Areas" row="id" />
+</row>
+<row name="stateId" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="State" row="id" />
+</row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>

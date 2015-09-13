@@ -7,7 +7,7 @@ class Observation extends Eloquent {
 	 *
 	 * @var string
 	 */
-	protected $table = 'Observations';
+	protected $table = 'observations';
 
 	/**
 	 * The attributes excluded from the model's JSON form.
@@ -19,21 +19,21 @@ class Observation extends Eloquent {
 	public function scopeWithUserId($query, $userId)
 	{
 
-		return $query->where('Observations.userId', '=', $userId);
+		return $query->where('observations.userId', '=', $userId);
 
 	}
 
 	public function scopeWithIASId($query, $userId)
 	{
 
-		return $query->where('Observations.IASId', '=', $userId);
+		return $query->where('observations.IASId', '=', $userId);
 
 	}
 
 	public function scopeValidated($query)
 	{
 
-		return $query->where('Observations.validatorId', '!=', 'null');
+		return $query->where('observations.validatorId', '!=', 'null');
 
 	}
 
@@ -82,17 +82,17 @@ class Observation extends Eloquent {
 		if(-1 != $taxonomyId)
 			$newQuery = $query->join('IAS', 'IASId', '=', 'IAS.id')->where('IAS.taxonId', '=', $taxonomyId);
 
-		$newQuery = $newQuery->where('Observations.created_at', '>=', $fromDate.' 00:00:00');
-		$newQuery = $newQuery->where('Observations.created_at', '<=', $toDate.' 23:59:59');
+		$newQuery = $newQuery->where('observations.created_at', '>=', $fromDate.' 00:00:00');
+		$newQuery = $newQuery->where('observations.created_at', '<=', $toDate.' 23:59:59');
 
 		if(0 != count($areaIds))
 		{
 
-			$newQuery = $newQuery->whereIn('areaId', $areaIds);
+			$newQuery = $newQuery->join('ObservationAreas', 'areaId', '=', 'ObservationAreas.areaId')->whereIn('ObservationAreas.areaId', $areaIds);
 
 		}
 
-		return $newQuery->select('Observations.*');
+		return $newQuery->select('observations.*');
 
 	}
 

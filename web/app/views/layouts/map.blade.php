@@ -97,50 +97,22 @@
 								<select name="state" id="input-state" class="form-control">
 									<option value="-1" >{{Lang::get('ui.allStates')}}</option>
 <?php
-	$keys = array_keys($states);
-	$numStates = count($keys);
+	$numStates = count($states);
 	$str = array();
 	for($i=0; $i<$numStates; ++$i)
 	{
 
-		$str[] = '<option value="'.$keys[$i].'">'.$states[$keys[$i]].'</option>';
+		$str[] = '<option value="'.$states[$i]->id.'">'.$states[$i]->name.'</option>';
 
 	}
 	echo implode(' ', $str);
 ?>
 								</select>
-								<label for="input-regions">{{Lang::get('ui.region')}}</label>
-								<select name="regions" id="input-regions" class="form-control">
-									<option value="-1" >{{Lang::get('ui.allRegions')}}</option>
-<?php
-	$keys = array_keys($regions);
-	$numRegions = count($keys);
-	$str = array();
-	for($i=0; $i<$numRegions; ++$i)
-	{
-
-		$str[] = '<option value="'.$keys[$i].'">'.$regions[$keys[$i]].'</option>';
-
-	}
-	echo implode(' ', $str);
-?>
-								</select>
-								<label for="input-area">{{Lang::get('ui.areas')}}</label>
-								<select name="areas" id="input-area" class="form-control">
-									<option value="-1" >{{Lang::get('ui.allAreas')}}</option>
-<?php
-	$keys = array_keys($areas);
-	$numAreas = count($keys);
-	$str = array();
-	for($i=0; $i<$numAreas; ++$i)
-	{
-
-		$str[] = '<option value="'.$keys[$i].'">'.$areas[$keys[$i]].'</option>';
-
-	}
-	echo implode(' ', $str);
-?>
-								</select>
+								<div id="regionAndAreaSelect">
+								</div>
+								<div id="filterSelectLoader" style="display: none; text-align:center;">
+									{{ HTML::image('img/loader.gif', 'Loading...'); }}
+								</div>
 							</div>
 						</div>
 						<div class="row">
