@@ -181,6 +181,7 @@ class IASController extends RequestController {
 				$obj->description = $current->getDescriptionData($languageId, $defaultLanguageId);
 				$obj->latinName = $current->latinName;
 				$obj->id = $current->id;
+				$obj->taxonId = $current->taxonId;
 
 				unset($imageData);
 				unset($descData);

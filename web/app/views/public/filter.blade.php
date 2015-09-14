@@ -9,14 +9,14 @@
 	<div class="form-group col-md-12">
 		<span><b>{{Lang::get('ui.taxonomy')}}</b> <br /></span>
 		<label for="input-grup">{{Lang::get('ui.group')}}</label>
-		{{Form::select('taxonomy', $taxonomies)}}
+		{{Form::select('taxonomy', $taxonomies, null, array('id' => 'taxonomyFilterSelect'))}}
 	</div>
 </div>
 <div class="row" style="text-align: center;">
 	<div class="col-md-12">
 		<div class="btn-group" role="group" aria-label="...">
-			<button type="button" class="btn btn-default">{{Lang::get('ui.commonName')}}</button>
-			<button type="button" class="btn btn-default active">{{Lang::get('ui.scientificName')}}</button>
+			<button id="btnCommonName" type="button" class="btn btn-default" onclick="showCommonName()">{{Lang::get('ui.commonName')}}</button>
+			<button id="btnScientificName" type="button" class="btn btn-default active" onclick="showScientificName()">{{Lang::get('ui.scientificName')}}</button>
 		</div>
 	</div>
 </div>
@@ -27,11 +27,11 @@
 
 		$current = $data[$i];
 ?>
-<div class="row">
+<div class="row iasRow" id="IASRow{{$current->id}}" >
 	<div class="col-md-2" onclick="showIAS({{$current->id}})" style="cursor:pointer;">
 		{{ HTML::image(Config::get('app.urlImg').$current->image->url, $current->image->text, array('style' => 'width: 20px;')); }}
 	</div>
-	<div class="col-md-6" onclick="showIAS({{$current->id}})" style="cursor:pointer;">
+	<div id="IASName{{$current->id}}"class="col-md-6" onclick="showIAS({{$current->id}})" style="cursor:pointer;">
 		{{$current->latinName}}
 	</div>
 	<div class="col-md-3">

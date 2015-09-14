@@ -8,6 +8,8 @@ var userValidatedMarkers = null;
 var otherUsersObservationsMarkers = null;
 var otherUsersValidatedMarkers = null;
 var shapeLayers = null;
+var activeTimeOut = null;
+var lastXHR = null;
 
 $(document).ready(function () {
 
@@ -23,15 +25,129 @@ $(document).ready(function () {
 		format: 'DD/MM/YYYY'
 	});
 
-	api.getIASMapFilter(function(data) { 
-		iasList = data; 
-		configureSwitch();
-		api.getObservations(addObservationMarkers);
-	}, "#iasContents");
+	api.getIASMapFilter(getIASMapFilterOK, "#iasContents");
 	loadingImage = $('#contentModalContents').html();
 	configureShapes();
 
 });
+
+function getIASMapFilterOK(data)
+{
+
+	iasList = data;
+	
+	configureSwitch();
+	api.getObservations(addObservationMarkers);
+	$('#taxonomyFilterSelect').change(onTaxonFilterChanged);
+
+	$('#searchIAS').keyup(function() {
+
+		if(null != activeTimeOut)
+		clearTimeout(activeTimeOut);
+
+		activeTimeOut = setTimeout(function() {searchIAS()}, 100);
+
+	});
+
+}
+
+function onTaxonFilterChanged()
+{
+
+	var val = $('#taxonomyFilterSelect').val();
+	if(-1 == val)
+	{
+
+		$('.iasRow').show();
+
+	}
+	else
+	{
+
+		for(var i=0; i<iasList.length; ++i)
+		{
+
+			var current = iasList[i];
+			if(current.taxonId == val)
+				$('#IASRow'+ current.id).show();
+			else
+				$('#IASRow'+ current.id).hide();
+
+		}
+
+	}
+
+}
+
+function searchIAS()
+{
+
+	if(null != lastXHR)
+		lastXHR.abort();
+
+	var searchStr = $('#searchIAS').val();
+
+	if('' != searchStr)
+	{
+
+		for(var i=0; i<iasList.length; ++i)
+		{
+
+			var current = iasList[i];
+			var name = '';
+			if($('#btnCommonName').hasClass('active'))
+				name = current.description.name;
+			else
+				name = current.latinName;
+
+			if(name.toLowerCase().indexOf(searchStr.toLowerCase()) > -1)
+				$('#IASRow'+ current.id).show();
+			else
+				$('#IASRow'+ current.id).hide();
+
+		}
+
+	}
+	else
+	{
+
+		$('.iasRow').show();
+
+	}
+
+}
+
+function showCommonName()
+{
+
+	$('#btnCommonName').addClass('active').siblings().removeClass('active');
+	for(var i=0; i<iasList.length; ++i)
+	{
+
+		var current = iasList[i];
+		$('#IASName'+ current.id).html(current.description.name);
+
+	}
+
+	searchIAS();
+
+}
+
+function showScientificName()
+{
+
+	$('#btnScientificName').addClass('active').siblings().removeClass('active');
+	for(var i=0; i<iasList.length; ++i)
+	{
+
+		var current = iasList[i];
+		$('#IASName'+ current.id).html(current.latinName);
+
+	}
+
+	searchIAS();
+
+}
 
 function onStateChanged()
 {
