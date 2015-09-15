@@ -33,7 +33,7 @@ class Observation extends Eloquent {
 	public function scopeValidated($query)
 	{
 
-		return $query->where('observations.validatorId', '!=', 'null');
+		return $query->whereNotNull('observations.validatorId');
 
 	}
 
@@ -74,13 +74,13 @@ class Observation extends Eloquent {
 
 	}
 
-	public function scopeFiltered($query, $taxonomyId, $fromDate, $toDate,
+	public function scopeFiltered($query, $taxonsId, $fromDate, $toDate,
 			$areaIds)
 	{
 
 		$newQuery = $query;
-		if(-1 != $taxonomyId)
-			$newQuery = $query->join('IAS', 'IASId', '=', 'IAS.id')->where('IAS.taxonId', '=', $taxonomyId);
+		if(0 != count($taxonsId))
+			$newQuery = $query->join('IAS', 'IASId', '=', 'IAS.id')->whereIn('IAS.taxonId', $taxonsId);
 
 		$newQuery = $newQuery->where('observations.created_at', '>=', $fromDate.' 00:00:00');
 		$newQuery = $newQuery->where('observations.created_at', '<=', $toDate.' 23:59:59');

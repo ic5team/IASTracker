@@ -1,15 +1,15 @@
 var iasList = null;
 var mapHandler = null;
 var iasMapHandler = null;
+var userMapHandler = null;
 var loadingImage = null;
-var observations = null;
+var userMarkers = null;
 var userObservationsMarkers = null;
 var userValidatedMarkers = null;
 var otherUsersObservationsMarkers = null;
 var otherUsersValidatedMarkers = null;
 var shapeLayers = null;
 var activeTimeOut = null;
-var lastXHR = null;
 
 $(document).ready(function () {
 
@@ -36,7 +36,7 @@ function getIASMapFilterOK(data)
 
 	iasList = data;
 	
-	configureSwitch();
+	configureSwitch(".IASCheck");
 	api.getObservations(addObservationMarkers);
 	$('#taxonomyFilterSelect').change(onTaxonFilterChanged);
 
@@ -54,64 +54,32 @@ function getIASMapFilterOK(data)
 function onTaxonFilterChanged()
 {
 
-	var val = $('#taxonomyFilterSelect').val();
-	if(-1 == val)
-	{
-
-		$('.iasRow').show();
-
-	}
-	else
-	{
-
-		for(var i=0; i<iasList.length; ++i)
-		{
-
-			var current = iasList[i];
-			if(current.taxonId == val)
-				$('#IASRow'+ current.id).show();
-			else
-				$('#IASRow'+ current.id).hide();
-
-		}
-
-	}
+	searchIAS();
 
 }
 
 function searchIAS()
 {
 
-	if(null != lastXHR)
-		lastXHR.abort();
-
 	var searchStr = $('#searchIAS').val();
+	var val = $('#taxonomyFilterSelect').val();
+	var taxonomies = taxonChilds[val];
 
-	if('' != searchStr)
+	for(var i=0; i<iasList.length; ++i)
 	{
 
-		for(var i=0; i<iasList.length; ++i)
-		{
+		var current = iasList[i];
+		var name = '';
+		if($('#btnCommonName').hasClass('active'))
+			name = current.description.name;
+		else
+			name = current.latinName;
 
-			var current = iasList[i];
-			var name = '';
-			if($('#btnCommonName').hasClass('active'))
-				name = current.description.name;
-			else
-				name = current.latinName;
-
-			if(name.toLowerCase().indexOf(searchStr.toLowerCase()) > -1)
-				$('#IASRow'+ current.id).show();
-			else
-				$('#IASRow'+ current.id).hide();
-
-		}
-
-	}
-	else
-	{
-
-		$('.iasRow').show();
+		if((name.toLowerCase().indexOf(searchStr.toLowerCase()) > -1)
+			&& ((current.taxonId == val) || (-1 == val) || (-1 != $.inArray(current.taxonId, taxonomies))))
+			$('#IASRow'+ current.id).show();
+		else
+			$('#IASRow'+ current.id).hide();
 
 	}
 
@@ -186,11 +154,11 @@ function areaRegionsOk(data)
 
 }
 
-function configureSwitch()
+function configureSwitch(classId)
 {
 
-	$(".IASCheck").bootstrapSwitch({size: 'mini'});
-	$(".IASCheck").each(function(index) {
+	$(classId).bootstrapSwitch({size: 'mini'});
+	$(classId).each(function(index) {
 
 		var functionString = $(this).attr('onclick');
 		if("" != functionString)
@@ -218,7 +186,6 @@ function addObservationMarkers(data)
 {
 
 	var numObservacions = data.length;
-	observations = data;
 	userObservationsMarkers = new Array();
 	userValidatedMarkers = new Array();
 	otherUsersObservationsMarkers = new Array();
@@ -278,6 +245,16 @@ function onMarkerClick(e)
 
 }
 
+function showUser(id)
+{
+
+	$('#contentModalContents').html(loadingImage);
+	$('#contentModalTitle').html('')
+	$('#contentModal').modal();
+	api.getUser(id, userLoaded, '#contentModalContents');
+
+}
+
 function showIAS(id)
 {
 
@@ -293,11 +270,20 @@ function observationLoaded(data)
 
 }
 
+function userLoaded(data)
+{
+
+	userMapHandler = new MapHandler("UserObsMap", mapDescriptors, crsDescriptors);
+	api.getUserObservations(data.id, addUserMarkers);
+	configureSwitch(".IASUserCheck");
+
+}
+
 function iasLoaded(data)
 {
 
 	iasMapHandler = new MapHandler("IASObsMap", mapDescriptors, crsDescriptors);
-	api.getIASObservations(data, addIASMarkers)
+	api.getIASObservations(data, addIASMarkers);
 
 }
 
@@ -315,18 +301,51 @@ function addIASMarkers(data)
 
 			var greenIcon = constructValidatedIcon();
 			marker = iasMapHandler.createMarker(current.latitude, current.longitude, 
-				current.accuracy, 'red', '#f03', 0.5, {id : current.id}, onMarkerClick, greenIcon);
+				current.accuracy, 'red', '#f03', 0.5, {id : current.id}, null, greenIcon);
 
 		}
 		else
 		{
 
 			marker = iasMapHandler.createMarker(current.latitude, current.longitude, 
-				current.accuracy, 'red', '#f03', 0.5, {id : current.id}, onMarkerClick);
+				current.accuracy, 'red', '#f03', 0.5, {id : current.id}, null);
 
 		}
 
 		iasMapHandler.addMarker(marker);
+
+	}
+
+}
+
+function addUserMarkers(data)
+{
+
+	userMarkers = new Array();
+	var numObservacions = data.length;
+	for(var i=0; i<numObservacions; ++i)
+	{
+
+		var current = data[i];
+		var marker;
+		if(1 == current.statusId)
+		{
+
+			var greenIcon = constructValidatedIcon();
+			marker = userMapHandler.createMarker(current.latitude, current.longitude, 
+				current.accuracy, 'red', '#f03', 0.5, {id : current.id, IASId: current.IASId}, onMarkerClick, greenIcon);
+
+		}
+		else
+		{
+
+			marker = userMapHandler.createMarker(current.latitude, current.longitude, 
+				current.accuracy, 'red', '#f03', 0.5, {id : current.id, IASId: current.IASId}, onMarkerClick);
+
+		}
+
+		userMarkers.push(marker);
+		userMapHandler.addMarker(marker);
 
 	}
 
@@ -547,6 +566,38 @@ function clearObservations()
 	{
 
 		mapHandler.removeMarker(otherUsersValidatedMarkers[i]);
+
+	}
+
+}
+
+function activeUserIAS(id)
+{
+
+	if($('#IASUserCheck'+id).is(':checked'))
+	{
+
+		for(var i=0; i<userMarkers.length; ++i)
+		{
+
+			var current = userMarkers[i];
+			if(current.marker.options.IASId == id)
+				userMapHandler.addMarker(current);
+
+		}
+
+	}
+	else
+	{
+
+		for(var i=0; i<userMarkers.length; ++i)
+		{
+
+			var current = userMarkers[i];
+			if(current.marker.options.IASId == id)
+				userMapHandler.removeMarker(current);
+
+		}
 
 	}
 

@@ -30,6 +30,16 @@
 		var api = new IASTracker("<?php echo Config::get('app.urlPublic'); ?>");
 		var shapes = {{$shapes}};
 		var shapeNames = {{$shapeNames}};
+		var taxonChilds = new Array();
+<?php
+
+	$keys = array_keys($taxonChilds);
+	for($i=0; $i<count($keys); ++$i)
+	{
+		echo 'taxonChilds['.$keys[$i].'] = ['.implode(',', $taxonChilds[$keys[$i]]).'];';
+	}
+
+?>
 	</script>
 	{{ HTML::script('js/pages/index.js'); }}
 @stop

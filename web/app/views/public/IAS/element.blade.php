@@ -47,7 +47,7 @@
 </div>
 <div class="row">
 	<div class="col-md-12">
-		<div id="IASObsMap" class="map">
+		<div id="IASObsMap" class="modalMap">
 			Mapa
 		</div>
 	</div>

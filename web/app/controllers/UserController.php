@@ -71,14 +71,20 @@ class UserController extends RequestController {
 			$data = $element;
 			$data->obsNum = $element->getObservationsNumber();
 			$data->validatedObsNum = $element->getValidatedNumber();
-			$data->lastObservation = $element->getLastObservationTS();
+			$data->lastObservation = $element->getLastObservation()[0]->created_at;
 			$data->images = $element->getObservationImages();
 
 			$languageId = Language::locale(App::getLocale())->first()->id;
 			$configuration = Configuration::find(1);
 			$defaultLanguageId = $configuration->defaultLanguageId;
 			$ias = $element->getObservedIAS($languageId, $defaultLanguageId);
-			return View::make('public/User/element', array('data' => $data, 'ias' => $ias));
+
+			$output = new stdClass();
+			$output->html = View::make('public/User/element', array('data' => $data, 'ias' => $ias))->render();
+			$output->data = new stdClass();
+			$output->data->id = $element->id;
+
+			return json_encode($output);
 
 		}
 
@@ -147,6 +153,21 @@ class UserController extends RequestController {
 	{
 
 		return User::find($id);
+
+	}
+
+	protected function getObservations($id)
+	{
+
+		if(Request::ajax())
+		{
+
+			$elements = Observation::withUserId($id)
+				->orderBy('id')->get();
+
+			return Response::json($elements->toJson());
+
+		}
 
 	}
 

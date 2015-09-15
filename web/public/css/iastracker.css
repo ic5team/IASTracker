@@ -78,7 +78,11 @@
 }
 
 .map {
-	height:calc(100vh - 70px);;
+	height:calc(100vh - 70px);
+}
+
+.modalMap {
+	height:calc(50vh);
 }
 
 body {
@@ -89,7 +93,7 @@ body {
 #contentModal .modal-content
 {
 
-	height: 600px;
+	height: calc(80vh);
 	overflow: auto;
 
 }
@@ -176,4 +180,9 @@ body {
 .shadow {
 	box-shadow: 0 1px 5px rgba(0,0,0,0.65);
 	border-radius: 4px;
+}
+
+.modal-rsp {
+	width: calc(80vw);
+	height: calc(80vh);
 }

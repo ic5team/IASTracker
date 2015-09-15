@@ -72,6 +72,7 @@ class IndexController extends BaseController {
 		$data->externalSources = array();
 
 		$taxonomies = array();
+		$taxonChilds = array();
 		$taxons = IASTaxon::withLanguageId($languageId)->get();
 		if(null == $taxons)
 			$taxons = IASTaxon::withLanguageId($defaultLanguageId)->get();
@@ -79,6 +80,8 @@ class IndexController extends BaseController {
 		{
 
 			$taxonomies[$taxons[$i]->id] = $taxons[$i]->name;
+			$taxon = IASTaxon::find($taxons[$i]->id);
+			$taxonChilds[$taxons[$i]->id] = $taxon->getChildTaxonsIds();
 
 		}
 
@@ -97,7 +100,8 @@ class IndexController extends BaseController {
 		return View::make("public/index", array('data' => $data, 
 			'taxonomies' => $taxonomies, 'states' => $states,
 			'shapes' => json_encode($shapeURLs),
-			'shapeNames' => json_encode($shapeNames)));
+			'shapeNames' => json_encode($shapeNames),
+			'taxonChilds' => $taxonChilds));
 
 	}
 

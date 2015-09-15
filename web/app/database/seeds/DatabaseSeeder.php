@@ -278,7 +278,7 @@ class IASTableSeeder extends Seeder {
 		DB::table('IAS')->insert(array(
 			'id'  => 1,
 			'latinName' => 'Agave Americana',
-			'taxonId' => 3,
+			'taxonId' => 0,
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime,
@@ -288,7 +288,7 @@ class IASTableSeeder extends Seeder {
 		DB::table('IAS')->insert(array(
 			'id'  => 2,
 			'latinName' => 'Rhynchophorus ferrugineus',
-			'taxonId' => 5,
+			'taxonId' => 3,
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime,
@@ -612,7 +612,7 @@ class IASTaxonsTableSeeder extends Seeder {
 	{
 	
 		DB::table('IASTaxons')->insert(array(
-			'id'  => 3,
+			'id'  => 0,
 			'languageId' => 1,
 			'name' => 'Flora',
 			'creatorId' => 1,
@@ -621,9 +621,39 @@ class IASTaxonsTableSeeder extends Seeder {
 		));
 
 		DB::table('IASTaxons')->insert(array(
+			'id'  => 1,
+			'languageId' => 1,
+			'name' => 'Animals',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxons')->insert(array(
+			'id'  => 2,
+			'languageId' => 1,
+			'name' => 'Invertebrats no artròpodes',
+			'parentTaxonId' => 1,
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxons')->insert(array(
+			'id'  => 3,
+			'languageId' => 1,
+			'name' => 'Artròpodes no crustacis',
+			'parentTaxonId' => 1,
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxons')->insert(array(
 			'id'  => 4,
 			'languageId' => 1,
-			'name' => 'Fauna',
+			'name' => 'Crustacis',
+			'parentTaxonId' => 1,
 			'creatorId' => 1,
 			'created_at' => new DateTime,
 			'updated_at' => new DateTime
@@ -632,7 +662,28 @@ class IASTaxonsTableSeeder extends Seeder {
 		DB::table('IASTaxons')->insert(array(
 			'id'  => 5,
 			'languageId' => 1,
-			'name' => 'Bitxo',
+			'name' => 'Rèptils',
+			'parentTaxonId' => 1,
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxons')->insert(array(
+			'id'  => 6,
+			'languageId' => 1,
+			'name' => 'Aus',
+			'parentTaxonId' => 1,
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxons')->insert(array(
+			'id'  => 7,
+			'languageId' => 1,
+			'name' => 'Mamífers',
+			'parentTaxonId' => 1,
 			'creatorId' => 1,
 			'created_at' => new DateTime,
 			'updated_at' => new DateTime

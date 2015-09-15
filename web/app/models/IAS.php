@@ -152,6 +152,15 @@ class IAS extends Eloquent {
 
 	}
 
+	function scopeWithUserId($query, $userId)
+	{
+
+		return $query->join('observations', 'IAS.id', '=', 'observations.IASId')
+			->where('observations.userId', '=', $userId)
+			->select('IAS.*');
+
+	}
+
 }
 
 ?>

@@ -31,6 +31,9 @@ function IASTracker(url)
 	this.areas = new Object();
 	this.areas.name = "Areas";
 	this.areas.entryPoint = this.APIBaseUrl + this.areas.name;
+	this.users = new Object();
+	this.users.name = "Users";
+	this.users.entryPoint = this.APIBaseUrl + this.users.name;
 
 }
 
@@ -172,6 +175,27 @@ IASTracker.prototype.getRegionAreas = function(regionId, doneFunction, destinati
 
 	var completeURL = this.regions.entryPoint + this.separator + regionId + 
 		this.separator + this.areas.name;
+	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
+
+	return this.AJAXRequest(completeURL, destId, doneFunction, 'GET', {});
+
+}
+
+IASTracker.prototype.getUser = function(userId, doneFunction, destinationId)
+{
+
+	var completeURL = this.users.entryPoint + this.separator + userId;
+	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
+
+	return this.AJAXRequest(completeURL, destId, doneFunction, 'GET', {});
+
+}
+
+IASTracker.prototype.getUserObservations = function(userId, doneFunction, destinationId)
+{
+
+	var completeURL = this.users.entryPoint + this.separator + userId + 
+		this.separator + this.observations.name;
 	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
 
 	return this.AJAXRequest(completeURL, destId, doneFunction, 'GET', {});

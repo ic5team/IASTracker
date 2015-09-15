@@ -183,9 +183,6 @@ class IASController extends RequestController {
 				$obj->id = $current->id;
 				$obj->taxonId = $current->taxonId;
 
-				unset($imageData);
-				unset($descData);
-
 				$data[] = $obj;
 
 			}

@@ -24,6 +24,21 @@ class ObservationController extends RequestController {
 		$regionId = Input::has('regionId') ? Input::get('regionId') : -1;
 		$areaId = Input::has('areaId') ? Input::get('areaId') : -1;
 
+		$taxonsId = array();
+		if(-1 != $taxonomyId)
+		{
+
+			$taxonsId[] = $taxonomyId;
+			$taxon = IASTaxon::find($taxonomyId);
+			$childs = $taxon->getChildTaxons();
+			for($i=0; $i<count($childs); ++$i)
+			{
+
+				$taxonsId[] = $childs[$i]["id"];
+
+			}
+
+		}
 		
 		$areaIds = array();
 		if(-1 != $areaId)
@@ -63,7 +78,7 @@ class ObservationController extends RequestController {
 
 		}
 
-		$elements = $this->getFilteredElements($first, $num, $taxonomyId, $fromDate, 
+		$elements = $this->getFilteredElements($first, $num, $taxonsId, $fromDate, 
 			$toDate, $areaIds);
 
 		return Response::json($elements->toJson());
@@ -203,17 +218,17 @@ class ObservationController extends RequestController {
 	* Gets all the filtered elements
 	* @param first The first element of the listing
 	* @param num The number of elements on the list
-	* @param taxonomyId The filtered taxonomy id
+	* @param taxonsId An array with the taxonomies ids
 	* @param fromDate The starting date of the search interval  
 	* @param toDate The ending date of the search interval
-	* @param areasId A string with the areas identifiers
+	* @param areasId An array with the areas identifiers
 	* @return An array of models
 	*/
-	protected function getFilteredElements($first, $num, $taxonomyId, $fromDate, $toDate,
+	protected function getFilteredElements($first, $num, $taxonsId, $fromDate, $toDate,
 			$areasId)
 	{
 
-		$values = Observation::filtered($taxonomyId, $fromDate, $toDate,
+		$values = Observation::filtered($taxonsId, $fromDate, $toDate,
 			$areasId)->orderBy('observations.id')
 			->skip($first)->take($num)->get();
 

@@ -38,7 +38,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	}
 
-	public function getLastObservationTS()
+	public function getLastObservation()
 	{
 
 		return Observation::withUserId($this->id)->lastCreated()->get();
@@ -49,6 +49,32 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	{
 
 		return ObservationImage::withUserId($this->id)->get();
+
+	}
+
+	public function getObservedIAS($languageId, $defaultLanguageId)
+	{
+
+		$data = array();
+		$ias = IAS::withUserId($this->id)->get();
+		for($i=0; $i<count($ias); ++$i)
+		{
+
+			$current = $ias[$i];
+			$obj = new stdClass();
+
+			$obj->image = $current->getDefaultImageData($languageId, $defaultLanguageId);
+			$obj->name = $current->getDescriptionData($languageId, $defaultLanguageId)->name;
+			$obj->id = $current->id;
+
+
+			$data[] = $obj;
+
+		}
+
+		unset($ias);
+
+		return $data;
 
 	}
 

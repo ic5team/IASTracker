@@ -34,7 +34,7 @@
 	<div id="IASName{{$current->id}}"class="col-md-6" onclick="showIAS({{$current->id}})" style="cursor:pointer;">
 		{{$current->latinName}}
 	</div>
-	<div class="col-md-3">
+	<div class="col-md-4">
 		<input type="checkbox" id="IASCheck{{$current->id}}" class="IASCheck" onclick="activeIAS" data="{{$current->id}}" checked>
 	</div>
 </div>
