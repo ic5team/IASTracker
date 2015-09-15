@@ -168,7 +168,10 @@ class Inicial extends Migration {
 			$table->integer('languageId')->unsigned();
 			$table->string('name', 255);
 			$table->text('shortDescription');
-			$table->text('longDescription');
+			$table->text('sizeLongDescription')->nullable();
+			$table->text('infoLongDescription')->nullable();
+			$table->text('habitatLongDescription')->nullable();
+			$table->text('confuseLongDescription')->nullable();
 			$table->integer('creatorId')->unsigned()->nullable();
 			$table->timestamps();
 		});

@@ -29,7 +29,14 @@
 ?>
 <div class="row iasRow" id="IASRow{{$current->id}}" >
 	<div class="col-md-2" onclick="showIAS({{$current->id}})" style="cursor:pointer;">
-		{{ HTML::image(Config::get('app.urlImg').$current->image->url, $current->image->text, array('style' => 'width: 20px;')); }}
+<?php
+		if(property_exists($current->image,'url'))
+		{
+?>
+			{{ HTML::image(Config::get('app.urlImg').$current->image->url, $current->image->text, array('style' => 'width: 20px;')); }}
+<?php
+		}
+?>
 	</div>
 	<div id="IASName{{$current->id}}"class="col-md-6" onclick="showIAS({{$current->id}})" style="cursor:pointer;">
 		{{$current->latinName}}

@@ -22,7 +22,6 @@ class DatabaseSeeder extends Seeder {
 		$this->call('ConfigurationTextsTableSeeder');
 		$this->call('IASTaxonsTableSeeder');
 		$this->call('IASTableSeeder');
-		$this->call('IASDescriptionsTableSeeder');
 		$this->call('IASImagesTableSeeder');
 		$this->call('IASImagesTextTableSeeder');
 		$this->call('RepositoriesTableSeeder');
@@ -287,79 +286,163 @@ class IASTableSeeder extends Seeder {
 	
 		DB::table('IAS')->insert(array(
 			'id'  => 1,
-			'latinName' => 'Agave Americana',
+			'latinName' => 'Agave americana',
 			'taxonId' => 0,
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
-			'updated_at' => new DateTime,
-			'defaultImageId' => 11
+			'updated_at' => new DateTime
 		));
 
 		DB::table('IAS')->insert(array(
 			'id'  => 2,
-			'latinName' => 'Rhynchophorus ferrugineus',
-			'taxonId' => 3,
+			'latinName' => 'Ailanthus altissima',
+			'taxonId' => 0,
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
-			'updated_at' => new DateTime,
-			'defaultImageId' => 17
-		));
-
-	}
-}
-
-class IASDescriptionsTableSeeder extends Seeder {
- 
-	public function run()
-	{
-	
-		DB::table('IASDescriptions')->insert(array(
-			'id'  => 1,
-			'IASId' => 1,
-			'languageId' => 1,
-			'name' => 'Atzavara',
-			'shortDescription' => 'descripció curta',   
-			'longDescription' => 'descripció llarga',
-			'creatorId' => 1,
-			'created_at' => new DateTime,
 			'updated_at' => new DateTime
 		));
 
-		DB::table('IASDescriptions')->insert(array(
-			'id'  => 2,
-			'IASId' => 1,
-			'languageId' => 2,
-			'name' => 'Agave d\'Amérique',
-			'shortDescription' => 'descripció curta FR',   
-			'longDescription' => 'descripció llarga FR',
-			'creatorId' => 1,
-			'created_at' => new DateTime,
-			'updated_at' => new DateTime
-		));
-
-		DB::table('IASDescriptions')->insert(array(
+		DB::table('IAS')->insert(array(
 			'id'  => 3,
-			'IASId' => 1,
-			'languageId' => 3,
-			'name' => 'Agave',
-			'shortDescription' => 'descripció curta EN',   
-			'longDescription' => 'descripció llarga EN',
+			'latinName' => 'Carpobrotus spp.',
+			'taxonId' => 0,
 			'creatorId' => 1,
-			'created_at' => new DateTime,
+			'created_at' => new DateTime,   
 			'updated_at' => new DateTime
 		));
 
-		DB::table('IASDescriptions')->insert(array(
-			'id'  => 6,
-			'IASId' => 2,
-			'languageId' => 1,
-			'name' => 'Asiatic palm weevil',
-			'shortDescription' => "Adults are large, usually over 2 cm (up to 4 cm) long and 1.5 cm wide, with a long curved rostrum (snout) characteristic of weevils. Colour is reddish-brown with a variable number of dark markings on the dorsal surface of the thorax. It’s a bane to palm trees. The head and rostrum comprise about one-third of the total length. ",   
-			'longDescription' => '<i class="fa fa-2x fa-arrows-h"></i>Adult weevils measure over 2 cm long and 1.5 cm wide. The average size of an egg is 2.62 mm long and 1,12 mm wide. The larvae can grow up to 3.5 cm long. The pupal case can range in length from 5-9.5 cm and in width from 2.5-4 cm.
-<br /><i class="fa fa-2x fa-info"></i>Larvae are legless and creamy white in colour with a hard brown head capsule. Eggs are whitish-yellow, smooth, shiny, cylindrical with rounded ends, slightly narrower at the anterior end. Pupae appear as an elongated oval cocoon made up of fibrous strands. The entire life cycle take about 4 months and may be spent entirely on the host plant. The weevil lays an average of 204 eggs. Signs of attack on the plant itself are distinctive but hard to detect. These include: egg laying notches, cocoons inserted into the base of the palms, an eccentric growing crown, holes at the base of cut palms, symptoms resembling those caused by lack of water such as wilting, desiccation and necrosis of the foliage, and tunnelling within the stems and trunk. Interior of host tree is often destroyed without any detected exterior signs. 
-<br /><i class="fa fa-2x fa-map-marker"></i>Asiatic palm weevil is originated from Asia and it has spread across North Africa, Central America, Europe and Oceania. It can be found in desert, natural forests, planted forests and urban areas. It lives in palm trees.',
+		DB::table('IAS')->insert(array(
+			'id'  => 4,
+			'latinName' => 'Cortaderia selloana',
+			'taxonId' => 0,
 			'creatorId' => 1,
-			'created_at' => new DateTime,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IAS')->insert(array(
+			'id'  => 5,
+			'latinName' => 'Cotoneaster horizontalis',
+			'taxonId' => 0,
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IAS')->insert(array(
+			'id'  => 6,
+			'latinName' => 'Estrilda astrild',
+			'taxonId' => 6,
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IAS')->insert(array(
+			'id'  => 7,
+			'latinName' => 'Dreissena polymorpha',
+			'taxonId' => 4,
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IAS')->insert(array(
+			'id'  => 8,
+			'latinName' => 'Pomacea insularum',
+			'taxonId' => 4,
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IAS')->insert(array(
+			'id'  => 9,
+			'latinName' => 'Psittacula eupatria',
+			'taxonId' => 6,
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IAS')->insert(array(
+			'id'  => 10,
+			'latinName' => 'Heracleum mantegazzianum',
+			'taxonId' => 0,
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IAS')->insert(array(
+			'id'  => 11,
+			'latinName' => 'Senecio angulatus',
+			'taxonId' => 0,
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IAS')->insert(array(
+			'id'  => 12,
+			'latinName' => 'Myiopsitta monachus',
+			'taxonId' => 6,
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IAS')->insert(array(
+			'id'  => 13,
+			'latinName' => 'Psittacula krameri',
+			'taxonId' => 6,
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IAS')->insert(array(
+			'id'  => 14,
+			'latinName' => 'Myocastor coypus',
+			'taxonId' => 7,
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IAS')->insert(array(
+			'id'  => 15,
+			'latinName' => 'Opuntia spp.',
+			'taxonId' => 0,
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IAS')->insert(array(
+			'id'  => 16,
+			'latinName' => 'Phytolacca americana',
+			'taxonId' => 0,
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IAS')->insert(array(
+			'id'  => 17,
+			'latinName' => 'Neovison vison',
+			'taxonId' => 7,
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IAS')->insert(array(
+			'id'  => 18,
+			'latinName' => 'Procyon lotor',
+			'taxonId' => 7,
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
 			'updated_at' => new DateTime
 		));
 
