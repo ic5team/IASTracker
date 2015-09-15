@@ -2,12 +2,16 @@
 
 class BaseController extends Controller {
 
-	protected $iLanguageId;
 
 	function __construct() 
 	{
 
-		$iLanguageId = Input::has('languageId') ? Input::get('languageId') : 1;
+		if(Input::has('lang'))
+		{
+
+			App::setLocale(Input::get('lang'));
+
+		}
 
 	}
 

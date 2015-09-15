@@ -14,6 +14,7 @@
 	{{ HTML::script('js/leaflet.js'); }}
 	{{ HTML::script('js/proj4-compressed.js'); }}
 	{{ HTML::script('js/proj4leaflet.js'); }}
+	{{ HTML::script('http://maps.google.com/maps/api/js?v=3.2&sensor=false')}}
 	{{ HTML::script('js/moment.js'); }}
 	{{ HTML::script('js/ca.js'); }}
 	{{ HTML::script('js/transition.js'); }}
@@ -21,8 +22,10 @@
 	{{ HTML::script('js/bootstrap-datetimepicker.min.js'); }}
 	{{ HTML::script('js/catiline.js'); }}
 	{{ HTML::script('js/leaflet.shapefile.js'); }}
+	{{ HTML::script('js/leaflet.google.js'); }}
 	{{ HTML::script('js/iastrackermap.js'); }}
 	{{ HTML::script('js/iastracker.api.js'); }}
+
 	<script>
 		var mapDescriptors = {{$data->mapProviders}};
 		var crsDescriptors = JSON.parse( '{{$data->crsDescriptors}}' );

@@ -58,23 +58,12 @@
 	width: 100%;
 	margin: 0 auto;
 }
-.wrapmiddle{
-	float: left;
-	width: 100%;
-}
-.middle{
-	margin-right:500px;
-	margin-left:362px;
-}
 .left{
 	float: left;
 	width: 362px;
-	margin-left: -100%;
 }
 .right{
-	float: left;
-	width: 500px;
-	margin-left: -500px;
+	float: right;
 }
 
 .map {

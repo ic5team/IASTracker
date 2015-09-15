@@ -2,27 +2,6 @@
 	<div style="padding: 0;">
 		<div class="collapse navbar-collapse" style="padding: 0;">
 			<div class="wrapper">
-				<div class="wrapmiddle"> 	  
-					<div class="middle">
-						<div id="barra-buscador">
-							<input type="text" class="form-control" placeholder="{{Lang::get('ui.search')}}" id="search"  style="display: none;">	
-						</div>
-						<div id="search-results" class="hidden arrow_box" style="margin-top: 4px; min-width:250px; float:right; width:450px; background: white; z-index: 1;">
-							<div id="search-loading" style="padding-top: 30px;">
-								<img src="<?php echo Config::get('app.urlImg'); ?>loader.gif">
-							</div>
-							<div style="padding: 10px; border-radius: 5px;">
-								<div style="border: 0; border-radius: 5px;">
-									<div id="result">
-									</div>
-								</div>
-							</div>
-							<div id="no-resultats" class="hidden">
-								{{Lang::get('ui.noSearchResults')}}
-							</div>
-						</div>
-					</div>
-				</div>
 				<div class="left">
 					<ul class="nav navbar-nav" id="logo-and-user-bar">
 						<li id="navbar-logo">
@@ -78,7 +57,7 @@
 	{
 ?>
 									<li>
-										<a href="#" onclick="setLang({{$data->languages[$i]->locale}})">
+										<a href="?lang={{$data->languages[$i]->locale}}">
 											{{ HTML::image('img/thumbs/flags/'.$data->languages[$i]->img, $data->languages[$i]->name, array('class' => 'navbar-logo-img', 'pull-right')); }}
 										</a>
 									</li>

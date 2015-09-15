@@ -35,7 +35,7 @@ class IndexController extends BaseController {
 			$currentMapProvider = $mapProviders[$i];
 			$mapTexts = MapProviderText::withMapAndLanguageId(
 				$currentMapProvider->id, $languageId)->first();
-			if(null != $mapTexts)
+			if(null == $mapTexts)
 			{
 
 				$mapTexts = MapProviderText::withMapAndLanguageId(

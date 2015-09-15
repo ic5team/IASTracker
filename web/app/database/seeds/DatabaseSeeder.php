@@ -137,6 +137,16 @@ class LanguagesTableSeeder extends Seeder {
 
 		DB::table('Languages')->insert(array(
 			'id'  => 2,
+			'name' => 'ES',
+			'locale' => 'es',
+			'flagURL' => 'es.png',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('Languages')->insert(array(
+			'id'  => 3,
 			'name' => 'FR',
 			'locale' => 'fr',
 			'flagURL' => 'france.gif',
@@ -146,7 +156,7 @@ class LanguagesTableSeeder extends Seeder {
 		));
 
 		DB::table('Languages')->insert(array(
-			'id'  => 3,
+			'id'  => 4,
 			'name' => 'EN',
 			'locale' => 'en',
 			'flagURL' => 'eng.jpg',

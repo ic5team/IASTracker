@@ -1,23 +1,25 @@
 <?php
 
 	return array(
+		'inici' => 'IASTracker Website',
+		'filter' => 'Filter',
 		'signup' => 'Sign Up',
 		'login' => 'Sign In',
 		'search' => 'Search...',
-		'ic5info' => 'About us',
+		'ic5Info' => 'About us',
 		'taxonomy' => 'By taxonomy',
 		'group' => 'Group',
 		'all' => 'All',
 		'date' => 'By date',
 		'from' => 'From',
-		'to' => 'To'
+		'to' => 'To',
 		'location' => 'By location',
 		'state' => 'State',
 		'allStates' => '- All States -',
 		'region' => 'Region',
 		'allRegions' => '- All Regions -',
 		'area' => 'Area',
-		'allAreas' => '- All Areas -'
+		'allAreas' => '- All Areas -',
 		'taxonomiesAll' => '- All Taxonomies -',
 		'commonName' => 'Common',
 		'scientific' => 'Scientific',
@@ -26,5 +28,11 @@
 		'observationValidated' => 'Observation validated',
 		'userObsOnly' => 'Show only user observations',
 		'iasTrackerAreas' => 'IASTracker areas',
-		'showAreas' => 'Show IASTracker areas'
+		'showAreas' => 'Show IASTracker areas',
+		'moreData' => 'Additional information',
+		'ui.observations' => 'observations',
+		'ui.validated' => 'validated',
+		'ui.lastObservation' => 'last observation',
+		'ui.lastConnection' => 'last connected'
+
 	);
