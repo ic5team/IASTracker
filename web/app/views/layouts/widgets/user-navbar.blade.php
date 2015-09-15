@@ -5,7 +5,7 @@
 				<div class="wrapmiddle"> 	  
 					<div class="middle">
 						<div id="barra-buscador">
-							<input type="text" class="form-control" placeholder="{{Lang::get('ui.search')}}" id="search">	
+							<input type="text" class="form-control" placeholder="{{Lang::get('ui.search')}}" id="search"  style="display: none;">	
 						</div>
 						<div id="search-results" class="hidden arrow_box" style="margin-top: 4px; min-width:250px; float:right; width:450px; background: white; z-index: 1;">
 							<div id="search-loading" style="padding-top: 30px;">

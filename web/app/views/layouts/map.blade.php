@@ -37,7 +37,7 @@
 @section('main_wrapper')
 	<div class="full-width">
 		<div id="map" class="map">
-			<div id="controls" class="mapControls ui-draggable">
+			<div id="controls" class="mapControls ui-draggable shadow">
 				<!-- Nav tabs -->
 				<ul id="tabsControls" class="nav nav-tabs" role="tablist">
 					<li role="presentation" class="active">
@@ -134,7 +134,7 @@
 					</div>
 				</div>
 			</div>
-			<div id="observationsControls" class="obsControls ui-draggable">
+			<div id="observationsControls" class="obsControls ui-draggable shadow">
 				<div class="row">
 					<div class="form-group col-md-12">
 						<h4>{{Lang::get('ui.iasTrackerObservations')}}</h4>
