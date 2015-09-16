@@ -22,7 +22,7 @@
 		'allAreas' => '- All Areas -',
 		'taxonomiesAll' => '- All Taxonomies -',
 		'commonName' => 'Common',
-		'scientific' => 'Scientific',
+		'scientificName' => 'Scientific',
 		'iasTrackerObservations' => 'IASTracker observations',
 		'invasorObserved' => 'Invasor observed',
 		'observationValidated' => 'Observation validated',
@@ -30,9 +30,9 @@
 		'iasTrackerAreas' => 'IASTracker areas',
 		'showAreas' => 'Show IASTracker areas',
 		'moreData' => 'Additional information',
-		'ui.observations' => 'observations',
-		'ui.validated' => 'validated',
-		'ui.lastObservation' => 'last observation',
-		'ui.lastConnection' => 'last connected'
+		'observations' => 'observations',
+		'validated' => 'validated',
+		'lastObservation' => 'last observation',
+		'lastConnection' => 'last connected'
 
 	);

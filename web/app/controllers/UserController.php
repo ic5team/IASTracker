@@ -48,10 +48,49 @@ class UserController extends RequestController {
 	protected function newResource()
 	{
 
-		$element = new User(array());
+		$inMail = Input::get('mail');
+		if(Input::has('mail'))
+		{
 
-		$element->touch();
-		$element->save();
+			$params['mail'] = $inMail;
+			$paramAttribs['mail'] = 'required|email|unique:Usuaris,deleted_at,NULL';
+
+		}
+
+		$validator = Validator::make($params, $paramAttribs);
+
+		if($validator->fails())
+		{
+
+			$dto = new stdClass();
+			$dto->error = $validator->messages()->first();
+			return Response::json($dto);
+
+		}
+		else
+		{
+
+			$token = str_random(40);
+			$element = new User(array('languageId' => Language::locale(App::getLocale())->first()->id,
+				'mail' => $inMail,
+				'isActive' => false,
+				'activationKey' => $token,
+				'amIExpert' => false,
+				'isExpert' => false,
+				'isAdmin' => false,
+				'lastConnection' => new DateTime()));
+
+			$element->touch();
+			$element->save();
+
+			Mail::send('emails.welcome', array('token' => $token), function($message)
+			{
+
+				$message->to($inMail, '')->subject(Lang::get('email.welcomeSubject').'!');
+
+			});
+
+		}
 
 	}
 
@@ -110,12 +149,66 @@ class UserController extends RequestController {
 	protected function updateResource($id)
 	{
 
+		$out = new stdClass();
 		$element = $this->getElement($id);
+		$view = '';
 
-		//Update the data
+		if(Input::has('token') && Input::has('pw1') 
+			&& Input::has('pw2') && Input::has('nick'))
+		{
 
-		$element->touch();
-		$element->save();
+			$token = Input::get('token');
+			$pw1 = Input::get('pw1');
+			$pw2 = Input::get('pw2');
+			$nick = Input::get('nick');
+
+			if(($element->activationKey == $token) 
+				&& ($pw1 == $pw2))
+			{
+
+				$user = User::nickname($nick)->first();
+				if(null == $user)
+				{
+
+					$element->password = Hash::make($pw1);
+					$element->username = $nick;
+					$element->isActive = true;
+					$element->activationKey = '';
+					$element->lastConnection = new DateTime();
+					$element->touch();
+					$element->save();
+
+					Auth::login($element);
+					$out->html = View::make('public/User/activated')->render();
+
+				}
+				else
+				{
+
+					$out->html = View::make('public/User/noActivated', 
+						array('message' => Lang::get('ui.duplicatedNick')))->render();
+
+				}
+
+			}
+			else if($pw1 == $pw2)
+			{
+
+				$out->html = View::make('public/User/noActivated', 
+						array('message' => Lang::get('ui.invalidToken')))->render();
+
+			}
+			else
+			{
+
+				$out->html = View::make('public/User/noActivated', 
+						array('message' => Lang::get('ui.pwMismatch')))->render();
+
+			}
+
+		}
+
+		return json_encode($out);
 
 	}
 
@@ -169,6 +262,31 @@ class UserController extends RequestController {
 
 		}
 
+	}
+
+	public function activate()
+	{
+
+		$token = Input::get('token');
+		$data = $this->getBasicData();
+
+		$user = User::activationKey($token)->first();
+
+		if ($user != NULL && !$user->isActive)
+		{
+
+			$lang = Language::find($user->languageId);
+			App::setLocale($lang->locale);
+			return View::make("public/activate", array('data' => $data,
+				'token' => $token, 'userId' => $user->id));
+
+		}
+		else
+		{
+
+			App::abort(403);
+
+		}
 	}
 
 }

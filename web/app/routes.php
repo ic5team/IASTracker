@@ -21,6 +21,7 @@
 	Route::resource('user', 'UserController');
 
 	Route::get('/', array('as' => 'inici', 'uses' => 'IndexController@showIndex'));
+	Route::get('/account/activate', array('uses' => 'UserController@activate'));
 
 /*
 |--------------------------------------------------------------------------
@@ -35,5 +36,7 @@
 	Route::get('/v1/IAS/{id}/Observations', array('uses' => 'IASController@getObservations'));
 	Route::get('/v1/States/{id}/Regions', array('uses' => 'StateController@getRegions'));
 	Route::get('/v1/Regions/{id}/Areas', array('uses' => 'RegionController@getAreas'));
+	Route::post('/v1/Users/', array('uses' => 'UserController@store'));
+	Route::put('/v1/Users/{id}', array('uses' => 'UserController@update'));
 	Route::get('/v1/Users/{id}', array('uses' => 'UserController@show'));
 	Route::get('/v1/Users/{id}/Observations', array('uses' => 'UserController@getObservations'));

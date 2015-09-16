@@ -31,11 +31,14 @@
 	left: 100px; 
 	top: 100px; 
 	background-color:white; 
-	width: 310px;
+	width: 400px;
 	border: #DDDDDD;
 	border-width: thin;
 	border-style: solid;
 	padding: 10px;
+	max-height: calc(60vh);
+	overflow-x: hidden;
+	overflow-y: auto;
 }
 
 .obsControls {

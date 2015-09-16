@@ -42,9 +42,9 @@ class BaseController extends Controller {
 			$data->userLanguage = $user->languageId;
 			$data->isAdmin = $user->isAdmin;
 			$data->isExpert = $user->isExpert;
-			$data->isValidator = (0 < $user->validators()->count());
 			$data->observationNumber = 0;
 			$data->verifiedObservations = 0;
+			$data->verifiedObservationsPC = 0;
 			$data->usrId = $user->id;
 
 			unset($user);

@@ -6,7 +6,8 @@
 	"require": {
 		"laravel/framework": "4.2.*",
 		"doctrine/dbal": "~2.3",
-		"liebig/cron": "dev-master"
+		"liebig/cron": "dev-master",
+		"guzzlehttp/guzzle": "~5.3|~6.0"
 	},
 	"require-dev": {
 		"way/generators" : "2.*",

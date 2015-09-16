@@ -67,21 +67,26 @@ IASTracker.prototype.AJAXRequest = function(url, id, doneFunction, method, value
 		})
 		.done(function(data, textStatus, jqXHR) {
 
-			data = JSON.parse(data);
-			var auxData = data;
-
-			if(null != id)
+			if('' != data)
 			{
 
-				$(id).html(data.html);
-				auxData = data.data;
+				data = JSON.parse(data);
+				var auxData = data;
 
-			}
+				if(null != id)
+				{
 
-			if(!data.hasOwnProperty('error'))
-			{
+					$(id).html(data.html);
+					auxData = data.data;
 
-				doneFunction(auxData);
+				}
+
+				if(!data.hasOwnProperty('error') && (null != doneFunction))
+				{
+
+					doneFunction(auxData);
+
+				}
 
 			}
 
@@ -199,5 +204,15 @@ IASTracker.prototype.getUserObservations = function(userId, doneFunction, destin
 	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
 
 	return this.AJAXRequest(completeURL, destId, doneFunction, 'GET', {});
+
+}
+
+IASTracker.prototype.activateUser = function(userId, params, doneFunction, destinationId)
+{
+
+	var completeURL = this.users.entryPoint + this.separator + userId;
+	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
+
+	return this.AJAXRequest(completeURL, destId, doneFunction, 'PUT', params);
 
 }

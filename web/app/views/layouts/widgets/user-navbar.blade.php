@@ -14,13 +14,13 @@
 	{ 
 ?>
 						<li id="navbar-loguejat">
-							<a href="<?php echo Config::get('app.urlPublic').'usuaris/'.$data->nickL?>">
-								{{ HTML::image('img/thumbs/users/'.$data->fotoUsuariL, $data->nickL, array('class' => 'navbar-user-img', 'pull-left', 'id' => 'imgPerfilBarra')); }}
-								{{$data->nickL}}
+							<a href="<?php echo Config::get('app.urlPublic').'usuaris/'.$data->username?>">
+								{{ HTML::image('img/'.$data->userImage, $data->username, array('class' => 'navbar-user-img', 'pull-left', 'id' => 'imgPerfilBarra', 'style' => 'height: 53px;')); }}
+								{{$data->username}}
 								<ul class="nav navbar-nav">
 									<li id="user-stats">
-										<div class="data" data-toggle="tooltip" data-placement="bottom" title="{{$data->numObs}}"><i class="fa fa-signal"></i>{{ $data->numObs or '0' }} {{Lang::get('ui.obs')}}</div>
-										<div class="data" data-toggle="tooltip" data-placement="bottom" title="{{$data->pcObs}}"><i class="fa fa-clock-o"></i>{{ $data->pcObs or '' }}</div>
+										<div class="data" data-toggle="tooltip" data-placement="bottom" title="{{$data->observationNumber}}"><i class="fa fa-signal"></i>{{ $data->observationNumber or '0' }} {{Lang::get('ui.obs')}}</div>
+										<div class="data" data-toggle="tooltip" data-placement="bottom" title="{{$data->verifiedObservationsPC}}"><i class="fa fa-clock-o"></i>{{ $data->verifiedObservationsPC or '' }}</div>
 									</li>
 								</ul>
 							</a>

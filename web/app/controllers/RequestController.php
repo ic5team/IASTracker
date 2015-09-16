@@ -223,8 +223,7 @@ abstract class RequestController extends BaseController {
 
 			try {
 
-				$this->updateResource($id);
-				return Response::json(array('ok' => 1));
+				return $this->updateResource($id);
 
 			}
 			catch(Illuminate\Database\QueryException $e)

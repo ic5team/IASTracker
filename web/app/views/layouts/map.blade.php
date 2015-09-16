@@ -24,13 +24,11 @@
 	{{ HTML::script('js/leaflet.shapefile.js'); }}
 	{{ HTML::script('js/leaflet.google.js'); }}
 	{{ HTML::script('js/iastrackermap.js'); }}
-	{{ HTML::script('js/iastracker.api.js'); }}
 
 	<script>
 		var mapDescriptors = {{$data->mapProviders}};
 		var crsDescriptors = JSON.parse( '{{$data->crsDescriptors}}' );
 		var mapCenter = JSON.parse('{{$data->center}}');
-		var api = new IASTracker("<?php echo Config::get('app.urlPublic'); ?>");
 		var shapes = {{$shapes}};
 		var shapeNames = {{$shapeNames}};
 		var taxonChilds = new Array();

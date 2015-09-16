@@ -78,4 +78,18 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	}
 
+	function scopeActivationKey($query, $token)
+	{
+
+		return $query->where('Users.activationKey', '=', $token);
+
+	}
+
+	function scopeNickname($query, $nick)
+	{
+
+		return $query->where('Users.username', '=', $nick);
+
+	}
+
 }

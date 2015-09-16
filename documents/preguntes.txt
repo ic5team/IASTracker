@@ -1,0 +1,10 @@
+Preguntes:
+	Disseny: 
+		pq dos colors de cada? És pel requadre i el fons, no? Sí
+		Marker d'observació i de validació? ELs del leaflet
+		Pantalles d'ajuda . Ari
+		Pàgina 10 ppt. LLista única? I que al fer click vagi cap allà? Sí
+	IAS_REPOSITORIES
+		Full IASRelatedDB Què és la última columna? Res
+
+Domini??? Fa falta crear correu electrònic

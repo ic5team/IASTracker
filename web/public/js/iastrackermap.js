@@ -51,6 +51,10 @@ function MapHandler(mapId, mapDescriptors, crsDescriptors, layersControlId, cont
 		L.DomEvent.disableClickPropagation(L.DomUtil.get(controlsId));
 		$('#'+controlsId).draggable();
 
+		L.DomEvent.addListener(L.DomUtil.get(controlsId), 'mousewheel', function (e) {
+    		L.DomEvent.stopPropagation(e);
+		});
+
 	}
 
 	if('undefined' !== typeof observationsControlId)

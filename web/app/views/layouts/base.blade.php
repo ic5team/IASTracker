@@ -12,6 +12,11 @@
 	{{ HTML::script('//code.jquery.com/ui/1.10.4/jquery-ui.min.js'); }}
 	{{ HTML::script('js/bootstrap.min.js'); }}
 	{{ HTML::script('js/bootstrap-switch.min.js'); }}
+	{{ HTML::script('js/common.js'); }}
+	{{ HTML::script('js/iastracker.api.js'); }}
+	<script>
+		var api = new IASTracker("<?php echo Config::get('app.url'); ?>");
+	</script>
 @stop
 
 @section('head')
@@ -41,7 +46,7 @@
 
 	<script>
 		var loggedUserId = <?php echo (property_exists($data, 'usrId') ? $data->usrId : -1 ); ?>;
-		var urlPublic = "<?php echo Config::get('app.urlPublic'); ?>";
+		var urlPublic = "<?php echo Config::get('app.url'); ?>";
 		var urlImg = "<?php echo Config::get('app.urlImg'); ?>";
 	</script>
 @stop

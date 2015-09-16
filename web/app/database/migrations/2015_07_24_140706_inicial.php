@@ -316,13 +316,13 @@ class Inicial extends Migration {
 		{
 			$table->increments('id');
 			$table->integer('languageId')->unsigned()->nullable();
-			$table->string('username', 255);
-			$table->string('password', 255);
+			$table->string('username', 255)->nullable();
+			$table->string('password', 255)->nullable();
 			$table->string('mail', 255);
-			$table->string('fullName', 255);
+			$table->string('fullName', 255)->nullable();
 			$table->boolean('isActive');
 			$table->string('activationKey', 255)->nullable();
-			$table->string('photoURL', 255);
+			$table->string('photoURL', 255)->nullable();
 			$table->rememberToken();
 			$table->boolean('amIExpert');
 			$table->boolean('isExpert');
