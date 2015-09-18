@@ -811,3 +811,17 @@ function showAreas()
 	}	
 
 }
+
+function updateUserData()
+{
+
+	$('#dataModalText').html('');
+	$('#input-name').val(fullName);
+	$('#amIExpertCheckbox').bootstrapSwitch('state', isExpert);
+	var img = $('#imgPerfilBarra').attr('src');
+	$('#imgPerfilCompletar').css({'background-image': 'url(' + img + ')'});
+	$('#completar-dades-modal').modal();
+	$('#pas3').addClass('hidden');
+	antPas3();
+
+}

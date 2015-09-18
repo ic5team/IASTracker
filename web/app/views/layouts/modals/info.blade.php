@@ -2,12 +2,25 @@
 	<div class="modal-dialog" style="width:80%; max-width:1000px">
 		<div class="modal-content" style="min-height:400px;">
 			<div class="modal-header" style="background: rgba(162,200,86,1); color: #FFF;">
-				<h3 id="modal-title">{{Lang::get('ui.completeUserData')}}</h3>
+<?php
+	if(property_exists($data, 'isComplete') && !$data->isComplete)
+	{
+?>
+				<h3 id="modal-title-user-data">{{Lang::get('ui.completeUserData')}}</h3>
+<?php
+	}
+	else
+	{
+?>
+				<h3 id="modal-title-user-data">{{Lang::get('ui.updateData')}}</h3>
+<?php
+	}
+?>
 			</div>
 			<div class="modal-body">
 				<div id="pas1">
 					<div class="row" style="min-height:210px">
-						<div class="col-md-4">
+						<div class="col-md-4" id="dataModalText">
 							{{Lang::get('ui.welcomeText')}}
 						</div>
 						<div class="col-md-8">

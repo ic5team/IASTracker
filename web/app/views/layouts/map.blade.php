@@ -31,17 +31,10 @@ if(property_exists($data, 'isComplete') && !$data->isComplete)
 	{{ HTML::script('js/catiline.js'); }}
 	{{ HTML::script('js/leaflet.shapefile.js'); }}
 	{{ HTML::script('js/leaflet.google.js'); }}
-<?php
-if(property_exists($data, 'isComplete') && !$data->isComplete)
-{
-?>
 	{{ HTML::script('js/jcrop/js/jquery.Jcrop.min.js'); }}
 	{{ HTML::script('js/forms/completa-usuari.js'); }}
 	{{ HTML::script('js/completa-usuari.js'); }}
 	{{ HTML::script('js/pages/fotos-jcrop.js'); }}
-<?php
-}
-?>
 	{{ HTML::script('js/iastrackermap.js'); }}
 
 	<script>
@@ -51,25 +44,29 @@ if(property_exists($data, 'isComplete') && !$data->isComplete)
 		var shapes = {{$shapes}};
 		var shapeNames = {{$shapeNames}};
 		var taxonChilds = new Array();
+		var isExpert = {{($data->amIExpert) ? 'true' : 'false'}};
+		var fullName = "{{('' == $data->fullName) ? '' : $data->fullName}}";
 <?php
-
 	$keys = array_keys($taxonChilds);
 	for($i=0; $i<count($keys); ++$i)
 	{
 
 		echo 'taxonChilds['.$keys[$i].'] = ['.implode(',', $taxonChilds[$keys[$i]]).'];';
 	}
+?>
 
+	$('.langButtons').each(function(index) {
+		$(this).on('click', function(e) {
+			$('.langButtons').removeClass('active');
+			$(this).addClass('active');
+		});
+	});
+<?php
 	if(property_exists($data, 'isComplete') && !$data->isComplete)
 	{
 ?>
-		$('#infoModal').modal({backdrop: 'static', keyboard : false});
-		$('.langButtons').each(function(index) {
-			$(this).on('click', function(e) {
-				$('.langButtons').removeClass('active');
-				$(this).addClass('active');
-			});
-		});
+
+		$('#completar-dades-modal').modal();
 <?php
 	}
 
@@ -255,13 +252,6 @@ if(property_exists($data, 'isComplete') && !$data->isComplete)
 			</div>
 		</div>
 		@include('layouts.modals.base')
-<?php
-	if(property_exists($data, 'isComplete') && !$data->isComplete)
-	{
-?>
 		@include('layouts.modals.info')
-<?php
-	}
-?>
 	</div>
 @stop

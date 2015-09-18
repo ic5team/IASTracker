@@ -24,7 +24,7 @@
 @stop
 
 @section('main_wrapper')
-	<div class="full-width">
+	<div class="full-width" style="overflow: hidden;">
 		<div class="row" id="activationForm">
 			<div class="col-md-4 col-md-offset-4">
 					<div id="titol" style="text-align:center">

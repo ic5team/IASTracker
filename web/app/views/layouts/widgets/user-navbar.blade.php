@@ -18,22 +18,19 @@
 		if("" != $data->userImage)
 		{
 ?>
-							{{ HTML::image('img/'.$data->userImage, $data->username, array('class' => 'navbar-user-img', 'pull-left', 'id' => 'imgPerfilBarra', 'style' => 'height: 35px; position: absolute;')); }}
+							{{ HTML::image('img/thumbs/'.$data->userImage, $data->username, array('class' => 'navbar-user-img', 'pull-left', 'id' => 'imgPerfilBarra', 'style' => 'height: 35px; position: absolute;')); }}
 <?php
 		}
 ?>
-							<div style="margin-left: 45px; margin-top: 5px; font-size: 30px; color:#908787">
+							<div id="userNameDiv" style="margin-left: 45px; margin-top: 5px; font-size: 30px; color:#908787">
 							{{$data->username}}
 							</div>
-							<div id="panell-usuari" class="arrow_box menu_box hidden">
+							<div id="panell-usuari" class="arrow_box menu_box">
 								<div style="padding: 10px;">
 									<ul class="nav nav-pills nav-stacked">
-										<li id="user-stats">
-											<div class="data" data-toggle="tooltip" data-placement="bottom" title="{{$data->observationNumber}}"><i class="fa fa-signal"></i>{{ $data->observationNumber or '0' }} {{Lang::get('ui.obs')}}</div>
-											<div class="data" data-toggle="tooltip" data-placement="bottom" title="{{$data->verifiedObservationsPC}}"><i class="fa fa-clock-o"></i>{{ $data->verifiedObservationsPC or '' }}</div>
-										</li>
-										<li><a href="<?php echo Config::get('app.urlPublic').'adm'?>">{{ Lang::get('ui.admin')}}</a></li>
-										<li><a href="<?php echo Config::get('app.urlPublic').'logout'?>">{{ Lang::get('ui.tancarSessio')}}</a></li>
+										<li onclick="updateUserData()"><a href="#">{{ Lang::get('ui.updateData')}}</a></li>
+										<li onclick="updatePassword()"><a href="#">{{ Lang::get('ui.updatePassword')}}</a></li>
+										<li onclick="logOut()"><a href="#">{{ Lang::get('ui.tancarSessio')}}</a></li>
 									</ul>
 								</div>
 							</div>

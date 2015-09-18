@@ -66,6 +66,8 @@ return array(
 		'omit' => 'Ometre',
 		'selectImageText' => 'Clica sobre la imatge per escollir la teva fotografia de perfil.',
 		'personalDataCompleteText' => 'Les dades s\'afegiran al teu perfil personal',
-		'personalDataValidationText' => 'Aquestes són les teves dades. Comprova que tot és correcte:'
+		'personalDataValidationText' => 'Aquestes són les teves dades. Comprova que tot és correcte:',
+		'updateData' => 'Actualitzar dades',
+		'updatePassword' => 'Canviar contrassenya',
 
 	);

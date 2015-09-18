@@ -1,12 +1,6 @@
 var fotoPerfil;
 var nom;
 
-$(document).ready(function () {
-
-    $('#completar-dades-modal').modal();
-
-});
-
 function ometre(){
     window.location.href= urlPublic;
 }

@@ -253,8 +253,19 @@ class UserController extends RequestController {
 		$pathThumbDesti = $thumbsPath.$dbPhotoName;
 		$pathGranDesti = $photosPath.$dbPhotoName;
 
-		rename("./img/uploads/grans/".$originalName,$pathGranDesti);
-		rename("./img/uploads/thumbs/".$originalName,$pathThumbDesti);
+		try 
+		{
+
+			rename("./img/uploads/grans/".$originalName,$pathGranDesti);
+			rename("./img/uploads/thumbs/".$originalName,$pathThumbDesti);
+
+		}
+		catch(Exception $e)
+		{
+
+			$dbPhotoName = $element->photoURL;
+
+		}
 
 		$element->fullName = $name;
 		$element->languageId = $language;

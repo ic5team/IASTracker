@@ -44,7 +44,9 @@ class BaseController extends Controller {
 				$data->userImage = $user->photoURL;
 				$data->userLanguage = $user->languageId;
 				$data->isAdmin = $user->isAdmin;
+				$data->amIExpert = $user->amIExpert;
 				$data->isExpert = $user->isExpert;
+				$data->fullName = $user->fullName;
 				$data->observationNumber = 0;
 				$data->verifiedObservations = 0;
 				$data->verifiedObservationsPC = 0;
