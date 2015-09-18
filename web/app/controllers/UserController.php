@@ -157,58 +157,114 @@ class UserController extends RequestController {
 			&& Input::has('pw2') && Input::has('nick'))
 		{
 
-			$token = Input::get('token');
-			$pw1 = Input::get('pw1');
-			$pw2 = Input::get('pw2');
-			$nick = Input::get('nick');
+			$out = $this->setPassword($element);
 
-			if(($element->activationKey == $token) 
-				&& ($pw1 == $pw2))
+		}
+		else if(Input::has('name') && Input::has('language')
+			&& Input::has('isExpert') && Input::has('imageURL'))
+		{
+
+			$out = $this->setUserData($element);
+
+		}
+
+		return json_encode($out);
+
+	}
+
+	protected function setPassword($element)
+	{
+
+		$out = new stdClass();
+		$token = Input::get('token');
+		$pw1 = Input::get('pw1');
+		$pw2 = Input::get('pw2');
+		$nick = Input::get('nick');
+
+		if(($element->activationKey == $token) 
+			&& ($pw1 == $pw2))
+		{
+
+			$user = User::nickname($nick)->first();
+			if(null == $user)
 			{
 
-				$user = User::nickname($nick)->first();
-				if(null == $user)
-				{
+				$element->password = Hash::make($pw1);
+				$element->username = $nick;
+				$element->isActive = true;
+				$element->activationKey = null;
+				$element->lastConnection = new DateTime();
+				$element->touch();
+				$element->save();
 
-					$element->password = Hash::make($pw1);
-					$element->username = $nick;
-					$element->isActive = true;
-					$element->activationKey = '';
-					$element->lastConnection = new DateTime();
-					$element->touch();
-					$element->save();
-
-					Auth::login($element);
-					$out->html = View::make('public/User/activated')->render();
-
-				}
-				else
-				{
-
-					$out->html = View::make('public/User/noActivated', 
-						array('message' => Lang::get('ui.duplicatedNick')))->render();
-
-				}
-
-			}
-			else if($pw1 == $pw2)
-			{
-
-				$out->html = View::make('public/User/noActivated', 
-						array('message' => Lang::get('ui.invalidToken')))->render();
+				Auth::login($element);
+				$out->html = View::make('public/User/activated')->render();
 
 			}
 			else
 			{
 
 				$out->html = View::make('public/User/noActivated', 
-						array('message' => Lang::get('ui.pwMismatch')))->render();
+					array('message' => Lang::get('ui.duplicatedNick')))->render();
 
 			}
 
 		}
+		else if($pw1 == $pw2)
+		{
 
-		return json_encode($out);
+			$out->html = View::make('public/User/noActivated', 
+					array('message' => Lang::get('ui.invalidToken')))->render();
+
+		}
+		else
+		{
+
+			$out->html = View::make('public/User/noActivated', 
+					array('message' => Lang::get('ui.pwMismatch')))->render();
+
+		}
+
+		return $out;
+
+	}
+
+	protected function setUserData($element)
+	{
+
+		$out = new stdClass();
+		$name = Input::get('name');
+		$language = Input::get('language');
+		$isExpert = Input::get('isExpert');
+		$image = Input::get('imageURL');
+
+		//Move the image
+		$originalName = explode("/", $image);
+		$originalName = $originalName[count($originalName) - 1];
+		$desinationFolder = '/users/';
+
+		$nameParts = explode(".", $originalName);
+		$ext = strtoupper($nameParts[count($nameParts)-1]);
+
+		$dbPhotoName = $desinationFolder.'u'.$element->id.'.'.$ext;
+
+		$thumbsPath = './img/thumbs/';
+		$photosPath = './img/fotos/';
+		$pathThumbDesti = $thumbsPath.$dbPhotoName;
+		$pathGranDesti = $photosPath.$dbPhotoName;
+
+		rename("./img/uploads/grans/".$originalName,$pathGranDesti);
+		rename("./img/uploads/thumbs/".$originalName,$pathThumbDesti);
+
+		$element->fullName = $name;
+		$element->languageId = $language;
+		$element->amIExpert = $isExpert;
+		$element->photoURL = $dbPhotoName;
+		$element->lastConnection = new DateTime();
+		$element->touch();
+		$element->save();
+
+		return $out;
 
 	}
 

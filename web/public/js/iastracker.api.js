@@ -216,3 +216,13 @@ IASTracker.prototype.activateUser = function(userId, params, doneFunction, desti
 	return this.AJAXRequest(completeURL, destId, doneFunction, 'PUT', params);
 
 }
+
+IASTracker.prototype.addUserData = function(userId, params, doneFunction, destinationId)
+{
+
+	var completeURL = this.users.entryPoint + this.separator + userId;
+	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
+
+	return this.AJAXRequest(completeURL, destId, doneFunction, 'PUT', params);
+
+}

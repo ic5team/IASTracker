@@ -36,16 +36,24 @@ class BaseController extends Controller {
 		{
 
 			$user = Auth::user();
-			$data->isLogged = true;
-			$data->username = $user->username;
-			$data->userImage = $user->photoURL;
-			$data->userLanguage = $user->languageId;
-			$data->isAdmin = $user->isAdmin;
-			$data->isExpert = $user->isExpert;
-			$data->observationNumber = 0;
-			$data->verifiedObservations = 0;
-			$data->verifiedObservationsPC = 0;
-			$data->usrId = $user->id;
+			if($user->isActive)
+			{
+
+				$data->isLogged = true;
+				$data->username = $user->username;
+				$data->userImage = $user->photoURL;
+				$data->userLanguage = $user->languageId;
+				$data->isAdmin = $user->isAdmin;
+				$data->isExpert = $user->isExpert;
+				$data->observationNumber = 0;
+				$data->verifiedObservations = 0;
+				$data->verifiedObservationsPC = 0;
+				$data->usrId = $user->id;
+				$data->isComplete = (null != $user->fullName);
+
+			}
+			else
+				Auth::logout();
 
 			unset($user);
 
@@ -78,6 +86,7 @@ class BaseController extends Controller {
 			$obj->locale = $languages[$i]->locale;
 			$obj->img = $languages[$i]->flagURL;
 			$obj->name = $languages[$i]->name;
+			$obj->id = $languages[$i]->id;
 			$data->languages[] = $obj;
 
 		}

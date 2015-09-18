@@ -14,12 +14,26 @@
 	<div class="col-md-5">
 		<div class="row">
 			<div class="col-md-12">
+<?php
+	if(property_exists($data->image, 'url'))
+	{
+?>
 				{{ HTML::image(Config::get('app.urlImg').$data->image->url, '', array("style" => "width: 300px;"))}}
+<?php
+	}
+?>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-12" style="font-weight: bold; font-size: 12px;">
+<?php
+	if(property_exists($data->image, 'url'))
+	{
+?>
 				{{ $data->image->text.' '.$data->image->attribution }}
+<?php
+	}
+?>
 			</div>
 		</div>
 	</div>
