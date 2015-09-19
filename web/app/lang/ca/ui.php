@@ -57,6 +57,8 @@ return array(
 		'loading' => 'Carregant...',
 		'imageAdjust' => 'Ajusta la imatge',
 		'acceptAction' => 'Acceptar',
+		'rejectAction' => 'Rebutjar',
+		'readMore' => 'Llegir més...',
 		'dismissAction' => 'Cancel·lar',
 		'completeUserData' => 'Completa les teves dades',
 		'personalData' => 'Dades personals',
@@ -84,6 +86,18 @@ return array(
 		'userExistsQuestion' => 'Ja estàs registrat?',
 		'invalidEmail' => 'Aquest correu electrònic no té un format vàlid',
 		'usedEmail' => 'Ja hi ha un usuari registrat amb aquest correu electrònic',
-		'signupDone' => 'Usuari registrar correctament. Aviat rebràs un correu per activar el compte'
+		'signupDone' => 'Usuari registrar correctament. Aviat rebràs un correu per activar el compte',
+		'cookiesWarning' => 'Aquesta web utilitza cookies per millorar la teva experiència. Si hi estàs d\'acord apreta el botó per acceptar-ho',
+		'cookieTitle' => 'Política de cookies',
+		'cookieText' => 'Una galeta és un petit fitxer de text que s’emmagatzema en el seu navegador quan visita gairebé qualsevol pàgina web. La seva utilitat és que la web sigui capaç de recordar la seva visita quan torni a navegar per aquesta pàgina. Les cookies solen emmagatzemar informació de caràcter tècnic, preferències personals, personalització de continguts, estadístiques d’ús, enllaços a xarxes socials, accés a comptes d’usuari, etc. L’objectiu de la galeta és adaptar el contingut de la web al seu perfil i necessitats. Sense galetes els serveis oferts per qualsevol pàgina es veurien minvats notablement.',
+		'usedCookiesTitle' => 'Cookies utilitzades en aquest lloc web',
+		'usedCookiesText' => 'Procedim a detallar l’ús que fa aquesta web de cookies (o galetes) amb la finalitat d’informar-lo amb la màxima exactitud possible.<br />Aquest lloc web utilitza les següents galetes pròpies:<br/>• Galetes de sessió, per emmagatzemar informació de preferències personals. <br />Aquest lloc web no utilitza galetes de tercers',
+		'passwordReminderText' => 'Introdueix el teu correu electrònic per recordar-te la contrasenya',
+		'notUsedEmail' => 'No hi ha cap usuari registrat amb aquest correu electrònic',
+		'remindPasswordDone' => 'Aviat rebràs un correu electrònic amb les instruccions per recordar la contrasenya',
+		'remindPasswordAction' => 'Recorda',
+		'resetPassword' => 'Restauració de la contrasenya',
+		'resetAction' => 'Restaura',
+		'passwordChanged' => 'La contrasenya s\'ha canviat correctament, fes click :link per entrar'
 
 	);

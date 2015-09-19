@@ -278,6 +278,7 @@ if(property_exists($data, 'isComplete') && !$data->isComplete)
 ?>
 		@include('layouts.modals.login')
 		@include('layouts.modals.signup')
+		@include('layouts.modals.remind')
 <?php
 
 	}

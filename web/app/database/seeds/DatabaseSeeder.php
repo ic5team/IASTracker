@@ -43,7 +43,7 @@ class MapProviderTableSeeder extends Seeder {
 		DB::table('MapProvider')->insert(array(
 			'id'  => 1,
 			'url' => 'http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png',
-			'attribution' => '&copy; <a href=\"http://osm.org/copyright\" title=\"OpenStreetMap\" target=\"_blank\">OpenStreetMap</a> contributors | Tiles Courtesy of <a href=\"http://www.mapquest.com/\" title=\"MapQuest\" target=\"_blank\">MapQuest</a> <img src=\"http://developer.mapquest.com/content/osm/mq_logo.png\" width=\"16\" height=\"16\">',
+			'attribution' => '&copy; <a href="http://osm.org/copyright" title="OpenStreetMap" target="_blank">OpenStreetMap</a> contributors | Tiles Courtesy of <a href="http://www.mapquest.com/" title="MapQuest" target="_blank">MapQuest</a> <img src="http://developer.mapquest.com/content/osm/mq_logo.png" width="16" height="16">',
 			'zIndex' => 1,
 			'SWBoundLat' => null,
 			'SWBoundLon' => null,
@@ -164,6 +164,8 @@ class LanguagesTableSeeder extends Seeder {
 			'updated_at' => new DateTime
 		));
 
+		DB::statement('UPDATE "Users" SET "languageId"=1');
+
 	}
 }
 
@@ -211,7 +213,7 @@ class UsersTableSeeder extends Seeder {
 			'fullName' => 'Isaac Besora i Vilardaga',
 			'isActive' => 1,
 			'activationKey' => null,
-			'photoURL' => 'usuaris/ibesora.png',
+			'photoURL' => 'users/u1.png',
 			'remember_token' => null,
 			'amIExpert' => 1,
 			'isExpert' => 1,

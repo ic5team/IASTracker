@@ -25,11 +25,10 @@
 							<div id="userNameDiv" style="margin-left: 45px; margin-top: 5px; font-size: 30px; color:#908787">
 							{{$data->username}}
 							</div>
-							<div id="panell-usuari" class="arrow_box menu_box">
+							<div id="panell-usuari" class="arrow_box menu_box hidden">
 								<div style="padding: 10px;">
 									<ul class="nav nav-pills nav-stacked">
 										<li onclick="updateUserData()"><a href="#">{{ Lang::get('ui.updateData')}}</a></li>
-										<li onclick="updatePassword()"><a href="#">{{ Lang::get('ui.updatePassword')}}</a></li>
 										<li><a href="logout">{{ Lang::get('ui.logOut')}}</a></li>
 									</ul>
 								</div>

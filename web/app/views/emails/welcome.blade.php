@@ -6,7 +6,7 @@
 	<body>
 		<h2>{{ Lang::get('email.welcomeTitle') }}</h2>
 		<div>
-			{{ Lang::get('email.activationText') }}{{ URL::to('account/activate?'.$token) }}.<br/>
+			{{ Lang::get('email.activationText') }}{{ URL::to('account/activate?token='.$token) }}.<br/>
 		</div>
 	</body>
 </html>

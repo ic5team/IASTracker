@@ -238,3 +238,23 @@ IASTracker.prototype.addUser = function(email, doneFunction, destinationId)
 	return this.AJAXRequest(completeURL, destId, doneFunction, 'POST', {email : email});
 
 }
+
+IASTracker.prototype.remindUser = function(email, doneFunction, destinationId)
+{
+
+	var completeURL = this.users.entryPoint;
+	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
+
+	return this.AJAXRequest(completeURL, destId, doneFunction, 'PUT', {email : email});
+
+}
+
+IASTracker.prototype.resetUserPassword = function(userId, params, doneFunction, destinationId)
+{
+
+	var completeURL = this.users.entryPoint + this.separator + userId;
+	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
+
+	return this.AJAXRequest(completeURL, destId, doneFunction, 'PUT', params);
+
+}

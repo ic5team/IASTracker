@@ -322,6 +322,7 @@ class Inicial extends Migration {
 			$table->string('fullName', 255)->nullable();
 			$table->boolean('isActive');
 			$table->string('activationKey', 255)->nullable();
+			$table->string('resetKey', 255)->nullable();
 			$table->string('photoURL', 255)->nullable();
 			$table->rememberToken();
 			$table->boolean('amIExpert');

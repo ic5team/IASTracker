@@ -6,13 +6,11 @@ La llista d'IAS d'una zona és ordenada
 Canviar tots els .js per la versió minimitzada
 Fer categories segons els % de validació (noms de biolegs famosos?)
 
-Relació area i observació múltiple. Una Obs pot estar en més d'una IAS
-Taxons, IAS de la taula de taxons del backup
-Passar taula d'idiomes a la Blanca
 Afegir descripcions dels repositoris
-Afegir espanyol
 App de beta
 Muntar mapes al servidor
+
+Canviar mail.php
 
 
 	Al afegir una observació s'ha de fer la intersecció del punt amb 

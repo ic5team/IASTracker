@@ -2,6 +2,7 @@
 	background-color: #FFF;
 	margin-bottom: 0px;
 	height: 70px;
+  position:  relative;
 }
 
 #navbar-no-loguejat {
@@ -219,3 +220,35 @@ body {
 }
 
 #target { width: 450px; }
+
+.arrow_box {
+  position: relative;
+  background: #eee;
+  border: 2px solid #a2c856;
+  border-radius: 2px;
+}
+.arrow_box:after, .arrow_box:before {
+  bottom: 100%;
+  left: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.arrow_box:after {
+  border-color: rgba(255, 255, 255, 0);
+  border-bottom-color: #fff;
+  border-width: 6px;
+  margin-left: -6px;
+}
+.arrow_box:before {
+  border-color: rgba(221, 221, 221, 0);
+  border-bottom-color: #a2c856;
+  border-width: 10px;
+  margin-left: -10px;
+}
+
+.menu_box { position: absolute; top: 45px; left: 100%; margin-left: -175px; width: 200px; z-index: 1001;  background: white; }

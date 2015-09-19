@@ -34,6 +34,7 @@ class IndexController extends BaseController {
 
 			$user = Auth::user();
 			$lang = $user->languageId;
+			$user->resetKey = null;
 			$user->lastConnection = new DateTime();
 			$user->save();
 			App::setLocale(Language::find($lang)->locale);
@@ -46,7 +47,7 @@ class IndexController extends BaseController {
 
 		$configuration = Configuration::find(1);
 		$defaultLanguageId = $configuration->defaultLanguageId;
-
+		
 		$languageId = Language::locale(App::getLocale())->first()->id;
 
 		//Get the signup text
@@ -148,6 +149,14 @@ class IndexController extends BaseController {
 
 		Auth::logout();
 		return Redirect::intended('/');
+
+	}
+
+	public function showCookies()
+	{
+
+		$data = $this->getBasicData();
+		return View::make('public/cookies', array('data' => $data));
 
 	}
 

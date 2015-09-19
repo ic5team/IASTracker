@@ -21,9 +21,11 @@
 	Route::resource('user', 'UserController');
 
 	Route::get('/', array('as' => 'inici', 'uses' => 'IndexController@showIndex'));
-	Route::post('/', array('as' => 'inici', 'uses' => 'IndexController@showIndex'));
-	Route::get('/logout', array('as' => 'inici', 'uses' => 'IndexController@logout'));
+	Route::post('/', array('uses' => 'IndexController@showIndex'));
+	Route::get('/cookies', array('uses' => 'IndexController@showCookies'));
+	Route::get('/logout', array('uses' => 'IndexController@logout'));
 	Route::get('/account/activate', array('uses' => 'UserController@activate'));
+	Route::get('/password/reset', array('uses' => 'UserController@resetPassword'));
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +41,7 @@
 	Route::get('/v1/States/{id}/Regions', array('uses' => 'StateController@getRegions'));
 	Route::get('/v1/Regions/{id}/Areas', array('uses' => 'RegionController@getAreas'));
 	Route::post('/v1/Users/', array('uses' => 'UserController@store'));
+	Route::put('/v1/Users/', array('uses' => 'UserController@remind'));
 	Route::put('/v1/Users/{id}', array('uses' => 'UserController@update'));
 	Route::get('/v1/Users/{id}', array('uses' => 'UserController@show'));
 	Route::get('/v1/Users/{id}/Observations', array('uses' => 'UserController@getObservations'));

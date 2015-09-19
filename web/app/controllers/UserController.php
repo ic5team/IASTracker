@@ -164,6 +164,13 @@ class UserController extends RequestController {
 			$out = $this->setPassword($element);
 
 		}
+		else if(Input::has('token') && Input::has('pw1') 
+			&& Input::has('pw2') )
+		{
+
+			$out = $this->setResetPassword($element);
+
+		}
 		else if(Input::has('name') && Input::has('language')
 			&& Input::has('isExpert') && Input::has('imageURL'))
 		{
@@ -213,6 +220,46 @@ class UserController extends RequestController {
 					array('message' => Lang::get('ui.duplicatedNick')))->render();
 
 			}
+
+		}
+		else if($pw1 == $pw2)
+		{
+
+			$out->html = View::make('public/User/noActivated', 
+					array('message' => Lang::get('ui.invalidToken')))->render();
+
+		}
+		else
+		{
+
+			$out->html = View::make('public/User/noActivated', 
+					array('message' => Lang::get('ui.pwMismatch')))->render();
+
+		}
+
+		return $out;
+
+	}
+
+	protected function setResetPassword($element)
+	{
+
+		$out = new stdClass();
+		$token = Input::get('token');
+		$pw1 = Input::get('pw1');
+		$pw2 = Input::get('pw2');
+
+		if(($element->resetKey == $token) 
+			&& ($pw1 == $pw2))
+		{
+
+			$element->password = Hash::make($pw1);
+			$element->resetKey = null;
+			$element->lastConnection = new DateTime();
+			$element->touch();
+			$element->save();
+
+			$out->html = View::make('public/User/passwordChanged')->render();
 
 		}
 		else if($pw1 == $pw2)
@@ -359,6 +406,69 @@ class UserController extends RequestController {
 			App::abort(403);
 
 		}
+
+	}
+
+	public function remind()
+	{
+
+		$email = Input::get('email');
+		$data = $this->getBasicData();
+
+		$user = User::email($email)->first();
+		$dto = new stdClass();
+
+		if($user != NULL)
+		{
+
+			$token = str_random(40);
+			$user->resetKey = $token;
+			$user->touch();
+			$user->save();
+
+			Mail::send('emails.auth.reminder', array('token' => $token), function($message) use ($email)
+			{
+
+				$message->to($email, '')->subject(Lang::get('email.passwordReminderSubject').'!');
+
+			});
+
+		}
+		else
+		{
+
+			$dto->error = Lang::get('ui.notUsedEmail');
+
+		}
+
+		return Response::json($dto);
+
+	}
+
+	public function resetPassword()
+	{
+
+		$token = Input::get('token');
+		$data = $this->getBasicData();
+
+		$user = User::resetKey($token)->first();
+
+		if($user != NULL)
+		{
+
+			$lang = Language::find($user->languageId);
+			App::setLocale($lang->locale);
+			return View::make("public/reset", array('data' => $data,
+				'token' => $token, 'userId' => $user->id));
+
+		}
+		else
+		{
+
+			App::abort(403);
+
+		}
+
 	}
 
 }

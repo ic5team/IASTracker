@@ -50,7 +50,7 @@
 						<div class="btn btn-lg btn-block btn-default" onclick="loginUsuari()">{{Lang::get('ui.loginAction')}}</div>
 						<br>
 						<p class="text-center">{{Lang::get('ui.notRegisteredQuestion')}}<a style="cursor:pointer" onclick="showSignUp()">{{Lang::get('ui.notRegisteredAction')}}</a></p>
-						<p class="text-center">{{Lang::get('ui.pwForgottenQuestion')}}<a style="cursor:pointer" onclick="showRememberPW()">{{Lang::get('ui.pwForgottenAction')}}</a></p>
+						<p class="text-center">{{Lang::get('ui.pwForgottenQuestion')}}<a style="cursor:pointer" onclick="showRememberPw()">{{Lang::get('ui.pwForgottenAction')}}</a></p>
 					</div>
 				</div>
 			</div>

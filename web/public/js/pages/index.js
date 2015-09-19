@@ -25,6 +25,14 @@ $(document).ready(function () {
 		format: 'DD/MM/YYYY'
 	});
 
+	$("#navbar-loguejat").on("mouseover", function () {
+        $('#panell-usuari').removeClass('hidden');
+    });
+
+    $("#navbar-loguejat").on("mouseleave", function () {
+        $('#panell-usuari').addClass('hidden');
+    });
+
 	api.getIASMapFilter(getIASMapFilterOK, "#iasContents");
 	loadingImage = $('#contentModalContents').html();
 	configureShapes();
@@ -871,7 +879,7 @@ function loginUsuari()
 
 }
 
-function registrarUsuari()
+function userSignUp()
 {
 
 	var val = $('#input-signupEmail').val();
@@ -919,6 +927,77 @@ function userRegistered(data)
 	
 		$('#signupDesc').hide();
 		$('#signupDone').show();
+
+	}
+
+}
+
+function showRememberPw()
+{
+
+	$('#signupModal').modal('hide');
+	$('#loginModal').modal('hide');
+
+	$('#remindPasswordDesc').show();
+	$('#remindPasswordPanel').show();
+	$('#remindPasswordDone').hide();
+	$('#input-reminderEmail').val('');
+	$('#form-reminderEmail').removeClass('has-error');
+	$('#error-notUsedEmail').addClass('hidden');
+	$('#error-invalidEmail').addClass('hidden');
+
+	$('#remindModal').modal();
+
+}
+
+function remindPassword()
+{
+
+	var val = $('#input-reminderEmail').val();
+
+	$('#form-reminderEmail').removeClass('has-error');
+	$('#error-notUsedEmail').addClass('hidden');
+	$('#error-invalidEmail').addClass('hidden');
+
+	if(isValidEmail(val))
+	{
+
+		$('#error-invalidEmail').addClass('hidden');
+		$('#remindPasswordPanel').hide();
+		$('#remindPasswordLoading').show();
+		api.remindUser(val, userReminded);
+
+	}
+	else
+	{
+
+		$('#remindPasswordPanel').show();
+		$('#remindPasswordLoading').hide();
+		$('#error-notUsedEmail').addClass('hidden');
+		$('#form-reminderEmail').addClass('has-error');
+		$('#error-invalidEmail').removeClass('hidden');
+
+	}
+
+}
+
+function userReminded(data)
+{
+
+	$('#remindPasswordLoading').hide();
+	if(data.hasOwnProperty('error'))
+	{
+
+		$('#remindPasswordPanel').show();
+		$('#form-reminderEmail').addClass('has-error');
+		$('#error-notUsedEmail').removeClass('hidden');
+
+	}
+	else
+	{
+	
+		$('#remindPasswordDesc').hide();
+		$('#remindPasswordDone').show();
 
 	}
 
