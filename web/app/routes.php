@@ -21,6 +21,8 @@
 	Route::resource('user', 'UserController');
 
 	Route::get('/', array('as' => 'inici', 'uses' => 'IndexController@showIndex'));
+	Route::post('/', array('as' => 'inici', 'uses' => 'IndexController@showIndex'));
+	Route::get('/logout', array('as' => 'inici', 'uses' => 'IndexController@logout'));
 	Route::get('/account/activate', array('uses' => 'UserController@activate'));
 
 /*

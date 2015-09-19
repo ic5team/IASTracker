@@ -48,12 +48,16 @@ class UserController extends RequestController {
 	protected function newResource()
 	{
 
-		$inMail = Input::get('mail');
-		if(Input::has('mail'))
+		$inMail = Input::get('email');
+		$params = array();
+		$paramAttribs = array();
+		$dto = new stdClass();
+
+		if(Input::has('email'))
 		{
 
 			$params['mail'] = $inMail;
-			$paramAttribs['mail'] = 'required|email|unique:Usuaris,deleted_at,NULL';
+			$paramAttribs['mail'] = 'required|email|unique:Users,mail';
 
 		}
 
@@ -62,9 +66,7 @@ class UserController extends RequestController {
 		if($validator->fails())
 		{
 
-			$dto = new stdClass();
 			$dto->error = $validator->messages()->first();
-			return Response::json($dto);
 
 		}
 		else
@@ -83,7 +85,7 @@ class UserController extends RequestController {
 			$element->touch();
 			$element->save();
 
-			Mail::send('emails.welcome', array('token' => $token), function($message)
+			Mail::send('emails.welcome', array('token' => $token), function($message) use ($inMail)
 			{
 
 				$message->to($inMail, '')->subject(Lang::get('email.welcomeSubject').'!');
@@ -91,6 +93,8 @@ class UserController extends RequestController {
 			});
 
 		}
+
+		return Response::json($dto);
 
 	}
 
@@ -164,7 +168,8 @@ class UserController extends RequestController {
 			&& Input::has('isExpert') && Input::has('imageURL'))
 		{
 
-			$out = $this->setUserData($element);
+			if(Auth::check() && ($id == Auth::user()->id))
+				$out = $this->setUserData($element);
 
 		}
 

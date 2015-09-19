@@ -5,7 +5,45 @@ class IndexController extends BaseController {
 	public function showIndex()
 	{
 
+		$error = '';
+		if(Input::has('email') && Input::has('password'))
+		{
+
+			if(!Auth::attempt(array('mail' => Input::get('email'), 
+				'password' => Input::get('password')), Input::has('forever')))
+			{
+
+				$error = Lang::get('ui.wrongUserCredentials');
+
+			}
+			else
+			{
+
+			}
+
+		}
+		else if(Input::has('email') || Input::has('password'))
+		{
+
+			$error = Lang::get('ui.missingParameters');
+
+		}
+
+		if(Auth::user())
+		{
+
+			$user = Auth::user();
+			$lang = $user->languageId;
+			$user->lastConnection = new DateTime();
+			$user->save();
+			App::setLocale(Language::find($lang)->locale);
+
+		}
+
 		$data = $this->getBasicData();
+		if('' != $error)
+			$data->error = $error;
+
 		$configuration = Configuration::find(1);
 		$defaultLanguageId = $configuration->defaultLanguageId;
 
@@ -102,6 +140,14 @@ class IndexController extends BaseController {
 			'shapes' => json_encode($shapeURLs),
 			'shapeNames' => json_encode($shapeNames),
 			'taxonChilds' => $taxonChilds));
+
+	}
+
+	public function logout()
+	{
+
+		Auth::logout();
+		return Redirect::intended('/');
 
 	}
 

@@ -146,8 +146,7 @@ abstract class RequestController extends BaseController {
 
 			try {
 
-				$this->newResource();
-				return Response::json(array('ok' => 1));
+				return $this->newResource();
 
 			}
 			catch(Illuminate\Database\QueryException $e)

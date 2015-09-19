@@ -819,9 +819,107 @@ function updateUserData()
 	$('#input-name').val(fullName);
 	$('#amIExpertCheckbox').bootstrapSwitch('state', isExpert);
 	var img = $('#imgPerfilBarra').attr('src');
+	$('#imgPerfilCompletar').data('url', img);
 	$('#imgPerfilCompletar').css({'background-image': 'url(' + img + ')'});
 	$('#completar-dades-modal').modal();
 	$('#pas3').addClass('hidden');
 	antPas3();
+
+}
+
+function showLogInModal()
+{
+
+	$('#loginModal').modal();
+
+}
+
+function showLogIn()
+{
+
+	$('#loginModal').modal();
+	$('#signupModal').modal('hide');
+
+}
+
+function showSignUpModal()
+{
+
+	$('#signupDesc').show();
+	$('#signupPanel').show();
+	$('#signupDone').hide();
+	$('#input-signupEmail').val('');
+	$('#form-signupEmail').removeClass('has-error');
+	$('#error-usedEmail').addClass('hidden');
+	$('#error-invalidEmail').addClass('hidden');
+	$('#signupModal').modal();
+
+}
+
+function showSignUp()
+{
+
+	$('#loginModal').modal('hide');
+	$('#signupModal').modal();
+
+}
+
+function loginUsuari()
+{
+
+	$('#loginForm').submit();
+
+}
+
+function registrarUsuari()
+{
+
+	var val = $('#input-signupEmail').val();
+
+	$('#form-signupEmail').removeClass('has-error');
+	$('#error-usedEmail').addClass('hidden');
+	$('#error-invalidEmail').addClass('hidden');
+
+	if(isValidEmail(val))
+	{
+
+		$('#error-invalidEmail').addClass('hidden');
+		$('#signupPanel').hide();
+		$('#signupLoading').show();
+		api.addUser(val, userRegistered);
+
+	}
+	else
+	{
+
+		$('#signupPanel').show();
+		$('#signupLoading').hide();
+		$('#error-usedEmail').addClass('hidden');
+		$('#form-signupEmail').addClass('has-error');
+		$('#error-invalidEmail').removeClass('hidden');
+
+	}
+
+}
+
+function userRegistered(data)
+{
+
+	$('#signupLoading').hide();
+	if(data.hasOwnProperty('error'))
+	{
+
+		$('#signupPanel').show();
+		$('#form-signupEmail').addClass('has-error');
+		$('#error-usedEmail').removeClass('hidden');
+
+	}
+	else
+	{
+	
+		$('#signupDesc').hide();
+		$('#signupDone').show();
+
+	}
 
 }

@@ -30,7 +30,7 @@
 									<ul class="nav nav-pills nav-stacked">
 										<li onclick="updateUserData()"><a href="#">{{ Lang::get('ui.updateData')}}</a></li>
 										<li onclick="updatePassword()"><a href="#">{{ Lang::get('ui.updatePassword')}}</a></li>
-										<li onclick="logOut()"><a href="#">{{ Lang::get('ui.tancarSessio')}}</a></li>
+										<li><a href="logout">{{ Lang::get('ui.logOut')}}</a></li>
 									</ul>
 								</div>
 							</div>

@@ -68,6 +68,22 @@ return array(
 		'personalDataCompleteText' => 'Les dades s\'afegiran al teu perfil personal',
 		'personalDataValidationText' => 'Aquestes són les teves dades. Comprova que tot és correcte:',
 		'updateData' => 'Actualitzar dades',
-		'updatePassword' => 'Canviar contrassenya',
+		'updatePassword' => 'Canviar contrasenya',
+		'loginText' => 'Introdueix les teves dades per iniciar sessió',
+		'email' => 'Correu electrònic',
+		'rememberMeText' => 'Recorda\'m',
+		'loginAction' => 'Entra!',
+		'notRegisteredQuestion' => 'Encara no estàs registrat?',
+		'notRegisteredAction' => 'Registra\'t',
+		'pwForgottenQuestion' => 'Has oblidat la contrasenya?',
+		'pwForgottenAction' => 'Recorda-la!',
+		'wrongUserCredentials' => 'No hi ha cap usuari amb aquest correu electrònic i contrasenya',
+		'missingParameters' => 'Falten paràmetres',
+		'logOut' => 'Sortir',
+		'signupText' => 'Introdueix el teu correu electrònic per registrar-te',
+		'userExistsQuestion' => 'Ja estàs registrat?',
+		'invalidEmail' => 'Aquest correu electrònic no té un format vàlid',
+		'usedEmail' => 'Ja hi ha un usuari registrat amb aquest correu electrònic',
+		'signupDone' => 'Usuari registrar correctament. Aviat rebràs un correu per activar el compte'
 
 	);

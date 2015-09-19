@@ -44,9 +44,14 @@ if(property_exists($data, 'isComplete') && !$data->isComplete)
 		var shapes = {{$shapes}};
 		var shapeNames = {{$shapeNames}};
 		var taxonChilds = new Array();
+<?php
+	if($data->isLogged)
+	{
+?>
 		var isExpert = {{($data->amIExpert) ? 'true' : 'false'}};
 		var fullName = "{{('' == $data->fullName) ? '' : $data->fullName}}";
 <?php
+	}
 	$keys = array_keys($taxonChilds);
 	for($i=0; $i<count($keys); ++$i)
 	{
@@ -70,6 +75,14 @@ if(property_exists($data, 'isComplete') && !$data->isComplete)
 <?php
 	}
 
+	if(property_exists($data, 'error'))
+	{
+
+?>
+	$('#loginModal').modal();
+
+<?php
+	}
 ?>
 	</script>
 	{{ HTML::script('js/pages/index.js'); }}
@@ -252,6 +265,22 @@ if(property_exists($data, 'isComplete') && !$data->isComplete)
 			</div>
 		</div>
 		@include('layouts.modals.base')
+<?php
+	if(Auth::check())
+	{
+?>
 		@include('layouts.modals.info')
+<?php
+	}
+	else
+	{
+
+?>
+		@include('layouts.modals.login')
+		@include('layouts.modals.signup')
+<?php
+
+	}
+?>
 	</div>
 @stop
