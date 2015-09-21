@@ -90,7 +90,7 @@ if(property_exists($data, 'isComplete') && !$data->isComplete)
 
 @section('main_wrapper')
 	<div class="full-width">
-		<div id="map" class="map">
+		<div id="map" class="map" style="position: initial">
 			<div id="controls" class="mapControls ui-draggable shadow">
 				<!-- Nav tabs -->
 				<ul id="tabsControls" class="nav nav-tabs" role="tablist">

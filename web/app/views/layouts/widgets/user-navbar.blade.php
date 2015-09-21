@@ -29,6 +29,7 @@
 								<div style="padding: 10px;">
 									<ul class="nav nav-pills nav-stacked">
 										<li onclick="updateUserData()"><a href="#">{{ Lang::get('ui.updateData')}}</a></li>
+										<li><a href="password/reset" target="_blank">{{ Lang::get('ui.updatePassword')}}</a></li>
 										<li><a href="logout">{{ Lang::get('ui.logOut')}}</a></li>
 									</ul>
 								</div>

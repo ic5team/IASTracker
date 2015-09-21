@@ -449,9 +449,26 @@ class UserController extends RequestController {
 	{
 
 		$token = Input::get('token');
-		$data = $this->getBasicData();
+		$user = NULL;
+		if(Input::has('token'))
+			$user = User::resetKey($token)->first();
 
-		$user = User::resetKey($token)->first();
+		$data = $this->getBasicData();
+		if(NULL == $user)
+		{
+
+			if(Auth::check())
+			{
+
+				$user = Auth::user();
+
+				$token = str_random(40);
+				$user->resetKey = $token;
+				$user->save();
+
+			}
+
+		}
 
 		if($user != NULL)
 		{
