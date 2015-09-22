@@ -1,13 +1,13 @@
 <?php
 
 return array(
-		'inici' => 'Web de l\'IASTracker',
-		'filter' => 'Filtra',
-		'signup' => 'Registre',
-		'login' => 'Entra',
-		'search' => 'Cerca...',
-		'ic5Info' => 'Nosaltres',
-		'taxonomy' => 'Per taxó',
+		'inici' => 'Web de l\'IASTracker',	//Text que surt a la barra del navegador
+		'filter' => 'Filtra',				//Text del botó per aplicar el filtre
+		'signup' => 'Registre',				//Text del botó per registrar-te al geoportal
+		'login' => 'Entra',					//Text del botó per iniciar sessió
+		'search' => 'Cerca...',				//Text que surt a la barra de cerca en el panell dels IAS del geoportal
+		'ic5Info' => 'Nosaltres',			//Text que surt al costat del logo de l'ic5 a la barra superior. Fent-hi click s'ha d'obrir la finestra amb el vostre text
+		'taxonomy' => 'Per taxó',			
 		'group' => 'Grup',
 		'all' => 'Tots',
 		'date' => 'Per data',

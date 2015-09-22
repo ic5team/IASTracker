@@ -38,59 +38,281 @@
 		<title>IASTracker</title>
 	</head>
 	<body>
-		<div data-role="page" id="panel-fixed-page1">
-    <div data-role="header" data-theme="b" data-position="fixed">
-        <h1>Fixed header</h1>
-        <a href="#nav-panel" data-icon="bars" data-iconpos="notext">Menu</a>
-        <a href="#add-form" data-icon="gear" data-iconpos="notext">Add</a>
-    </div><!-- /header -->
-    <div data-role="content" class="jqm-content">
-    	<h1>Panels</h1>
-		<h2>Fixed positioning</h2>
-        <p>This is a typical page that has two buttons in the header bar that open panels. The left panel has the reveal display mode. The right panel opens as overlay. For both panels we set <code>data-position-fixed="true"</code>. We also set position fixed for the header and footer on this page.</p>
-        <p>The left panel contains a long menu to demonstrate that the framework will check the panel contents height and unfixes the panel so its content can be scrolled. In the right panel there is a short form that shows the fixed positioning.</p>		
-		<div data-demo-html="#panel-fixed-page1" data-demo-css="true"></div><!--/demo-html -->
-	</div><!-- /content -->
-    <div data-role="footer" data-position="fixed" data-theme="b">
-    	<h4>Fixed footer</h4>
-    </div><!-- /footer -->
-    
-	<div data-role="panel" data-position-fixed="true" data-theme="a" id="nav-panel">
-		<ul data-role="listview" data-theme="a" class="nav-search">
-            <li data-icon="delete"><a href="#" data-rel="close">Close menu</a></li>
-                <li><a href="#panel-fixed-page2">Accordion</a></li>
-                <li><a href="#panel-fixed-page2">AJAX Navigation</a></li>
-                <li><a href="#panel-fixed-page2">Autocomplete</a></li>
-                <li><a href="#panel-fixed-page2">Buttons</a></li>
-                <li><a href="#panel-fixed-page2">Checkboxes</a></li>
-                <li><a href="#panel-fixed-page2">Collapsibles</a></li>                
-		</ul>
-	</div><!-- /panel -->
-
-	<div data-role="panel" data-position="right" data-position-fixed="true" data-display="overlay" data-theme="b" id="add-form">
-        <form class="userform">
-        	<h2>Login</h2>
-            <label for="name">Username:</label>
-            <input type="text" name="name" id="name" value="" data-clear-btn="true" data-mini="true">
-            <label for="password">Password:</label>
-            <input type="password" name="password" id="password" value="" data-clear-btn="true" autocomplete="off" data-mini="true">
-            <div class="ui-grid-a">
-                <div class="ui-block-a"><a href="#" data-rel="close" data-role="button" data-theme="c" data-mini="true">Cancel</a></div>
-                <div class="ui-block-b"><a href="#" data-rel="close" data-role="button" data-theme="b" data-mini="true">Save</a></div>
+		<div id="splash" data-role="page" data-url="splash" class="splash fullscreen">
+		</div>
+		<div id="screen1" class="fullscreen" data-role="page" data-url="screen1">
+			Agreement of terms and conditions
+			<a href="#screen2" id="btAgree" data-transition="pop">Agree</a>
+		</div>
+		<div id="screen2" data-role="page" class="fullscreen" data-url="screen2">
+			<div id="help1" class="helpWindow almostFullscreen" next="help2">Help1</div>
+			<div id="help2" class="helpWindow almostFullscreen" prev="help1" next="help3" style="display: none">Help2</div>
+			<div id="help3" class="helpWindow almostFullscreen" prev="help2" next="help4" style="display: none">Help3</div>
+			<div id="help4" class="helpWindow almostFullscreen" prev="help3" style="display: none">Help4</div>
+			<a href="#screen3" data-transition="pop">Skip</a>
+		</div>
+		<div id="screen3" data-role="page" class="fullscreen" data-url="screen3">
+			You are not registered. To register enter your email
+			<a href="#screen5" data-transition="pop">Not now</a>
+			<a href="#screen5" data-transition="pop" id="btNoNever">No, don't ask me again</a>
+			<input id="signupEmail" name="email" placeholder="me@me.com" />
+			<a href="#screen5" data-transition="pop" id="btSignUp">Sign In</a>
+		</div>
+		<div id="screen4" data-role="page" class="fullscreen" data-url="screen4">
+			<div class="row">
+				<div class="col-md-6 col-md-offset-3">
+					<img src='' />
+				</div>
 			</div>
-        </form>
-	</div><!-- /panel -->
-</div><!-- /page -->
-
-<div data-role="page" id="panel-fixed-page2">
-    <div data-role="header" data-theme="f">
-        <h1>Landing page</h1>
-    </div><!-- /header -->
-    <div data-role="content" class="jqm-content">
-        <p>This is just a landing page.</p>
-        <a href="#panel-fixed-page1" data-role="button" data-inline="true" data-mini="true" data-icon="back" data-iconpos="left">Back</a>
-    </div><!-- /content -->
-</div><!-- /page -->
+			<div class="row">
+				<div class="col-md-12">
+					<form role="form">
+						<div class="form-group" id="form-name">
+							<label for="name">Nom complet</label>
+							<input name="name" type="text" class="form-control block" id="input-name">
+							<span id="error-name" class="help-block hidden"></span>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12 form-group has-error" id="fullNameError" style="display: none;">
+					<div class="help-block with-errors">
+						Camp requerit
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<span>Ets un expert?</span>
+					<input type="checkbox" id="amIExpertCheckbox" class="IASCheck" checked>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2">
+					<ul class="nav navbar-nav">
+						<!-- Banderes -->
+					</ul>
+				</div>
+			</div>
+			<a href="#screen5" data-transition="pop" >Cancel</a>
+			<a href="#screen5" data-transition="pop" id="btCompleteData">Accept</a>
+		</div>
+		<div id="screen5" data-role="page" data-url="screen5">
+			<div data-role="header" data-position="fixed" data-tap-toggle="false">
+				<a href="#menuPanel" data-icon="bars" data-iconpos="notext">Menu</a>
+				<h1>Page Title</h1>
+			</div>
+			<div data-role="content">
+				<!-- IAS de la posició actual -->
+				IAS de la posició actual
+			</div>
+		</div>
+		<div id="screen6" data-role="page" data-url="screen6">
+			<div data-role="header" data-position="fixed" data-tap-toggle="false">
+				<a href="#menuPanel" data-icon="bars" data-iconpos="notext">Menu</a>
+				<h1>Page Title</h1>
+			</div>
+			<div data-role="content">
+				<!-- IAS preferits -->
+				IAS preferits
+			</div>
+		</div>
+		<div id="screen8" data-role="page" data-url="screen8">
+			<div data-role="header" data-position="fixed" data-tap-toggle="false">
+				<a href="#menuPanel" data-icon="bars" data-iconpos="notext">Menu</a>
+				<h1 id="titolTaxo">Page Title</h1>
+			</div>
+			<div data-role="content">
+				<!-- IAS per taxons -->
+				IAS per taxons
+				<div id="taxo1" style="background-color:#F00"> Taxó1<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+				</div>
+				<div id="taxo2" style="background-color:#0F0"> Taxó2<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /></div>
+				<div id="taxo3" style="min-height: 100vh; background-color:#00F"> Taxó3</div>
+				<a name="taxo4"></a> Taxó4
+				<a name="taxo5"></a> Taxó5
+				<a name="taxo6"></a> Taxó6
+			</div>
+		</div>
+		<div id="screenUser1" data-role="page" data-url="screenUser1">
+			<div data-role="header" data-position="fixed" data-tap-toggle="false">
+				<a href="#menuPanel" data-icon="bars" data-iconpos="notext">Menu</a>
+				<h1>Page Title</h1>
+			</div>
+			<div data-role="content">
+				<!-- IAS en altres zones guardades per l'usuari -->
+				IAS en zona usuari 1
+			</div>
+		</div>
+		<div id="screenUser2" data-role="page" data-url="screenUser2">
+			<div data-role="header" data-position="fixed" data-tap-toggle="false">
+				<a href="#menuPanel" data-icon="bars" data-iconpos="notext">Menu</a>
+				<h1>Page Title</h1>
+			</div>
+			<div data-role="content">
+				<!-- IAS en altres zones guardades per l'usuari -->
+				IAS en zona usuari 2
+			</div>
+		</div>
+		<div id="screenUser3" data-role="page" data-url="screenUser3">
+			<div data-role="header" data-position="fixed" data-tap-toggle="false">
+				<a href="#menuPanel" data-icon="bars" data-iconpos="notext">Menu</a>
+				<h1>Page Title</h1>
+			</div>
+			<div data-role="content">
+				<!-- IAS en altres zones guardades per l'usuari -->
+				IAS en zona usuari 3
+			</div>
+		</div>
+		<div id="screen11" data-role="page" data-url="screen11">
+			<div data-role="header" data-position="fixed" data-tap-toggle="false">
+				<a href="#menuPanel" data-icon="bars" data-iconpos="notext">Menu</a>
+				<h1>Page Title</h1>
+			</div>
+			<div data-role="content">
+				<!-- Other areas IAS -->
+				<div id="otherAreasMap">Map</div>
+				<label for="name">List name</label>
+				<input name="name" type="text" class="form-control block" id="input-name">
+				<button class="btn btn-primary">Cancel</button>
+				<button class="btn btn-primary">Accept</button>
+			</div>
+		</div>
+		<div id="screen12" data-role="page" data-url="screen12">
+			<div data-role="header" data-position="fixed" data-tap-toggle="false">
+				<a href="#menuPanel" data-icon="bars" data-iconpos="notext">Menu</a>
+				<h1>Page Title</h1>
+			</div>
+			<div data-role="content">
+				<!-- IAS en altres zones guardades per l'usuari -->
+				About IAS Tracker
+			</div>
+		</div>
+		<div id="screen13" data-role="page" data-url="screen13">
+			<div data-role="header" data-position="fixed" data-tap-toggle="false">
+				<a href="#menuPanel" data-icon="bars" data-iconpos="notext">Menu</a>
+				<h1>Page Title</h1>
+			</div>
+			<div data-role="content">
+				<!-- IAS en altres zones guardades per l'usuari -->
+				IAS Datasheet
+			</div>
+		</div>
+		<div id="screen14" data-role="page" data-url="screen14">
+			<div data-role="header" data-position="fixed" data-tap-toggle="false">
+				<a href="#menuPanel" data-icon="bars" data-iconpos="notext">Menu</a>
+				<h1>Page Title</h1>
+			</div>
+			<div data-role="content">
+				<!-- IAS Location -->
+				IAS Location
+				<div id="IASObservationMap">Map</div>
+				<!-- La 15 es fa amagant la resta de components -->
+				<!-- Afegir loading -->
+				<div id="confirmationScreen"></div>
+			</div>
+		</div>
+		<div id="screen14_1" data-role="page" data-url="screen14_1">
+			<div data-role="header" data-position="fixed" data-tap-toggle="false">
+				<a href="#menuPanel" data-icon="bars" data-iconpos="notext">Menu</a>
+				<h1>Page Title</h1>
+			</div>
+			<div data-role="content">
+				<!-- Afegir nota a l'observació -->
+				Descripció de l'observació
+			</div>
+		</div>
+		<div data-role="panel"  data-position-fixed="true" id="menuPanel" data-position="left" data-display="overlay" data-theme="a" class="ui-panel ui-panel-position-left ui-panel-display-overlay ui-body-a ui-panel-animate ui-panel-closed">
+			<div class="ui-panel-inner">
+				<a href="#screen5">IAS current location</a>
+				<a href="#screen6">My IAS</a>
+				<div id="scrollablePanel">
+					<div class="row menuElement">
+						<div class="col-md-12">
+							<a href="#screen5">IAS current location</a>
+						</div>
+					</div>
+					<div class="row menuElement" id="myIASRow">
+						<div class="col-md-12">
+							<a href="#screen6">My IAS</a>
+						</div>
+					</div>
+					<div class="row menuElement">
+						<div class="col-md-12">
+							<a href="#screen8" scrollTo="taxo1" class="scroll">Taxó 1</a>
+						</div>
+					</div>
+					<div class="row menuElement">
+						<div class="col-md-12">
+							<a href="#screen8" scrollTo="taxo2" class="scroll">Taxó 2</a>
+						</div>
+					</div>
+					<div class="row menuElement">
+						<div class="col-md-12">
+							<a href="#screen8" scrollTo="taxo3" class="scroll">Taxó 3</a>
+						</div>
+					</div>
+					<div class="row menuElement">
+						<div class="col-md-12">
+							<a href="#screen8" scrollTo="taxo4" class="scroll">Taxó 4</a>
+						</div>
+					</div>
+					<div class="row menuElement">
+						<div class="col-md-12">
+							<a href="#screen8#taxo5">Taxó 5</a>
+						</div>
+					</div>
+					<div class="row menuElement">
+						<div class="col-md-12">
+							<a href="#screen8#taxo6">Taxó 6</a>
+						</div>
+					</div>
+					<div class="row menuElement">
+						<div class="col-md-12">
+							My zone 1
+						</div>
+					</div>
+					<div class="row menuElement">
+						<div class="col-md-12">
+							My zone 2
+						</div>
+					</div>
+					<div class="row menuElement">
+						<div class="col-md-12">
+							My zone 3
+						</div>
+					</div>
+				</div>
+				<div id="fixedPanel">
+					<div class="row menuElement" id="otherAreasIAS">
+						<div class="col-md-12">
+							Select other IAS areas
+						</div>
+					</div>
+					<div class="row menuElement" id="userProfile">
+						<div class="col-md-12">
+							User profile
+						</div>
+					</div>
+					<div class="row menuElement" id="aboutIAS">
+						<div class="col-md-12">
+							<a href="#screen12">About IAS Tracker</a>
+						</div>
+					</div>
+					<div class="row menuElement">
+						<div class="col-md-12">
+							Scientific name
+						</div>
+					</div>
+					<div class="row menuElement" id="help">
+						<div class="col-md-12">
+							Help
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 		<script type="text/javascript" src="js/jquery.min.js"></script>
 		<script type="text/javascript" src="js/jquery.mobile-1.4.5.min.js"></script>
 		<script type="text/javascript" src="js/bootstrap.min.js"></script>

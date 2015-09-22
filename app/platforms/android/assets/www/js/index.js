@@ -23,7 +23,47 @@ var app = {
 	// Application Constructor
 	initialize: function() {
 		this.bindEvents();
-  		//$("#menuPanel").enhanceWithin().panel();
+  		$("#menuPanel").enhanceWithin().panel();
+
+  		$(".scroll").on("click", function(e) {
+
+			e.preventDefault();
+			var dest = this.href.split("#");
+			var page = '#' + dest[dest.length-1];
+			$(page).attr('scrollTo', $(this).attr('scrollTo'));
+			$('#titolTaxo').html(this.innerHTML);
+			$("body").pagecontainer("change", page, {allowSamePageTransition : true});
+			$("menuPanel").panel("close");
+
+		});
+
+		$('#screen8').on('pageshow', function(e) {
+
+			var to = $(this).attr('scrollTo');
+
+			if('undefined' !== typeof to)
+			{
+			
+				var offset = $('#' + to + '').offset().top;
+				$.mobile.silentScroll(offset);
+
+			}
+
+		});
+
+		$(document).on('pagebeforechange', function(e, ob) {
+
+			if (((ob.toPage[0].id === "splash") || (ob.toPage[0].id === "screen1") 
+				|| (ob.toPage[0].id === "screen2") || (ob.toPage[0].id === "screen3") 
+				|| (ob.toPage[0].id === "screen4")) && ob.options.fromPage)
+			{
+
+				e.preventDefault();
+				history.go(1);
+
+			}
+
+		});
 
 	},
 	// Bind Event Listeners
@@ -32,13 +72,13 @@ var app = {
 	// 'load', 'deviceready', 'offline', and 'online'.
 	bindEvents: function() {
 		document.addEventListener('deviceready', this.onDeviceReady, false);
-		/*document.addEventListener('offline', this.onOffline, false);
+		document.addEventListener('offline', this.onOffline, false);
 		document.addEventListener('online', this.onOnline, false);
 
 		$('#btAgree').on('click', app.termsAgreed);
 		$('#btNoNever').on('click', app.neverSignUp);
 		$('#btSignUp').on('click', app.SignUp);
-		$('#btCompleteData').on('click', app.completeData);*/
+		$('#btCompleteData').on('click', app.completeData);
 
 	},
 	// deviceready Event Handler
@@ -60,7 +100,7 @@ var app = {
 		if('deviceready' == id)
 		{
 
-			/*app.isOnline = app.isConnected();
+			app.isOnline = app.isConnected();
 			$('#screen2').on('swipeleft', app.onHelpSwipe);
 			$('#screen2').on('swiperight', app.onHelpSwipe);
 			//Check for updates if there is network connection
@@ -70,7 +110,7 @@ var app = {
 				//Check for updates
 				setTimeout(app.closeSplashScreen, 10000);
 
-			}*/
+			}
 
 		}
 		
