@@ -104,7 +104,11 @@ class IAS extends Eloquent {
 		}
 		$obj->name = $iasDesc->name;
 		$obj->shortDescription = $iasDesc->shortDescription;
-		$obj->longDescription = $iasDesc->longDescription;
+		$obj->sizeLongDescription = $iasDesc->sizeLongDescription;
+		$obj->infoLongDescription = $iasDesc->infoLongDescription;
+		$obj->habitatLongDescription = $iasDesc->habitatLongDescription;
+		$obj->confuseLongDescription = $iasDesc->confuseLongDescription;
+		$obj->longDescription = $iasDesc->sizeLongDescription.' '.$iasDesc->infoLongDescription.' '.$iasDesc->habitatLongDescription.' '.$iasDesc->confuseLongDescription;
 
 		return $obj;
 
@@ -164,7 +168,7 @@ class IAS extends Eloquent {
 	function scopeLastUpdated($query)
 	{
 
-		return $query->orderBy('created_at', 'DESC');
+		return $query->orderBy('updated_at', 'DESC');
 
 	}
 

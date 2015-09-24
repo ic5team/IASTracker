@@ -125,6 +125,7 @@ class Inicial extends Migration {
 			$table->integer('IASId')->unsigned();
 			$table->string('URL', 255);
 			$table->text('attribution');
+			$table->integer('order');
 			$table->integer('creatorId')->unsigned()->nullable();
 			$table->timestamps();
 		});
@@ -237,6 +238,8 @@ class Inicial extends Migration {
 			$table->increments('id');
 			$table->integer('languageId')->unsigned();
 			$table->string('name', 255);
+			$table->string('appInnerColor', 7)->nullable();
+			$table->string('appOuterColor', 7)->nullable();
 			$table->integer('parentTaxonId')->unsigned()->nullable();
 			$table->integer('creatorId')->unsigned()->nullable();
 			$table->timestamps();

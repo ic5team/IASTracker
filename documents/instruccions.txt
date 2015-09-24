@@ -8,3 +8,9 @@ Escapar el camp name de MapProviderTexts
 Escapar el camp text de MapProviderTexts
 El camp resolutions de CRS ha de ser un string en format JSON [,,,,]
 Les funcions en AJAX han de tornar l'html amb l'error si s'escau
+
+De shapes a sql
+shp2pgsql IASTracker_Regions_WGS84.shp > areas.sql
+De sql a shp
+Renombrar taula Areas a areas
+pgsql2shp -f montseny.shp -u iastracker -P 12345678 IASTrackerDB "SELECT * FROM areas WHERE id=1"

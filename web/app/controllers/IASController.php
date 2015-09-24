@@ -18,8 +18,12 @@ class IASController extends RequestController {
 		$elements = $this->getElements($first, $num);
 		$numElements = count($elements);
 
+		$taxons = IASTaxon::all();
+		$numTaxons = count($taxons);
+
 		$data = new stdClass();
 		$data->list = array();
+		$data->taxons = array();
 		$lastUpdated = null;
 		for($i=0; $i<$numElements; ++$i)
 		{
@@ -30,13 +34,28 @@ class IASController extends RequestController {
 			$aux->latinName = $element->latinName;
 			$aux->taxons = $element->taxonId;
 			$aux->image = $element->getDefaultImageData($languageId, $defaultLanguageId);
+			$aux->id = $element->id;
 			$aux->relatedDBs = $element->getRelatedDBs();
-			$data->list[] = $aux;
+
+			if(!array_key_exists($aux->taxons, $data->list))
+				$data->list[$aux->taxons] = array();
+
+			$data->list[$aux->taxons][] = $aux;
 
 			if(null == $lastUpdated)
-				$lastUpdated = $element->created_at;
+				$lastUpdated = $element->updated_at;
 			else
-				$lastUpdated = ($element->created_at > $lastUpdated) ? $element->created_at : $lastUpdated;
+				$lastUpdated = ($element->updated_at > $lastUpdated) ? $element->updated_at : $lastUpdated;
+
+		}
+
+		for($i=0; $i<$numTaxons; ++$i)
+		{
+
+			$element = $taxons[$i];
+			$data->taxons[$element->id] = $element;
+
+			$lastUpdated = ($element->updated_at > $lastUpdated) ? $element->updated_at : $lastUpdated;
 
 		}
 
@@ -259,8 +278,10 @@ class IASController extends RequestController {
 	{
 
 		$lastIAS = IAS::lastUpdated()->first();
+		$lastTaxon = IASTaxon::lastUpdated()->first();
+
 		$obj = new stdClass();
-		$obj->lastUpdated = $lastIAS->created_at;
+		$obj->lastUpdated = ($lastIAS->updated_at > $lastTaxon->updated_at) ? $lastIAS->updated_at : $lastTaxon->updated_at;
 		return Response::json($obj);
 
 	}

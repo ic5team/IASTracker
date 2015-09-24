@@ -90,7 +90,7 @@
 				</a>
 				<a href="#signupScreen" data-transition="pop" data-role="button" id="signinSignUpBtn">Sign Up</a>
 				<a href="#screen5" data-transition="pop" data-role="button" id="notNowBtn">Not now</a>
-				<a data-transition="pop" id="btNoNever" data-role="button">No, don't ask me again</a>
+				<a href="#screen5" data-transition="pop" id="btNoNever" data-role="button">No, don't ask me again</a>
 			</div>
 		</div>
 		<div id="signupScreen" data-role="page" class="fullscreen background" data-url="signupScreen">
@@ -177,18 +177,8 @@
 		<div id="screen8" data-role="page" data-url="screen8">
 			<div data-role="header" data-position="fixed" data-tap-toggle="false">
 				<a href="#menuPanel" data-icon="bars" data-iconpos="notext">Menu</a>
-				<h1 id="titolTaxo">Page Title</h1>
 			</div>
-			<div data-role="content">
-				<!-- IAS per taxons -->
-				IAS per taxons
-				<div id="taxo1" style="background-color:#F00"> Taxó1<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-				</div>
-				<div id="taxo2" style="background-color:#0F0"> Taxó2<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /></div>
-				<div id="taxo3" style="min-height: 100vh; background-color:#00F"> Taxó3</div>
-				<a name="taxo4"></a> Taxó4
-				<a name="taxo5"></a> Taxó5
-				<a name="taxo6"></a> Taxó6
+			<div data-role="content" id="taxonScreen">
 			</div>
 		</div>
 		<div id="screenUser1" data-role="page" data-url="screenUser1" class="fullscreen background">
@@ -241,18 +231,20 @@
 				<h1>Page Title</h1>
 			</div>
 			<div data-role="content">
-				<!-- IAS en altres zones guardades per l'usuari -->
 				About IAS Tracker
 			</div>
 		</div>
 		<div id="screen13" data-role="page" data-url="screen13" class="fullscreen background">
 			<div data-role="header" data-position="fixed" data-tap-toggle="false">
-				<a href="#menuPanel" data-icon="bars" data-iconpos="notext">Menu</a>
-				<h1>Page Title</h1>
+				<a id="backLink" href="" data-icon="arrow-l" data-iconpos="notext">Menu</a>
+				<h1 id="IASCommonName">Page Title</h1>
 			</div>
 			<div data-role="content">
-				<!-- IAS en altres zones guardades per l'usuari -->
-				IAS Datasheet
+				<h4 id="IASLatinName"></h4>
+				<img id="bigIASImage" src="" />
+				<div id="IASImageText"></div>
+				<div id="LocateIASButton">Locate IAS</div>
+				<div id="IASDescription"></div>
 			</div>
 		</div>
 		<div id="screen14" data-role="page" data-url="screen14" class="fullscreen background">
@@ -294,36 +286,6 @@
 					</div>
 					<div class="row menuElement">
 						<div class="col-md-12">
-							<a href="#screen8" scrollTo="taxo1" class="scroll">Taxó 1</a>
-						</div>
-					</div>
-					<div class="row menuElement">
-						<div class="col-md-12">
-							<a href="#screen8" scrollTo="taxo2" class="scroll">Taxó 2</a>
-						</div>
-					</div>
-					<div class="row menuElement">
-						<div class="col-md-12">
-							<a href="#screen8" scrollTo="taxo3" class="scroll">Taxó 3</a>
-						</div>
-					</div>
-					<div class="row menuElement">
-						<div class="col-md-12">
-							<a href="#screen8" scrollTo="taxo4" class="scroll">Taxó 4</a>
-						</div>
-					</div>
-					<div class="row menuElement">
-						<div class="col-md-12">
-							<a href="#screen8#taxo5">Taxó 5</a>
-						</div>
-					</div>
-					<div class="row menuElement">
-						<div class="col-md-12">
-							<a href="#screen8#taxo6">Taxó 6</a>
-						</div>
-					</div>
-					<div class="row menuElement">
-						<div class="col-md-12">
 							My zone 1
 						</div>
 					</div>
@@ -356,7 +318,8 @@
 					</div>
 					<div class="row menuElement">
 						<div class="col-md-12">
-							Scientific name
+							<span>Scientific names?</span>
+							<input type="checkbox" id="cbScientificNames" class="IASCheck" checked>
 						</div>
 					</div>
 					<div class="row menuElement" id="help">

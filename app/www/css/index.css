@@ -161,3 +161,31 @@ h1 {
 input {
     font-size: 18px;
 }
+
+.iasImage {
+    max-height: 120px;
+    padding: 5px;
+}
+
+.iasName {
+    font-size: 12px;
+    border-width: 0px;
+}
+
+#bigIASImage {
+    width: 90vw;
+}
+
+#IASLatinName {
+    text-align: center;
+}
+
+#LocateIASButton {
+
+    height: 30px;
+    text-align: center;
+    font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+}

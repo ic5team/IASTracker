@@ -764,7 +764,7 @@ function configureShapes()
 					};
 			},
 			onEachFeature: function(feature, layer) {
-				layer.bindPopup("" + shapeNames[feature.properties.IASRID]);
+				layer.bindPopup("" + shapeNames[feature.properties.ID]);
 			}
 		});
 		shapeLayers.push(layer);
