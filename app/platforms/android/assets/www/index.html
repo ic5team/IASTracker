@@ -28,7 +28,7 @@
 			* Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
 				* Enable inline JS: add 'unsafe-inline' to default-src
 		-->
-		<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+		<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *;connect-src 'self' http://192.168.1.195:4326">
 		<meta name="format-detection" content="telephone=no">
 		<meta name="msapplication-tap-highlight" content="no">
 		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height">
@@ -39,26 +39,82 @@
 	</head>
 	<body>
 		<div id="splash" data-role="page" data-url="splash" class="splash fullscreen">
+			<div data-role="content">
+				<div id="loadingMessage">
+					<img id="ldImg" src="img/loader.gif"  />
+					<div id="ldMsg">Checking for updates</div>
+				</div>
+			</div>
 		</div>
 		<div id="screen1" class="fullscreen" data-role="page" data-url="screen1">
-			Agreement of terms and conditions
-			<a href="#screen2" id="btAgree" data-transition="pop">Agree</a>
+			<div data-role="header" data-tap-toggle="false">
+			</div>
+			<div data-role="content">
+				Agreement of terms and conditions
+			</div>
+			<div data-role="footer" data-position="fixed" data-tap-toggle="false">
+				<a href="#screen2" id="btAgree" data-transition="pop" class="right">Agree</a>
+			</div>
 		</div>
 		<div id="screen2" data-role="page" class="fullscreen" data-url="screen2">
 			<div id="help1" class="helpWindow almostFullscreen" next="help2">Help1</div>
 			<div id="help2" class="helpWindow almostFullscreen" prev="help1" next="help3" style="display: none">Help2</div>
 			<div id="help3" class="helpWindow almostFullscreen" prev="help2" next="help4" style="display: none">Help3</div>
 			<div id="help4" class="helpWindow almostFullscreen" prev="help3" style="display: none">Help4</div>
-			<a href="#screen3" data-transition="pop">Skip</a>
+			<div data-role="footer" data-position="fixed" data-tap-toggle="false">
+				<a href="#screen3" data-transition="pop" class="right">Skip</a>
+			</div>
 		</div>
-		<div id="screen3" data-role="page" class="fullscreen" data-url="screen3">
-			You are not registered. To register enter your email
-			<a href="#screen5" data-transition="pop">Not now</a>
-			<a href="#screen5" data-transition="pop" id="btNoNever">No, don't ask me again</a>
-			<input id="signupEmail" name="email" placeholder="me@me.com" />
-			<a href="#screen5" data-transition="pop" id="btSignUp">Sign In</a>
+		<div id="screen3" data-role="page" class="fullscreen background" data-url="screen3">
+			<div data-role="content" class="whitePanel" style="margin-top: 17vh;">
+				You are not logged in. Please enter your email and password
+				<div class="form-group" id="form-email">
+					<input name="email" type="email" class="form-control block" placeholder="me@example.com" id="input-email">
+					<span id="error-email" class="help-block hidden">Invalid email</span>
+				</div>
+				<div class="form-group" id="form-password">
+					<input name="password" type="password" id="input-password"/>
+					<span id="error-password" class="help-block hidden">Invalid password</span>
+				</div>
+				<div class="row alert alert-danger" id="error-general" style="display: none;">
+					<div class="col-md-12" id="error-general-text">
+					</div>
+				</div>
+				<a data-transition="pop" id="btSignIn" data-role="button" data-theme="b">
+					<div id="btSignInText">
+						Log in
+					</div>
+					<div id="btSignInLdg" style="display: none;">
+						<img src="img/loader.gif"  />
+					</div>
+				</a>
+				<a href="#signupScreen" data-transition="pop" data-role="button" id="signinSignUpBtn">Sign Up</a>
+				<a href="#screen5" data-transition="pop" data-role="button" id="notNowBtn">Not now</a>
+				<a data-transition="pop" id="btNoNever" data-role="button">No, don't ask me again</a>
+			</div>
 		</div>
-		<div id="screen4" data-role="page" class="fullscreen" data-url="screen4">
+		<div id="signupScreen" data-role="page" class="fullscreen background" data-url="signupScreen">
+			<div data-role="content" class="whitePanel" style="margin-top: 25vh;">
+				To register enter your email
+				<div class="form-group" id="form-signUpEmail">
+					<input name="signUpEmail" type="email" class="form-control block" placeholder="me@example.com" id="input-signUpEmail">
+					<span id="error-signUpEmail" class="help-block hidden">Invalid email</span>
+				</div>
+				<div class="row alert alert-danger" id="error-generalSignUp" style="display: none;">
+					<div class="col-md-12" id="error-general-textSignUp">
+					</div>
+				</div>
+				<a data-transition="pop" id="btSignUp" data-role="button" data-theme="b">
+					<div id="btSignUpText">
+						SignUp
+					</div>
+					<div id="btSignUpLdg" style="display: none;">
+						<img src="img/loader.gif"  />
+					</div>
+				</a>
+			</div>
+		</div>
+		<div id="screen4" data-role="page" class="fullscreen background" data-url="screen4">
 			<div class="row">
 				<div class="col-md-6 col-md-offset-3">
 					<img src='' />
@@ -98,7 +154,7 @@
 			<a href="#screen5" data-transition="pop" >Cancel</a>
 			<a href="#screen5" data-transition="pop" id="btCompleteData">Accept</a>
 		</div>
-		<div id="screen5" data-role="page" data-url="screen5">
+		<div id="screen5" data-role="page" data-url="screen5" class="fullscreen background">
 			<div data-role="header" data-position="fixed" data-tap-toggle="false">
 				<a href="#menuPanel" data-icon="bars" data-iconpos="notext">Menu</a>
 				<h1>Page Title</h1>
@@ -108,7 +164,7 @@
 				IAS de la posició actual
 			</div>
 		</div>
-		<div id="screen6" data-role="page" data-url="screen6">
+		<div id="screen6" data-role="page" data-url="screen6" class="fullscreen background">
 			<div data-role="header" data-position="fixed" data-tap-toggle="false">
 				<a href="#menuPanel" data-icon="bars" data-iconpos="notext">Menu</a>
 				<h1>Page Title</h1>
@@ -135,7 +191,7 @@
 				<a name="taxo6"></a> Taxó6
 			</div>
 		</div>
-		<div id="screenUser1" data-role="page" data-url="screenUser1">
+		<div id="screenUser1" data-role="page" data-url="screenUser1" class="fullscreen background">
 			<div data-role="header" data-position="fixed" data-tap-toggle="false">
 				<a href="#menuPanel" data-icon="bars" data-iconpos="notext">Menu</a>
 				<h1>Page Title</h1>
@@ -145,7 +201,7 @@
 				IAS en zona usuari 1
 			</div>
 		</div>
-		<div id="screenUser2" data-role="page" data-url="screenUser2">
+		<div id="screenUser2" data-role="page" data-url="screenUser2" class="fullscreen background">
 			<div data-role="header" data-position="fixed" data-tap-toggle="false">
 				<a href="#menuPanel" data-icon="bars" data-iconpos="notext">Menu</a>
 				<h1>Page Title</h1>
@@ -155,7 +211,7 @@
 				IAS en zona usuari 2
 			</div>
 		</div>
-		<div id="screenUser3" data-role="page" data-url="screenUser3">
+		<div id="screenUser3" data-role="page" data-url="screenUser3" class="fullscreen background">
 			<div data-role="header" data-position="fixed" data-tap-toggle="false">
 				<a href="#menuPanel" data-icon="bars" data-iconpos="notext">Menu</a>
 				<h1>Page Title</h1>
@@ -165,7 +221,7 @@
 				IAS en zona usuari 3
 			</div>
 		</div>
-		<div id="screen11" data-role="page" data-url="screen11">
+		<div id="screen11" data-role="page" data-url="screen11" class="fullscreen background">
 			<div data-role="header" data-position="fixed" data-tap-toggle="false">
 				<a href="#menuPanel" data-icon="bars" data-iconpos="notext">Menu</a>
 				<h1>Page Title</h1>
@@ -189,7 +245,7 @@
 				About IAS Tracker
 			</div>
 		</div>
-		<div id="screen13" data-role="page" data-url="screen13">
+		<div id="screen13" data-role="page" data-url="screen13" class="fullscreen background">
 			<div data-role="header" data-position="fixed" data-tap-toggle="false">
 				<a href="#menuPanel" data-icon="bars" data-iconpos="notext">Menu</a>
 				<h1>Page Title</h1>
@@ -199,7 +255,7 @@
 				IAS Datasheet
 			</div>
 		</div>
-		<div id="screen14" data-role="page" data-url="screen14">
+		<div id="screen14" data-role="page" data-url="screen14" class="fullscreen background">
 			<div data-role="header" data-position="fixed" data-tap-toggle="false">
 				<a href="#menuPanel" data-icon="bars" data-iconpos="notext">Menu</a>
 				<h1>Page Title</h1>
@@ -213,7 +269,7 @@
 				<div id="confirmationScreen"></div>
 			</div>
 		</div>
-		<div id="screen14_1" data-role="page" data-url="screen14_1">
+		<div id="screen14_1" data-role="page" data-url="screen14_1" class="fullscreen background">
 			<div data-role="header" data-position="fixed" data-tap-toggle="false">
 				<a href="#menuPanel" data-icon="bars" data-iconpos="notext">Menu</a>
 				<h1>Page Title</h1>
@@ -225,8 +281,6 @@
 		</div>
 		<div data-role="panel"  data-position-fixed="true" id="menuPanel" data-position="left" data-display="overlay" data-theme="a" class="ui-panel ui-panel-position-left ui-panel-display-overlay ui-body-a ui-panel-animate ui-panel-closed">
 			<div class="ui-panel-inner">
-				<a href="#screen5">IAS current location</a>
-				<a href="#screen6">My IAS</a>
 				<div id="scrollablePanel">
 					<div class="row menuElement">
 						<div class="col-md-12">
@@ -317,6 +371,8 @@
 		<script type="text/javascript" src="js/jquery.mobile-1.4.5.min.js"></script>
 		<script type="text/javascript" src="js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="cordova.js"></script>
+		<script type="text/javascript" src="js/common.js"></script>
+		<script type="text/javascript" src="js/iastracker.api.js"></script>
 		<script type="text/javascript" src="js/index.js"></script>
 	</body>
 </html>

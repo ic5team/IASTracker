@@ -127,3 +127,37 @@ h1 {
     border: 1px solid;
 
 }
+
+#ldMsg {
+    position: absolute;
+    top: 88vh;
+    left: 30vw;
+}
+
+#ldImg {
+    position: absolute;
+    top: 83vh;
+    width: 5vw;
+    left: 47.5vw;
+}
+
+.background {
+    background:url(../img/background.png) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.right {
+    float: right;
+    margin-right: 10px;
+}
+
+.whitePanel {
+    background-color: #FFF;
+}
+
+input {
+    font-size: 18px;
+}

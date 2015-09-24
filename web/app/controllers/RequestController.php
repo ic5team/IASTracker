@@ -93,18 +93,18 @@ abstract class RequestController extends BaseController {
 		$first = Input::has('first') ? Input::get('first') : 0;
 		$num = Input::has('num') ? Input::get('num') : PHP_INT_MAX;
 
-		if(Request::ajax())
-		{
+		//if(Request::ajax())
+		//{
 
 			return $this->elements($first, $num);
 
-		}
-		else
-		{
+		//}
+		//else
+		//{
 
-			return $this->showListView($first, $num);
+		//	return $this->showListView($first, $num);
 
-		}
+		//}
 
 	}
 
@@ -141,27 +141,16 @@ abstract class RequestController extends BaseController {
 	public function store()
 	{
 		
-		if(Request::ajax())
-		{
+		try {
 
-			try {
-
-				return $this->newResource();
-
-			}
-			catch(Illuminate\Database\QueryException $e)
-			{
-
-				return Response::json(array('ok' => 0, 'msg' => Lang::get('errors.errorCreatingElement'), 
-					'internalMsg' => $e->getMessage()));
-
-			}
+			return $this->newResource();
 
 		}
-		else
+		catch(Illuminate\Database\QueryException $e)
 		{
 
-			return $this->requestNotAccepted();
+			return Response::json(array('ok' => 0, 'msg' => Lang::get('errors.errorCreatingElement'), 
+				'internalMsg' => $e->getMessage()));
 
 		}
 

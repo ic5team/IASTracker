@@ -73,7 +73,10 @@ class UserController extends RequestController {
 		{
 
 			$token = str_random(40);
-			$element = new User(array('languageId' => Language::locale(App::getLocale())->first()->id,
+			$userId = User::idDESC()->first()->id;
+			$element = new User(array(
+				'id' => $userId+1,
+				'languageId' => Language::locale(App::getLocale())->first()->id,
 				'mail' => $inMail,
 				'isActive' => false,
 				'activationKey' => $token,
@@ -485,6 +488,55 @@ class UserController extends RequestController {
 			App::abort(403);
 
 		}
+
+	}
+
+	public function login()
+	{
+
+		$obj = new stdClass();
+		if(!Auth::attempt(array('mail' => Input::get('email'), 
+			'password' => Input::get('password')), true))
+		{
+
+			$obj->error = Lang::get('ui.wrongUserCredentials');
+
+		}
+
+		if(Auth::user())
+		{
+
+			$user = Auth::user();
+			$obj->token = str_random(40);
+			$obj->id = $user->id;
+			$obj->nick = $user->username;
+			$obj->image = Config::get('app.urlUserImgThumbs').$user->photoURL;
+			$obj->fullName = $user->fullName;
+			$obj->amIExpert = $user->amIExpert;
+			$user->appKey = $obj->token;
+			$user->lastConnection = new DateTime();
+			$user->save();
+
+		}
+		
+		return Response::json($obj);
+
+	}
+
+	public function checkUserToken($id)
+	{
+
+		$user = User::appToken(Input::get('token'))->get();
+		$data = new stdClass();
+		
+		if(null == $user)
+			$data->error = true;
+		else if($user->id != $id)
+			$data->error = true;
+		
+		//TODO: Check if token has expired
+
+		return Response::json($data);
 
 	}
 

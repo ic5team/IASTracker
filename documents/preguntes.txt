@@ -7,6 +7,6 @@ Preguntes:
 	IAS_REPOSITORIES
 		Full IASRelatedDB Què és la última columna? Res
 
-Domini??? Fa falta crear correu electrònic
+Domini??? Fa falta crear correu electrònic. Servidor mail 
 Relacions entre IAS i àrees? + ordres de preferència No totes les IAS que hi ha al backup són bones
 El botó de sortir si no s'accepten les condicions d'ús no hi pot anar

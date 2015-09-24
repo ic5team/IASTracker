@@ -161,6 +161,27 @@ class IAS extends Eloquent {
 
 	}
 
+	function scopeLastUpdated($query)
+	{
+
+		return $query->orderBy('created_at', 'DESC');
+
+	}
+
+	function scopeOrderByTaxon($query)
+	{
+
+		return $query->orderBy('taxonId', 'ASC');
+
+	}
+
+	function scopeOrderByName($query)
+	{
+
+		return $query->orderBy('latinName', 'ASC');
+
+	}
+
 }
 
 ?>

@@ -36,12 +36,16 @@
 	Route::get('/v1/IASFilter', array('uses' => 'IASController@getFilter'));
 	Route::get('/v1/Observations', array('uses' => 'ObservationController@index'));
 	Route::get('/v1/Observations/{id}', array('uses' => 'ObservationController@show'));
+	Route::get('/v1/IAS/lastUpdate', array('uses' => 'IASController@getLastUpdate'));
+	Route::get('/v1/IAS/', array('uses' => 'IASController@index'));
 	Route::get('/v1/IAS/{id}', array('uses' => 'IASController@show'));
 	Route::get('/v1/IAS/{id}/Observations', array('uses' => 'IASController@getObservations'));
 	Route::get('/v1/States/{id}/Regions', array('uses' => 'StateController@getRegions'));
 	Route::get('/v1/Regions/{id}/Areas', array('uses' => 'RegionController@getAreas'));
 	Route::post('/v1/Users/', array('uses' => 'UserController@store'));
 	Route::put('/v1/Users/', array('uses' => 'UserController@remind'));
+	Route::post('/v1/Users/login', array('uses' => 'UserController@login'));
+	Route::get('/v1/Users/{id}/token', array('uses' => 'UserController@checkUserToken'));
 	Route::put('/v1/Users/{id}', array('uses' => 'UserController@update'));
 	Route::get('/v1/Users/{id}', array('uses' => 'UserController@show'));
 	Route::get('/v1/Users/{id}/Observations', array('uses' => 'UserController@getObservations'));

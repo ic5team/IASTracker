@@ -11,8 +11,38 @@ class IASController extends RequestController {
 	protected function elements($first, $num)
 	{
 
+		$languageId = Language::locale(App::getLocale())->first()->id;
+		$configuration = Configuration::find(1);
+		$defaultLanguageId = $configuration->defaultLanguageId;
+
 		$elements = $this->getElements($first, $num);
-		return Response::json($elements->toJson());
+		$numElements = count($elements);
+
+		$data = new stdClass();
+		$data->list = array();
+		$lastUpdated = null;
+		for($i=0; $i<$numElements; ++$i)
+		{
+
+			$aux = new stdClass();
+			$element = $elements[$i];
+			$aux->description = $element->getDescriptionData($languageId, $defaultLanguageId);
+			$aux->latinName = $element->latinName;
+			$aux->taxons = $element->taxonId;
+			$aux->image = $element->getDefaultImageData($languageId, $defaultLanguageId);
+			$aux->relatedDBs = $element->getRelatedDBs();
+			$data->list[] = $aux;
+
+			if(null == $lastUpdated)
+				$lastUpdated = $element->created_at;
+			else
+				$lastUpdated = ($element->created_at > $lastUpdated) ? $element->created_at : $lastUpdated;
+
+		}
+
+		$data->lastUpdated = $lastUpdated;
+
+		return json_encode($data);
 
 	}
 
@@ -139,8 +169,7 @@ class IASController extends RequestController {
 	protected function getElements($first, $num)
 	{
 
-		return IAS::orderBy('latinName')
-			->skip($first)->take($num)->get();
+		return IAS::orderByTaxon()->orderByName()->get();
 
 	}
 
@@ -223,6 +252,16 @@ class IASController extends RequestController {
 			return Response::json($elements->toJson());
 
 		}
+
+	}
+
+	protected function getLastUpdate()
+	{
+
+		$lastIAS = IAS::lastUpdated()->first();
+		$obj = new stdClass();
+		$obj->lastUpdated = $lastIAS->created_at;
+		return Response::json($obj);
 
 	}
 

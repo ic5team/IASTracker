@@ -108,4 +108,18 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	}
 
+	function scopeUserToken($query, $token)
+	{
+
+		return $query->where('Users.appKey', '=', $token);
+
+	}
+
+	function scopeIdDESC($query)
+	{
+
+		return $query->orderBy('id', 'DESC');
+
+	}
+
 }
