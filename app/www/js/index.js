@@ -526,7 +526,7 @@ var app = {
 			navigator.camera.getPicture( app.onCameraSuccess, app.onCameraError, 
 				{
 					quality : 75, 
-					destinationType : Camera.DestinationType.FILE_URI, 
+					destinationType : Camera.DestinationType.NATIVE_URI, 
 					sourceType : Camera.PictureSourceType.CAMERA, 
 					allowEdit : false,
 					targetWidth: 1090
@@ -538,7 +538,7 @@ var app = {
 			navigator.camera.getPicture( app.onCameraSuccess, app.onCameraError, 
 				{
 					quality : 75, 
-					destinationType : Camera.DestinationType.FILE_URI, 
+					destinationType : Camera.DestinationType.NATIVE_URI, 
 					sourceType : Camera.PictureSourceType.PHOTOLIBRARY, 
 					allowEdit : false,
 					targetWidth: 1090
@@ -616,21 +616,23 @@ var app = {
 		{
 	
 			var url = urlPublic + 'common/obsImageUpload.php';
-			var fd = new FormData();
-			fd.append( 'image', app.locationImages[index]);
+			var imageURI = app.locationImages[index];
 
-			$.ajax({
-				url : url,
-				data : fd, 
-				processData: false,
-				contentType: false, 
-				type: 'POST',
-				success: function(data) {
-					var obj = $.parseJSON(data);
-					app.locationImages[index] = obj;
+			var options = new FileUploadOptions();
+            options.fileKey="image";
+            options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1);
+            if(-1 == options.fileName.lastIndexOf('.'))
+            	options.fileName += '.jpg';
+
+            options.mimeType="image/jpeg";
+            options.chunkedMode = false;
+ 
+            var ft = new FileTransfer();
+            ft.upload(imageURI, url, function(r) {
+					app.locationImages[index] = r.response;
 					app.uploadNextImage(index+1, id);
-				}
-			});
+				}, app.uploadFail, options);
+
 		}
 		else
 		{
@@ -639,12 +641,18 @@ var app = {
 		}
 
 	},
+	uploadFail: function(r)
+	{
+
+		console.log(r.code);
+
+	},
 	uploadImagesFinished: function(id)
 	{
 
 		var text = $('#obsText').val();
 		var number = $('#numberOfSpecies').val();
-		api.addObservation(id, text, number, app.locationImages, app.observationSent);
+		api.addObservation(id, text, number, app.locationImages, app.mLocation.coords, app.mLocation.accuracy, app.observationSent);
 
 	},
 	observationSent: function()

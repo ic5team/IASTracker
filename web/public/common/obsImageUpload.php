@@ -62,7 +62,7 @@ if(isset($_FILES[$fieldName]))
 
 	      				$imageName = $key.'.png';
 	      				move_uploaded_file($_FILES[$fieldName]['tmp_name'], $uploadsDirectoryGrans.$imageName);
-	      				$dto->url = $imageName;
+	      				$dto = $imageName;
 
 					}
 					else
