@@ -28,12 +28,14 @@
 			* Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
 				* Enable inline JS: add 'unsafe-inline' to default-src
 		-->
-		<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *;connect-src 'self' http://192.168.1.195:4326">
+		<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *;connect-src 'self' http://192.168.1.195:4326; img-src *;">
 		<meta name="format-detection" content="telephone=no">
 		<meta name="msapplication-tap-highlight" content="no">
 		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height">
 		<link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.min.css">
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="css/leaflet.css">
 		<link rel="stylesheet" type="text/css" href="css/index.css">
 		<title>IASTracker</title>
 	</head>
@@ -167,11 +169,9 @@
 		<div id="screen6" data-role="page" data-url="screen6" class="fullscreen background">
 			<div data-role="header" data-position="fixed" data-tap-toggle="false">
 				<a href="#menuPanel" data-icon="bars" data-iconpos="notext">Menu</a>
-				<h1>Page Title</h1>
+				<h1>Starred IAS</h1>
 			</div>
 			<div data-role="content">
-				<!-- IAS preferits -->
-				IAS preferits
 			</div>
 		</div>
 		<div id="screen8" data-role="page" data-url="screen8">
@@ -243,22 +243,35 @@
 				<h4 id="IASLatinName"></h4>
 				<img id="bigIASImage" src="" />
 				<div id="IASImageText"></div>
-				<div id="LocateIASButton">Locate IAS</div>
+				<div id="LocateIASButton" data-role="button" >Locate IAS</div>
 				<div id="IASDescription"></div>
 			</div>
 		</div>
 		<div id="screen14" data-role="page" data-url="screen14" class="fullscreen background">
 			<div data-role="header" data-position="fixed" data-tap-toggle="false">
-				<a href="#menuPanel" data-icon="bars" data-iconpos="notext">Menu</a>
-				<h1>Page Title</h1>
+				<a href="backLinkLocation" data-icon="arrow-l" data-iconpos="notext">Menu</a>
+				<h1 id="LocationCommonName">Page Title</h1>
 			</div>
 			<div data-role="content">
-				<!-- IAS Location -->
-				IAS Location
-				<div id="IASObservationMap">Map</div>
-				<!-- La 15 es fa amagant la resta de components -->
-				<!-- Afegir loading -->
-				<div id="confirmationScreen"></div>
+				<div id="IASObservationMap" class="map">Map</div>
+				<div id="TakeImageBtn" class="obsButton"><i class="fa fa-camera"></i></div>
+				<div id="SelectImageBtn" class="obsButton"><i class="fa fa-picture-o"></i></div>
+				<div id="addNoteBtn" class="ui-btn ui-icon-carat-d ui-btn-icon-right">Add a note</div>
+				<textarea id="obsText" rows="4" cols="50" style="display:none;"></textarea> 
+				<select id="numberOfSpecies">
+					<option value="1">One</option>
+					<option value="2">Few</option>
+					<option value="3">Several</option>
+				</select>
+				<div id="SendObservationButton" data-role="button" >
+					<div id="btSendIASText">
+						Send IAS
+					</div>
+					<div id="btSendIASLdg" style="display: none;">
+						<img src="img/loader.gif"  />
+					</div>
+				</div>
+				<div id="confirmationScreen" style="display: none;">Observation sent</div>
 			</div>
 		</div>
 		<div id="screen14_1" data-role="page" data-url="screen14_1" class="fullscreen background">
@@ -334,8 +347,12 @@
 		<script type="text/javascript" src="js/jquery.mobile-1.4.5.min.js"></script>
 		<script type="text/javascript" src="js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="cordova.js"></script>
+		<script type="text/javascript" src="js/leaflet.js"></script>
+		<script type="text/javascript" src="js/proj4-compressed.js"></script>
+		<script type="text/javascript" src="js/proj4leaflet.js"></script>
 		<script type="text/javascript" src="js/common.js"></script>
 		<script type="text/javascript" src="js/iastracker.api.js"></script>
+		<script type="text/javascript" src="js/iastracker.map.js"></script>
 		<script type="text/javascript" src="js/index.js"></script>
 	</body>
 </html>

@@ -40,6 +40,8 @@
 	Route::get('/v1/IAS/', array('uses' => 'IASController@index'));
 	Route::get('/v1/IAS/{id}', array('uses' => 'IASController@show'));
 	Route::get('/v1/IAS/{id}/Observations', array('uses' => 'IASController@getObservations'));
+	Route::get('/v1/Maps/', array('uses' => 'IndexController@getAppMapData'));
+	Route::get('/v1/Maps/lastUpdate', array('uses' => 'IndexController@getLastMapUpdate'));
 	Route::get('/v1/States/{id}/Regions', array('uses' => 'StateController@getRegions'));
 	Route::get('/v1/Regions/{id}/Areas', array('uses' => 'RegionController@getAreas'));
 	Route::post('/v1/Users/', array('uses' => 'UserController@store'));

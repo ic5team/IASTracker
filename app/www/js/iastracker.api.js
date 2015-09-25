@@ -22,6 +22,9 @@ function IASTracker(url)
 	this.users.entryPoint = this.APIBaseUrl + this.users.name;
 	this.users.login = "login";
 	this.users.checkToken = "token";
+	this.map = new Object();
+	this.map.entryPoint = this.APIBaseUrl + "Maps";
+	this.map.lastUpdate = 'lastUpdate';
 
 }
 
@@ -111,6 +114,22 @@ IASTracker.prototype.getIASLastUpdate = function(doneFunction)
 {
 
 	var completeURL = this.ias.entryPoint + this.separator + this.ias.lastUpdate;
+	return this.AJAXRequest(completeURL, doneFunction, 'GET', {});
+
+}
+
+IASTracker.prototype.getMapLastUpdate = function(doneFunction)
+{
+
+	var completeURL = this.map.entryPoint + this.separator + this.map.lastUpdate;
+	return this.AJAXRequest(completeURL, doneFunction, 'GET', {});
+
+}
+
+IASTracker.prototype.getMapList = function(doneFunction)
+{
+
+	var completeURL = this.map.entryPoint;
 	return this.AJAXRequest(completeURL, doneFunction, 'GET', {});
 
 }

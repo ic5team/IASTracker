@@ -47,7 +47,6 @@ class IndexController extends BaseController {
 
 		$configuration = Configuration::find(1);
 		$defaultLanguageId = $configuration->defaultLanguageId;
-		
 		$languageId = Language::locale(App::getLocale())->first()->id;
 
 		//Get the signup text
@@ -61,52 +60,9 @@ class IndexController extends BaseController {
 
 		$data->signupClause = $configTexts->privacyStatement;
 
-		//Get the CRS
-		$data->crsDescriptors = CRS::all()->toJSON();
+		$mapData = $this->getMapData();
 
-		//Get the map providers
-		$mapProvidersArray = array();
-		$mapProviders = MapProvider::idAscending()->get();
-		for($i=0; $i<count($mapProviders); ++$i)
-		{
-
-			$mapDescriptor = new stdClass();
-			$currentMapProvider = $mapProviders[$i];
-			$mapTexts = MapProviderText::withMapAndLanguageId(
-				$currentMapProvider->id, $languageId)->first();
-			if(null == $mapTexts)
-			{
-
-				$mapTexts = MapProviderText::withMapAndLanguageId(
-					$currentMapProvider->id, $defaultLanguageId)->first();
-
-			}
-			$currentMapProvider->name = $mapTexts->name;
-			$currentMapProvider->desc = $mapTexts->text;
-
-			$wmsProvider = WMSMapProvider::find($currentMapProvider->id);
-			$currentMapProvider->isWMS = (NULL != $wmsProvider);
-
-			if($currentMapProvider->isWMS)
-			{
-
-				$currentMapProvider->layers =  $wmsProvider->layers;
-				$currentMapProvider->format =  $wmsProvider->format;
-				$currentMapProvider->transparent =  $wmsProvider->transparent;
-				$currentMapProvider->continuousWorld =  $wmsProvider->continuousWorld;
-				$currentMapProvider->crsId =  $wmsProvider->crsId;
-
-			}
-
-			$mapProvidersArray[] = $currentMapProvider;
-
-		}
-
-		$data->mapProviders = json_encode($mapProvidersArray);
-		$center = array();
-		$center[] = $configuration->centerLat;
-		$center[] = $configuration->centerLon;
-		$data->center = json_encode($center);
+		$data = (object) array_merge((array) $data, (array) $mapData);
 		
 		$data->externalSources = array();
 
@@ -157,6 +113,86 @@ class IndexController extends BaseController {
 
 		$data = $this->getBasicData();
 		return View::make('public/cookies', array('data' => $data));
+
+	}
+
+	public function getAppMapData()
+	{
+
+		return Response::json($this->getMapData());
+
+	}
+
+	public function getLastMapUpdate()
+	{
+
+		$lastMap = MapProvider::lastUpdated()->first();
+
+		$obj = new stdClass();
+		$obj->lastUpdated = $lastMap->updated_at;
+		return Response::json($obj);
+
+	}
+
+	public function getMapData()
+	{
+
+		$data = new stdClasS();
+		$lastMap = MapProvider::lastUpdated()->first();
+		$configuration = Configuration::find(1);
+		$defaultLanguageId = $configuration->defaultLanguageId;
+		$languageId = Language::locale(App::getLocale())->first()->id;
+
+		//Get the CRS
+		$data->crsDescriptors = CRS::all()->toJSON();
+
+		//Get the map providers
+		$mapProvidersArray = array();
+		$mapProviders = MapProvider::idAscending()->get();
+		for($i=0; $i<count($mapProviders); ++$i)
+		{
+
+			$mapDescriptor = new stdClass();
+			$currentMapProvider = $mapProviders[$i];
+			$mapTexts = MapProviderText::withMapAndLanguageId(
+				$currentMapProvider->id, $languageId)->first();
+			if(null == $mapTexts)
+			{
+
+				$mapTexts = MapProviderText::withMapAndLanguageId(
+					$currentMapProvider->id, $defaultLanguageId)->first();
+
+			}
+			$currentMapProvider->name = $mapTexts->name;
+			$currentMapProvider->desc = $mapTexts->text;
+
+			$wmsProvider = WMSMapProvider::find($currentMapProvider->id);
+			$currentMapProvider->isWMS = (NULL != $wmsProvider);
+
+			if($currentMapProvider->isWMS)
+			{
+
+				$currentMapProvider->layers =  $wmsProvider->layers;
+				$currentMapProvider->format =  $wmsProvider->format;
+				$currentMapProvider->transparent =  $wmsProvider->transparent;
+				$currentMapProvider->continuousWorld =  $wmsProvider->continuousWorld;
+				$currentMapProvider->crsId =  $wmsProvider->crsId;
+
+			}
+
+			$mapProvidersArray[] = $currentMapProvider;
+
+		}
+
+		$data->mapProviders = json_encode($mapProvidersArray);
+		$center = array();
+		$center[] = $configuration->centerLat;
+		$center[] = $configuration->centerLon;
+		$data->center = json_encode($center);
+
+		$data->lastUpdated = $lastMap->updated_at;
+
+		return $data;
 
 	}
 

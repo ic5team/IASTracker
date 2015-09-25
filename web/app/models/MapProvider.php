@@ -23,6 +23,12 @@ class MapProvider extends Eloquent {
 
 	}
 	
+	function scopeLastUpdated($query)
+	{
+
+		return $query->orderBy('updated_at', 'DESC');
+
+	}
 }
 
 ?>
