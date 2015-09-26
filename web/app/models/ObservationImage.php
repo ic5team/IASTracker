@@ -8,6 +8,8 @@ class ObservationImage extends Eloquent {
 	 * @var string
 	 */
 	protected $table = 'ObservationImages';
+	protected $fillable = array('observationId', 'URL');
+
 
 	/**
 	 * The attributes excluded from the model's JSON form.

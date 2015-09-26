@@ -32,18 +32,37 @@ var app = {
 	MapHandler: null,
 	locationImages: null,
 	backDisabled: false,
+	IASPendingObservations: null,
+	isUploadingPendingObservations: false,
+	bWaitingIAS: false,
 
 	// Application Constructor
 	initialize: function() {
 		this.bindEvents();
 
+		$('#screen5').on('pageshow', function(e) {
+
+			app.bWaitingIAS = true;
+			$('#waitingIAS').show();
+			$('#locatedIAS').hide();
+			if(null != app.mLocation)
+			{
+
+				api.getIASFromLocation(app.mLocation.coords.latitude, app.mLocation.coords.longitude, app.iasLocated);
+
+			}
+		});
+
 		$('#screen6').on('pageshow', function(e) {
+
+			$(".iasBlock").off('click');
 			$(".iasBlock").on('click', function(e) {
 
 				app.showIAS($(this).attr('data-pos'), $(this).attr('data-taxonId'), '#screen6');
 
 			});
 
+			$(".iasName").off('click');
 			$(".iasName").on('click', function(e) {
 
 				app.starIAS($(this).attr('data-id'));
@@ -71,10 +90,67 @@ var app = {
 			var mapDescriptors = JSON.parse(window.localStorage.getItem('MapList'));
 			var crsDescriptors = JSON.parse(window.localStorage.getItem('MapCRSDescriptors'));
 			var mapCenter = JSON.parse(window.localStorage.getItem('MapCenter'));
-			app.MapHandler = new MapHandler("IASObservationMap", mapDescriptors, crsDescriptors, mapCenter);
-			$('#numberOfSpecies').selectmenu();
-			$('#obsText').textinput();
 
+			if(app.isUploadingPendingObservations)
+				$('#sendingPendingObs').show();
+			else
+				$('#observationScreen').show();
+
+			$('#obsSentConfirmationScreen').hide();
+			$('#obsStoredScreen').hide();
+			$('#obsSentErrorScreen').hide();
+
+			if(null != app.MapHandler)
+				app.MapHandler.destroy();
+
+			app.MapHandler = new MapHandler("IASObservationMap", mapDescriptors, crsDescriptors, mapCenter);
+
+			
+			$('#numberOfSpecies').val(1);
+			$('#obsText').val('');
+			$('#error-no-gps').hide();
+
+		});
+
+		$('#numberOfSpecies').selectmenu();
+		$('#obsText').textinput();
+		$('#TakeImageBtn').on('click', function(e) {
+			navigator.camera.getPicture( app.onCameraSuccess, app.onCameraError, 
+				{
+					quality : 75, 
+					destinationType : Camera.DestinationType.NATIVE_URI, 
+					sourceType : Camera.PictureSourceType.CAMERA, 
+					allowEdit : false,
+					targetWidth: 1090
+				}
+			);
+		});
+
+		$('#SelectImageBtn').on('click', function(e) {
+			navigator.camera.getPicture( app.onCameraSuccess, app.onCameraError, 
+				{
+					quality : 75, 
+					destinationType : Camera.DestinationType.NATIVE_URI, 
+					sourceType : Camera.PictureSourceType.PHOTOLIBRARY, 
+					allowEdit : false,
+					targetWidth: 1090
+				}
+			);
+		});
+
+		$('#addNoteBtn').on('click', function(e) {
+			if($('#obsText').is(':visible'))
+			{
+				$('#obsText').hide();
+				$('#addNoteBtn').addClass('ui-icon-carat-d');
+				$('#addNoteBtn').removeClass('ui-icon-carat-u');
+			}
+			else
+			{
+				$('#obsText').show();
+				$('#addNoteBtn').removeClass('ui-icon-carat-d');
+				$('#addNoteBtn').addClass('ui-icon-carat-u');
+			}
 		});
 
 		$(document).on('pagebeforechange', function(e, ob) {
@@ -100,6 +176,48 @@ var app = {
 		userId = window.localStorage.getItem('userId');
 
 	},
+	iasLocated: function(data)
+	{
+
+		if('undefined' !== typeof data)
+		{
+
+			var html = '';
+			for(var i=0; i<data.length; ++i)
+			{
+
+				var div = $('.iasBlock[data-id=' + data[i] +']').clone();
+
+				html += '<div style="width: 50%; display: inline-block; text-align: center;">';
+				html += div[0].outerHTML;
+				html += '</div>';
+
+			}
+
+			$('#locatedIAS').html(html);
+
+			$('.iasBlock').off('click');
+			$(".iasBlock").on('click', function(e) {
+
+				app.showIAS($(this).attr('data-pos'), $(this).attr('data-taxonId'), '#screen8');
+
+			});
+
+			$('.iasName').off('click');
+			$(".iasName").on('click', function(e) {
+
+				app.starIAS($(this).attr('data-id'));
+				return false;
+
+			});
+
+			$('#waitingIAS').hide();
+			$('#locatedIAS').show();
+			app.bWaitingIAS = false;
+
+		}
+
+	},
 	// Bind Event Listeners
 	//
 	// Bind any events that are required on startup. Common events are:
@@ -114,6 +232,15 @@ var app = {
 		$('#btSignIn').on('click', app.SignIn);
 		$('#btSignUp').on('click', app.SignUp);
 		$('#btCompleteData').on('click', app.completeData);
+		$('#closeConfirmationScreen').on('click', function(e){ 
+			$('#backLinkLocation').click();
+		});
+		$('#closeObsStoredScreen').on('click', function(e){ 
+			$('#backLinkLocation').click();
+		});
+		$('#closeObsNotSentScreen').on('click', function(e){ 
+			$('#obsSentErrorScreen').hide();
+		});
 
 
 	},
@@ -124,11 +251,30 @@ var app = {
 	onDeviceReady: function() {
 		options = { enableHighAccuracy: true };
 		navigator.geolocation.watchPosition(app.onLocationSuccess, app.onLocationError, options);
+		app.IASPendingObservations = JSON.parse(window.localStorage.getItem('pendingObservations'));
+		if(null == app.IASPendingObservations)
+			app.IASPendingObservations = new Array();
+
+		if(app.isOnline)
+			app.uploadPendingObservations();
+		
 		app.receivedEvent('deviceready');
+	},
+	uploadPendingObservations: function() {
+
+		if(0 != app.IASPendingObservations.length)
+		{
+
+			app.isUploadingPendingObservations = true;
+			app.locationImages = app.IASPendingObservations[0].images;
+			app.uploadImages(0);
+
+		}
+
 	},
 	onLocationSuccess: function(position) {
 
-		mLocation = position;
+		app.mLocation = position;
 		if(null != app.MapHandler)
 			app.MapHandler.setLocation(position.coords);
 
@@ -143,6 +289,7 @@ var app = {
 	},
 	onOnline: function() {
 		app.isOnline = true;
+		app.uploadPendingObservations();
 	},
 	// Update DOM on a Received Event
 	receivedEvent: function(id) {
@@ -158,8 +305,10 @@ var app = {
 			{
 
 				//Check for updates
-				api.getIASLastUpdate(app.IASLastUpdateOk);
-				api.getMapLastUpdate(app.MapLastUpdateOk);
+				setTimeout(function() {
+					api.getIASLastUpdate(app.IASLastUpdateOk);
+					api.getMapLastUpdate(app.MapLastUpdateOk);
+				}, 10000);
 
 			}
 			else
@@ -304,63 +453,70 @@ var app = {
 
 		var screenHtml = '';
 		var menuHtml = '';
-		var keys = Object.keys(app.TaxonList);
-		var latinNames = $('#cbScientificNames').is(':checked');
-		var path = window.localStorage.getItem('path');
 
-		for(var i=0; i<keys.length; ++i)
+		if(null != app.TaxonList)
 		{
 
-			if(app.IASList.hasOwnProperty(keys[i]))
+			var keys = Object.keys(app.TaxonList);
+			var latinNames = $('#cbScientificNames').is(':checked');
+			var path = window.localStorage.getItem('path');
+
+			for(var i=0; i<keys.length; ++i)
 			{
 
-				var rowClass='';
-				if((keys.length-1) == i)
-					rowClass = 'min-height: 100vh;'
-
-				//Add Taxon to taxon screen
-				var taxon = app.TaxonList[keys[i]];
-				screenHtml += '<div id="taxon' + 
-					taxon.id + '" style="background-color:' + taxon.appOuterColor + ';' + rowClass + '">';
-				screenHtml += '<h1>' + taxon.name +'</h1>';
-
-				var ias = app.IASList[keys[i]];
-				var iasKeys = Object.keys(ias);
-				for(var j=0; j<iasKeys.length; ++j)
+				if(app.IASList.hasOwnProperty(keys[i]))
 				{
 
-					var current = ias[iasKeys[j]];
-					var starredClass = 'fa-star-o';
+					var rowClass='';
+					if((keys.length-1) == i)
+						rowClass = 'min-height: 100vh;'
 
-					if((null != app.starredIAS) && app.starredIAS.indexOf(current.id))
-						starredClass = 'fa-star';
+					//Add Taxon to taxon screen
+					var taxon = app.TaxonList[keys[i]];
+					screenHtml += '<div id="taxon' + 
+						taxon.id + '" style="background-color:' + taxon.appOuterColor + ';' + rowClass + '">';
+					screenHtml += '<h1>' + taxon.name +'</h1>';
 
-					var name = 'ias' + current.id +'Name';
-					var block = 'ias' + current.id +'Block';
+					var ias = app.IASList[keys[i]];
+					var iasKeys = Object.keys(ias);
+					for(var j=0; j<iasKeys.length; ++j)
+					{
 
-					screenHtml += '<div style="width: 50%; display: inline-block; text-align: center;">';
-					screenHtml += '<div class="iasBlock" data-taxonId="' + taxon.id + '" data-id="' + current.id + '" data-pos="' + iasKeys[j] + '" style="background-color:' + taxon.appInnerColor + '; width: 95%; margin-bottom: 10px;">';
-					screenHtml += '<img class="iasImage" src="' + path + '/IASTracker/ias' + current.id + '.jpg" />';
+						var current = ias[iasKeys[j]];
+						var starredClass = 'fa-star-o';
 
-					screenHtml += '<div data-taxonId="' + taxon.id + '" data-id="' + current.id + '"" class="iasName" style="background-color:' + taxon.appInnerColor + ';">';
-					if(latinNames)
-						screenHtml += current.latinName;
-					else
-						screenHtml += current.description.name;
-					screenHtml += '<i class="fa ' + starredClass +' IAS' + current.id + 'Icon"></i></div>';
+						var arrayIndex = app.starredIAS.indexOf(current.id.toString());
+						if((null != app.starredIAS) && (-1 != arrayIndex))
+							starredClass = 'fa-star';
+
+						var name = 'ias' + current.id +'Name';
+						var block = 'ias' + current.id +'Block';
+
+						screenHtml += '<div style="width: 50%; display: inline-block; text-align: center;">';
+						screenHtml += '<div class="iasBlock" data-taxonId="' + taxon.id + '" data-id="' + current.id + '" data-pos="' + iasKeys[j] + '" style="background-color:' + taxon.appInnerColor + '; width: 95%; margin-bottom: 10px;">';
+						screenHtml += '<img class="iasImage" src="' + path + '/IASTracker/ias' + current.id + '.jpg" />';
+
+						screenHtml += '<div data-taxonId="' + taxon.id + '" data-id="' + current.id + '"" class="iasName">';
+						if(latinNames)
+							screenHtml += current.latinName;
+						else
+							screenHtml += current.description.name;
+						screenHtml += '<i class="fa ' + starredClass +' IAS' + current.id + 'Icon"></i></div>';
+						screenHtml += '</div>';
+						screenHtml += '</div>';
+
+
+					}
+
+					if(0 != (iasKeys.length % 2))
+						screenHtml += '<div style="width: 50%; display: inline-block;"></div></div>';
+
 					screenHtml += '</div>';
-					screenHtml += '</div>';
 
+					//Add taxon to menu
+					menuHtml += '<div class="row menuElement"><div class="col-md-12"><a href="#screen8" scrollTo="taxon' + taxon.id + '" class="scroll">' + taxon.name + '</a></div></div>';
 
 				}
-
-				if(0 != (iasKeys.length % 2))
-					screenHtml += '<div style="width: 50%; display: inline-block;"></div></div>';
-
-				screenHtml += '</div>';
-
-				//Add taxon to menu
-				menuHtml += '<div class="row menuElement"><div class="col-md-12"><a href="#screen8" scrollTo="taxon' + taxon.id + '" class="scroll">' + taxon.name + '</a></div></div>';
 
 			}
 
@@ -381,12 +537,14 @@ var app = {
 
 		});
 
+  		$('.iasBlock').off('click');
 		$(".iasBlock").on('click', function(e) {
 
 			app.showIAS($(this).attr('data-pos'), $(this).attr('data-taxonId'), '#screen8');
 
 		});
 
+		$('.iasName').off('click');
 		$(".iasName").on('click', function(e) {
 
 			app.starIAS($(this).attr('data-id'));
@@ -417,12 +575,14 @@ var app = {
 
 			$('#screen6 > div[data-role="content"]').html(html);
 
+			$('.iasBlock').off('click');
 			$(".iasBlock").on('click', function(e) {
 
 				app.showIAS($(this).attr('data-pos'), $(this).attr('data-taxonId'), '#screen6');
 
 			});
 
+			$('.iasName').off('click');
 			$(".iasName").on('click', function(e) {
 
 				app.starIAS($(this).attr('data-id'));
@@ -505,6 +665,7 @@ var app = {
 		$('#IASImageText').html(ias.image.text);
 
 		$('#LocateIASButton').css('background-color', taxon.appInnerColor);
+		$('#LocateIASButton').off('click');
 		$('#LocateIASButton').on('click', function(e){
 			app.locateIAS(ias.id, ias.latinName, taxon.appInnerColor);
 		});
@@ -522,47 +683,11 @@ var app = {
 		$('#backLinkLocation').attr('href', "#screen13");
 		$('#LocationCommonName').html(name);
 		$('#LocationCommonName').css('color', color);
-		$('#TakeImageBtn').on('click', function(e) {
-			navigator.camera.getPicture( app.onCameraSuccess, app.onCameraError, 
-				{
-					quality : 75, 
-					destinationType : Camera.DestinationType.NATIVE_URI, 
-					sourceType : Camera.PictureSourceType.CAMERA, 
-					allowEdit : false,
-					targetWidth: 1090
-				}
-			);
-		});
-
-		$('#SelectImageBtn').on('click', function(e) {
-			navigator.camera.getPicture( app.onCameraSuccess, app.onCameraError, 
-				{
-					quality : 75, 
-					destinationType : Camera.DestinationType.NATIVE_URI, 
-					sourceType : Camera.PictureSourceType.PHOTOLIBRARY, 
-					allowEdit : false,
-					targetWidth: 1090
-				}
-			);
-		});
-
-		$('#addNoteBtn').on('click', function(e) {
-			if($('#obsText').is(':visible'))
-			{
-				$('#obsText').hide();
-				$('#addNoteBtn').addClass('ui-icon-carat-d');
-				$('#addNoteBtn').removeClass('ui-icon-carat-u');
-			}
-			else
-			{
-				$('#obsText').show();
-				$('#addNoteBtn').removeClass('ui-icon-carat-d');
-				$('#addNoteBtn').addClass('ui-icon-carat-u');
-			}
-		});
 		$('#SendObservationButton').css('background-color', color);
+		$('#SendObservationButton').off('click');
 		$('#SendObservationButton').on('click', function(e) {
 			app.sendObservation(id);
+			return false;
 		});
 
 		$("body").pagecontainer("change", "#screen14");
@@ -581,25 +706,49 @@ var app = {
 	sendObservation: function(id)
 	{
 
-		if(app.isOnline)
+		if(null != app.mLocation)
 		{
 
-			app.backDisabled = true;
-			$('#addNoteBtn').addClass('ui-disabled');
-			$("#obsText").textinput( 'disable' );
-			$('#numberOfSpecies').selectmenu('disable');
-			$('#TakeImageBtn').addClass('ui-disabled');
-			$('#SelectImageBtn').addClass('ui-disabled');
-			$('#SendObservationButton').addClass('ui-disabled');
-			$('#btSendIASText').hide();
-			$('#btSendIASLdg').show();
+			if(app.isOnline)
+			{
 
-			app.uploadImages(id);
+				app.backDisabled = true;
+				$('#error-no-gps').hide();
+				$('#addNoteBtn').addClass('ui-disabled');
+				$("#obsText").textinput( 'disable' );
+				$('#numberOfSpecies').selectmenu('disable');
+				$('#TakeImageBtn').addClass('ui-disabled');
+				$('#SelectImageBtn').addClass('ui-disabled');
+				$('#btSendIASText').hide();
+				$('#btSendIASLdg').show();
+				$('#SendObservationButton').addClass('ui-disabled');
+
+				app.uploadImages(id);
+
+			}
+			else
+			{
+
+				$('#observationScreen').hide();
+				$('#obsStoredScreen').show();
+				$('#error-no-gps').hide();
+				var text = $('#obsText').val();
+				var number = $('#numberOfSpecies').val();
+				var location = JSON.stringify({accuracy: app.mLocation.coords.accuracy, 
+					altitude: app.mLocation.coords.altitude, latitude: app.mLocation.coords.latitude, 
+					longitude: app.mLocation.coords.longitude});
+				app.IASPendingObservations.push({id:id, text: text, number: number, images: app.locationImages, 
+					location: location});
+				window.localStorage.setItem('pendingObservations', JSON.stringify(app.IASPendingObservations));
+
+			}
 
 		}
 		else
 		{
-			//TODO: Store & upload when connection
+
+			$('#error-no-gps').show();
+
 		}
 
 	},
@@ -615,23 +764,7 @@ var app = {
 		if(index < app.locationImages.length)
 		{
 	
-			var url = urlPublic + 'common/obsImageUpload.php';
-			var imageURI = app.locationImages[index];
-
-			var options = new FileUploadOptions();
-            options.fileKey="image";
-            options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1);
-            if(-1 == options.fileName.lastIndexOf('.'))
-            	options.fileName += '.jpg';
-
-            options.mimeType="image/jpeg";
-            options.chunkedMode = false;
- 
-            var ft = new FileTransfer();
-            ft.upload(imageURI, url, function(r) {
-					app.locationImages[index] = r.response;
-					app.uploadNextImage(index+1, id);
-				}, app.uploadFail, options);
+			app.uploadImageAux(index, id);
 
 		}
 		else
@@ -641,33 +774,99 @@ var app = {
 		}
 
 	},
-	uploadFail: function(r)
-	{
+	uploadImageAux: function(index, id) {
 
-		console.log(r.code);
+		var url = urlPublic + 'common/obsImageUpload.php';
+		var imageURI = app.locationImages[index];
+		var options = new FileUploadOptions();
+        options.fileKey="image";
+        options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1);
+        if(-1 == options.fileName.lastIndexOf('.'))
+        	options.fileName += '.jpg';
+
+        options.mimeType="image/jpeg";
+        options.chunkedMode = false;
+
+        var ft = new FileTransfer();
+        ft.upload(imageURI, url, function(r) {
+				app.locationImages[index] = r.response;
+				app.uploadNextImage(index+1, id);
+			}, 
+			function(r) {
+				//When an image is selected from the library and the app is restarted
+				//the given uri is invalid. The image is discarded
+				//TODO: Need to find a way 
+				app.locationImages[index] = "";
+				app.uploadNextImage(index+1, id);
+				console.log(r.code);
+			}, 
+			options
+		);
 
 	},
 	uploadImagesFinished: function(id)
 	{
 
-		var text = $('#obsText').val();
-		var number = $('#numberOfSpecies').val();
-		api.addObservation(id, text, number, app.locationImages, app.mLocation.coords, app.mLocation.accuracy, app.observationSent);
+		if(!app.isUploadingPendingObservations)
+		{
+		
+			var text = $('#obsText').val();
+			var number = $('#numberOfSpecies').val();
+			api.addObservation(id, text, number, app.locationImages, app.mLocation.coords, 
+				app.mLocation.coords.altitude, app.mLocation.coords.accuracy, app.observationSent);
+
+		}
+		else
+		{
+
+			var current = app.IASPendingObservations[0];
+			var location = JSON.parse(current.location);
+			api.addObservation(current.id, current.text, current.number, app.locationImages, 
+				{longitude: location.longitude, latitude: location.latitude}, 
+				location.altitude, location.accuracy, app.observationSent);
+
+		}
 
 	},
 	observationSent: function()
 	{
 
-		$('#addNoteBtn').removeClass('ui-disabled');
-		$("#obsText").textinput('enable');
-		$('#numberOfSpecies').selectmenu('enable');
-		$('#TakeImageBtn').removeClass('ui-disabled');
-		$('#SelectImageBtn').removeClass('ui-disabled');
-		$('#SendObservationButton').removeClass('ui-disabled');
-		$('#btSendIASText').show();
-		$('#btSendIASLdg').hide();
+		if(!app.isUploadingPendingObservations)
+		{
 
-		app.backDisabled = false;
+			$('#addNoteBtn').removeClass('ui-disabled');
+			$("#obsText").textinput('enable');
+			$('#numberOfSpecies').selectmenu('enable');
+			$('#TakeImageBtn').removeClass('ui-disabled');
+			$('#SelectImageBtn').removeClass('ui-disabled');
+			$('#SendObservationButton').removeClass('ui-disabled');
+			$('#btSendIASText').show();
+			$('#btSendIASLdg').hide();
+
+			$('#observationScreen').hide();
+			$('#obsSentConfirmationScreen').show();
+
+			app.backDisabled = false;
+
+		}
+		else
+		{
+
+			app.IASPendingObservations.splice(0, 1);
+			window.localStorage.setItem('pendingObservations', JSON.stringify(app.IASPendingObservations));
+
+			if(0 != app.IASPendingObservations)
+				app.uploadPendingObservations();
+			else
+			{
+
+				$('#sendingPendingObs').hide();
+				$('#observationScreen').show();
+				app.isUploadingPendingObservations = false;
+
+			}
+
+		}
 
 	},
 	closeSplashScreen: function(data)

@@ -238,8 +238,8 @@ class Inicial extends Migration {
 			$table->increments('id');
 			$table->integer('languageId')->unsigned();
 			$table->string('name', 255);
-			$table->string('appInnerColor', 20)->nullable();
-			$table->string('appOuterColor', 20)->nullable();
+			$table->string('appInnerColor', 25)->nullable();
+			$table->string('appOuterColor', 25)->nullable();
 			$table->integer('parentTaxonId')->unsigned()->nullable();
 			$table->integer('creatorId')->unsigned()->nullable();
 			$table->timestamps();
@@ -250,15 +250,16 @@ class Inicial extends Migration {
 			$table->increments('id');
 			$table->integer('IASId')->unsigned();
 			$table->integer('userId')->unsigned()->nullable();
-			$table->integer('languageId')->unsigned();
+			$table->integer('languageId')->unsigned()->nullable();
 			$table->integer('validatorId')->unsigned()->nullable();
 			$table->integer('statusId')->unsigned();
-			$table->text('notes');
+			$table->text('notes')->nullable();
 			$table->timestamp('validatorTS')->nullable();
 			$table->decimal('latitude', 9, 6);
 			$table->decimal('longitude', 9, 6);
-			$table->decimal('elevation', 6, 2);
-			$table->decimal('accuracy', 6, 2);
+			$table->decimal('elevation', 6, 2)->nullable();
+			$table->decimal('accuracy', 6, 2)->nullable();
+			$table->integer('howMany')->unsigned();
 			$table->timestamps();
 
 		});

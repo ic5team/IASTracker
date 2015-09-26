@@ -25,6 +25,9 @@ function IASTracker(url)
 	this.map = new Object();
 	this.map.entryPoint = this.APIBaseUrl + "Maps";
 	this.map.lastUpdate = 'lastUpdate';
+	this.observations = new Object();
+	this.observations.entryPoint = this.APIBaseUrl + "Observations";
+
 
 }
 
@@ -148,5 +151,25 @@ IASTracker.prototype.checkUserToken = function(id, token, doneFunction)
 	var completeURL = this.users.entryPoint + this.separator + id + 
 		this.separator + this.users.checkToken;
 	return this.AJAXRequest(completeURL, doneFunction, 'GET', {token: token});
+
+}
+
+IASTracker.prototype.addObservation = function(id, text, number, 
+	images, coords, altitude, accuracy, doneFunction)
+{
+
+	var completeURL = this.observations.entryPoint;
+	return this.AJAXRequest(completeURL, doneFunction, 'POST', {IASId: id, description: text, 
+		number: number, observationImages: images, coords: coords, altitude: altitude, 
+		accuracy: accuracy});	
+
+}
+
+IASTracker.prototype.getIASFromLocation = function(latitude, longitude, doneFunction)
+{
+
+	var completeURL = this.ias.entryPoint;
+	return this.AJAXRequest(completeURL, doneFunction, 'GET', {latitude: latitude, 
+		longitude: longitude});	
 
 }

@@ -8,6 +8,9 @@ class Observation extends Eloquent {
 	 * @var string
 	 */
 	protected $table = 'observations';
+	protected $fillable = array('IASId','userId', 'languageId',
+				'statusId', 'notes', 'latitude', 'longitude',
+				'elevation', 'accuracy', 'howMany');
 
 	/**
 	 * The attributes excluded from the model's JSON form.

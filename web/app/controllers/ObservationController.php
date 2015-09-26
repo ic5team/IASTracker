@@ -117,10 +117,97 @@ class ObservationController extends RequestController {
 	protected function newResource()
 	{
 
-		$element = new Observation(array());
+		$dto = new stdClass();
 
-		$element->touch();
-		$element->save();
+		if(Input::has('IASId') && Input::has('number') && 
+			Input::has('coords'))
+		{
+
+			$observationImages = array();
+			if(Input::has('observationImages'))
+				$observationImages = Input::get('observationImages');
+
+			$description = null;
+			if(Input::has('description'))
+				$description = Input::get('description');
+
+			$altitude = null;
+			if(Input::has('altitude'))
+				$altitude = Input::get('altitude');
+
+			$accuracy = null;
+			if(Input::has('accuracy'))
+				$accuracy = Input::get('accuracy');
+
+			$coords = Input::get('coords');
+			$latitude = $coords['latitude'];
+			$longitude = $coords['longitude'];
+			$images = Input::get('observationImages');
+			$userId = null;
+			$languageId = null;
+
+			if(Auth::check())
+			{
+
+				$userId = Auth::user()->id;
+				$languageId = null;
+
+			}
+		
+			$element = new Observation(array(
+				'IASId' => Input::get('IASId'),
+				'userId' => $userId,
+				'languageId' => $languageId,
+				'statusId' => 2,
+				'notes' => $description,
+				'latitude' => $latitude,
+				'longitude' => $longitude,
+				'elevation' => $altitude,
+				'accuracy' => $accuracy,
+				'howMany' => Input::get('number')
+			));
+			$element->touch();
+			$element->save();
+
+			for($i=0; $i<count($images); ++$i)
+			{
+
+				if("" != $images[$i])
+				{
+
+					$image = new ObservationImage(array(
+						'observationId' => $element->id,
+						'URL' => $images[$i]
+					));
+					$image->touch();
+					$image->save();
+
+				}
+
+			}
+
+			$areas = Area::getAreaContains($latitude, $longitude);
+			for($i=0; $i<count($areas); ++$i)
+			{
+
+				$obsArea = new ObservationArea(array(
+					'observationId' => $element->id,
+					'areaId' => $areas[$i]->id,
+				));
+				$obsArea->touch();
+				$obsArea->save();
+
+			}
+
+		}
+		else
+		{
+
+			$dto->error = Lang::get('ui.missingParameters');
+
+		}
+
+		return Response::json($dto);
 
 	}
 

@@ -1,13 +1,13 @@
 <?php
 
-class IASRegionValidator extends Eloquent {
+class IASAreaValidator extends Eloquent {
 
 	/**
 	 * The database table used by the model.
 	 *
 	 * @var string
 	 */
-	protected $table = 'IASRegionsValidators';
+	protected $table = 'IASAreasValidators';
 
 	/**
 	 * The attributes excluded from the model's JSON form.

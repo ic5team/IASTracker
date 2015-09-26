@@ -156,7 +156,7 @@ class IAS extends Eloquent {
 
 	}
 
-	function scopeWithUserId($query, $userId)
+	public function scopeWithUserId($query, $userId)
 	{
 
 		return $query->join('observations', 'IAS.id', '=', 'observations.IASId')
@@ -165,21 +165,21 @@ class IAS extends Eloquent {
 
 	}
 
-	function scopeLastUpdated($query)
+	public function scopeLastUpdated($query)
 	{
 
 		return $query->orderBy('updated_at', 'DESC');
 
 	}
 
-	function scopeOrderByTaxon($query)
+	public function scopeOrderByTaxon($query)
 	{
 
 		return $query->orderBy('taxonId', 'ASC');
 
 	}
 
-	function scopeOrderByName($query)
+	public function scopeOrderByName($query)
 	{
 
 		return $query->orderBy('latinName', 'ASC');

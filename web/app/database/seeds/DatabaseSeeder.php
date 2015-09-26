@@ -28,8 +28,6 @@ class DatabaseSeeder extends Seeder {
 		$this->call('IASRelatedDBsTableSeeder');
 		$this->call('StatusTableSeeder');
 		$this->call('StatusTextsTableSeeder');
-		$this->call('ObservationsTableSeeder');
-		$this->call('ObservationImagesTableSeeder');
 
 	}
 
@@ -727,8 +725,8 @@ class IASTaxonsTableSeeder extends Seeder {
 			'id'  => 0,
 			'languageId' => 1,
 			'name' => 'Flora',
-			'appInnerColor' => '#FFFF33',
-			'appOuterColor' => '#FF9966',
+			'appInnerColor' => 'rgba(0,255,153,0.5)',
+			'appOuterColor' => 'rgba(153,255,51,0.7)',
 			'creatorId' => 1,
 			'created_at' => new DateTime,
 			'updated_at' => new DateTime
@@ -749,8 +747,8 @@ class IASTaxonsTableSeeder extends Seeder {
 			'id'  => 2,
 			'languageId' => 1,
 			'name' => 'Invertebrats no artròpodes',
-			'appInnerColor' => '#ED1C24',
-			'appOuterColor' => '#F15A24',
+			'appInnerColor' => 'rgba(41,171,226,0.5)',
+			'appOuterColor' => 'rgba(0,255,255,0.7)',
 			'parentTaxonId' => 1,
 			'creatorId' => 1,
 			'created_at' => new DateTime,
@@ -761,8 +759,8 @@ class IASTaxonsTableSeeder extends Seeder {
 			'id'  => 3,
 			'languageId' => 1,
 			'name' => 'Artròpodes no crustacis',
-			'appInnerColor' => '#ED1C24',
-			'appOuterColor' => '#F15A24',
+			'appInnerColor' => 'rgba(237,28,36,0.5)',
+			'appOuterColor' => 'rgba(241,90,36,0.7)',
 			'parentTaxonId' => 1,
 			'creatorId' => 1,
 			'created_at' => new DateTime,
@@ -773,8 +771,8 @@ class IASTaxonsTableSeeder extends Seeder {
 			'id'  => 4,
 			'languageId' => 1,
 			'name' => 'Crustacis',
-			'appInnerColor' => '#00FFFF',
-			'appOuterColor' => '#29ABE2',
+			'appInnerColor' => 'rgba(51,51,255,0.5)',
+			'appOuterColor' => 'rgba(0,153,255,0.7)',
 			'parentTaxonId' => 1,
 			'creatorId' => 1,
 			'created_at' => new DateTime,
@@ -785,8 +783,8 @@ class IASTaxonsTableSeeder extends Seeder {
 			'id'  => 5,
 			'languageId' => 1,
 			'name' => 'Rèptils',
-			'appInnerColor' => '#00FFFF',
-			'appOuterColor' => '#29ABE2',
+			'appInnerColor' => 'rgba(255,153,102,0.5)',
+			'appOuterColor' => 'rgba(255,255,51,0.7)',
 			'parentTaxonId' => 1,
 			'creatorId' => 1,
 			'created_at' => new DateTime,
@@ -797,8 +795,8 @@ class IASTaxonsTableSeeder extends Seeder {
 			'id'  => 6,
 			'languageId' => 1,
 			'name' => 'Aus',
-			'appInnerColor' => '#00FFFF',
-			'appOuterColor' => '#29ABE2',
+			'appInnerColor' => 'rgba(153,102,255,0.5)',
+			'appOuterColor' => 'rgba(153,153,255,0.7)',
 			'parentTaxonId' => 1,
 			'creatorId' => 1,
 			'created_at' => new DateTime,
@@ -809,113 +807,13 @@ class IASTaxonsTableSeeder extends Seeder {
 			'id'  => 7,
 			'languageId' => 1,
 			'name' => 'Mamífers',
-			'appInnerColor' => '#00FFFF',
-			'appOuterColor' => '#29ABE2',
+			'appInnerColor' => 'rgba(117,76,36,0.5)',
+			'appOuterColor' => 'rgba(198,156,109,0.7)',
 			'parentTaxonId' => 1,
 			'creatorId' => 1,
 			'created_at' => new DateTime,
 			'updated_at' => new DateTime
 		));
-
-	}
-
-}
-
-class ObservationImagesTableSeeder extends Seeder {
- 
-	public function run()
-	{
-	
-		DB::table('ObservationImages')->insert(array(
-			'id'  => 3,
-			'observationId' => 4,
-			'URL' => 'iasLogo.PNG',
-			'created_at' => new DateTime,   
-			'updated_at' => new DateTime
-		));
-
-		DB::table('ObservationImages')->insert(array(
-			'id'  => 4,
-			'observationId' => 4,
-			'URL' => 'ibesora.PNG',
-			'created_at' => new DateTime,   
-			'updated_at' => new DateTime
-		));
-
-		DB::table('ObservationImages')->insert(array(
-			'id'  => 5,
-			'observationId' => 4,
-			'URL' => 'mosquit.jpg',
-			'created_at' => new DateTime,   
-			'updated_at' => new DateTime
-		));
-
-		DB::table('ObservationImages')->insert(array(
-			'id'  => 6,
-			'observationId' => 4,
-			'URL' => 'pomacea.jpg',
-			'created_at' => new DateTime,   
-			'updated_at' => new DateTime
-		));
-
-		DB::table('ObservationImages')->insert(array(
-			'id'  => 7,
-			'observationId' => 7,
-			'URL' => 'Morrut_Palmeres_06.jpg',
-			'created_at' => new DateTime,   
-			'updated_at' => new DateTime
-		));
-
-		DB::table('ObservationImages')->insert(array(
-			'id'  => 8,
-			'observationId' => 7,
-			'URL' => 'Morrut_Palmeres_02.jpg',
-			'created_at' => new DateTime,   
-			'updated_at' => new DateTime
-		));
-
-	}
-}
-
-class ObservationsTableSeeder extends Seeder {
- 
-	public function run()
-	{
-	
-		DB::table('observations')->insert(array(
-			'id'  => 4,
-			'IASId' => 1,
-			'userId' => 1,
-			'languageId' => 1,
-			'statusId' => 2,
-			'notes' => 'Observation text',
-			'validatorTS' => new DateTime,
-			'latitude' => '42.118900',
-			'longitude' => '1.865000',
-			'elevation' => '1998.00',
-			'accuracy' => 50,
-			'created_at' => new DateTime,   
-			'updated_at' => new DateTime
-		));
-
-		DB::table('observations')->insert(array(
-			'id'  => 7,
-			'IASId' => 2,
-			'userId' => 1,
-			'languageId' => 1,
-			'validatorId' => 1,
-			'statusId' => 1,
-			'notes' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut accumsan diam ut quam blandit eleifend. Maecenas dignissim porttitor semper. In aliquet ligula mi, vel tincidunt urna imperdiet sed. Proin fermentum lacus a enim cursus venenatis. Donec ut luctus neque. Sed in ante lacus. Vivamus tristique viverra tortor in tristique. Nullam vulputate odio libero. Aliquam sit amet ex quis diam consequat ultricies. Aliquam semper ultricies ligula, et vehicula nisi varius et. Ut ac vehicula diam. Morbi ut enim at lacus malesuada gravida non id odio. Mauris sit amet euismod massa. In dictum facilisis laoreet. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Cras vel dictum ante.',
-			'validatorTS' => new DateTime,
-			'latitude' => '42.159000',
-			'longitude' => '1.906900',
-			'elevation' => '1000.00',
-			'accuracy' => 30,
-			'created_at' => new DateTime,   
-			'updated_at' => new DateTime
-		));
-
-		DB::statement('UPDATE observations SET geom=(SELECT ST_SetSRID(ST_MakePoint(longitude, latitude), 4326));');
 
 	}
 

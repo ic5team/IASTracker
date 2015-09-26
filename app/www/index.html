@@ -149,7 +149,12 @@
 			<div class="row">
 				<div class="col-md-8 col-md-offset-2">
 					<ul class="nav navbar-nav">
-						<!-- Banderes -->
+						<select id="languageSelector">
+							<option value="1">Català</option>
+							<option value="2">Español</option>
+							<option value="3">Français</option>
+							<option value="4">English</option>
+						</select>
 					</ul>
 				</div>
 			</div>
@@ -159,11 +164,11 @@
 		<div id="screen5" data-role="page" data-url="screen5" class="fullscreen background">
 			<div data-role="header" data-position="fixed" data-tap-toggle="false">
 				<a href="#menuPanel" data-icon="bars" data-iconpos="notext">Menu</a>
-				<h1>Page Title</h1>
+				<h1>Location IAS</h1>
 			</div>
 			<div data-role="content">
-				<!-- IAS de la posició actual -->
-				IAS de la posició actual
+				<div id="waitingIAS" class="whitePanel" style="margin-top: 20vh;text-align:center;"><i class="fa fa-compass" style="font-size: 180px;"></i><br />Adquiring your location...</div>
+				<div id="locatedIAS"></div>
 			</div>
 		</div>
 		<div id="screen6" data-role="page" data-url="screen6" class="fullscreen background">
@@ -179,36 +184,6 @@
 				<a href="#menuPanel" data-icon="bars" data-iconpos="notext">Menu</a>
 			</div>
 			<div data-role="content" id="taxonScreen">
-			</div>
-		</div>
-		<div id="screenUser1" data-role="page" data-url="screenUser1" class="fullscreen background">
-			<div data-role="header" data-position="fixed" data-tap-toggle="false">
-				<a href="#menuPanel" data-icon="bars" data-iconpos="notext">Menu</a>
-				<h1>Page Title</h1>
-			</div>
-			<div data-role="content">
-				<!-- IAS en altres zones guardades per l'usuari -->
-				IAS en zona usuari 1
-			</div>
-		</div>
-		<div id="screenUser2" data-role="page" data-url="screenUser2" class="fullscreen background">
-			<div data-role="header" data-position="fixed" data-tap-toggle="false">
-				<a href="#menuPanel" data-icon="bars" data-iconpos="notext">Menu</a>
-				<h1>Page Title</h1>
-			</div>
-			<div data-role="content">
-				<!-- IAS en altres zones guardades per l'usuari -->
-				IAS en zona usuari 2
-			</div>
-		</div>
-		<div id="screenUser3" data-role="page" data-url="screenUser3" class="fullscreen background">
-			<div data-role="header" data-position="fixed" data-tap-toggle="false">
-				<a href="#menuPanel" data-icon="bars" data-iconpos="notext">Menu</a>
-				<h1>Page Title</h1>
-			</div>
-			<div data-role="content">
-				<!-- IAS en altres zones guardades per l'usuari -->
-				IAS en zona usuari 3
 			</div>
 		</div>
 		<div id="screen11" data-role="page" data-url="screen11" class="fullscreen background">
@@ -249,39 +224,39 @@
 		</div>
 		<div id="screen14" data-role="page" data-url="screen14" class="fullscreen background">
 			<div data-role="header" data-position="fixed" data-tap-toggle="false">
-				<a href="backLinkLocation" data-icon="arrow-l" data-iconpos="notext">Menu</a>
+				<a id="backLinkLocation" href="" data-icon="arrow-l" data-iconpos="notext">Menu</a>
 				<h1 id="LocationCommonName">Page Title</h1>
 			</div>
 			<div data-role="content">
-				<div id="IASObservationMap" class="map">Map</div>
-				<div id="TakeImageBtn" class="obsButton"><i class="fa fa-camera"></i></div>
-				<div id="SelectImageBtn" class="obsButton"><i class="fa fa-picture-o"></i></div>
-				<div id="addNoteBtn" class="ui-btn ui-icon-carat-d ui-btn-icon-right">Add a note</div>
-				<textarea id="obsText" rows="4" cols="50" style="display:none;"></textarea> 
-				<select id="numberOfSpecies">
-					<option value="1">One</option>
-					<option value="2">Few</option>
-					<option value="3">Several</option>
-				</select>
-				<div id="SendObservationButton" data-role="button" >
-					<div id="btSendIASText">
-						Send IAS
+				<div id="sendingPendingObs" style="display: none;">Sending Pending Observations</div>
+				<div id="observationScreen">
+					<div id="IASObservationMap" class="map">Map</div>
+					<div id="TakeImageBtn" class="obsButton"><i class="fa fa-camera"></i></div>
+					<div id="SelectImageBtn" class="obsButton"><i class="fa fa-picture-o"></i></div>
+					<div id="addNoteBtn" class="ui-btn ui-icon-carat-d ui-btn-icon-right">Add a note</div>
+					<textarea id="obsText" rows="4" cols="50" style="display:none;"></textarea> 
+					<select id="numberOfSpecies">
+						<option value="1">One</option>
+						<option value="2">Few</option>
+						<option value="3">Several</option>
+					</select>
+					<div class="row alert alert-danger" id="error-no-gps" style="display: none;">
+						<div class="col-md-12">
+							No GPS
+						</div>
 					</div>
-					<div id="btSendIASLdg" style="display: none;">
-						<img src="img/loader.gif"  />
+					<div id="SendObservationButton" data-role="button" >
+						<div id="btSendIASText">
+							Send IAS
+						</div>
+						<div id="btSendIASLdg" style="display: none;">
+							<img src="img/loader.gif"  />
+						</div>
 					</div>
 				</div>
-				<div id="confirmationScreen" style="display: none;">Observation sent</div>
-			</div>
-		</div>
-		<div id="screen14_1" data-role="page" data-url="screen14_1" class="fullscreen background">
-			<div data-role="header" data-position="fixed" data-tap-toggle="false">
-				<a href="#menuPanel" data-icon="bars" data-iconpos="notext">Menu</a>
-				<h1>Page Title</h1>
-			</div>
-			<div data-role="content">
-				<!-- Afegir nota a l'observació -->
-				Descripció de l'observació
+				<div id="obsSentConfirmationScreen" class="locationMessage whitePanel" style="display: none;text-align:center;"><i class="fa fa-cloud-upload" style="font-size: 180px;"></i><br />Observation sent<div id="closeConfirmationScreen" data-role="button" class="ui-btn">Ok</div></div>
+				<div id="obsStoredScreen" class="locationMessage whitePanel" style="display: none;text-align:center;"><i class="fa fa-archive" style="font-size: 180px;"></i><br />Observation stored, it will be sent when a internet connection is found<div id="closeObsStoredScreen" data-role="button" class="ui-btn" >Ok</div></div>
+				<div id="obsSentErrorScreen" class="locationMessage whitePanel" style="display: none;text-align:center;"><i class="fa fa-exclamation-triangle" style="font-size: 180px;"></i><br />Observation NOT sent<div id="closeObsNotSentScreen" data-role="button" class="ui-btn" >Ok</div></div>
 			</div>
 		</div>
 		<div data-role="panel"  data-position-fixed="true" id="menuPanel" data-position="left" data-display="overlay" data-theme="a" class="ui-panel ui-panel-position-left ui-panel-display-overlay ui-body-a ui-panel-animate ui-panel-closed">

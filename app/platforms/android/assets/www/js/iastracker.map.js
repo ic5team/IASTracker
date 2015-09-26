@@ -311,3 +311,10 @@ MapHandler.prototype.removeLayer = function(layer)
 	this.map.removeLayer(layer);
 
 }
+
+MapHandler.prototype.destroy = function()
+{
+
+	this.map.remove();
+
+}

@@ -29,7 +29,7 @@ body {
     height:100%;
     margin:0px;
     padding:0px;
-    text-transform:uppercase;
+    text-transform: none;
     width:100%;
 
 }
@@ -214,4 +214,8 @@ input {
     width: 45%;
     text-align: center;
     font-size: 60px;
+}
+
+.locationMessage {
+    margin-top: 20vh;
 }

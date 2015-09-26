@@ -11,6 +11,52 @@ class IASController extends RequestController {
 	protected function elements($first, $num)
 	{
 
+		if(Input::has('latitude') && Input::has('longitude'))
+		{
+
+			return $this->getIASByLocation();
+
+		}
+		else
+		{
+
+			return $this->getIAS($first, $num);
+
+		}
+
+	}
+
+	protected function getIASByLocation()
+	{
+
+		$latitude = Input::get('latitude');
+		$longitude = Input::geT('longitude');
+
+		$areas = Area::getAreaContains($latitude, $longitude);
+		$vec = array();
+
+		for($i=0; $i<count($areas); ++$i)
+		{
+
+			$ias = IASArea::iASByArea($areas[$i]->id)->get();
+			for($j=0; $j<count($ias); ++$j)
+			{
+
+				$current = $ias[$j];
+				if(FALSE === array_search($current->IASId, $vec))
+					$vec[] = $current->IASId;
+
+			}
+
+		}
+
+		return Response::json($vec);
+
+	}
+
+	protected function getIAS($first, $num)
+	{
+
 		$languageId = Language::locale(App::getLocale())->first()->id;
 		$configuration = Configuration::find(1);
 		$defaultLanguageId = $configuration->defaultLanguageId;

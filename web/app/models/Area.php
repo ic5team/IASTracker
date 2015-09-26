@@ -48,6 +48,14 @@ class Area extends Eloquent {
 
 	}
 
+	public static function getAreaContains($latitude, $longitude)
+	{
+
+		return DB::select('SELECT id FROM "Areas" WHERE ST_Intersects(ST_SetSRID(ST_MakePoint(?, ?), 4326), geom) ORDER BY "zIndex" DESC', 
+			array($longitude, $latitude));
+
+	}
+
 }
 
 ?>
