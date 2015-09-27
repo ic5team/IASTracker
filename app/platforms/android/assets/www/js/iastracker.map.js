@@ -268,9 +268,6 @@ MapHandler.prototype.createMarker = function(lat, lon, accuracy, color, fillColo
 
 	}
 
-	if(null == cbFunction)
-		options.clickable = false;
-
 	marker = L.marker([lat, lon], options);
 
 	var circle = L.circle([lat, lon], accuracy, circleOptions);

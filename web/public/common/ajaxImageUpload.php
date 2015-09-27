@@ -77,15 +77,15 @@ if(isset($_FILES[$fieldName]))
 	    }
 
 
-	      				$imageName = $key.'.png';
-	      				imagepng($tmpImg, $uploadsDirectoryThumbs.$imageName, 9);
+	      				$imageName = $key.'.jpg';
+	      				imagejpeg($tmpImg, $uploadsDirectoryThumbs.$imageName, 75);
 
 	      				$dto->url = (isset($_SERVER['HTTPS']) ? 'https://' : 'http://').$uploadsURL.'thumbs/'.$imageName;
 
 	      				$tmpImg = imagecreatetruecolor($width, $height);
 	      				imagecopyresized($tmpImg, $img, 0, 0, 0, 0, $width, $height, 
 	      					$width, $height);
-	      				imagepng($tmpImg, $uploadsDirectoryGrans.$imageName, 9);
+	      				imagejpeg($tmpImg, $uploadsDirectoryGrans.$imageName, 75);
 
 					}
 					else

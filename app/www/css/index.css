@@ -219,3 +219,11 @@ input {
 .locationMessage {
     margin-top: 20vh;
 }
+
+.iasBlock {
+    min-height: 160px;
+}
+
+.iasName {
+    height: 40px;
+}

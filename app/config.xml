@@ -4,6 +4,7 @@
     <description>
         The IASTracker ic5Team project
     </description>
+    <icon src="res/IASTRACKER-map_V_Ok.png" platform="ios" width="57" height="57" density="mdpi" />
     <author email="dev@altersport.cat" href="http://www.altersport.cat">
         Alter Sport
     </author>
@@ -19,6 +20,10 @@
 	<preference name="Orientation" value="portrait" />
     <preference name="android-minSdkVersion" value="19" />
     <platform name="android">
+        <splash src="res/splash.png" density="port-hdpi"/>
+        <splash src="res/splash.png" density="port-ldpi"/>
+        <splash src="res/splash.png" density="port-mdpi"/>
+        <splash src="res/splash.png" density="port-xhdpi"/>
         <allow-intent href="market:*" />
 		<preference name="KeepRunning" value="false"/>
     </platform>

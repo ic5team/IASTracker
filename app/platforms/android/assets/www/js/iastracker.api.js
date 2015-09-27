@@ -155,13 +155,13 @@ IASTracker.prototype.checkUserToken = function(id, token, doneFunction)
 }
 
 IASTracker.prototype.addObservation = function(id, text, number, 
-	images, coords, altitude, accuracy, doneFunction)
+	images, coords, altitude, accuracy, userToken, doneFunction)
 {
 
 	var completeURL = this.observations.entryPoint;
 	return this.AJAXRequest(completeURL, doneFunction, 'POST', {IASId: id, description: text, 
 		number: number, observationImages: images, coords: coords, altitude: altitude, 
-		accuracy: accuracy});	
+		accuracy: accuracy, token: userToken});	
 
 }
 

@@ -88,8 +88,8 @@ if(isset($_POST['image']))
 		imagecopyresampled($newImg, $newBigImg, 0, 0, 0, 0, $newWidth, $newHeight, 
 			$wImg, $hImg);
 			
-		imagepng($newBigImg, $uploadsDirectoryGrans.$nomOriginal, 9);
-		imagepng($newImg, $uploadsDirectoryThumbs.$nomOriginal, 9);
+		imagejpeg($newBigImg, $uploadsDirectoryGrans.$nomOriginal, 75);
+		imagejpeg($newImg, $uploadsDirectoryThumbs.$nomOriginal, 75);
 
 		$dto->urlThumbs = (isset($_SERVER['HTTPS']) ? 'https://' : 'http://').$uploadsURL.'thumbs/'.$nomOriginal;
 		$dto->urlGrans = (isset($_SERVER['HTTPS']) ? 'https://' : 'http://').$uploadsURL.'grans/'.$nomOriginal;

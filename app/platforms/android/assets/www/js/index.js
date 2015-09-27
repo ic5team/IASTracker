@@ -17,7 +17,8 @@
  * under the License.
  */
 var urlPublic = 'http://192.168.1.195:4326/IASTracker/';
-var imgURL = 'http://192.168.1.195:4326/IASTracker/img/'
+var imgURL = 'http://192.168.1.195:4326/IASTracker/img/';
+var fotosImgURL = 'http://192.168.1.195:4326/IASTracker/img/fotos/';
 var app = {
 	//Global parameters
 	isOnline: false,
@@ -30,11 +31,17 @@ var app = {
 	iDownloadsStarted: 0,
 	mLocation: null,
 	MapHandler: null,
+	OtherMapHandler: null,
 	locationImages: null,
 	backDisabled: false,
 	IASPendingObservations: null,
 	isUploadingPendingObservations: false,
 	bWaitingIAS: false,
+	bWaitingForLocation: false,
+	mMarker: null,
+	GPSSkip: false,
+	waitingForGPSTO: null,
+	profileImage: '',
 
 	// Application Constructor
 	initialize: function() {
@@ -82,6 +89,22 @@ var app = {
 				$.mobile.silentScroll(offset);
 
 			}
+
+		});
+
+		$('#screen11').on('pageshow', function(e) {
+
+			$('#listCreated').hide();
+			$('#createList').show();
+			app.bWaitingForLocation = true;
+			var mapDescriptors = JSON.parse(window.localStorage.getItem('MapList'));
+			var crsDescriptors = JSON.parse(window.localStorage.getItem('MapCRSDescriptors'));
+			var mapCenter = JSON.parse(window.localStorage.getItem('MapCenter'));
+
+			if(null != app.OtherMapHandler)
+				app.OtherMapHandler.destroy();
+
+			app.OtherMapHandler = new MapHandler("otherAreasMap", mapDescriptors, crsDescriptors, mapCenter);
 
 		});
 
@@ -160,7 +183,6 @@ var app = {
 				&& ob.options.fromPage[0].id !== "screen3" && ob.options.fromPage[0].id !== "screen5"
 				 && ob.options.fromPage[0].id !== "screen6")) 
 				|| (ob.toPage[0].id === "screen1" && (ob.options.fromPage && ob.options.fromPage[0].id !== "splash")) 
-				|| (ob.toPage[0].id === "screen2" && (ob.options.fromPage && ob.options.fromPage[0].id !== "screen1")) 
 				|| (ob.toPage[0].id === "screen3" && (ob.options.fromPage && ob.options.fromPage[0].id !== "screen2" 
 					&& ob.options.fromPage[0].id !== "splash" && ob.options.fromPage[0].id !== "signupScreen")))
 			{
@@ -173,7 +195,7 @@ var app = {
 		});
 
 		api = new IASTracker(urlPublic);
-		userId = window.localStorage.getItem('userId');
+		app.userId = window.localStorage.getItem('userId');
 
 	},
 	iasLocated: function(data)
@@ -232,6 +254,7 @@ var app = {
 		$('#btSignIn').on('click', app.SignIn);
 		$('#btSignUp').on('click', app.SignUp);
 		$('#btCompleteData').on('click', app.completeData);
+		$('#acceptListBtn').on('click', app.listAccepted);
 		$('#closeConfirmationScreen').on('click', function(e){ 
 			$('#backLinkLocation').click();
 		});
@@ -241,7 +264,253 @@ var app = {
 		$('#closeObsNotSentScreen').on('click', function(e){ 
 			$('#obsSentErrorScreen').hide();
 		});
+		$('#helpBt').on('click', function(e){
+			$('#helpSkipBtn').attr('href', "#screen5");
+			$("body").pagecontainer("change", '#screen2');
+		});
+		$('#cbScientificNames').on('click', function(e) 
+		{
 
+			var latinName = ($('#cbScientificNames').is(':checked'));
+			$('.iasName').each(function() {
+				var pos = $(this).attr('data-pos');
+				var taxonId = $(this).attr('data-taxonid');
+				var ias = app.IASList[taxonId][pos];
+
+				if(latinName)
+					$(this).html(ias.latinName);
+				else
+					$(this).html(ias.description.name);
+
+			});
+
+		});
+
+		$('#userImageIcon').on('click', function(e) {
+			navigator.camera.getPicture( function(imageURI) { 
+				app.profileImage = imageURI; 
+				$('#userImage').attr('src', imageURI); 
+				$('#userImageIcon').hide();
+				$('#userImage').show();
+			}, app.onCameraError, 
+				{
+					quality : 75, 
+					destinationType : Camera.DestinationType.NATIVE_URI, 
+					sourceType : Camera.PictureSourceType.PHOTOLIBRARY, 
+					allowEdit : false,
+					targetWidth: 1090
+				}
+			);
+		});
+		$('#userImage').on('click', function(e) {
+			navigator.camera.getPicture( function(imageURI) { 
+				app.profileImage = imageURI; 
+				$('#userImage').attr('src', imageURI); 
+			}, app.onCameraError, 
+				{
+					quality : 75, 
+					destinationType : Camera.DestinationType.NATIVE_URI, 
+					sourceType : Camera.PictureSourceType.PHOTOLIBRARY, 
+					allowEdit : false,
+					targetWidth: 1090
+				}
+			);
+		});
+		$('#btCompleteData').on('click', app.completeProfile);
+
+	},
+	completeProfile: function()
+	{
+
+		$('#btCompleteDataText').hide();
+		$('#btCompleteDataLdg').show();
+		$('#btCompleteData').addClass('ui-disabled');
+		$('#input-name').addClass('ui-disabled');
+		$('#amIExpert').addClass('ui-disabled');
+		$('#languageSelector').addClass('ui-disabled');
+
+		if('' != app.profileImage)
+		{
+
+			app.uploadProfileImage();
+
+		}
+		else
+		{
+			app.completeProfileAux();
+		}
+
+	},
+	uploadProfileImage: function() {
+
+		var url = urlPublic + 'common/ajaxImageUpload.php';
+		var imageURI = app.profileImage;
+		var options = new FileUploadOptions();
+        options.fileKey="image";
+        options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1);
+        if(-1 == options.fileName.lastIndexOf('.'))
+        	options.fileName += '.jpg';
+
+        options.mimeType="image/jpeg";
+        options.chunkedMode = false;
+
+        var ft = new FileTransfer();
+        ft.upload(imageURI, url, function(r) {
+        		var url = JSON.parse(r.response);
+				app.profileImage = url.url;
+				app.completeProfileAux();
+			}, 
+			function(r) {
+				console.log(r.code);
+			}, 
+			options
+		);
+
+	},
+	completeProfileAux: function()
+	{
+
+		var fullName = $('#input-name').val();
+		var amIExpert = $('#amIExpert').hasClass('ui-checked');
+		var languageSelector = $('#languageSelector').val();
+		var token = window.localStorage.getItem('userToken');
+		api.addUserData(app.userId, {token: token, name: fullName, 
+			isExpert: amIExpert, language: languageSelector, imageURL: app.profileImage}, app.profileUpdated);
+
+	},
+	profileUpdated: function() 
+	{
+
+		$('#btCompleteDataText').show();
+		$('#btCompleteDataLdg').hide();
+		$('#btCompleteData').removeClass('ui-disabled');
+		$('#input-name').removeClass('ui-disabled');
+		$('#amIExpert').removeClass('ui-disabled');
+		$('#languageSelector').removeClass('ui-disabled');
+
+	},
+	listAccepted: function()
+	{
+
+		var val = $('#input-list-name').val();
+
+		if('' != val)
+		{
+
+			$('#error-no-listName').hide();
+			$('#btStoreListText').hide();
+			$('#btStoreListLdg').show();
+			$('#acceptListBtn').addClass('ui-disabled');
+			var latlng = app.mMarker.marker.getLatLng();
+			api.getIASFromLocation(latlng.lat, latlng.lng, app.listAcceptedOk);
+
+		}
+		else
+		{
+
+			$('#error-no-listName').show();
+
+		}
+
+	},
+	listAcceptedOk: function(data)
+	{
+
+		var val =  $('#input-list-name').val();
+
+		var lists = window.localStorage.getItem('userLists');
+
+		if(null == lists)
+			lists = new Array();
+		else
+			lists = JSON.parse(lists);
+
+		lists.push({name: val, list: data});
+		window.localStorage.setItem('userLists', JSON.stringify(lists));
+
+		//Add menu
+		app.addListMenu(lists.length-1, val);
+		$('#listCreated').show();
+		$('#createList').hide();
+		$('#btStoreListText').show();
+		$('#btStoreListLdg').hide();
+		$('#acceptListBtn').removeClass('ui-disabled');
+
+	},
+	addListMenu: function(id, name)
+	{
+
+		var menuHtml = '<div class="row menuElement" id="list' + id +'" data-id="' + id +'"><div class="col-md-12"><a href="#screenList" class="scroll">' + name + '</a></div></div>';
+		$('#scrollablePanel').append(menuHtml);
+
+		$('#list' + id).on('click', function(e) 
+		{
+
+			var lists = JSON.parse(window.localStorage.getItem('userLists'));
+			var id = $(this).attr('data-id');
+			var data = lists[id];
+			$('#listTitle').html(data.name);
+			app.viewUserList(data.list, id);
+
+		});
+
+	},
+	viewUserList: function(data, id)
+	{
+
+		$('#btStoreListText').show();
+		$('#btStoreListLdg').hide();
+		$('#acceptListBtn').removeClass('ui-disabled');
+
+		if('undefined' !== typeof data)
+		{
+
+			var html = '';
+			for(var i=0; i<data.length; ++i)
+			{
+
+				var div = $('.iasBlock[data-id=' + data[i] +']').clone();
+
+				html += '<div style="width: 50%; display: inline-block; text-align: center;">';
+				html += div[0].outerHTML;
+				html += '</div>';
+
+			}
+
+			html += '<button id="removeListBtn" class="btn btn-primary" data-id="' + id + '" style="width: 100%;">Remove list</button>';
+
+			$('#listContent').html(html);
+
+			$('#removeListBtn').on('click', function(e) {
+				var id = $(this).attr('data-id');
+				var lists = JSON.parse(window.localStorage.getItem('userLists'));
+				lists.splice(id, 1);
+				window.localStorage.setItem('userLists', JSON.stringify(lists));
+				$('#list' + id).remove();
+				$("body").pagecontainer("change", "#screen5");
+			});
+
+			$('.iasBlock').off('click');
+			$(".iasBlock").on('click', function(e) {
+
+				app.showIAS($(this).attr('data-pos'), $(this).attr('data-taxonId'), '#screenList');
+
+			});
+
+			$('.iasName').off('click');
+			$(".iasName").on('click', function(e) {
+
+				app.starIAS($(this).attr('data-id'));
+				return false;
+
+			});
+
+			$('#waitingIAS').hide();
+			$('#locatedIAS').show();
+
+		}
+
+		$('#input-name').val('');
 
 	},
 	// deviceready Event Handler
@@ -275,8 +544,34 @@ var app = {
 	onLocationSuccess: function(position) {
 
 		app.mLocation = position;
+
 		if(null != app.MapHandler)
 			app.MapHandler.setLocation(position.coords);
+
+		if(null != app.waitingForGPSTO)
+			clearTimeout(app.waitingForGPSTO);
+
+		if($('#error-no-gps').is(':visible'))
+			$('#error-no-gps').hide();
+
+		if(app.waitingForGPS)
+		{
+
+			app.waitingForGPS = false;
+			app.GPSSkip = true;
+			app.closeSplashScreen();
+
+		}
+
+		if(app.bWaitingForLocation)
+		{
+
+			app.mMarker = app.OtherMapHandler.createMarker(position.coords.latitude, position.coords.longitude, 
+				0, '#FFFFFF', '#FFFFFF', 0.5, {draggable: true, focus:true});
+			app.OtherMapHandler.addMarker(app.mMarker);
+			app.bWaitingForLocation = false;
+
+		}
 
 	},
 	onLocationError: function(error) {
@@ -308,7 +603,7 @@ var app = {
 				setTimeout(function() {
 					api.getIASLastUpdate(app.IASLastUpdateOk);
 					api.getMapLastUpdate(app.MapLastUpdateOk);
-				}, 10000);
+				}, 0);
 
 			}
 			else
@@ -407,7 +702,12 @@ var app = {
 
 		var userToken = window.localStorage.getItem('userToken');
 		if(null != userToken)
-			api.checkUserToken(userId, userToken, app.closeSplashScreen);
+		{
+
+			api.checkUserToken(app.userId, userToken, app.closeSplashScreen);
+			$('#userProfile').show();
+
+		}
 		else
 			app.closeSplashScreen();
 
@@ -485,8 +785,7 @@ var app = {
 						var current = ias[iasKeys[j]];
 						var starredClass = 'fa-star-o';
 
-						var arrayIndex = app.starredIAS.indexOf(current.id.toString());
-						if((null != app.starredIAS) && (-1 != arrayIndex))
+						if((null != app.starredIAS) && (-1 != app.starredIAS.indexOf(current.id.toString())))
 							starredClass = 'fa-star';
 
 						var name = 'ias' + current.id +'Name';
@@ -496,7 +795,7 @@ var app = {
 						screenHtml += '<div class="iasBlock" data-taxonId="' + taxon.id + '" data-id="' + current.id + '" data-pos="' + iasKeys[j] + '" style="background-color:' + taxon.appInnerColor + '; width: 95%; margin-bottom: 10px;">';
 						screenHtml += '<img class="iasImage" src="' + path + '/IASTracker/ias' + current.id + '.jpg" />';
 
-						screenHtml += '<div data-taxonId="' + taxon.id + '" data-id="' + current.id + '"" class="iasName">';
+						screenHtml += '<div data-taxonId="' + taxon.id + '" data-id="' + current.id + '"" data-pos="' + iasKeys[j] + '" class="iasName">';
 						if(latinNames)
 							screenHtml += current.latinName;
 						else
@@ -524,6 +823,21 @@ var app = {
 
 		$('#taxonScreen').html(screenHtml);
 		$('#myIASRow').after(menuHtml);
+
+		var lists = window.localStorage.getItem('userLists');
+
+		if(null == lists)
+			lists = new Array();
+		else
+			lists = JSON.parse(lists);
+
+		for(var i=0; i<lists.length; ++i)
+		{
+
+			var data = lists[i];
+			app.addListMenu(i, data.name);
+
+		}
 
 		$("#menuPanel").enhanceWithin().panel();
   		$(".scroll").on("click", function(e) {
@@ -747,9 +1061,18 @@ var app = {
 		else
 		{
 
+			app.waitingForGPSTO = setTimeout(app.checkGPS, 5000);
 			$('#error-no-gps').show();
 
 		}
+
+	},
+	checkGPS: function()
+	{
+
+		options = { enableHighAccuracy: true, timeout: 4000 };
+		navigator.geolocation.getCurrentPosition(app.onLocationSuccess, app.onLocationError, options);
+		app.waitingForGPSTO = setTimeout(app.checkGPS, 5000);
 
 	},
 	uploadImages: function(id)
@@ -807,13 +1130,14 @@ var app = {
 	uploadImagesFinished: function(id)
 	{
 
+		var userToken = window.localStorage.getItem("userToken");
 		if(!app.isUploadingPendingObservations)
 		{
 		
 			var text = $('#obsText').val();
 			var number = $('#numberOfSpecies').val();
 			api.addObservation(id, text, number, app.locationImages, app.mLocation.coords, 
-				app.mLocation.coords.altitude, app.mLocation.coords.accuracy, app.observationSent);
+				app.mLocation.coords.altitude, app.mLocation.coords.accuracy, userToken, app.observationSent);
 
 		}
 		else
@@ -823,7 +1147,7 @@ var app = {
 			var location = JSON.parse(current.location);
 			api.addObservation(current.id, current.text, current.number, app.locationImages, 
 				{longitude: location.longitude, latitude: location.latitude}, 
-				location.altitude, location.accuracy, app.observationSent);
+				location.altitude, location.accuracy, userToken, app.observationSent);
 
 		}
 
@@ -869,6 +1193,15 @@ var app = {
 		}
 
 	},
+	profileImageDownloaded: function(data)
+	{
+
+		var path = window.localStorage.getItem('path');
+		$('#userImage').attr('src', path + '/IASTracker/user' + app.userId + '.jpg');
+		$('#userImage').show();
+		$('#userImageIcon').hide();
+
+	},
 	closeSplashScreen: function(data)
 	{
 
@@ -878,12 +1211,26 @@ var app = {
 		app.constructWindows();
 
 		if(('undefined' !== typeof data) && (data.hasOwnProperty('error')))
+		{
+
 			window.localStorage.setItem('userToken', null);
+
+		}
+		else if('undefined' !== typeof data)
+		{
+
+			$('#input-name').val(data.name);
+			$('#amIExpert').prop('checked', data.amIExpert);
+			$('#languageSelector').val(data.languageId);
+			downloadFile(fotosImgURL + data.image, 'IASTracker', 'user' + app.userId, app.profileImageDownloaded);
+
+		}
 
 		var started = window.localStorage.getItem("started");
 		var dontRegister = window.localStorage.getItem("dontRegister");
 		var userToken = window.localStorage.getItem("userToken");
 
+		var noGPS = (null == app.mLocation && !app.GPSSkip);
 		var isFirstTime = (null === started);
 		var dontRegister = (null !== dontRegister && dontRegister);
 		var isUserLogged = (null !== userToken);
@@ -903,7 +1250,13 @@ var app = {
 
 		}
 
-		if(isFirstTime)
+		if(noGPS)
+		{
+
+			app.showNoGPSScreen();
+
+		}
+		else if(isFirstTime)
 		{
 
 			app.showUserAgreement();
@@ -934,8 +1287,19 @@ var app = {
 
 		}
 
+	},
+	showNoGPSScreen: function()
+	{
 
-		
+		app.waitingForGPS = true;
+		app.waitingForGPSTO = setTimeout(app.checkGPS, 5000);
+
+		$('#noGPSSkipBtn').on('click', function() { 
+			app.GPSSkip = true; 
+			app.waitingForGPS = false;
+			false; app.closeSplashScreen(); 
+		});
+		$("body").pagecontainer("change",'#noGPSScreen');
 
 	},
 	showUserAgreement: function()
@@ -1170,14 +1534,18 @@ var app = {
 			else
 			{
 
-				$('#error-general').hide();
 				window.localStorage.setItem('userId', data.id);
 				window.localStorage.setItem('userToken', data.token)
+				app.userId = data.id;
+				downloadFile(fotosImgURL + data.image, 'IASTracker', 'user' + data.id, app.profileImageDownloaded);
+				$('#userProfile').show();
+				$('#error-general').hide();
+				
 				$('#input-name').val(data.fullName);
 				if(data.amIExpert)
-					$('#amIExpertCheckbox').prop('checked', true);
+					$('#amIExpert').prop('checked', true);
 				else
-					$('#amIExpertCheckbox').prop('checked', false);
+					$('#amIExpert').prop('checked', false);
 
 				var starred = window.localStorage.getItem("starred");
 				var hasStarred = (null !== starred && (0 != starred.length))

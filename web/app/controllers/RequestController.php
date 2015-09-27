@@ -206,27 +206,16 @@ abstract class RequestController extends BaseController {
 	public function update($id)
 	{
 		
-		if(Request::ajax())
-		{
+		try {
 
-			try {
-
-				return $this->updateResource($id);
-
-			}
-			catch(Illuminate\Database\QueryException $e)
-			{
-
-				return Response::json(array('ok' => 0, 'msg' => Lang::get('errors.errorUpdatingElement'), 
-					'internalMsg' => $e->getMessage()));
-
-			}
+			return $this->updateResource($id);
 
 		}
-		else
+		catch(Illuminate\Database\QueryException $e)
 		{
 
-			return $this->requestNotAccepted();
+			return Response::json(array('ok' => 0, 'msg' => Lang::get('errors.errorUpdatingElement'), 
+				'internalMsg' => $e->getMessage()));
 
 		}
 

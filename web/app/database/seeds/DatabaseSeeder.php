@@ -22,7 +22,6 @@ class DatabaseSeeder extends Seeder {
 		$this->call('ConfigurationTextsTableSeeder');
 		$this->call('IASTaxonsTableSeeder');
 		$this->call('IASTableSeeder');
-		$this->call('IASImagesTableSeeder');
 		$this->call('IASImagesTextTableSeeder');
 		$this->call('RepositoriesTableSeeder');
 		$this->call('IASRelatedDBsTableSeeder');
@@ -288,7 +287,7 @@ class IASTableSeeder extends Seeder {
 			'id'  => 1,
 			'latinName' => 'Agave americana',
 			'taxonId' => 0,
-			'defaultImageId' => 1,
+			'defaultImageId' => 3,
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime
@@ -298,7 +297,7 @@ class IASTableSeeder extends Seeder {
 			'id'  => 2,
 			'latinName' => 'Ailanthus altissima',
 			'taxonId' => 0,
-			'defaultImageId' => 2,
+			'defaultImageId' => 7,
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime
@@ -308,7 +307,7 @@ class IASTableSeeder extends Seeder {
 			'id'  => 3,
 			'latinName' => 'Carpobrotus spp.',
 			'taxonId' => 0,
-			'defaultImageId' => 4,
+			'defaultImageId' => 15,
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime
@@ -318,7 +317,7 @@ class IASTableSeeder extends Seeder {
 			'id'  => 4,
 			'latinName' => 'Cortaderia selloana',
 			'taxonId' => 0,
-			'defaultImageId' => 5,
+			'defaultImageId' => 60,
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime
@@ -328,7 +327,7 @@ class IASTableSeeder extends Seeder {
 			'id'  => 5,
 			'latinName' => 'Cotoneaster horizontalis',
 			'taxonId' => 0,
-			'defaultImageId' => 10,
+			'defaultImageId' => 33,
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime
@@ -338,7 +337,7 @@ class IASTableSeeder extends Seeder {
 			'id'  => 6,
 			'latinName' => 'Estrilda astrild',
 			'taxonId' => 6,
-			'defaultImageId' => 3,
+			'defaultImageId' => 10,
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime
@@ -348,7 +347,7 @@ class IASTableSeeder extends Seeder {
 			'id'  => 7,
 			'latinName' => 'Dreissena polymorpha',
 			'taxonId' => 4,
-			'defaultImageId' => 11,
+			'defaultImageId' => 36,
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime
@@ -358,7 +357,7 @@ class IASTableSeeder extends Seeder {
 			'id'  => 8,
 			'latinName' => 'Pomacea insularum',
 			'taxonId' => 4,
-			'defaultImageId' => 12,
+			'defaultImageId' => 38,
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime
@@ -368,7 +367,7 @@ class IASTableSeeder extends Seeder {
 			'id'  => 9,
 			'latinName' => 'Psittacula eupatria',
 			'taxonId' => 6,
-			'defaultImageId' => 13,
+			'defaultImageId' => 40,
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime
@@ -378,7 +377,7 @@ class IASTableSeeder extends Seeder {
 			'id'  => 10,
 			'latinName' => 'Heracleum mantegazzianum',
 			'taxonId' => 0,
-			'defaultImageId' => 14,
+			'defaultImageId' => 42,
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime
@@ -388,7 +387,7 @@ class IASTableSeeder extends Seeder {
 			'id'  => 11,
 			'latinName' => 'Senecio angulatus',
 			'taxonId' => 0,
-			'defaultImageId' => 8,
+			'defaultImageId' => 29,
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime
@@ -398,7 +397,7 @@ class IASTableSeeder extends Seeder {
 			'id'  => 12,
 			'latinName' => 'Myiopsitta monachus',
 			'taxonId' => 6,
-			'defaultImageId' => 6,
+			'defaultImageId' => 26,
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime
@@ -408,7 +407,7 @@ class IASTableSeeder extends Seeder {
 			'id'  => 13,
 			'latinName' => 'Psittacula krameri',
 			'taxonId' => 6,
-			'defaultImageId' => 9,
+			'defaultImageId' => 32,
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime
@@ -418,7 +417,7 @@ class IASTableSeeder extends Seeder {
 			'id'  => 14,
 			'latinName' => 'Myocastor coypus',
 			'taxonId' => 7,
-			'defaultImageId' => 15,
+			'defaultImageId' => 45,
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime
@@ -428,7 +427,7 @@ class IASTableSeeder extends Seeder {
 			'id'  => 15,
 			'latinName' => 'Opuntia spp.',
 			'taxonId' => 0,
-			'defaultImageId' => 7,
+			'defaultImageId' => 28,
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime
@@ -438,7 +437,7 @@ class IASTableSeeder extends Seeder {
 			'id'  => 16,
 			'latinName' => 'Phytolacca americana',
 			'taxonId' => 0,
-			'defaultImageId' => 16,
+			'defaultImageId' => 58,
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime
@@ -448,7 +447,7 @@ class IASTableSeeder extends Seeder {
 			'id'  => 17,
 			'latinName' => 'Neovison vison',
 			'taxonId' => 7,
-			'defaultImageId' => 17,
+			'defaultImageId' => 50,
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime
@@ -458,221 +457,23 @@ class IASTableSeeder extends Seeder {
 			'id'  => 18,
 			'latinName' => 'Procyon lotor',
 			'taxonId' => 7,
-			'defaultImageId' => 18,
+			'defaultImageId' => 54,
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IAS')->insert(array(
+			'id'  => 19,
+			'latinName' => 'Rhynchophorus ferrugineus',
+			'taxonId' => 3,
+			'defaultImageId' => 19,
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime
 		));
 
 	}
-}
-
-class IASImagesTableSeeder extends Seeder {
- 
-	public function run()
-	{
-	
-		DB::table('IASImages')->insert(array(
-			'id'  => 1,
-			'IASId' => 1,
-			'URL' => 'Agave_americana_MPizarro_1.jpg',
-			'attribution' => 'IC5Team',
-			'order' => 1,
-			'creatorId' => 1,
-			'created_at' => new DateTime,
-			'updated_at' => new DateTime
-		));
-
-		DB::table('IASImages')->insert(array(
-			'id'  => 2,
-			'IASId' => 2,
-			'URL' => 'Ailant_Collserola_058.JPG',
-			'attribution' => 'IC5Team',
-			'order' => 1,
-			'creatorId' => 1,
-			'created_at' => new DateTime,
-			'updated_at' => new DateTime
-		));
-
-		DB::table('IASImages')->insert(array(
-			'id'  => 3,
-			'IASId' => 6,
-			'URL' => 'Bec_de_corall_01.JPG',
-			'attribution' => 'Juan Emilio - CC BY-SA 2.0',
-			'order' => 1,
-			'creatorId' => 1,
-			'created_at' => new DateTime,
-			'updated_at' => new DateTime
-		));
-
-		DB::table('IASImages')->insert(array(
-			'id'  => 4,
-			'IASId' => 3,
-			'URL' => 'Carpobrotus_April_2008-1.jpg',
-			'attribution' => 'Alvesgaspar - CC BY-SA 3.0',
-			'order' => 1,
-			'creatorId' => 1,
-			'created_at' => new DateTime,
-			'updated_at' => new DateTime
-		));
-
-		DB::table('IASImages')->insert(array(
-			'id'  => 5,
-			'IASId' => 4,
-			'URL' => 'Cortaderia_selloana0.jpg',
-			'attribution' => 'Kurt Stueber - CC BY-SA 3.0',
-			'order' => 1,
-			'creatorId' => 1,
-			'created_at' => new DateTime,
-			'updated_at' => new DateTime
-		));
-
-		DB::table('IASImages')->insert(array(
-			'id'  => 6,
-			'IASId' => 12,
-			'URL' => 'Myiopsitta_monachus_-Old_San_Juan_-Puerto_Rico.jpg',
-			'attribution' => 'Ujorge - CC BY-SA 3.0',
-			'order' => 1,
-			'creatorId' => 1,
-			'created_at' => new DateTime,
-			'updated_at' => new DateTime
-		));
-
-		DB::table('IASImages')->insert(array(
-			'id'  => 7,
-			'IASId' => 15,
-			'URL' => 'Opuntia_ficus-indica_Indian_Fig.jpg',
-			'attribution' => 'Victor Korniyenko - CC BY-SA 3.0',
-			'order' => 1,
-			'creatorId' => 1,
-			'created_at' => new DateTime,
-			'updated_at' => new DateTime
-		));
-
-		DB::table('IASImages')->insert(array(
-			'id'  => 8,
-			'IASId' => 11,
-			'URL' => 'Senecio_angulatus_0940.JPG',
-			'attribution' => 'IC5Team',
-			'order' => 1,
-			'creatorId' => 1,
-			'created_at' => new DateTime,
-			'updated_at' => new DateTime
-		));
-
-		DB::table('IASImages')->insert(array(
-			'id'  => 9,
-			'IASId' => 13,
-			'URL' => 'PsittaculaKrameri_1231.JPG',
-			'attribution' => 'IC5Team',
-			'order' => 1,
-			'creatorId' => 1,
-			'created_at' => new DateTime,
-			'updated_at' => new DateTime
-		));
-
-		DB::table('IASImages')->insert(array(
-			'id'  => 10,
-			'IASId' => 5,
-			'URL' => 'Cotonéaster_horizontal.JPG',
-			'attribution' => 'Père Igor - CC BY-SA 3.0',
-			'order' => 1,
-			'creatorId' => 1,
-			'created_at' => new DateTime,
-			'updated_at' => new DateTime
-		));
-
-		DB::table('IASImages')->insert(array(
-			'id'  => 11,
-			'IASId' => 7,
-			'URL' => 'Zebra_mussel_GLERL_2.jpg',
-			'attribution' => 'Neil916 - Public domain',
-			'order' => 1,
-			'creatorId' => 1,
-			'created_at' => new DateTime,
-			'updated_at' => new DateTime
-		));
-
-		DB::table('IASImages')->insert(array(
-			'id'  => 12,
-			'IASId' => 8,
-			'URL' => 'Pomacea_P3240065.JPG',
-			'attribution' => 'Miguel Ángel López',
-			'order' => 1,
-			'creatorId' => 1,
-			'created_at' => new DateTime,
-			'updated_at' => new DateTime
-		));
-
-		DB::table('IASImages')->insert(array(
-			'id'  => 13,
-			'IASId' => 9,
-			'URL' => 'Psittacula_eupatria_Jurong_Bird_Park.jpg',
-			'attribution' => 'Peter Tan - CC BY-SA 2.0 ',
-			'order' => 1,
-			'creatorId' => 1,
-			'created_at' => new DateTime,
-			'updated_at' => new DateTime
-		));
-
-		DB::table('IASImages')->insert(array(
-			'id'  => 14,
-			'IASId' => 10,
-			'URL' => 'Heracleum_mantegazzianum_kemi.jpg',
-			'attribution' => 'RicHard-59 - CC BY-SA 4.0 ',
-			'order' => 1,
-			'creatorId' => 1,
-			'created_at' => new DateTime,
-			'updated_at' => new DateTime
-		));
-
-		DB::table('IASImages')->insert(array(
-			'id'  => 15,
-			'IASId' => 14,
-			'URL' => 'Nutria_Myocastor_coypus_Wildpark_Poing-03.jpg',
-			'attribution' => 'Rufus46 - CC BY-SA 3.0',
-			'order' => 1,
-			'creatorId' => 1,
-			'created_at' => new DateTime,
-			'updated_at' => new DateTime
-		));
-
-		DB::table('IASImages')->insert(array(
-			'id'  => 16,
-			'IASId' => 16,
-			'URL' => 'Phytolacca_americana_Chocowinity_NC.jpg',
-			'attribution' => 'Luca Masters - CC BY-SA 2.0',
-			'order' => 1,
-			'creatorId' => 1,
-			'created_at' => new DateTime,
-			'updated_at' => new DateTime
-		));
-
-		DB::table('IASImages')->insert(array(
-			'id'  => 17,
-			'IASId' => 17,
-			'URL' => 'Neovison_vison_PP.jpg',
-			'attribution' => 'Cephas - CC BY-SA 3.0',
-			'order' => 1,
-			'creatorId' => 1,
-			'created_at' => new DateTime,
-			'updated_at' => new DateTime
-		));
-
-		DB::table('IASImages')->insert(array(
-			'id'  => 18,
-			'IASId' => 18,
-			'URL' => 'Procyon_lotor_(Common_raccoon).jpg',
-			'attribution' => 'Bastique - CC BY-SA 3.0',
-			'order' => 1,
-			'creatorId' => 1,
-			'created_at' => new DateTime,
-			'updated_at' => new DateTime
-		));
-
-	}
-
-
 }
 
 class IASImagesTextTableSeeder extends Seeder {

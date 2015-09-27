@@ -174,12 +174,28 @@ class UserController extends RequestController {
 			$out = $this->setResetPassword($element);
 
 		}
-		else if(Input::has('name') && Input::has('language')
-			&& Input::has('isExpert') && Input::has('imageURL'))
+		else if(Input::has('language')
+			&& Input::has('isExpert'))
 		{
 
-			if(Auth::check() && ($id == Auth::user()->id))
+			if(Input::has('token'))
+			{
+
+				$user = User::userToken(Input::get('token'))->first();
+				if((null != $user) && ($id == $user->id))
+				{
+
+					$out = $this->setUserData($element);
+
+				}
+
+			}
+			else if(Auth::check() && ($id == Auth::user()->id))
+			{
+
 				$out = $this->setUserData($element);
+
+			}
 
 		}
 
@@ -288,37 +304,46 @@ class UserController extends RequestController {
 	{
 
 		$out = new stdClass();
-		$name = Input::get('name');
+		$name = $element->fullName; 
 		$language = Input::get('language');
 		$isExpert = Input::get('isExpert');
 		$image = Input::get('imageURL');
+		$dbPhotoName = $element->photoURL;
 
-		//Move the image
-		$originalName = explode("/", $image);
-		$originalName = $originalName[count($originalName) - 1];
-		$desinationFolder = '/users/';
+		if(Input::has('name'))
+			$name = Input::get('name');
 
-		$nameParts = explode(".", $originalName);
-		$ext = strtoupper($nameParts[count($nameParts)-1]);
-
-		$dbPhotoName = $desinationFolder.'u'.$element->id.'.'.$ext;
-
-		$thumbsPath = './img/thumbs/';
-		$photosPath = './img/fotos/';
-		$pathThumbDesti = $thumbsPath.$dbPhotoName;
-		$pathGranDesti = $photosPath.$dbPhotoName;
-
-		try 
+		if(Input::has('imageURL'))
 		{
 
-			rename("./img/uploads/grans/".$originalName,$pathGranDesti);
-			rename("./img/uploads/thumbs/".$originalName,$pathThumbDesti);
+			//Move the image
+			$originalName = explode("/", $image);
+			$originalName = $originalName[count($originalName) - 1];
+			$desinationFolder = '/users/';
 
-		}
-		catch(Exception $e)
-		{
+			$nameParts = explode(".", $originalName);
+			$ext = strtoupper($nameParts[count($nameParts)-1]);
 
-			$dbPhotoName = $element->photoURL;
+			$dbPhotoName = $desinationFolder.'u'.$element->id.'.'.$ext;
+
+			$thumbsPath = './img/thumbs/';
+			$photosPath = './img/fotos/';
+			$pathThumbDesti = $thumbsPath.$dbPhotoName;
+			$pathGranDesti = $photosPath.$dbPhotoName;
+
+			try 
+			{
+
+				rename("./img/uploads/grans/".$originalName,$pathGranDesti);
+				rename("./img/uploads/thumbs/".$originalName,$pathThumbDesti);
+
+			}
+			catch(Exception $e)
+			{
+
+				$dbPhotoName = $element->photoURL;
+
+			}
 
 		}
 
@@ -510,7 +535,7 @@ class UserController extends RequestController {
 			$obj->token = str_random(40);
 			$obj->id = $user->id;
 			$obj->nick = $user->username;
-			$obj->image = Config::get('app.urlUserImgThumbs').$user->photoURL;
+			$obj->image = $user->photoURL;
 			$obj->fullName = $user->fullName;
 			$obj->amIExpert = $user->amIExpert;
 			$user->appKey = $obj->token;
@@ -526,13 +551,23 @@ class UserController extends RequestController {
 	public function checkUserToken($id)
 	{
 
-		$user = User::appToken(Input::get('token'))->get();
+		$user = User::userToken(Input::get('token'))->first();
+		
 		$data = new stdClass();
 		
 		if(null == $user)
 			$data->error = true;
 		else if($user->id != $id)
 			$data->error = true;
+		else
+		{
+
+			$data->name = $user->fullName;
+			$data->image = $user->photoURL;
+			$data->amIExpert = $user->amIExpert;
+			$data->languageId = $user->languageId;
+
+		}
 		
 		//TODO: Check if token has expired
 

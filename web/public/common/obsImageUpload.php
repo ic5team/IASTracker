@@ -60,7 +60,7 @@ if(isset($_FILES[$fieldName]))
 					        $key .= $keys[array_rand($keys)];
 					    }
 
-	      				$imageName = $key.'.png';
+	      				$imageName = $key.'.'.$ext;
 	      				move_uploaded_file($_FILES[$fieldName]['tmp_name'], $uploadsDirectoryGrans.$imageName);
 	      				$dto = $imageName;
 

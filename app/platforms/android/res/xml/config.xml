@@ -29,12 +29,17 @@
         <param name="onload" value="true" />
     </feature>
     <preference name="AndroidPersistentFileLocation" value="Internal" />
+    <splash density="port-hdpi" src="res/splash.png" />
+    <splash density="port-ldpi" src="res/splash.png" />
+    <splash density="port-mdpi" src="res/splash.png" />
+    <splash density="port-xhdpi" src="res/splash.png" />
     <allow-intent href="market:*" />
     <preference name="KeepRunning" value="false" />
     <name>IASTracker</name>
     <description>
         The IASTracker ic5Team project
     </description>
+    <icon density="mdpi" height="57" platform="ios" src="res/IASTRACKER-map_V_Ok.png" width="57" />
     <author email="dev@altersport.cat" href="http://www.altersport.cat">
         Alter Sport
     </author>

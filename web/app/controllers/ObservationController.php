@@ -146,11 +146,17 @@ class ObservationController extends RequestController {
 			$userId = null;
 			$languageId = null;
 
-			if(Auth::check())
+			if(Input::has('token'))
 			{
 
-				$userId = Auth::user()->id;
-				$languageId = null;
+				$user = User::userToken(Input::get('token'))->first();;
+				if(null != $user)
+				{
+				
+					$userId = $user->id;
+					$languageId = $user->languageId;
+
+				}
 
 			}
 		
