@@ -210,7 +210,7 @@ class UsersTableSeeder extends Seeder {
 			'fullName' => 'Isaac Besora i Vilardaga',
 			'isActive' => 1,
 			'activationKey' => null,
-			'photoURL' => 'users/u1.png',
+			'photoURL' => 'users/user.png',
 			'remember_token' => null,
 			'amIExpert' => 1,
 			'isExpert' => 1,

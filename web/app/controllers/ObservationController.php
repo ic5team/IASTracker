@@ -159,7 +159,7 @@ class ObservationController extends RequestController {
 				}
 
 			}
-		
+
 			$element = new Observation(array(
 				'IASId' => Input::get('IASId'),
 				'userId' => $userId,
@@ -172,6 +172,16 @@ class ObservationController extends RequestController {
 				'accuracy' => $accuracy,
 				'howMany' => Input::get('number')
 			));
+
+			if($user->isExpert)
+			{
+
+				$element->validatorId = $userId;
+				$element->validatorTS = new DateTime();
+				$element->statusId = 1;
+
+			}
+
 			$element->touch();
 			$element->save();
 

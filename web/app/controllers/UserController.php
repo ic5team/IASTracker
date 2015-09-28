@@ -341,7 +341,7 @@ class UserController extends RequestController {
 			catch(Exception $e)
 			{
 
-				$dbPhotoName = $element->photoURL;
+				$dbPhotoName = $e->getMessage();//$element->photoURL;
 
 			}
 

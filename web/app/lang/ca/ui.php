@@ -98,6 +98,23 @@ return array(
 		'remindPasswordAction' => 'Recorda',
 		'resetPassword' => 'Restauració de la contrasenya',
 		'resetAction' => 'Restaura',
-		'passwordChanged' => 'La contrasenya s\'ha canviat correctament, fes click :link per entrar'
+		'passwordChanged' => 'La contrasenya s\'ha canviat correctament, fes click :link per entrar',
+		'profilePicture' => 'Imatge de perfil',
+		'administration' => 'Administració',
+		'isExpert' => 'És expert?',
+		'observationsNumber' => 'Nombre d\'observacions :num',
+		'validatedNumber' => 'Nombre d\'observacions validades :num',
+		'areYouAnExpert' => 'Et consideres un expert?',
+		'yes' => 'Sí',
+		'no' => 'No',
+		'isAdmin' => 'És administrador?',
+		'validate' => 'Valida',
+		'discard' => 'Descarta',
+		'users' => 'Usuaris',
+		'obs' => 'Observations',
+		'howMany' => 'Quants?',
+		'one' => 'Un',
+		'few' => 'Pocs',
+		'several' => 'Alguns'
 
 	);

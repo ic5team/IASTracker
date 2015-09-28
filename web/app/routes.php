@@ -26,6 +26,8 @@
 	Route::get('/logout', array('uses' => 'IndexController@logout'));
 	Route::get('/account/activate', array('uses' => 'UserController@activate'));
 	Route::get('/password/reset', array('uses' => 'UserController@resetPassword'));
+	Route::get('/admin', array('uses' => 'AdminController@showUsers'));
+	Route::get('/admin/observations', array('uses' => 'AdminController@showObservations'));
 
 /*
 |--------------------------------------------------------------------------
