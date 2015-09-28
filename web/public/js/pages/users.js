@@ -1,4 +1,4 @@
-$(document).ready() {
+$(document).ready(function() {
 
 	$('.UserExpertCheck').each(function(index) {
 		$(this).on('click', function(e) {
@@ -7,4 +7,4 @@ $(document).ready() {
 		});
 	});
 
-}
+});

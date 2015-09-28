@@ -258,3 +258,23 @@ IASTracker.prototype.resetUserPassword = function(userId, params, doneFunction, 
 	return this.AJAXRequest(completeURL, destId, doneFunction, 'PUT', params);
 
 }
+
+IASTracker.prototype.validateObservation = function(obsId, doneFunction)
+{
+
+	var completeURL = this.observations.entryPoint + this.separator + obsId;
+	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
+
+	return this.AJAXRequest(completeURL, destId, doneFunction, 'PUT', {status: 1});
+
+}
+
+IASTracker.prototype.discardObservation = function(obsId, doneFunction)
+{
+
+	var completeURL = this.observations.entryPoint + this.separator + obsId;
+	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
+
+	return this.AJAXRequest(completeURL, destId, doneFunction, 'PUT', {status: 3});
+
+}

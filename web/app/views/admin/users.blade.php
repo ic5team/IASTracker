@@ -29,6 +29,14 @@
 					{{Lang::get('ui.isAdmin')}}
 					<input type="checkbox" class="UserExpertCheck" data="{{$current->id}}" {{ $current->isAdmin ? 'checked' : '' }} >
 				</label>
+				<label>
+					{{Lang::get('ui.isValidator')}}
+					<input type="checkbox" class="UserExpertCheck" data="{{$current->id}}" {{ $current->isValidator ? 'checked' : '' }} >
+				</label>
+				<label>
+					{{Lang::get('ui.organization')}}
+					<input type="text" value="{{$current->organization}}" />
+				</label>
 			</div>
 		</div>
 <?php

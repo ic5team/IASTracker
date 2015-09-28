@@ -7,8 +7,8 @@ DROP TABLE nuts_rg_01m_2013_levl_2_wgs84;
 SELECT UpdateGeometrySRID('iastracker_regions_wgs84','geom',4326);
 INSERT INTO "Areas"("id", "shapeFileURL", "name", "zIndex", "creatorId", "created_at", "updated_at", "geom") SELECT "iasrid", '', "iasr_name", "iasr_order", 1, NOW(), NOW(), "geom" FROM iastracker_regions_wgs84;
 DROP TABLE iastracker_regions_wgs84;
-INSERT INTO "RegionAreas"("areaId", "regionId", "created_at", "updated_at") SELECT a.id, r.id, NOW(), NOW() FROM "Areas" a, "regions" r WHERE ST_Intersects(a.geom, r.geom);
-INSERT INTO "StateAreas"("areaId", "stateId", "created_at", "updated_at") SELECT a.id, s.id, NOW(), NOW() FROM "Areas" a, "States" s WHERE ST_Intersects(a.geom, s.geom);
+INSERT INTO "RegionAreas"("areaId", "regionId", "created_at", "updated_at") SELECT a.id, r.id, NOW(), NOW() FROM "Areas" a, "regions" r WHERE ST_Intersects(a.geom, r.geom) AND a.id != 100;
+INSERT INTO "StateAreas"("areaId", "stateId", "created_at", "updated_at") SELECT a.id, s.id, NOW(), NOW() FROM "Areas" a, "States" s WHERE ST_Intersects(a.geom, s.geom) AND a.id != 100;
 UPDATE "States" SET "isActive"=TRUE WHERE "name" IN ('Spain', 'Belgium', 'Mexico');
 UPDATE "regions" SET "isActive"=TRUE WHERE "stateId" IN (51, 21, 149);
 UPDATE "Areas" SET "shapeFileURL"='shapes/catalunya.zip' WHERE id=0;
@@ -377,3 +377,5 @@ INSERT INTO "IASImagesTexts"("IASIId","languageId","text","creatorId","created_a
 INSERT INTO "IASImagesTexts"("IASIId","languageId","text","creatorId","created_at","updated_at") VALUES(59,4,'Leaves and berries',1,NOW(),NOW());
 INSERT INTO "IASImagesTexts"("IASIId","languageId","text","creatorId","created_at","updated_at") VALUES(59,2,'Hojas y frutos',1,NOW(),NOW());
 INSERT INTO "IASImagesTexts"("IASIId","languageId","text","creatorId","created_at","updated_at") VALUES(59,3,'Feuilles et fruits',1,NOW(),NOW());
+
+INSERT INTO "AreasValidators"("areaId","validatorId","creatorId","created_at","updated_at") VALUES(0,1,1,NOW(),NOW());

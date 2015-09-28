@@ -57,13 +57,31 @@ class MapProviderTableSeeder extends Seeder {
 
 		DB::table('MapProvider')->insert(array(
 			'id'  => 2,
-			'url' => 'http://mapcache.icc.cat/map/bases/service?',
+			'url' => 'http://geoserveis.icc.cat/icc_ndvicolor/wms/service?',
 			'attribution' => 'Institut Cartogràfic i Geològic de Catalunya -ICGC',
 			'zIndex' => 2,
 			'SWBoundLat' => '40.48456',
 			'SWBoundLon' => '0.02884',
 			'NEBoundLat' => '42.91822',
 			'NEBoundLon' => '3.46619',
+			'minZoom' => 5,
+			'maxZoom' => 18,
+			'creatorId' => 1,
+			'subdomains' => null,
+			'isOverlay' => true,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProvider')->insert(array(
+			'id'  => 3,
+			'url' => 'http://land.discomap.eea.europa.eu/arcgis/services/Land/CLC2006_Dyna_LAEA/MapServer/WMSServer?',
+			'attribution' => 'European Environment Agency (EEA)',
+			'zIndex' => 2,
+			'SWBoundLat' => '23.401584',
+			'SWBoundLon' => '-48.213097',
+			'NEBoundLat' => '72.062365',
+			'NEBoundLon' => '63.874419',
 			'minZoom' => 5,
 			'maxZoom' => 18,
 			'creatorId' => 1,
@@ -83,7 +101,20 @@ class WMSMapProviderTableSeeder extends Seeder {
 	
 		DB::table('WMSMapProvider')->insert(array(
 			'mapProviderId'  => 2,
-			'layers' => 'orto',
+			'styles' => 'SGD_StereoModel::ShowContourOff',
+			'layers' => 'ox3dndvi2014',
+			'format' => 'image/png',
+			'transparent' => true,
+			'continuousWorld' => true,
+			'crsId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('WMSMapProvider')->insert(array(
+			'mapProviderId'  => 3,
+			'styles' => '',
+			'layers' => '20,19,18,17,16,14,13,11,10,8,7,5,4,2,1',
 			'format' => 'image/png',
 			'transparent' => true,
 			'continuousWorld' => true,
@@ -186,8 +217,19 @@ class MapProviderTextsTableSeeder extends Seeder {
 			'id'  => 2,
 			'mapProviderId' => 2, 
 			'languageId' => 1,
-			'text' => 'Mapa topogràfic de l\'ICC',
-			'name' => 'Topogràfic ICC',
+			'text' => 'Catalunya NDVI. 2014',
+			'name' => 'Catalunya NDVI. 2014',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 3,
+			'mapProviderId' => 3, 
+			'languageId' => 1,
+			'text' => 'CORINE Landcover (CLC)',
+			'name' => 'CORINE Landcover (CLC)',
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime

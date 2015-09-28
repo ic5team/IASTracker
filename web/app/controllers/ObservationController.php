@@ -193,7 +193,7 @@ class ObservationController extends RequestController {
 
 					$image = new ObservationImage(array(
 						'observationId' => $element->id,
-						'URL' => $images[$i]
+						'URL' => str_replace('"', '', $images[$i])
 					));
 					$image->touch();
 					$image->save();
@@ -285,10 +285,19 @@ class ObservationController extends RequestController {
 
 		$element = $this->getElement($id);
 
-		//Update the data
+		if(Input::has('status') && Auth::check())
+		{
 
-		$element->touch();
-		$element->save();
+			$user = Auth::user();
+			$element->validatorId = $user->id;
+			$element->validatorTS = new DateTime();
+			$element->statusId = Input::get('status');
+			$element->touch();
+			$element->save();
+
+			return json_encode($id);
+
+		}
 
 	}
 
