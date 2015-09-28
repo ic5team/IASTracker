@@ -118,6 +118,9 @@ MapHandler.prototype.constructMapLayers = function(mapDescriptors)
 		var mapLayer = new Object();
 		var options = new Object();
 
+		if(undefined !== currentMap.styles)
+			options.styles = currentMap.styles;
+
 		if(undefined !== currentMap.layers)
 			options.layers = currentMap.layers;
 

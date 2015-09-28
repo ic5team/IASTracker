@@ -39,6 +39,7 @@
 	Route::get('/v1/Observations', array('uses' => 'ObservationController@index'));
 	Route::post('/v1/Observations', array('uses' => 'ObservationController@store'));
 	Route::get('/v1/Observations/{id}', array('uses' => 'ObservationController@show'));
+	Route::put('/v1/Observations/{id}', array('uses' => 'ObservationController@update'));
 	Route::get('/v1/IAS/', array('uses' => 'IASController@index'));
 	Route::get('/v1/IAS/lastUpdate', array('uses' => 'IASController@getLastUpdate'));
 	Route::get('/v1/IAS/{id}', array('uses' => 'IASController@show'));

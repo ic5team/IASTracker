@@ -34,7 +34,7 @@
 		if($data->isAdmin)
 		{
 ?>
-										<li><a href="admin" target="_blank">{{ Lang::get('ui.administration')}}</a></li>
+										<li><a href="admin">{{ Lang::get('ui.administration')}}</a></li>
 <?php
 		}
 ?>

@@ -75,7 +75,7 @@
 	<div class="col-md-4" onclick="showUser({{$data->user->id}})" style="cursor:pointer;">
 		<div class="row">
 			<div class="col-md-4">
-				{{ HTML::image(Config::get('app.urlImg').$data->user->photoURL, '', array("style" => "width: 100px;"))}}
+				{{ HTML::image(Config::get('app.urlImgThumbs').$data->user->photoURL, '', array("style" => "width: 100px;"))}}
 			</div>
 			<div class="col-md-8">
 				<div class="row">

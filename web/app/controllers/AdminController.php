@@ -15,8 +15,11 @@ class AdminController extends BaseController {
 			{
 
 				$current = $data->users[$i];
+				$validator = IASValidator::find($current->id);
 				$current->numObs = Observation::withUserId($current->id)->count();
 				$current->numValidated = Observation::withUserId($current->id)->validated()->count();
+				$current->isValidator = (null != $validator);
+				$current->organization = $validator->organization;
 				$data->users[$i] = $current;
 
 			}
@@ -44,8 +47,20 @@ class AdminController extends BaseController {
 			$defaultLanguageId = $configuration->defaultLanguageId;
 
 			$data = $this->getBasicData();
-			$data->obs = Observation::status(2)->areas()->get();
+			$validator = IASValidator::userId(Auth::user()->id)->first();
+			$areas = AreaValidator::validatorId($validator->id)->get();
+			$ids = array();
+			for($i=0; $i<count($areas); ++$i)
+			{
 
+				$ids[] =$areas[$i]->areaId;
+
+			}
+
+			$mapData = $this->getMapData();
+			$data = (object) array_merge((array) $data, (array) $mapData);
+
+			$data->obs = Observation::status(2)->areas($ids)->get();
 			for($i=0; $i<count($data->obs); ++$i)
 			{
 
@@ -54,6 +69,7 @@ class AdminController extends BaseController {
 				$current->ias = IAS::find($current->IASId);
 				$current->ias->description = $current->ias->getDescriptionData($languageId, $defaultLanguageId);
 				$current->ias->image = $current->ias->getDefaultImageData($languageId, $defaultLanguageId);
+				$current->images = ObservationImage::withObservationId($current->id)->get();
 				$current->user = User::find($current->userId);
 				$data->obs[$i] = $current;
 
@@ -65,7 +81,7 @@ class AdminController extends BaseController {
 		else
 		{
 
-			App::abort(403);
+			return Redirect::to('/');
 
 		}
 

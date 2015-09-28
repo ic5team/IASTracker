@@ -115,6 +115,11 @@ return array(
 		'howMany' => 'Quants?',
 		'one' => 'Un',
 		'few' => 'Pocs',
-		'several' => 'Alguns'
+		'several' => 'Alguns',
+		'isValidator' => 'És validador?',
+		'organization' => 'Organització:',
+		'obsDescriptionTitle' => 'Descripció',
+		'obsImageTitle' => 'Imatges',
+		'noObservationsToValidate' => 'No hi ha cap observació pendent'
 
 	);

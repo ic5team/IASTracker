@@ -98,7 +98,15 @@ class Observation extends Eloquent {
 	public function scopeStatus($query, $status)
 	{
 
-		return $query->orderBy('statusId', $status);
+		return $query->where('statusId', '=', $status);
+
+	}
+
+	public function scopeAreas($query, $areas)
+	{
+
+		return $query->join('ObservationAreas', 'observations.id', '=', 'ObservationAreas.observationId')
+			->whereIn('ObservationAreas.areaId', $areas)->select('observations.*');
 
 	}
 

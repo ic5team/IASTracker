@@ -26,6 +26,13 @@ class ObservationImage extends Eloquent {
 
 	}
 
+	public function scopeWithObservationId($query, $obsId)
+	{
+
+		return $query->where('observationId', '=', $obsId);
+
+	}
+
 }
 
 ?>

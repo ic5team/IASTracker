@@ -34,6 +34,7 @@ class Inicial extends Migration {
 		Schema::create('WMSMapProvider', function(Blueprint $table)
 		{
 			$table->integer('mapProviderId')->unsigned();
+			$table->string('styles', 255);
 			$table->string('layers', 255);
 			$table->string('format', 255);
 			$table->boolean('transparent');
@@ -264,10 +265,10 @@ class Inicial extends Migration {
 
 		});
 
-		Schema::create('IASAreasValidators', function(Blueprint $table)
+		Schema::create('AreasValidators', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->integer('IASAId')->unsigned();
+			$table->integer('areaId')->unsigned();
 			$table->integer('validatorId')->unsigned();
 			$table->integer('creatorId')->unsigned()->nullable();
 			$table->timestamps();

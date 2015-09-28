@@ -1,13 +1,13 @@
 <?php
 
-class Validator extends Eloquent {
+class AreaValidator extends Eloquent {
 
 	/**
 	 * The database table used by the model.
 	 *
 	 * @var string
 	 */
-	protected $table = 'Validators';
+	protected $table = 'AreasValidators';
 
 	/**
 	 * The attributes excluded from the model's JSON form.
@@ -15,6 +15,13 @@ class Validator extends Eloquent {
 	 * @var array
 	 */
 	protected $hidden = array();
+
+	public function scopeValidatorId($query, $id)
+	{
+
+		return $query->orderBy('validatorId', $id);
+
+	}
 
 }
 
