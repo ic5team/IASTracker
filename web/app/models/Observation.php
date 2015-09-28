@@ -95,6 +95,13 @@ class Observation extends Eloquent {
 
 	}
 
+	public function scopeStatus($query, $status)
+	{
+
+		return $query->orderBy('statusId', $status);
+
+	}
+
 }
 
 ?>
