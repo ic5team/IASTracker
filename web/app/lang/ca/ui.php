@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 return array(
 		'inici' => 'Web de l\'IASTracker',	//Text que surt a la barra del navegador
@@ -99,27 +99,18 @@ return array(
 		'resetPassword' => 'Restauració de la contrasenya',
 		'resetAction' => 'Restaura',
 		'passwordChanged' => 'La contrasenya s\'ha canviat correctament, fes click :link per entrar',
-		'profilePicture' => 'Imatge de perfil',
+
 		'administration' => 'Administració',
-		'isExpert' => 'És expert?',
-		'observationsNumber' => 'Nombre d\'observacions :num',
-		'validatedNumber' => 'Nombre d\'observacions validades :num',
-		'areYouAnExpert' => 'Et consideres un expert?',
-		'yes' => 'Sí',
-		'no' => 'No',
-		'isAdmin' => 'És administrador?',
-		'validate' => 'Valida',
-		'discard' => 'Descarta',
 		'users' => 'Usuaris',
-		'obs' => 'Observations',
-		'howMany' => 'Quants?',
-		'one' => 'Un',
-		'few' => 'Pocs',
-		'several' => 'Alguns',
+		'obs' => 'Observacions',
+		'observationsNumber' => ':num observacions realitzades',
+		'validatedNumber' => ':num observacions validades',
+		'yes' => 'Sí',
+		'isExpert' => 'És expert?',
+		'isAdmin' => 'És administrador?',
 		'isValidator' => 'És validador?',
-		'organization' => 'Organització:',
-		'obsDescriptionTitle' => 'Descripció',
-		'obsImageTitle' => 'Imatges',
-		'noObservationsToValidate' => 'No hi ha cap observació pendent'
+		'organization' => 'Organització',
+		'store' => 'Guardar'
+
 
 	);

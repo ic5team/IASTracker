@@ -9,6 +9,8 @@ class IASValidator extends Eloquent {
 	 */
 	protected $table = 'Validators';
 	protected $primaryKey = 'userId';
+	protected $fillable = array('userId', 'organization', 'createdId', 'created_at', 
+		'updated_at');
 
 	/**
 	 * The attributes excluded from the model's JSON form.

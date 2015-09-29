@@ -64,7 +64,7 @@ class MapProviderTableSeeder extends Seeder {
 			'SWBoundLon' => '0.02884',
 			'NEBoundLat' => '42.91822',
 			'NEBoundLon' => '3.46619',
-			'minZoom' => 5,
+			'minZoom' => 17,
 			'maxZoom' => 18,
 			'creatorId' => 1,
 			'subdomains' => null,
@@ -91,6 +91,78 @@ class MapProviderTableSeeder extends Seeder {
 			'updated_at' => new DateTime
 		));
 
+		DB::table('MapProvider')->insert(array(
+			'id'  => 4,
+			'url' => 'http://geoserveis.icc.cat/icc_mapesbase/wms/service?',
+			'attribution' => 'Institut Cartogràfic i Geològic de Catalunya -ICGC',
+			'zIndex' => 2,
+			'SWBoundLat' => '40.48456',
+			'SWBoundLon' => '0.02884',
+			'NEBoundLat' => '42.91822',
+			'NEBoundLon' => '3.46619',
+			'minZoom' => 5,
+			'maxZoom' => 18,
+			'creatorId' => 1,
+			'subdomains' => null,
+			'isOverlay' => true,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProvider')->insert(array(
+			'id'  => 5,
+			'url' => 'http://geoserveis.icc.cat/icc_mapesbase/wms/service?',
+			'attribution' => 'Institut Cartogràfic i Geològic de Catalunya -ICGC',
+			'zIndex' => 2,
+			'SWBoundLat' => '40.48456',
+			'SWBoundLon' => '0.02884',
+			'NEBoundLat' => '42.91822',
+			'NEBoundLon' => '3.46619',
+			'minZoom' => 5,
+			'maxZoom' => 18,
+			'creatorId' => 1,
+			'subdomains' => null,
+			'isOverlay' => true,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProvider')->insert(array(
+			'id'  => 6,
+			'url' => 'http://geo.agiv.be/inspire/wms/Orthobeeldvorming?',
+			'attribution' => 'Geopunt.be',
+			'zIndex' => 2,
+			'SWBoundLat' => '50.64',
+			'SWBoundLon' => '2.52',
+			'NEBoundLat' => '51.51',
+			'NEBoundLon' => '5.94',
+			'minZoom' => 5,
+			'maxZoom' => 18,
+			'creatorId' => 1,
+			'subdomains' => null,
+			'isOverlay' => true,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProvider')->insert(array(
+			'id'  => 7,
+			'url' => 'http://geoservices.wallonie.be/arcgis/services/IMAGERIE/ORTHO_LAST/MapServer/WMSServer?',
+			'attribution' => 'Geopunt.be',
+			'zIndex' => 2,
+			'SWBoundLat' => '49.474629',
+			'SWBoundLon' => '2.835011',
+			'NEBoundLat' => '50.822978',
+			'NEBoundLon' => '6.438924',
+			'minZoom' => 5,
+			'maxZoom' => 18,
+			'creatorId' => 1,
+			'subdomains' => null,
+			'isOverlay' => true,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
 	}
 }
 
@@ -101,7 +173,7 @@ class WMSMapProviderTableSeeder extends Seeder {
 	
 		DB::table('WMSMapProvider')->insert(array(
 			'mapProviderId'  => 2,
-			'styles' => 'SGD_StereoModel::ShowContourOff',
+			'styles' => '',
 			'layers' => 'ox3dndvi2014',
 			'format' => 'image/png',
 			'transparent' => true,
@@ -114,7 +186,55 @@ class WMSMapProviderTableSeeder extends Seeder {
 		DB::table('WMSMapProvider')->insert(array(
 			'mapProviderId'  => 3,
 			'styles' => '',
-			'layers' => '20,19,18,17,16,14,13,11,10,8,7,5,4,2,1',
+			'layers' => '14,13,11,10,8,7,5,4,2,1',
+			'format' => 'image/png',
+			'transparent' => true,
+			'continuousWorld' => true,
+			'crsId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('WMSMapProvider')->insert(array(
+			'mapProviderId'  => 4,
+			'styles' => '',
+			'layers' => 'orto25c',
+			'format' => 'image/png',
+			'transparent' => true,
+			'continuousWorld' => true,
+			'crsId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('WMSMapProvider')->insert(array(
+			'mapProviderId'  => 5,
+			'styles' => '',
+			'layers' => 'mtc5m',
+			'format' => 'image/png',
+			'transparent' => true,
+			'continuousWorld' => true,
+			'crsId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('WMSMapProvider')->insert(array(
+			'mapProviderId'  => 6,
+			'styles' => '',
+			'layers' => 'OMZ09VLRGB',
+			'format' => 'image/png',
+			'transparent' => true,
+			'continuousWorld' => true,
+			'crsId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('WMSMapProvider')->insert(array(
+			'mapProviderId'  => 7,
+			'styles' => '',
+			'layers' => '0',
 			'format' => 'image/png',
 			'transparent' => true,
 			'continuousWorld' => true,
@@ -230,6 +350,281 @@ class MapProviderTextsTableSeeder extends Seeder {
 			'languageId' => 1,
 			'text' => 'CORINE Landcover (CLC)',
 			'name' => 'CORINE Landcover (CLC)',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 4,
+			'mapProviderId' => 4, 
+			'languageId' => 1,
+			'text' => 'Ortofoto de Catalunya 1:2.500',
+			'name' => 'Ortofoto de Catalunya 1:2.500',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 5,
+			'mapProviderId' => 5, 
+			'languageId' => 1,
+			'text' => 'Mapa topogràfic de Catalunya 1:5000',
+			'name' => 'Mapa topogràfic de Catalunya 1:5000',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 6,
+			'mapProviderId' => 6, 
+			'languageId' => 1,
+			'text' => 'Ortofoto 2009 Flandes color',
+			'name' => 'Ortofoto 2009 Flandes color',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 7,
+			'mapProviderId' => 7, 
+			'languageId' => 1,
+			'text' => 'Ortofoto 2012-2013 Valonia color 25m pixel',
+			'name' => 'Ortofoto 2012-2013 Valonia color 25m pixel',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 8,
+			'mapProviderId' => 1, 
+			'languageId' => 2,
+			'text' => 'OSM',
+			'name' => 'OSM',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 9,
+			'mapProviderId' => 2, 
+			'languageId' => 2,
+			'text' => 'Indice de vegetación (NDVI)',
+			'name' => 'Indice de vegetación (NDVI)',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 10,
+			'mapProviderId' => 3, 
+			'languageId' => 2,
+			'text' => 'Corine Land cover 2006 (CLC2006)LAEA',
+			'name' => 'Corine Land cover 2006 (CLC2006)LAEA',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 11,
+			'mapProviderId' => 4, 
+			'languageId' => 2,
+			'text' => 'Ortofoto de Cataluña 1: 2.500',
+			'name' => 'Ortofoto de Cataluña 1: 2.500',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 12,
+			'mapProviderId' => 5, 
+			'languageId' => 2,
+			'text' => 'Mapa topográfico de Cataluña 1: 5000',
+			'name' => 'Mapa topográfico de Cataluña 1: 5000',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 13,
+			'mapProviderId' => 6, 
+			'languageId' => 2,
+			'text' => 'Ortofoto 2009 Flandes color',
+			'name' => 'Ortofoto 2009 Flandes color',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 14,
+			'mapProviderId' => 7, 
+			'languageId' => 2,
+			'text' => 'Ortofoto 2012-2013 Valonia color 25m pixel',
+			'name' => 'Ortofoto 2012-2013 Valonia color 25m pixel',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 15,
+			'mapProviderId' => 1, 
+			'languageId' => 3,
+			'text' => 'OSM',
+			'name' => 'OSM',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 16,
+			'mapProviderId' => 2, 
+			'languageId' => 3,
+			'text' => 'Indice de végétation (NDVI)',
+			'name' => 'Indice de végétation (NDVI)',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 17,
+			'mapProviderId' => 3, 
+			'languageId' => 3,
+			'text' => 'Corine Land cover 2006 (CLC2006)LAEA',
+			'name' => 'Corine Land cover 2006 (CLC2006)LAEA',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 18,
+			'mapProviderId' => 4, 
+			'languageId' => 3,
+			'text' => 'Orthophoto de la Catalogne 1: 2 500',
+			'name' => 'Orthophoto de la Catalogne 1: 2 500',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 19,
+			'mapProviderId' => 5, 
+			'languageId' => 3,
+			'text' => 'Carte topographique de Catalogne 1: 5 000',
+			'name' => 'Carte topographique de Catalogne 1: 5 000',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 20,
+			'mapProviderId' => 6, 
+			'languageId' => 3,
+			'text' => 'Orthophoto Flandre 2009 couleur',
+			'name' => 'Orthophoto Flandre 2009 couleur',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 21,
+			'mapProviderId' => 7, 
+			'languageId' => 3,
+			'text' => 'Ortho Wallonie 2012-13 couleur 25m pixel',
+			'name' => 'Ortho Wallonie 2012-13 couleur 25m pixel',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 22,
+			'mapProviderId' => 1, 
+			'languageId' => 4,
+			'text' => 'OSM',
+			'name' => 'OSM',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 23,
+			'mapProviderId' => 2, 
+			'languageId' => 4,
+			'text' => 'Vegetation Index [NDVI]',
+			'name' => 'Vegetation Index [NDVI]',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 24,
+			'mapProviderId' => 3, 
+			'languageId' => 4,
+			'text' => 'Corine Land cover 2006 (CLC2006)LAEA',
+			'name' => 'Corine Land cover 2006 (CLC2006)LAEA',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 25,
+			'mapProviderId' => 4, 
+			'languageId' => 4,
+			'text' => 'Orthofoto of Catalonia 1: 2 500',
+			'name' => 'Orthofoto of Catalonia 1: 2 500',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 26,
+			'mapProviderId' => 5, 
+			'languageId' => 4,
+			'text' => 'Topographic map of Catalonia 1: 5000',
+			'name' => 'Topographic map of Catalonia 1: 5000',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 27,
+			'mapProviderId' => 6, 
+			'languageId' => 4,
+			'text' => 'Ortho 2009 Flanders color',
+			'name' => 'Ortho 2009 Flanders color',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 28,
+			'mapProviderId' => 7, 
+			'languageId' => 4,
+			'text' => 'Ortho Wallonie 2012-13 color 25m pixel',
+			'name' => 'Ortho Wallonie 2012-13 color 25m pixel',
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime

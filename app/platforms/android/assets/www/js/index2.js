@@ -1,1 +1,0 @@
-$("#menuPanel").enhanceWithin().panel();

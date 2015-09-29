@@ -198,6 +198,54 @@ class UserController extends RequestController {
 			}
 
 		}
+		else if(Input::has('expert') 
+			&& Input::has('validator')
+			&& Input::has('admin'))
+		{
+
+			$isValidator = Input::get('validator');
+			$element->isExpert = Input::get('expert');
+			$element->isAdmin = Input::get('admin');
+			$element->touch();
+			$element->save();
+
+			$val = IASValidator::userId($element->id)->first();
+			if("true" == $isValidator)
+			{
+
+				if(null == $val)
+				{
+
+					$val = new IASValidator(array(
+						'userId' => $element->id,
+						'organization' => Input::get('organization'),
+						'creatorId' => Auth::id(),
+						'created_at' => new DateTime(),
+						'updated_at' => new DateTime()));
+
+				}
+				else
+				{
+
+					$val->organization = Input::get('organization');
+
+				}
+
+				$val->touch();
+				$val->save();
+
+			}
+			else
+			{
+
+				if(null != $val)
+					$val->delete();
+
+			}
+
+			$out = $element->id;
+
+		}
 
 		return json_encode($out);
 

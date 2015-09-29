@@ -19,7 +19,10 @@ class AdminController extends BaseController {
 				$current->numObs = Observation::withUserId($current->id)->count();
 				$current->numValidated = Observation::withUserId($current->id)->validated()->count();
 				$current->isValidator = (null != $validator);
-				$current->organization = $validator->organization;
+				$current->organization = '';
+				if(null != $validator)
+					$current->organization = $validator->organization;
+				
 				$data->users[$i] = $current;
 
 			}
