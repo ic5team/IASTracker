@@ -22,7 +22,7 @@ class AdminController extends BaseController {
 				$current->organization = '';
 				if(null != $validator)
 					$current->organization = $validator->organization;
-				
+
 				$data->users[$i] = $current;
 
 			}
@@ -79,6 +79,71 @@ class AdminController extends BaseController {
 			}
 
 			return View::make("admin/observations", array('data' => $data));
+
+		}
+		else
+		{
+
+			return Redirect::to('/');
+
+		}
+
+	}
+
+	public function showIAS()
+	{
+
+		if(Auth::check())
+		{
+
+			$languageId = Language::locale(App::getLocale())->first()->id;
+			$configuration = Configuration::find(1);
+			$defaultLanguageId = $configuration->defaultLanguageId;
+
+			$data = $this->getBasicData();
+			$data->defaultLanguageId = $defaultLanguageId;
+			$data->areas = Area::all();
+			$data->ias = IAS::all();
+			$data->taxons = IASTaxon::withLanguageId($languageId)->get();
+			if(null == $data->taxons)
+				$data->taxons = IASTaxon::withLanguageId($defaultLanguageId)->get();
+			for($i=0; $i<count($data->ias); ++$i)
+			{
+
+				$current = $data->ias[$i];
+				$current->description = $current->getDescriptionData($languageId, $defaultLanguageId);
+				$current->image = $current->getDefaultImageData($languageId, $defaultLanguageId);
+				$data->ias[$i] = $current;
+
+			}
+
+			return View::make("admin/ias", array('data' => $data));
+
+		}
+		else
+		{
+
+			return Redirect::to('/');
+
+		}
+
+	}
+
+	public function showAreas()
+	{
+
+		if(Auth::check())
+		{
+
+			$languageId = Language::locale(App::getLocale())->first()->id;
+			$configuration = Configuration::find(1);
+			$defaultLanguageId = $configuration->defaultLanguageId;
+
+			$data = $this->getBasicData();
+			$data->areas = Area::all();
+			$data->validators = User::all();	//TODO: Han de ser només els validadors
+
+			return View::make("admin/areas", array('data' => $data));
 
 		}
 		else

@@ -41,6 +41,8 @@
 			<div class="row">
 				<div class="col-md-12"><a href="{{Config::get('app.url')}}admin" >{{Lang::get('ui.users')}}</a></div>
 				<div class="col-md-12"><a href="{{Config::get('app.url')}}admin/observations" >{{Lang::get('ui.obs')}}</a></div>
+				<div class="col-md-12"><a href="{{Config::get('app.url')}}admin/ias" >{{Lang::get('ui.ias')}}</a></div>
+				<div class="col-md-12"><a href="{{Config::get('app.url')}}admin/areas" >{{Lang::get('ui.areas')}}</a></div>
 			</div>
 		</div>
 		<div class="col-md-9 menu">

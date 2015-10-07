@@ -28,6 +28,8 @@
 	Route::get('/password/reset', array('uses' => 'UserController@resetPassword'));
 	Route::get('/admin', array('uses' => 'AdminController@showUsers'));
 	Route::get('/admin/observations', array('uses' => 'AdminController@showObservations'));
+	Route::get('/admin/ias', array('uses' => 'AdminController@showIAS'));
+	Route::get('/admin/areas', array('uses' => 'AdminController@showAreas'));
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +43,7 @@
 	Route::get('/v1/Observations/{id}', array('uses' => 'ObservationController@show'));
 	Route::put('/v1/Observations/{id}', array('uses' => 'ObservationController@update'));
 	Route::get('/v1/IAS/', array('uses' => 'IASController@index'));
+	Route::post('/v1/IAS/', array('uses' => 'IASController@store'));
 	Route::get('/v1/IAS/lastUpdate', array('uses' => 'IASController@getLastUpdate'));
 	Route::get('/v1/IAS/{id}', array('uses' => 'IASController@show'));
 	Route::get('/v1/IAS/{id}/Observations', array('uses' => 'IASController@getObservations'));

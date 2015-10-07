@@ -278,3 +278,13 @@ IASTracker.prototype.discardObservation = function(obsId, doneFunction)
 	return this.AJAXRequest(completeURL, destId, doneFunction, 'PUT', {status: 3});
 
 }
+
+IASTracker.prototype.addIAS = function(params, doneFunction)
+{
+
+	var completeURL = this.ias.entryPoint;
+	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
+
+	return this.AJAXRequest(completeURL, destId, doneFunction, 'POST', params);
+
+}

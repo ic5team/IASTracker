@@ -163,6 +163,24 @@ class MapProviderTableSeeder extends Seeder {
 			'updated_at' => new DateTime
 		));
 
+		DB::table('MapProvider')->insert(array(
+			'id'  => 8,
+			'url' => 'http://neowms.sci.gsfc.nasa.gov/wms/wms?',
+			'attribution' => 'NASA',
+			'zIndex' => 2,
+			'SWBoundLat' => null,
+			'SWBoundLon' => null,
+			'NEBoundLat' => null,
+			'NEBoundLon' => null,
+			'minZoom' => null,
+			'maxZoom' => null,
+			'creatorId' => 1,
+			'subdomains' => null,
+			'isOverlay' => true,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
 	}
 }
 
@@ -235,6 +253,18 @@ class WMSMapProviderTableSeeder extends Seeder {
 			'mapProviderId'  => 7,
 			'styles' => '',
 			'layers' => '0',
+			'format' => 'image/png',
+			'transparent' => true,
+			'continuousWorld' => true,
+			'crsId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('WMSMapProvider')->insert(array(
+			'mapProviderId'  => 8,
+			'styles' => '',
+			'layers' => 'SRTM_RAMP2_TOP',
 			'format' => 'image/png',
 			'transparent' => true,
 			'continuousWorld' => true,
@@ -625,6 +655,17 @@ class MapProviderTextsTableSeeder extends Seeder {
 			'languageId' => 4,
 			'text' => 'Ortho Wallonie 2012-13 color 25m pixel',
 			'name' => 'Ortho Wallonie 2012-13 color 25m pixel',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 29,
+			'mapProviderId' => 8, 
+			'languageId' => 1,
+			'text' => 'NASA',
+			'name' => 'NASA',
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime

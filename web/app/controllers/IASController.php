@@ -143,10 +143,116 @@ class IASController extends RequestController {
 	protected function newResource()
 	{
 
-		$element = new IAS(array());
+		if(Auth::check())
+		{
 
-		$element->touch();
-		$element->save();
+			$dto = new stdClass();
+
+			if(Input::has('latinName') && Input::has('taxon') && 
+				Input::has('descriptions'))
+			{
+
+				$element = new IAS();
+
+				$element->latinName = Input::get('latinName');
+				$element->taxonId = Input::get('taxon');
+				$element->creatorId = Auth::id();
+				$element->touch();
+				$element->save();
+
+				$descriptions = Input::get('descriptions');
+				for($i=0; $i<count($descriptions); ++$i)
+				{
+
+
+					$current = $descriptions[$i];
+					$iasDescription = new IASDescription();
+					$iasDescription->IASId = $element->id;
+					$iasDescription->languageId = $current->id;
+					$iasDescription->name = $current->common;
+					$iasDescription->shortDescription = $current->shortDesc;
+					$iasDescription->sizeLongDescription = $current->sizeDesc;
+					$iasDescription->infoLongDescription = $current->infoDesc;
+					$iasDescription->habitatLongDescription = $current->infoHabitat;
+					$iasDescription->confuseLongDescription = $current->infoConfuse;
+					$iasDescription->creatorId = Auth::id();
+					$iasDescription->touch();
+					$iasDescription->save();
+
+				}
+
+				$portaitImageId = -1;
+				$images = Input::get('images');
+				for($i=0; $i<count($images); ++$i)
+				{
+
+					$current = $images[$i];
+					$iasImage = new IASImage();
+					$iasImage->IASId = $element->id;
+					$iasImage->URL = $element->url;
+					$iasImage->attribution = $element->attribution;
+					$iasImage->order = 1;	//TODO: Input order from the administration panel
+					$iasImage->creatorId = Auth::id();
+
+					$iasImage->touch();
+					$iasImage->save();
+
+					if(-1 == $portaitImageId)
+						$portaitImageId = $iasImage->id;
+
+					for($k=0; $k<count($current->langs); ++$k)
+					{
+
+						$lang = $current->langs[$k];
+						$iasImageText = new IASImageText();
+						$iasImageText->IASIId = $iasImage->id;
+						$iasImageText->languageId = $lang->id;
+						$iasImageText->text = $lang->text;
+						$iasImageText->creatorId = Auth::id();
+
+						$iasImageText->touch();
+						$iasImageText->save();
+
+					}
+
+				}
+
+				if(-1 != $portaitImageId)
+				{
+
+					$element->defaultImageId = $portaitImageId;
+					$element->save();
+
+				}
+
+				for($i=0; $i<count($areas); ++$i)
+				{
+
+
+					$current = $areas[$i];
+					$area = new IASArea();
+					$area->IASId = $element->id;
+					$area->areaId = $current;
+					$area->orderId = 1;	//TODO: Input order from the administration panel
+					$area->creatorId = Auth::id();
+					$area->touch();
+					$area->save();
+
+				}
+
+				//TODO: Input repostitories and related DBs from the administration panel
+
+			}
+			else
+			{
+
+				$dto->error = Lang::get('ui.missingParameters');
+
+			}
+
+			return Response::json($dto);
+
+		}
 
 	}
 

@@ -100,6 +100,7 @@ return array(
 		'resetAction' => 'Restaura',
 		'passwordChanged' => 'La contrasenya s\'ha canviat correctament, fes click :link per entrar',
 
+		'noObservationsToValidate' => 'No hi ha observacions pendents de validar',
 		'administration' => 'Administració',
 		'users' => 'Usuaris',
 		'obs' => 'Observacions',
@@ -110,7 +111,27 @@ return array(
 		'isAdmin' => 'És administrador?',
 		'isValidator' => 'És validador?',
 		'organization' => 'Organització',
-		'store' => 'Guardar'
-
+		'store' => 'Guardar',
+		'ias' => 'IAS',
+		'edit' => 'Editar',
+		'add' => 'Afegir',
+		'taxon'	=> 'Taxó',
+		'descriptions' => 'Descripcions',
+		'shortDescription' => 'Descripció curta',
+		'sizeDescription' => 'Descripció de mida',
+		'infoDescription' => 'Informació sobre l\'IAS',
+		'habitatDescription' => 'Descripció de l\'hàbitat',
+		'notConfuseDescription' => 'Descripció de similituds',
+		'images' => 'Imatges',
+		'attribution' => 'Atribució',
+		'imageText' => 'Text',
+		'dragImage' => 'Fes click per seleccionar la imatge',
+		'areas' => 'Areas',
+		'validators' => 'Validadors',
+		'areaName' => 'Nom',
+		'zIndex' => 'Índex de superposició',
+		'polygon' => 'Polígon',
+		'description' => 'Descripció',
+		'errorStoring' => 'Hi ha algun error al formulari, revisa\'l!',
 
 	);
