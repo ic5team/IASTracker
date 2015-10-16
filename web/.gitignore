@@ -1,7 +1,5 @@
 /bootstrap/compiled.php
 composer.phar
 composer.lock
-.env.local.php
-/app/config/local/app.php
 .DS_Store
 Thumbs.db
