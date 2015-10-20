@@ -1,0 +1,67 @@
+MAP
+	NAME "IASTracker"
+	STATUS ON
+	IMAGETYPE      PNG
+	EXTENT         -97.238976 41.619778 -82.122902 49.385620
+	SIZE           400 300
+	TRANSPARENT ON
+	IMAGECOLOR     255 255 255
+
+	WEB
+		METADATA
+			"wms_title"     "IASTracker Map"  ##required
+			"wms_onlineresource" "http://127.0.0.1/mapvserv/mapserv.exe?"   ##required
+			"wms_srs"       "EPSG:42304 EPSG:42101 EPSG:4269 EPSG:4326"  ##recommended
+			"wms_enable_request" "*"   ##necessary
+		END
+	END # Web
+
+	SYMBOL
+		NAME "circle"
+		TYPE ellipse
+		POINTS 1 1 END
+	END # Symbol
+	
+	PROJECTION
+		"proj=utm"
+		"ellps=GRS80"
+		"datum=NAD83"
+		"zone=15"
+		"units=m"
+		"north"
+		"no_defs"
+	END
+
+	# Start of LAYER DEFINITIONS ---------------------------------------------
+	LAYER
+		NAME         Observations
+		#CONNECTIONTYPE POSTGIS
+		#CONNECTION "host=127.0.0.1 dbname=IASTrackerDB user=iastracker password=pw150782 port=5432"
+		DATA         states_ugl
+		STATUS       OFF
+		TYPE         POINT
+		METADATA
+			"wms_title"    "Observations"   ##required
+		END
+
+		# The class object is defined within the layer object.  You can define as
+		# many classes as you need (well, there are limits as with layers, but it's
+		# senseless to define more than ten on a "normal" layer.  There are
+		# situations, however, where you might have to do it.)
+		CLASS
+			NAME	"IAS Observation"
+
+			# There are styles in a class, just like there are classes in a layer,
+			# just like there are layers in a map.  You can define multiple styles in
+			# a class just as you can define multiple classes in a layer and multiple
+			# layers in a map.
+			STYLE
+				SYMBOL "circle"
+				SIZE 8
+				COLOR 0 0 0
+			END
+		END
+	END # States polygon layer ends here
+	# End of LAYER DEFINITIONS -------------------------------
+
+END # Map File
