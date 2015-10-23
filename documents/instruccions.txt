@@ -14,3 +14,5 @@ shp2pgsql IASTracker_Regions_WGS84.shp > areas.sql
 De sql a shp
 Renombrar taula Areas a areas
 pgsql2shp -f montseny.shp -u iastracker -P 12345678 IASTrackerDB "SELECT * FROM areas WHERE id=1"
+
+Crear usuari iastracker amb contrasenya 12345678

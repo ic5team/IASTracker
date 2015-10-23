@@ -80,14 +80,13 @@
 						<li id="navbar-info">
 							<ul class="nav navbar-nav">
 								<li>
-									<a href="#" onclick="showEUInfo()">
-										{{ HTML::image('img/thumbs/flags/europeFlag.jpg', Lang::get('ui.euInfo'), array('class' => 'navbar-logo-img', 'pull-right')); }}
+									<a href="ic5Info?lang={{App::getLocale()}}" target="_blank">
+										{{ HTML::image('img/thumbs/flags/ic5Logo.png', '', array('class' => 'navbar-logo-img', 'pull-right')); }}
 									</a>
 								</li>
 								<li>
-									<a href="#" onclick="showIC5Info()">
-										{{ HTML::image('img/thumbs/flags/ic5Logo.png', Lang::get('ui.ic5Info'), array('class' => 'navbar-logo-img', 'pull-right')); }}
-										{{Lang::get('ui.ic5Info')}}
+									<a href="iasTrackerInfo?lang={{App::getLocale()}}" target="_blank">
+										{{ HTML::image('img/thumbs/logoIASTracker.png', '', array('class' => 'navbar-logo-img', 'pull-right')); }}
 									</a>
 								</li>
 							</ul>

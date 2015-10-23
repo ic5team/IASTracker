@@ -16,12 +16,9 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-//var urlPublic = 'http://192.168.1.195:4326/IASTracker/';
-//var imgURL = 'http://192.168.1.195:4326/IASTracker/img/';
-//var fotosImgURL = 'http://192.168.1.195:4326/IASTracker/img/fotos/';
-var urlPublic = 'http://192.168.1.252:4326/IASTracker/';
-var imgURL = 'http://192.168.1.252:4326/IASTracker/img/';
-var fotosImgURL = 'http://192.168.1.252:4326/IASTracker/img/fotos/';
+var urlPublic = 'http://84.88.72.147/';
+var imgURL = 'http://84.88.72.147/img/';
+var fotosImgURL = 'http://84.88.72.147/img/fotos/';
 var app = {
 	//Global parameters
 	isOnline: false,

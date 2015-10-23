@@ -20,10 +20,16 @@
 // GENERATED FILE! DO NOT EDIT!
 
 apply plugin: 'android'
+apply plugin: 'io.fabric'
 
 buildscript {
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+
     repositories {
         mavenCentral()
+        maven { url 'https://maven.fabric.io/public' }
     }
 
     // Switch the Android Gradle plugin version requirement depending on the
@@ -48,6 +54,7 @@ buildscript {
 // Allow plugins to declare Maven dependencies via build-extras.gradle.
 repositories {
     mavenCentral()
+    maven { url 'https://maven.fabric.io/public' }
 }
 
 task wrapper(type: Wrapper) {
@@ -246,6 +253,9 @@ dependencies {
     debugCompile project(path: "CordovaLib", configuration: "debug")
     releaseCompile project(path: "CordovaLib", configuration: "release")
     // SUB-PROJECT DEPENDENCIES END
+    compile('com.crashlytics.sdk.android:crashlytics:2.5.2@aar') {
+        transitive = true;
+    }
 }
 
 def promptForReleaseKeyPassword() {

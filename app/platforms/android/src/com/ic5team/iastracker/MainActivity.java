@@ -20,6 +20,8 @@
 package com.ic5team.iastracker;
 
 import android.os.Bundle;
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 import org.apache.cordova.*;
 
 public class MainActivity extends CordovaActivity
@@ -28,6 +30,7 @@ public class MainActivity extends CordovaActivity
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         // Set by <content src="index.html" /> in config.xml
         loadUrl(launchUrl);
     }

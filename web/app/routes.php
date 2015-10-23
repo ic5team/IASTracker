@@ -30,6 +30,8 @@
 	Route::get('/admin/observations', array('uses' => 'AdminController@showObservations'));
 	Route::get('/admin/ias', array('uses' => 'AdminController@showIAS'));
 	Route::get('/admin/areas', array('uses' => 'AdminController@showAreas'));
+	Route::get('/ic5Info', array('uses' => 'StaticController@showIC5Info'));
+	Route::get('/iasTrackerInfo', array('uses' => 'StaticController@showIASTrackerInfo'));
 
 /*
 |--------------------------------------------------------------------------
