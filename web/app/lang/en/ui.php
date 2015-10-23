@@ -100,6 +100,7 @@ return array(
 		'resetAction' => 'Reset',
 		'passwordChanged' => 'Password has been reset correctly, click here :link to enter',
 
+		'noObservationsToValidate' => 'No hi ha observacions pendents de validar',
 		'administration' => 'Administration',
 		'users' => 'Users',
 		'obs' => 'Observations',
@@ -130,6 +131,14 @@ return array(
 		'areaName' => 'Name',
 		'zIndex' => 'Depth index',
 		'polygon' => 'Polygon',
-		'description' => 'Description'
+		'description' => 'Description',
+		'validate' => 'Validate',
+		'discard' => 'Discard',
+		'obsDescriptionTitle' => 'Observation description',
+		'obsImageTitle' => 'Observation images',
+		'howMany' => 'How many?',
+		'few' => 'Few',
+		'one' => 'One',
+		'several' => 'Several'
 
 	);

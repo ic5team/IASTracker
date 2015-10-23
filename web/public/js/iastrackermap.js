@@ -21,9 +21,6 @@ function MapHandler(mapId, mapDescriptors, crsDescriptors, layersControlId, cont
 		zoom: 2,
 	});
 
-	var googleLayer = new L.Google('ROADMAP');
-    this.baseMaps['Google'] = googleLayer;
-
 	this.controls = L.control.layers(this.baseMaps, this.overlayMaps, 
 		{collapsed: false, autoZIndex: false});
 	this.controls.addTo(this.map);

@@ -166,7 +166,25 @@ class MapProviderTableSeeder extends Seeder {
 		DB::table('MapProvider')->insert(array(
 			'id'  => 8,
 			'url' => 'http://neowms.sci.gsfc.nasa.gov/wms/wms?',
-			'attribution' => 'NASA',
+			'attribution' => 'Remote sensing imagery from NASA Earth Observations (NEO)',
+			'zIndex' => 2,
+			'SWBoundLat' => null,
+			'SWBoundLon' => null,
+			'NEBoundLat' => null,
+			'NEBoundLon' => null,
+			'minZoom' => null,
+			'maxZoom' => null,
+			'creatorId' => 1,
+			'subdomains' => null,
+			'isOverlay' => true,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProvider')->insert(array(
+			'id'  => 9,
+			'url' => 'http://neowms.sci.gsfc.nasa.gov/wms/wms?',
+			'attribution' => 'Remote sensing imagery from NASA Earth Observations (NEO)',
 			'zIndex' => 2,
 			'SWBoundLat' => null,
 			'SWBoundLon' => null,
@@ -268,7 +286,19 @@ class WMSMapProviderTableSeeder extends Seeder {
 			'format' => 'image/png',
 			'transparent' => true,
 			'continuousWorld' => true,
-			'crsId' => 1,
+			'crsId' => 2,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('WMSMapProvider')->insert(array(
+			'mapProviderId'  => 9,
+			'styles' => '',
+			'layers' => 'MOD13A2_E_NDVI',
+			'format' => 'image/png',
+			'transparent' => true,
+			'continuousWorld' => true,
+			'crsId' => 2,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime
 		));
@@ -285,6 +315,19 @@ class CRSTableSeeder extends Seeder {
 			'id'  => 1,
 			'code' => 'EPSG:25831',
 			'proj4def' => '+proj=utm +zone=31 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs',
+			'origin' => null,
+			'transformation' => null,
+			'scales' => null,
+			'resolutions' => '[1100,550,275,100,50,25,10,5,2,1,0.5,0.25]',
+			'bounds' => null,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('CRS')->insert(array(
+			'id'  => 2,
+			'code' => 'EPSG:4326',
+			'proj4def' => '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs ',
 			'origin' => null,
 			'transformation' => null,
 			'scales' => null,
@@ -664,8 +707,85 @@ class MapProviderTextsTableSeeder extends Seeder {
 			'id'  => 29,
 			'mapProviderId' => 8, 
 			'languageId' => 1,
-			'text' => 'NASA',
-			'name' => 'NASA',
+			'text' => 'Topografia',
+			'name' => 'Topografia',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 30,
+			'mapProviderId' => 8, 
+			'languageId' => 2,
+			'text' => 'Topografía',
+			'name' => 'Topografía',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 31,
+			'mapProviderId' => 8, 
+			'languageId' => 3,
+			'text' => 'Topographie',
+			'name' => 'Topographie',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 32,
+			'mapProviderId' => 8, 
+			'languageId' => 4,
+			'text' => 'Topography',
+			'name' => 'Topography',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 33,
+			'mapProviderId' => 9, 
+			'languageId' => 1,
+			'text' => 'Índex de vegetació (NDVI)',
+			'name' => 'Índex de vegetació (NDVI)',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 34,
+			'mapProviderId' => 9, 
+			'languageId' => 2,
+			'text' => 'Indice de vegetación (NDVI)',
+			'name' => 'Indice de vegetación (NDVI)',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 35,
+			'mapProviderId' => 9, 
+			'languageId' => 3,
+			'text' => 'Indice de végétation (NDVI)',
+			'name' => 'Indice de végétation (NDVI)',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 36,
+			'mapProviderId' => 8, 
+			'languageId' => 4,
+			'text' => 'Vegetation Index [NDVI]',
+			'name' => 'Vegetation Index [NDVI]',
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime
