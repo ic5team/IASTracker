@@ -7,7 +7,7 @@
 		<h2>{{Lang::get('email.passwordReminderSubject')}}</h2>
 
 		<div>
-			{{Lang::get('email.passwordReminderText')}} {{ URL::to('password/reset?token='.$token) }}.<br/>
+			{{Lang::get('email.passwordReminderText'array('username' => $user, 'link' => URL::to('password/reset?token='.$token)))}}.<br/>
 		</div>
 	</body>
 </html>
