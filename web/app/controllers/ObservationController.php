@@ -173,7 +173,7 @@ class ObservationController extends RequestController {
 				'howMany' => Input::get('number')
 			));
 
-			if($user->isExpert)
+			if(null != $user && $user->isExpert)
 			{
 
 				$element->validatorId = $userId;
