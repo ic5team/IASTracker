@@ -282,7 +282,7 @@ class WMSMapProviderTableSeeder extends Seeder {
 		DB::table('WMSMapProvider')->insert(array(
 			'mapProviderId'  => 8,
 			'styles' => '',
-			'layers' => 'SRTM_RAMP2_TOP',
+			'layers' => 'SRTM_RAMP2_TOPO',
 			'format' => 'image/png',
 			'transparent' => true,
 			'continuousWorld' => true,
