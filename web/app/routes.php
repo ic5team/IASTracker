@@ -32,6 +32,8 @@
 	Route::get('/admin/areas', array('uses' => 'AdminController@showAreas'));
 	Route::get('/ic5Info', array('uses' => 'StaticController@showIC5Info'));
 	Route::get('/iasTrackerInfo', array('uses' => 'StaticController@showIASTrackerInfo'));
+	Route::get('/privacy', array('uses' => 'StaticController@showPrivacyInfo'));
+	Route::get('/terms', array('uses' => 'StaticController@showTermsAndConditions'));
 
 /*
 |--------------------------------------------------------------------------

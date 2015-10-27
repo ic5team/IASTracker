@@ -36,7 +36,7 @@
 					</div>
 					<div class="row">
 						<div class="col-md-12">
-							{{$data->signupClause}}
+							{{Lang::get('ui.acceptUserTerms', array('link' => Config::get('app.url').'/terms'))}}
 						</div>
 					</div>
 				</div>

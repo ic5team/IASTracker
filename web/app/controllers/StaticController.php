@@ -24,4 +24,26 @@ class StaticController extends Controller {
 
 	}
 
+	public function showPrivacyInfo()
+	{
+
+		$locale = 'en';
+		if(Input::has('lang'))
+			$locale = Input::get('lang');
+
+		return Redirect::to(Config::get('app.url').'/html/PRIVACYSTATEMENTIASTRACKER_'.strtoupper($locale).'.htm');
+
+	}
+
+	public function showTermsAndConditions()
+	{
+
+		$locale = 'en';
+		if(Input::has('lang'))
+			$locale = Input::get('lang');
+
+		return Redirect::to(Config::get('app.url').'/html/PRIVACYSTATEMENTIASTRACKER_'.strtoupper($locale).'.htm');
+
+	}
+
 }

@@ -502,7 +502,7 @@ class UserController extends RequestController {
 			$user->touch();
 			$user->save();
 
-			Mail::send('emails.auth.reminder', array('token' => $token, 'user' => $inMail), function($message) use ($email)
+			Mail::send('emails.auth.reminder', array('token' => $token, 'user' => $email), function($message) use ($email)
 			{
 
 				$message->to($email, '')->subject(Lang::get('email.passwordReminderSubject').'!');
