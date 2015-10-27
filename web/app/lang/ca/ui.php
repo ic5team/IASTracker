@@ -53,6 +53,7 @@ return array(
 		'areYouAnExpert' => 'Ets un expert?',
 		'selectDefaultLanguage' => 'Selecciona el teu idioma preferit',
 		'saveAction' => 'Guarda!',
+		'profilePicture' => 'Imatge',
 		'selectProfileImage' => 'Selecciona la imatge de perfil',
 		'loading' => 'Carregant...',
 		'imageAdjust' => 'Ajusta la imatge',

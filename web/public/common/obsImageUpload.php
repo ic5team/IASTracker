@@ -10,7 +10,7 @@ Retorna un DTO amb els següents camps:
 $directory_self = str_replace(basename($_SERVER['PHP_SELF']), '', $_SERVER['PHP_SELF']);
 
 $uploadsDirectoryGrans = '../img/';
-$uploadsURL = $_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT'].'/IASTracker/img/';
+$uploadsURL = $_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT'].'/img/';
 $fieldName = 'image'; 
 $maxWidth = 2580;
 $maxHeight = 2048;

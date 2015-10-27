@@ -11,7 +11,7 @@ $directory_self = str_replace(basename($_SERVER['PHP_SELF']), '', $_SERVER['PHP_
 
 $uploadsDirectoryThumbs = '../img/uploads/thumbs/';
 $uploadsDirectoryGrans = '../img/uploads/grans/';
-$uploadsURL = $_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT'].'/IASTracker/img/uploads/';
+$uploadsURL = $_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT'].'/img/uploads/';
 $fieldName = 'image'; 
 $thumbWidth = 450;
 $thumbHeight = 300;
