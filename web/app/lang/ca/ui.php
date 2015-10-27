@@ -134,5 +134,6 @@ return array(
 		'polygon' => 'Polígon',
 		'description' => 'Descripció',
 		'errorStoring' => 'Hi ha algun error al formulari, revisa\'l!',
+		'acceptUserTerms' => 'Registran-te, acceptes els <a href=":link" target="_blank">acords d\'usuari</a>'
 
 	);
