@@ -88,7 +88,7 @@ class UserController extends RequestController {
 			$element->touch();
 			$element->save();
 
-			Mail::send('emails.welcome', array('token' => $token), function($message) use ($inMail)
+			Mail::send('emails.welcome', array('token' => $token, 'user' => $inMail), function($message) use ($inMail)
 			{
 
 				$message->to($inMail, '')->subject(Lang::get('email.welcomeSubject').'!');
