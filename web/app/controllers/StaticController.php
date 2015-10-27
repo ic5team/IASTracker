@@ -42,7 +42,7 @@ class StaticController extends Controller {
 		if(Input::has('lang'))
 			$locale = Input::get('lang');
 
-		return Redirect::to(Config::get('app.url').'/html/PRIVACYSTATEMENTIASTRACKER_'.strtoupper($locale).'.htm');
+		return Redirect::to(Config::get('app.url').'/html/USERAGREEMENTSIASTRACKER_'.strtoupper($locale).'.htm');
 
 	}
 
