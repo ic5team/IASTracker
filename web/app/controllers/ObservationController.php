@@ -145,6 +145,7 @@ class ObservationController extends RequestController {
 			$images = Input::get('observationImages');
 			$userId = null;
 			$languageId = null;
+			$user = null;
 
 			if(Input::has('token'))
 			{
