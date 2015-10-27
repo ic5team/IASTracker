@@ -50,31 +50,38 @@ class AdminController extends BaseController {
 			$defaultLanguageId = $configuration->defaultLanguageId;
 
 			$data = $this->getBasicData();
+			$data->obs = array();
 			$validator = IASValidator::userId(Auth::user()->id)->first();
-			$areas = AreaValidator::validatorId($validator->id)->get();
-			$ids = array();
-			for($i=0; $i<count($areas); ++$i)
+			if(null != $validator)
 			{
 
-				$ids[] =$areas[$i]->areaId;
+				$areas = AreaValidator::validatorId($validator->id)->get();
+				$ids = array();
+				for($i=0; $i<count($areas); ++$i)
+				{
 
-			}
+					$ids[] =$areas[$i]->areaId;
 
-			$mapData = $this->getMapData();
-			$data = (object) array_merge((array) $data, (array) $mapData);
+				}
 
-			$data->obs = Observation::status(2)->areas($ids)->get();
-			for($i=0; $i<count($data->obs); ++$i)
-			{
+				$mapData = $this->getMapData();
+				$data = (object) array_merge((array) $data, (array) $mapData);
 
-				$current = $data->obs[$i];
-				$current->ias = new stdClass();
-				$current->ias = IAS::find($current->IASId);
-				$current->ias->description = $current->ias->getDescriptionData($languageId, $defaultLanguageId);
-				$current->ias->image = $current->ias->getDefaultImageData($languageId, $defaultLanguageId);
-				$current->images = ObservationImage::withObservationId($current->id)->get();
-				$current->user = User::find($current->userId);
-				$data->obs[$i] = $current;
+				$data->obs = Observation::status(2)->areas($ids)->get();
+
+				for($i=0; $i<count($data->obs); ++$i)
+				{
+
+					$current = $data->obs[$i];
+					$current->ias = new stdClass();
+					$current->ias = IAS::find($current->IASId);
+					$current->ias->description = $current->ias->getDescriptionData($languageId, $defaultLanguageId);
+					$current->ias->image = $current->ias->getDefaultImageData($languageId, $defaultLanguageId);
+					$current->images = ObservationImage::withObservationId($current->id)->get();
+					$current->user = User::find($current->userId);
+					$data->obs[$i] = $current;
+
+				}
 
 			}
 

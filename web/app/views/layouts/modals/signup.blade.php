@@ -36,7 +36,7 @@
 					</div>
 					<div class="row">
 						<div class="col-md-12">
-							{{Lang::get('ui.acceptUserTerms', array('link' => Config::get('app.url').'/terms'))}}
+							{{Lang::get('ui.acceptUserTerms', array('link' => Config::get('app.url').'/terms?lang='.App::getLocale()))}}
 						</div>
 					</div>
 				</div>
