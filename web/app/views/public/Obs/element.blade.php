@@ -72,6 +72,10 @@
 	echo implode($str, '');
 ?>
 	</div>
+<?php
+	if(property_exists($data, 'user'))
+	{
+?>
 	<div class="col-md-4" onclick="showUser({{$data->user->id}})" style="cursor:pointer;">
 		<div class="row">
 			<div class="col-md-4">
@@ -91,4 +95,17 @@
 			</div>
 		</div>
 	</div>
+<?php
+	}
+	else
+	{
+
+?>
+	<div class="col-md-4">
+	</div>
+<?php
+
+
+	}
+?>
 </div>

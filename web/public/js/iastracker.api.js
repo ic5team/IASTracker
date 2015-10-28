@@ -59,9 +59,10 @@ IASTracker.prototype.getLastErrorMessage = function()
 IASTracker.prototype.AJAXRequest = function(url, id, doneFunction, method, values)
 {
 
+	var lang = window.location.search;
 	var asObject = this;
 	var xhr = $.ajax({
-			url: url, 
+			url: url + lang, 
 			type: method, 
 			data: values
 		})

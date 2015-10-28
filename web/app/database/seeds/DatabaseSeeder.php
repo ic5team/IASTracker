@@ -23,8 +23,6 @@ class DatabaseSeeder extends Seeder {
 		$this->call('IASTaxonsTableSeeder');
 		$this->call('IASTableSeeder');
 		$this->call('IASImagesTextTableSeeder');
-		$this->call('RepositoriesTableSeeder');
-		$this->call('IASRelatedDBsTableSeeder');
 		$this->call('StatusTableSeeder');
 		$this->call('StatusTextsTableSeeder');
 
@@ -1084,37 +1082,6 @@ class IASImagesTextTableSeeder extends Seeder {
 
 }
 
-class IASRelatedDBsTableSeeder extends Seeder {
- 
-	public function run()
-	{
-	
-		DB::table('IASRelatedDBs')->insert(array(
-			'id'  => 1,
-			'repoId' => 1,
-			'IASId' => 1,
-			'URL' => 'http://relatedDB.url',
-			'name' => 'related1',
-			'creatorId' => 1,
-			'created_at' => new DateTime,
-			'updated_at' => new DateTime
-		));
-
-		DB::table('IASRelatedDBs')->insert(array(
-			'id'  => 2,
-			'repoId' => 1,
-			'IASId' => 1,
-			'URL' => 'http://relatedDB2.url',
-			'name' => 'related2',
-			'creatorId' => 1,
-			'created_at' => new DateTime,
-			'updated_at' => new DateTime
-		));
-
-	}
-
-}
-
 class IASTaxonsTableSeeder extends Seeder {
  
 	public function run()
@@ -1211,24 +1178,6 @@ class IASTaxonsTableSeeder extends Seeder {
 			'parentTaxonId' => 1,
 			'creatorId' => 1,
 			'created_at' => new DateTime,
-			'updated_at' => new DateTime
-		));
-
-	}
-
-}
-
-class RepositoriesTableSeeder extends Seeder {
- 
-	public function run()
-	{
-	
-		DB::table('Repositories')->insert(array(
-			'id'  => 1,
-			'name' => 'Repo1',
-			'URL' => 'repo1URL',
-			'creatorId' => 1,
-			'created_at' => new DateTime,   
 			'updated_at' => new DateTime
 		));
 

@@ -68,7 +68,7 @@
 ?>
 									<li>
 										<a href="?lang={{$data->languages[$i]->locale}}">
-											{{ HTML::image('img/thumbs/flags/'.$data->languages[$i]->img, $data->languages[$i]->name, array('class' => 'navbar-logo-img', 'pull-right')); }}
+											{{ HTML::image('img/thumbs/flags/'.$data->languages[$i]->img, $data->languages[$i]->name, array('class' => 'navbar-logo-img', 'pull-right', 'style' => 'width: 30px;margin-top:10px;')); }}
 										</a>
 									</li>
 <?php
@@ -80,7 +80,7 @@
 						<li id="navbar-info">
 							<ul class="nav navbar-nav">
 								<li>
-									<a href="ic5Info?lang={{App::getLocale()}}" target="_blank">
+									<a href="ic5Info?lang={{App::getLocale()}}" target="_blank" style="padding-top: 0px; padding-bottom: 0px; margin-top:10px;">
 										{{ HTML::image('img/thumbs/flags/ic5Logo.png', '', array('class' => 'navbar-logo-img', 'pull-right')); }}
 									</a>
 								</li>

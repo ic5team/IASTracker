@@ -95,22 +95,28 @@
 ?>
 	</div>
 </div>
+<?php
+	$num = count($data->relatedDBs);
+	if(0 != $num)
+	{
+?>
 <div class="row">
 	<div class="col-md-12">
 		<h2>{{Lang::get('ui.moreData')}}</h2>
 	</div>
 </div>
 <?php
-	$num = count($data->relatedDBs);
-	$str = array();
-	for($i=0; $i<$num; ++$i)
-	{
+		$str = array();
+		for($i=0; $i<$num; ++$i)
+		{
 
-		$current = $data->relatedDBs[$i];
-		$str[] = '<div class="row"><div class="col-md-12"><a href="'.$current->URL.'" target="_blank">'.$current->name.'</a> <a href="'.$current->repoURL.'" target="_blank">'.$current->repoName.'</a></div></div>';
+			$current = $data->relatedDBs[$i];
+			$str[] = '<div class="row"><div class="col-md-12"><a href="'.$current->URL.'" target="_blank">'.$current->name.'</a> | <a href="'.$current->repoURL.'" target="_blank">'.$current->repoName.'</a></div></div>';
+
+		}
+
+		echo implode($str, '');
 
 	}
-
-	echo implode($str, '');
 
 ?>
