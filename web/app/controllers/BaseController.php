@@ -15,6 +15,25 @@ class BaseController extends Controller {
 
 	}
 
+	/*!
+		Obté la instància de la classe BaseController
+		@return La única instància de la classe BaseController
+	*/
+	public static function getInstance()
+	{
+
+		static $inst = null;
+		if($inst === null)
+		{
+
+			$inst = new BaseController();
+
+		}
+
+		return $inst;
+
+	}
+
 	public function getBasicData()
 	{
 

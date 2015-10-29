@@ -13,6 +13,7 @@ var activeTimeOut = null;
 
 $(document).ready(function () {
 
+	$().tooltip();
 	$("#observedCheckBox").attr("disabled", true);
 	$("#validatedCheckBox").attr("disabled", true);
 	$("#userObsCheckBox").attr("disabled", true);

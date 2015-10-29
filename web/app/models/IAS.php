@@ -148,6 +148,7 @@ class IAS extends Eloquent {
 			$repo = $relatedDB->repository;
 			$relatedDB->repoName = $repo->name;
 			$relatedDB->repoURL = $repo->URL;
+			$relatedDB->repoDesc = $repo->description;
 			$data[] = $relatedDB;
 
 		}

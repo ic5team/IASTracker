@@ -197,12 +197,14 @@ if(property_exists($data, 'isComplete') && !$data->isComplete)
 				<div class="row">
 					<div class="col-md-12">
 						<input type="checkbox" id="observedCheckBox" class="IASCheck" onclick="showObservations" checked>
+						<span class="observedCircle"></span>
 						<span>{{Lang::get('ui.invasorObserved')}}</span>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-12">
 						<input type="checkbox" id="validatedCheckBox" class="IASCheck" onclick="showValidatedObservations" checked>
+						<span class="validatedCircle"></span>
 						<span>{{Lang::get('ui.observationValidated')}}</span>
 					</div>
 				</div>

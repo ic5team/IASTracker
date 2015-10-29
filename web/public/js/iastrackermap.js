@@ -24,11 +24,12 @@ function MapHandler(mapId, mapDescriptors, crsDescriptors, layersControlId, cont
 	this.controls = L.control.layers(this.baseMaps, this.overlayMaps, 
 		{collapsed: false, autoZIndex: false});
 	this.controls.addTo(this.map);
+	L.control.scale().addTo(this.map);
 
 	if('undefined' !== typeof layersControlId)
 	{
 
-		this.controls._container.remove();
+		$(this.controls._container).remove();
 		$('#'+layersControlId).html(this.controls.onAdd(this.map));
 
 	}
@@ -161,13 +162,13 @@ MapHandler.prototype.constructMapLayers = function(mapDescriptors)
 		if(currentMap.isOverlay)
 		{
 
-			this.overlayMaps[currentMap.name] = mapLayer.leafletData;
+			this.overlayMaps[this.generateName(currentMap)] = mapLayer.leafletData;
 
 		}
 		else
 		{
 
-			this.baseMaps[currentMap.name] = mapLayer.leafletData;
+			this.baseMaps[this.generateName(currentMap)] = mapLayer.leafletData;
 
 		}
 
@@ -192,12 +193,20 @@ MapHandler.prototype.constructMapLayers = function(mapDescriptors)
 		mapLayer.zMax = currentMap.maxZoom;
 		mapLayer.name = currentMap.name;
 		mapLayer.isVisible = true;
+		mapLayer.desc = currentMap.desc;
 
 		ret.push(mapLayer);
 
 	}
 
 	return ret;
+
+}
+
+MapHandler.prototype.generateName= function(map)
+{
+
+	return map.name + '<i class="fa fa-info-circle" style="margin-left: 10px; cursor: pointer;" title="' + map.desc + '"></i>';
 
 }
 
@@ -223,7 +232,7 @@ MapHandler.prototype.computeLayers = function(e)
 				if(!currentLayer.isVisible)
 				{
 
-					this.controls.addOverlay(currentLayer.leafletData, currentLayer.name);
+					this.controls.addOverlay(currentLayer.leafletData, this.generateName(currentLayer));
 					this.layers[i].isVisible = true;
 
 				}

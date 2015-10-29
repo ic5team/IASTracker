@@ -86,7 +86,7 @@
 								</li>
 								<li>
 									<a href="iasTrackerInfo?lang={{App::getLocale()}}" target="_blank">
-										{{ HTML::image('img/thumbs/logoIASTracker.png', '', array('class' => 'navbar-logo-img', 'pull-right')); }}
+										{{ HTML::image('img/thumbs/logoIASTracker.png', '', array('class' => 'navbar-logo-img', 'pull-right', 'style' => 'margin-top: 10px;')); }}
 									</a>
 								</li>
 							</ul>

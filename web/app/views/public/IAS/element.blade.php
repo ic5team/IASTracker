@@ -111,7 +111,7 @@
 		{
 
 			$current = $data->relatedDBs[$i];
-			$str[] = '<div class="row"><div class="col-md-12"><a href="'.$current->URL.'" target="_blank">'.$current->name.'</a> | <a href="'.$current->repoURL.'" target="_blank">'.$current->repoName.'</a></div></div>';
+			$str[] = '<div class="row"><div class="col-md-12"><a href="'.$current->URL.'" target="_blank">'.$current->name.'</a> | <a href="'.$current->repoURL.'" target="_blank" title="'.$current->repoDesc.'">'.$current->repoName.'</a></div></div>';
 
 		}
 

@@ -1,2 +1,64 @@
 Modificar el manual d'instruccions per afegir un idioma
 	S'ha de traduir també l'ic5Info i l'IASInfo amb el nom del locale corresponent
+	Traduir també el privacy i els acords d'usuari
+	Configurar email
+
+App:
+	Icona de l'app sense nom
+	No fixar el nivell de zoom quan es fa una observació
+	Afegir un botó al menú per fer el login i el registre
+	Botó de configuració encara que l'usuari no estigui logejat. Els camps d'usuari han d'estar bloquejats però la selecció d'idioma s'ha de poder fer
+	Observacions sense foto només si registrat
+	Limitar num d'imatges per observació i mida a 4MB
+	Canvi d'idioma
+	Veure les altres imatges de les IAS, no només la principal
+	Descarregar només els IAS seguents al iniciar, no tots
+	Funcionament igual que a l'ajuda
+	Provar resolució 480x800
+	El botó d'Skip de no gps no funciona i duplica el menú
+	Controlar que el servidor no respongui
+	Bloquejar el botó de crear la llista mentre no t'hagi trobat la ubicació
+	Tancar el menú de selecció de la capa al seleccionar-ne una
+	Canviar mida del text i les icones de la barra superior
+	La fletxa de tornar enrera no funciona quan l'app queda bloquejada
+	La fletxa de tornar enrera no surt de l'app quan toca
+	Arreglar que no desapareguin les estrelles de preferits quan es canvia el tipus de nom
+	Optimitzar quan selecciones un taxó, que no es vegi primer l'inicial i després es mogui
+	Material design
+	Afegir Crashlytics
+Web:
+	Public:
+		Marcar l'idioma seleccionat
+		Ordre de les capes definit
+		Afegir taxons en els altres idiomes
+		Integrar les pàgines de qui som i del projecte amb la imatge general
+
+		www.iastracker.ic5team.com ha de redirigir a iastracker.ic5team.org
+		Nivell de zoom suficient on el NDVI no es vegi repetit. Al fer el primer zoom canviar a l'OSM
+		Agrupació d'observacions per quan n'hi hagin moltes
+		No va en l'explorer
+		Al tirar enrera quan hi ha una capa seleccionada que es deixa de veure, s'hauría de treure
+	Admin:
+		Eliminar observació
+		Afegir IAS
+		Modificar IAS
+		Eliminar IAS
+		Veure les meves validacions
+		L'usuari ha de poder borrar una imatge
+		Text al validar una observació. Si no es valida el text és obligatori sinó opcional
+		L'usuari ha de poder veure les seves observacions
+		Al validar una observació veure les que ha fet el mateix usuari de la mateixa espècie el mateix dia, així el validador en podrà descartar alguna
+		Al validar una observació indicar el % d'observacions de l'usuari validades
+		Obtenir EXIF de la imatge i marcar la posició d'on s'ha fet al mapa per si és molt diferent
+	
+	Eliminar periòdicament les imatges del directori upload i les que no s'utilitzen
+
+IC5Team: 
+	Texts Google Play + App Store
+	Ordre de les capes
+	Nom dels taxons en altres idiomes
+	Escala de colors de l'NDVI
+
+Fase 2: 
+	Els repositoris han de tenir les descripcions en tots els idiomes
+	Les bd relacionades han de tenir l'idioma en què estan
