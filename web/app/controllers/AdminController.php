@@ -79,9 +79,18 @@ class AdminController extends BaseController {
 					$current->ias->image = $current->ias->getDefaultImageData($languageId, $defaultLanguageId);
 					$current->images = ObservationImage::withObservationId($current->id)->get();
 					$user = User::find($current->userId);
-					$current->user = $user;
-					$current->user->observations = $user->getObservationsNumber();
-					$current->user->validated = $user->getValidatedNumber();
+					if(null != $user)
+					{
+
+						$current->user = $user;
+						$current->user->observations = $user->getObservationsNumber();
+						$current->user->validated = $user->getValidatedNumber();
+
+					}
+					else
+					{
+						
+					}
 					$data->obs[$i] = $current;
 
 				}
