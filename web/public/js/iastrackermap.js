@@ -21,8 +21,10 @@ function MapHandler(mapId, mapDescriptors, crsDescriptors, layersControlId, cont
 		zoom: 2,
 	});
 
+	var collapsed = ('undefined' == layersControlId || null == layersControlId);
+
 	this.controls = L.control.layers(this.baseMaps, this.overlayMaps, 
-		{collapsed: false, autoZIndex: false});
+		{collapsed: collapsed, autoZIndex: false});
 	this.controls.addTo(this.map);
 	L.control.scale().addTo(this.map);
 
@@ -62,6 +64,14 @@ function MapHandler(mapId, mapDescriptors, crsDescriptors, layersControlId, cont
 		$('#'+observationsControlId).draggable();
 
 	}
+
+}
+
+MapHandler.prototype.fitBounds = function(markers)
+{
+
+	var group = new L.featureGroup(markers);
+	this.map.fitBounds(group.getBounds());
 
 }
 
@@ -270,6 +280,10 @@ MapHandler.prototype.createMarker = function(lat, lon, accuracy, color, fillColo
 		};
 
 	var marker;
+	var options;
+
+	if('undefined' == typeof options)
+		options = {};
 
 	if('undefined' !== typeof icon)
 	{
@@ -292,11 +306,18 @@ MapHandler.prototype.createMarker = function(lat, lon, accuracy, color, fillColo
 
 }
 
-MapHandler.prototype.addMarker = function(markerObj)
+MapHandler.prototype.addMarker = function(markerObj, setView)
 {
 
 	markerObj.marker.addTo(this.map);
 	markerObj.circle.addTo(this.map);
+
+	if(setView)
+	{
+
+		this.map.setView(markerObj.marker._latlng, 16, {animate: true});
+
+	}
 
 }
 

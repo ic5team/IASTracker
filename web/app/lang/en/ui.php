@@ -133,13 +133,6 @@ return array(
 		'zIndex' => 'Depth index',
 		'polygon' => 'Polygon',
 		'description' => 'Description',
-		'validate' => 'Validate',
-		'discard' => 'Discard',
-		'obsDescriptionTitle' => 'Observation description',
-		'obsImageTitle' => 'Observation images',
-		'howMany' => 'How many?',
-		'few' => 'Few',
-		'one' => 'One',
-		'several' => 'Several'
+		
 
 	);

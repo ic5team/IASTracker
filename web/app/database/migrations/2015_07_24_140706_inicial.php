@@ -253,6 +253,7 @@ class Inicial extends Migration {
 			$table->integer('userId')->unsigned()->nullable();
 			$table->integer('languageId')->unsigned()->nullable();
 			$table->integer('validatorId')->unsigned()->nullable();
+			$table->text('validationText')->unsigned()->nullable();
 			$table->integer('statusId')->unsigned();
 			$table->text('notes')->nullable();
 			$table->timestamp('validatorTS')->nullable();
@@ -348,7 +349,6 @@ class Inicial extends Migration {
 		});
 
 		DB::statement('CREATE EXTENSION postgis');
-		DB::statement("SELECT AddGeometryColumn ('observations','geom',4326,'POINT',2)");
 		DB::statement("SELECT AddGeometryColumn ('regions','geom',4326,'MULTIPOLYGON',2)");
 		DB::statement("SELECT AddGeometryColumn ('Areas','geom',4326,'MULTIPOLYGON',2)");
 		DB::statement("SELECT AddGeometryColumn ('States','geom',4326,'MULTIPOLYGON',2)");

@@ -94,8 +94,6 @@ class ObservationController extends RequestController {
 	protected function showListView($first, $num)
 	{
 
-		$elements = $this->getElements($first, $num);
-		return Response::view('adm/Obs/list', array('data' => $elements));
 
 	}
 
@@ -106,7 +104,6 @@ class ObservationController extends RequestController {
 	protected function showCreateForm()
 	{
 
-		return Response::view('adm/Obs/create');
 
 	}
 
@@ -271,9 +268,6 @@ class ObservationController extends RequestController {
 	*/
 	protected function showResourceView($id)
 	{
-
-		$element = $this->getElements($id);
-		return Response::view('adm/Obs/element', array('data' => $element));
 
 	}
 

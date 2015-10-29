@@ -78,7 +78,10 @@ class AdminController extends BaseController {
 					$current->ias->description = $current->ias->getDescriptionData($languageId, $defaultLanguageId);
 					$current->ias->image = $current->ias->getDefaultImageData($languageId, $defaultLanguageId);
 					$current->images = ObservationImage::withObservationId($current->id)->get();
-					$current->user = User::find($current->userId);
+					$user = User::find($current->userId);
+					$current->user = $user;
+					$current->user->observations = $user->getObservationsNumber();
+					$current->user->validated = $user->getValidatedNumber();
 					$data->obs[$i] = $current;
 
 				}
@@ -91,7 +94,7 @@ class AdminController extends BaseController {
 		else
 		{
 
-			return Redirect::to('/');
+			App::abort(403);
 
 		}
 
@@ -130,7 +133,7 @@ class AdminController extends BaseController {
 		else
 		{
 
-			return Redirect::to('/');
+			App::abort(403);
 
 		}
 
@@ -156,7 +159,7 @@ class AdminController extends BaseController {
 		else
 		{
 
-			return Redirect::to('/');
+			App::abort(403);
 
 		}
 

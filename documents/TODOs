@@ -33,10 +33,8 @@ Web:
 		Afegir taxons en els altres idiomes
 		Integrar les pàgines de qui som i del projecte amb la imatge general
 
-		www.iastracker.ic5team.com ha de redirigir a iastracker.ic5team.org
 		Nivell de zoom suficient on el NDVI no es vegi repetit. Al fer el primer zoom canviar a l'OSM
 		Agrupació d'observacions per quan n'hi hagin moltes
-		No va en l'explorer
 		Al tirar enrera quan hi ha una capa seleccionada que es deixa de veure, s'hauría de treure
 	Admin:
 		Eliminar observació

@@ -104,6 +104,8 @@ return array(
 		'noObservationsToValidate' => 'No hi ha observacions pendents de validar',
 		'administration' => 'Administració',
 		'users' => 'Usuaris',
+		'user' => 'Usuari',
+		'userUnknown' => 'Anònim',
 		'obs' => 'Observacions',
 		'observationsNumber' => ':num observacions realitzades',
 		'validatedNumber' => ':num observacions validades',
@@ -137,5 +139,17 @@ return array(
 		'acceptUserTerms' => 'Registran-te, acceptes els <a href=":link" target="_blank">acords d\'usuari</a>',
 		'forbidden' => 'No tens permís per accedir a aquesta pàgina',
 		'notFound' => 'No s\'ha trobat la pàgina que estas buscant',
+		'validate' => 'Valida',
+		'discard' => 'Descarta',
+		'obsDescriptionTitle' => 'Descripció de l\'observació',
+		'obsImageTitle' => 'Imatges de l\'observació',
+		'obsMapTitle' => 'Localització',
+		'howMany' => 'Quants?',
+		'few' => 'Poques',
+		'one' => 'Una',
+		'several' => 'Algunes',
+		'observationImagesWarning' => 'Comprova al mapa que la distància entre les imatges i la observació no sigui molt gran',
+		'observationImagesError' => 'Les imatges no s\'han pogut geolocalitzar!',
+		'noObservationImages' => 'No hi ha imatges en aquesta observació'
 
 	);
