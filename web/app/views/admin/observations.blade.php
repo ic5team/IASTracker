@@ -71,7 +71,7 @@
 			for($j=0; $j<count($current->images); ++$j)
 			{
 
-				$exif = exif_read_data(Config::get('app.urlImg').$current->images[$j]->URL);
+				$exif = exif_read_data('./img/'.$current->images[$j]->URL);
 				$imageLat = null;
 				$imageParams = array('style'=>'width: 150px;', 'class'=>'obs'.$current->id.'Image');
 				if(array_key_exists('GPSLatitude', $exif))
