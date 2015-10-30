@@ -22,7 +22,7 @@ class IASValidator extends Eloquent {
 	public function scopeUserId($query, $id)
 	{
 
-		return $query->orderBy('userId', $id);
+		return $query->where('userId', '=', $id);
 
 	}
 
