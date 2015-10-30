@@ -67,22 +67,23 @@
 			{
 
 				$exif = exif_read_data('./img/'.$current->images[$j]->URL);
-				$coordArray = explode('/', $exif['GPSLatitude'][0]);
-				$latDegrees = (count($coordArray>1) ? floatval($coordArray[0])/floatval($coordArray[1]) : $coordArray[0]);
-				$coordArray = explode('/', $exif['GPSLatitude'][1]);
-				$latMinutes = (count($coordArray>1) ? floatval($coordArray[0])/floatval($coordArray[1]) : $coordArray[0]);
-				$coordArray = explode('/', $exif['GPSLatitude'][2]);
-				$latSeconds = (count($coordArray>1) ? floatval($coordArray[0])/floatval($coordArray[1]) : $coordArray[0]);
-				$coordArray = explode('/', $exif['GPSLongitude'][0]);
-				$lonDegrees = (count($coordArray>1) ? floatval($coordArray[0])/floatval($coordArray[1]) : $coordArray[0]);
-				$coordArray = explode('/', $exif['GPSLongitude'][1]);
-				$lonMinutes = (count($coordArray>1) ? floatval($coordArray[0])/floatval($coordArray[1]) : $coordArray[0]);
-				$coordArray = explode('/', $exif['GPSLongitude'][2]);
-				$lonSeconds = (count($coordArray>1) ? floatval($coordArray[0])/floatval($coordArray[1]) : $coordArray[0]);
-				$imageLat = null;
 				$imageParams = array('style'=>'width: 150px;', 'class'=>'obs'.$current->id.'Image');
 				if(array_key_exists('GPSLatitude', $exif))
 				{
+
+					$coordArray = explode('/', $exif['GPSLatitude'][0]);
+					$latDegrees = (count($coordArray>1) ? floatval($coordArray[0])/floatval($coordArray[1]) : $coordArray[0]);
+					$coordArray = explode('/', $exif['GPSLatitude'][1]);
+					$latMinutes = (count($coordArray>1) ? floatval($coordArray[0])/floatval($coordArray[1]) : $coordArray[0]);
+					$coordArray = explode('/', $exif['GPSLatitude'][2]);
+					$latSeconds = (count($coordArray>1) ? floatval($coordArray[0])/floatval($coordArray[1]) : $coordArray[0]);
+					$coordArray = explode('/', $exif['GPSLongitude'][0]);
+					$lonDegrees = (count($coordArray>1) ? floatval($coordArray[0])/floatval($coordArray[1]) : $coordArray[0]);
+					$coordArray = explode('/', $exif['GPSLongitude'][1]);
+					$lonMinutes = (count($coordArray>1) ? floatval($coordArray[0])/floatval($coordArray[1]) : $coordArray[0]);
+					$coordArray = explode('/', $exif['GPSLongitude'][2]);
+					$lonSeconds = (count($coordArray>1) ? floatval($coordArray[0])/floatval($coordArray[1]) : $coordArray[0]);
+					$imageLat = null;
 
 					$imageLat = (($exif['GPSLatitudeRef'] == 'S') ? -1 : 1 ) * ($latDegrees + $latMinutes/60 + $latSeconds/3600);
 					$imageLon = (($exif['GPSLongitudeRef'] == 'W') ? -1 : 1 ) * ($lonDegrees + $lonMinutes/60 + $lonSeconds/3600);
