@@ -23,6 +23,9 @@ class AdminController extends BaseController {
 				if(null != $validator)
 					$current->organization = $validator->organization;
 
+				if('' == $current->photoURL)
+					$current->photoURL = 'users/user.png';
+
 				$data->users[$i] = $current;
 
 			}

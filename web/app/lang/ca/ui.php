@@ -110,6 +110,7 @@ return array(
 		'observationsNumber' => ':num observacions realitzades',
 		'validatedNumber' => ':num observacions validades',
 		'yes' => 'Sí',
+		'no' => 'No',
 		'isExpert' => 'És expert?',
 		'isAdmin' => 'És administrador?',
 		'isValidator' => 'És validador?',
