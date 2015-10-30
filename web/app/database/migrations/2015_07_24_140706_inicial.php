@@ -255,6 +255,7 @@ class Inicial extends Migration {
 			$table->integer('validatorId')->unsigned()->nullable();
 			$table->text('validationText')->unsigned()->nullable();
 			$table->integer('statusId')->unsigned();
+			$table->boolean('isAutoValidated')->nullable();
 			$table->text('notes')->nullable();
 			$table->timestamp('validatorTS')->nullable();
 			$table->decimal('latitude', 9, 6);

@@ -174,8 +174,7 @@ class ObservationController extends RequestController {
 			if(null != $user && $user->isExpert)
 			{
 
-				$element->validatorId = $userId;
-				$element->validatorTS = new DateTime();
+				$element->isAutoValidated = true;
 				$element->statusId = 1;
 
 			}
