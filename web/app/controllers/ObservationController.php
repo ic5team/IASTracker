@@ -287,6 +287,7 @@ class ObservationController extends RequestController {
 			$element->validatorId = $user->id;
 			$element->validatorTS = new DateTime();
 			$element->statusId = Input::get('status');
+			$element->validationText = Input::get('text');
 			$element->touch();
 			$element->save();
 

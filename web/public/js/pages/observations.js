@@ -11,6 +11,10 @@ $(document).ready(function() {
 	    shadowAnchor: [12, 40]  // the same for the shadow
 	});
 
+	$('.insideCollapseButton').click(function(e) {
+		e.stopPropagation();
+	});
+
 	$('.obsCollapse').on('show.bs.collapse', function() {
 		var id = $(this).attr('data-id');
 
@@ -90,21 +94,65 @@ $(document).ready(function() {
 
 });
 
+function showValidationModal(id, isValidation)
+{
+
+	if(isValidation)
+	{
+	
+		$('#validateButton').attr('onclick', 'validate(' + id + ')');
+		$('#discardButton').hide();
+		$('#validateButton').show();
+
+	}
+	else
+	{
+
+		$('#discardButton').attr('onclick', 'discard(' + id + ')');
+		$('#discardButton').show();
+		$('#validateButton').hide();
+
+	}
+
+	$('#validationTextError').hide();
+	$('#serverError').hide();
+	$('#modalButtons').show();
+	$('#modalLoading').hide();
+	$('#validationText').val('');
+
+	$('#validationModal').modal();
+
+}
+
 function validate(id)
 {
 
-	$('obs' + id + 'Button').hide();
-	$('loading' + id).show();
-	api.validateObservation(id, obsStateChanged);
+	$('#modalButtons').hide();
+	$('#modalLoading').show();
+	var text = $('#validationText').val();
+	api.validateObservation(id, text, obsStateChanged);
 
 }
 
 function discard(id)
 {
 
-	$('obs' + id + 'Button').hide();
-	$('loading' + id).show();
-	api.discardObservation(id, obsStateChanged);
+	var text = $.trim($('#validationText').val());
+	if('' != text)
+	{
+
+		$('#modalButtons').hide();
+		$('#modalLoading').show();
+
+		api.discardObservation(id, text, obsStateChanged);
+
+	}
+	else
+	{
+
+		$('#validationTextError').show();
+
+	}
 
 }
 
@@ -112,11 +160,19 @@ function obsStateChanged(data)
 {
 
 	var obj = data;
-	if (!obj.hasOwnProperty('error'))
+	if (!obj.hasOwnProperty('ok'))
 	{
 
+		$('#validationModal').modal('hide');
 		$('#panel'+obj).remove();
 		$('#collapse'+obj).remove();
+
+	}
+	else
+	{
+
+		$('#serverErrorMessage').html(obj.msg + ': ' + obj.internalMsg);
+		$('#serverError').show();
 
 	}
 

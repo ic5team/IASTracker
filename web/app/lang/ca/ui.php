@@ -150,6 +150,8 @@ return array(
 		'several' => 'Algunes',
 		'observationImagesWarning' => 'Comprova al mapa que la distància entre les imatges i la observació no sigui molt gran',
 		'observationImagesError' => 'Les imatges no s\'han pogut geolocalitzar!',
-		'noObservationImages' => 'No hi ha imatges en aquesta observació'
+		'noObservationImages' => 'No hi ha imatges en aquesta observació',
+		'addValidationText' => 'Introdueix un comentari a la validació',
+		'validationTextError' => 'El text de validació és un camp requerit',
 
 	);
