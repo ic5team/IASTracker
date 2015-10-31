@@ -134,6 +134,14 @@ class CreateForeignKeys extends Migration {
 		Schema::table('IASTaxons', function(Blueprint $table)
 		{
 			$table->foreign('parentTaxonId')->references('id')->on('IASTaxons');
+			$table->foreign('creatorId')->references('id')->on('Users')
+				->onDelete('cascade');
+		});
+
+		Schema::table('IASTaxonNames', function(Blueprint $table)
+		{
+			$table->foreign('taxonId')->references('id')->on('IASTaxons')
+				->onDelete('cascade');
 			$table->foreign('languageId')->references('id')->on('Languages')
 				->onDelete('cascade');
 			$table->foreign('creatorId')->references('id')->on('Users')
@@ -350,6 +358,15 @@ class CreateForeignKeys extends Migration {
 			$table->dropForeign('IASTaxons_parentTaxonId_foreign');
 			$table->dropForeign('IASTaxons_languageId_foreign');
 			$table->dropForeign('IASTaxons_creatorId_foreign');
+		});
+
+		Schema::table('IASTaxonNames', function(Blueprint $table)
+		{
+
+			$table->dropForeign('IASTaxonNames_taxonId_foreign');
+			$table->dropForeign('IASTaxonNames_languageId_foreign');
+			$table->dropForeign('IASTaxonNames_creatorId_foreign');
+
 		});
 
 		Schema::table('observations', function(Blueprint $table)

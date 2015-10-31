@@ -100,6 +100,7 @@ class IASController extends RequestController {
 		{
 
 			$element = $taxons[$i];
+			$element->name = $taxons[$i]->getName($languageId, $defaultLanguageId);
 			$data->taxons[$element->id] = $element;
 
 			$lastUpdated = ($element->updated_at > $lastUpdated) ? $element->updated_at : $lastUpdated;

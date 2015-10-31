@@ -237,11 +237,18 @@ class Inicial extends Migration {
 		Schema::create('IASTaxons', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->integer('languageId')->unsigned();
-			$table->string('name', 255);
 			$table->string('appInnerColor', 25)->nullable();
 			$table->string('appOuterColor', 25)->nullable();
 			$table->integer('parentTaxonId')->unsigned()->nullable();
+			$table->integer('creatorId')->unsigned()->nullable();
+			$table->timestamps();
+		});
+
+		Schema::create('IASTaxonNames', function(Blueprint $table)
+		{
+			$table->integer('taxonId')->unsigned();
+			$table->integer('languageId')->unsigned();
+			$table->string('name', 255);
 			$table->integer('creatorId')->unsigned()->nullable();
 			$table->timestamps();
 		});
@@ -385,6 +392,7 @@ class Inicial extends Migration {
 		Schema::drop('States');
 		Schema::drop('StateAreas');
 		Schema::drop('IASTaxons');
+		Schema::drop('IASTaxonNames');
 		Schema::drop('observations');
 		Schema::drop('IASAreasValidators');
 		Schema::drop('ObservationAreas');

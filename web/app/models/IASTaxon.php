@@ -19,7 +19,8 @@ class IASTaxon extends Eloquent {
 	public function scopeWithLanguageId($query, $languageId)
 	{
 
-		return $query->where('languageId', '=', $languageId);
+		return $query->join('IASTaxonNames', 'taxonId', '=', 'id')
+			->where('languageId', '=', $languageId);
 
 	}
 
@@ -69,6 +70,23 @@ class IASTaxon extends Eloquent {
 
 		}
 		return $ids;
+
+	}
+
+	public function getName($languageId, $defaultLanguageId)
+	{
+
+		$name = IASTaxonName::withIASTaxonAndLanguageId(
+			$this->id, $languageId)->first();
+		if(null == $name)
+		{
+
+			$name = IASTaxonName::withIASTaxonAndLanguageId(
+				$this->id, $defaultLanguageId)->first();
+
+		}
+
+		return $name;
 
 	}
 

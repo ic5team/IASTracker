@@ -63,24 +63,30 @@ class IAS extends Eloquent {
 
 			$obj = new stdClass();
 			$img = $images[$i];
-			$obj->url = $img->URL;
-			$obj->attribution = $img->attribution;
-			$imgText = IASImageText::withIASImageAndLanguageId(
-				$img->id, $languageId)->first();
-			if(null == $imgText)
+
+			if($this->defaultImageId != $img->id)
 			{
 
+				$obj->url = $img->URL;
+				$obj->attribution = $img->attribution;
 				$imgText = IASImageText::withIASImageAndLanguageId(
-					$img->id, $defaultLanguageId)->first();
+					$img->id, $languageId)->first();
+				if(null == $imgText)
+				{
+
+					$imgText = IASImageText::withIASImageAndLanguageId(
+						$img->id, $defaultLanguageId)->first();
+
+				}
+
+				if(null != $imgText)
+					$obj->text = $imgText->text;
+				else
+					$obj->text = "";
+
+				$data[] = $obj;
 
 			}
-
-			if(null != $imgText)
-				$obj->text = $imgText->text;
-			else
-				$obj->text = "";
-
-			$data[] = $obj;
 
 		}
 

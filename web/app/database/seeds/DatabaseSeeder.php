@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder {
 		$this->call('ConfigurationTableSeeder');
 		$this->call('ConfigurationTextsTableSeeder');
 		$this->call('IASTaxonsTableSeeder');
+		$this->call('IASTaxonNamesTableSeeder');
 		$this->call('IASTableSeeder');
 		$this->call('IASImagesTextTableSeeder');
 		$this->call('StatusTableSeeder');
@@ -1089,8 +1090,6 @@ class IASTaxonsTableSeeder extends Seeder {
 	
 		DB::table('IASTaxons')->insert(array(
 			'id'  => 0,
-			'languageId' => 1,
-			'name' => 'Flora',
 			'appInnerColor' => 'rgba(0,255,153,0.5)',
 			'appOuterColor' => 'rgba(153,255,51,0.7)',
 			'creatorId' => 1,
@@ -1100,8 +1099,6 @@ class IASTaxonsTableSeeder extends Seeder {
 
 		DB::table('IASTaxons')->insert(array(
 			'id'  => 1,
-			'languageId' => 1,
-			'name' => 'Animals',
 			'appInnerColor' => '#ED1C24',
 			'appOuterColor' => '#F15A24',
 			'creatorId' => 1,
@@ -1111,8 +1108,6 @@ class IASTaxonsTableSeeder extends Seeder {
 
 		DB::table('IASTaxons')->insert(array(
 			'id'  => 2,
-			'languageId' => 1,
-			'name' => 'Invertebrats no artròpodes',
 			'appInnerColor' => 'rgba(41,171,226,0.5)',
 			'appOuterColor' => 'rgba(0,255,255,0.7)',
 			'parentTaxonId' => 1,
@@ -1123,8 +1118,6 @@ class IASTaxonsTableSeeder extends Seeder {
 
 		DB::table('IASTaxons')->insert(array(
 			'id'  => 3,
-			'languageId' => 1,
-			'name' => 'Artròpodes no crustacis',
 			'appInnerColor' => 'rgba(237,28,36,0.5)',
 			'appOuterColor' => 'rgba(241,90,36,0.7)',
 			'parentTaxonId' => 1,
@@ -1135,8 +1128,6 @@ class IASTaxonsTableSeeder extends Seeder {
 
 		DB::table('IASTaxons')->insert(array(
 			'id'  => 4,
-			'languageId' => 1,
-			'name' => 'Crustacis',
 			'appInnerColor' => 'rgba(51,51,255,0.5)',
 			'appOuterColor' => 'rgba(0,153,255,0.7)',
 			'parentTaxonId' => 1,
@@ -1147,8 +1138,6 @@ class IASTaxonsTableSeeder extends Seeder {
 
 		DB::table('IASTaxons')->insert(array(
 			'id'  => 5,
-			'languageId' => 1,
-			'name' => 'Rèptils',
 			'appInnerColor' => 'rgba(255,153,102,0.5)',
 			'appOuterColor' => 'rgba(255,255,51,0.7)',
 			'parentTaxonId' => 1,
@@ -1159,8 +1148,6 @@ class IASTaxonsTableSeeder extends Seeder {
 
 		DB::table('IASTaxons')->insert(array(
 			'id'  => 6,
-			'languageId' => 1,
-			'name' => 'Aus',
 			'appInnerColor' => 'rgba(153,102,255,0.5)',
 			'appOuterColor' => 'rgba(153,153,255,0.7)',
 			'parentTaxonId' => 1,
@@ -1171,11 +1158,306 @@ class IASTaxonsTableSeeder extends Seeder {
 
 		DB::table('IASTaxons')->insert(array(
 			'id'  => 7,
-			'languageId' => 1,
-			'name' => 'Mamífers',
 			'appInnerColor' => 'rgba(117,76,36,0.5)',
 			'appOuterColor' => 'rgba(198,156,109,0.7)',
 			'parentTaxonId' => 1,
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+	}
+
+}
+
+class IASTaxonNamesTableSeeder extends Seeder {
+ 
+	public function run()
+	{
+	
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 0,
+			'languageId' => 1,
+			'name' => 'Flora',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 1,
+			'languageId' => 1,
+			'name' => 'Animals',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 2,
+			'languageId' => 1,
+			'name' => 'Invertebrats no artròpodes',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 3,
+			'languageId' => 1,
+			'name' => 'Artròpodes no crustacis',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 4,
+			'languageId' => 1,
+			'name' => 'Crustacis',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 5,
+			'languageId' => 1,
+			'name' => 'Rèptils',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 6,
+			'languageId' => 1,
+			'name' => 'Aus',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 7,
+			'languageId' => 1,
+			'name' => 'Mamífers',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 0,
+			'languageId' => 2,
+			'name' => 'Flora',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 1,
+			'languageId' => 2,
+			'name' => 'Animales',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 2,
+			'languageId' => 2,
+			'name' => 'Invertebrados no artrópodos',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 3,
+			'languageId' => 2,
+			'name' => 'Artrópodos no crustáceos',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 4,
+			'languageId' => 2,
+			'name' => 'Crustáceos',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 5,
+			'languageId' => 2,
+			'name' => 'Reptiles',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 6,
+			'languageId' => 2,
+			'name' => 'Aves',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 7,
+			'languageId' => 2,
+			'name' => 'Mamíferos',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 0,
+			'languageId' => 3,
+			'name' => 'Plantes',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 1,
+			'languageId' => 3,
+			'name' => 'Animals',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 2,
+			'languageId' => 3,
+			'name' => 'Invertébrés non-arthropodes',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 3,
+			'languageId' => 3,
+			'name' => 'Arthropodes non-crustacés',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 4,
+			'languageId' => 3,
+			'name' => 'Crustacés',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 5,
+			'languageId' => 3,
+			'name' => 'Reptiles',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 6,
+			'languageId' => 3,
+			'name' => 'Oiseaux',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 7,
+			'languageId' => 3,
+			'name' => 'Mammifères',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 0,
+			'languageId' => 4,
+			'name' => 'Plants',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 1,
+			'languageId' => 4,
+			'name' => 'Animals',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 2,
+			'languageId' => 4,
+			'name' => 'Non-arthropod invertebrates',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 3,
+			'languageId' => 4,
+			'name' => 'Bugs',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 4,
+			'languageId' => 4,
+			'name' => 'Crustaceans',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 5,
+			'languageId' => 4,
+			'name' => 'Reptiles',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 6,
+			'languageId' => 4,
+			'name' => 'Birds',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 7,
+			'languageId' => 4,
+			'name' => 'Mammals',
 			'creatorId' => 1,
 			'created_at' => new DateTime,
 			'updated_at' => new DateTime
