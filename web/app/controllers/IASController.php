@@ -80,6 +80,7 @@ class IASController extends RequestController {
 			$aux->latinName = $element->latinName;
 			$aux->taxons = $element->taxonId;
 			$aux->image = $element->getDefaultImageData($languageId, $defaultLanguageId);
+			$aux->images = $element->getImageData($languageId, $defaultLanguageId);
 			$aux->id = $element->id;
 			$aux->relatedDBs = $element->getRelatedDBs();
 
