@@ -428,6 +428,19 @@ function showObservationsAux( onlyUserObs )
 			}
 
 		}
+		else
+		{
+
+			for(var i=0; i<otherUsersObservationsMarkers.length; ++i)
+			{
+
+				var current = otherUsersObservationsMarkers[i];
+				if($('#IASCheck' + current.marker.options.IASId).is(':checked'))
+					mapHandler.removeMarker(otherUsersObservationsMarkers[i]);
+
+			}
+
+		}
 
 	}
 	else
@@ -442,17 +455,12 @@ function showObservationsAux( onlyUserObs )
 
 		}
 
-		if(!onlyUserObs)
+		for(var i=0; i<otherUsersObservationsMarkers.length; ++i)
 		{
 
-			for(var i=0; i<otherUsersObservationsMarkers.length; ++i)
-			{
-
-				var current = otherUsersObservationsMarkers[i];
-				if($('#IASCheck' + current.marker.options.IASId).is(':checked'))
-					mapHandler.removeMarker(otherUsersObservationsMarkers[i]);
-
-			}
+			var current = otherUsersObservationsMarkers[i];
+			if($('#IASCheck' + current.marker.options.IASId).is(':checked'))
+				mapHandler.removeMarker(otherUsersObservationsMarkers[i]);
 
 		}
 
@@ -488,6 +496,19 @@ function showValidatedAux( onlyUserObs )
 			}
 
 		}
+		else
+		{
+
+			for(var i=0; i<otherUsersValidatedMarkers.length; ++i)
+			{
+
+				var current = otherUsersValidatedMarkers[i];
+				if($('#IASCheck' + current.marker.options.IASId).is(':checked'))
+					mapHandler.removeMarker(otherUsersValidatedMarkers[i]);
+
+			}
+
+		}
 
 	}
 	else
@@ -502,17 +523,12 @@ function showValidatedAux( onlyUserObs )
 
 		}
 
-		if(!onlyUserObs)
+		for(var i=0; i<otherUsersValidatedMarkers.length; ++i)
 		{
 
-			for(var i=0; i<otherUsersValidatedMarkers.length; ++i)
-			{
-
-				var current = otherUsersValidatedMarkers[i];
-				if($('#IASCheck' + current.marker.options.IASId).is(':checked'))
-					mapHandler.removeMarker(otherUsersValidatedMarkers[i]);
-
-			}
+			var current = otherUsersValidatedMarkers[i];
+			if($('#IASCheck' + current.marker.options.IASId).is(':checked'))
+				mapHandler.removeMarker(otherUsersValidatedMarkers[i]);
 
 		}
 
