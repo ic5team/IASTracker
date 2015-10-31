@@ -76,17 +76,17 @@ class IASTaxon extends Eloquent {
 	public function getName($languageId, $defaultLanguageId)
 	{
 
-		$name = IASTaxonName::withIASTaxonAndLanguageId(
+		$taxonName = IASTaxonName::withIASTaxonAndLanguageId(
 			$this->id, $languageId)->first();
 		if(null == $name)
 		{
 
-			$name = IASTaxonName::withIASTaxonAndLanguageId(
+			$taxonName = IASTaxonName::withIASTaxonAndLanguageId(
 				$this->id, $defaultLanguageId)->first();
 
 		}
 
-		return $name;
+		return $taxonName->name;
 
 	}
 
