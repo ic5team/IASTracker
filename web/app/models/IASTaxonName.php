@@ -7,7 +7,7 @@ class IASTaxonName extends Eloquent {
 	 *
 	 * @var string
 	 */
-	protected $table = 'IASTaxonsName';
+	protected $table = 'IASTaxonName';
 
 	/**
 	 * The attributes excluded from the model's JSON form.
