@@ -4,6 +4,8 @@
 	@parent
 	{{ HTML::style('css/lightbox.css'); }}
 	{{ HTML::style('css/leaflet.css'); }}
+	{{ HTML::style('css/MarkerCluster.Default.css'); }}
+	{{ HTML::style('css/MarkerCluster.css'); }}
 	{{ HTML::style('css/bootstrap-switch.min.css'); }}
 	{{ HTML::style('css/bootstrap-datetimepicker.min.css'); }}
 	<?php
@@ -30,7 +32,7 @@ if(property_exists($data, 'isComplete') && !$data->isComplete)
 	{{ HTML::script('js/bootstrap-datetimepicker.min.js'); }}
 	{{ HTML::script('js/catiline.js'); }}
 	{{ HTML::script('js/leaflet.shapefile.js'); }}
-	{{ HTML::script('js/leaflet.google.js'); }}
+	{{ HTML::script('js/leaflet.markercluster.js'); }}
 	{{ HTML::script('js/jcrop/js/jquery.Jcrop.min.js'); }}
 	{{ HTML::script('js/forms/completa-usuari.js'); }}
 	{{ HTML::script('js/completa-usuari.js'); }}
@@ -176,6 +178,7 @@ if(property_exists($data, 'isComplete') && !$data->isComplete)
 						<div class="row">
 							<div class="col-md-12">
 								<button role="button" class="btn btn-large btn-primary" type="button" onclick="filterObs()">{{Lang::get('ui.filter')}}</button>
+								<button role="button" class="btn btn-large btn-primary" type="button" onclick="cleanFilter()">{{Lang::get('ui.cleanFilter')}}</button>
 							</div>
 						</div>
 					</div>

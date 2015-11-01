@@ -9,6 +9,8 @@ function MapHandler(mapId, mapDescriptors, crsDescriptors, layersControlId, cont
 {
 
 	var self = this;
+	this.clusterLayer = L.markerClusterGroup({showCoverageOnHover: false});
+	this.markersLayer = L.layerGroup();
 	this.baseMaps = new Object();
 	this.overlayMaps = new Object();
 	this.crs = this.constructCRS(crsDescriptors);
@@ -20,6 +22,8 @@ function MapHandler(mapId, mapDescriptors, crsDescriptors, layersControlId, cont
 		center: mapCenter,
 		zoom: 2,
 	});
+
+	this.map.addLayer(this.clusterLayer);
 
 	var collapsed = ('undefined' == layersControlId || null == layersControlId);
 
@@ -37,10 +41,11 @@ function MapHandler(mapId, mapDescriptors, crsDescriptors, layersControlId, cont
 	}
 
 	this.map.on('moveend', function(e) {
-		self.computeLayers(e)
+		self.computeLayers(e);
 	});
 	this.map.on('zoomend', function(e) {
-		self.computeLayers(e)
+		self.computeLayers(e);
+		self.computeClustering(e);
 	});
 
 	this.computeLayers();
@@ -216,7 +221,7 @@ MapHandler.prototype.constructMapLayers = function(mapDescriptors)
 MapHandler.prototype.generateName= function(map)
 {
 
-	return map.name + '<i class="fa fa-info-circle" style="margin-left: 10px; cursor: pointer;" title="' + map.desc + '"></i>';
+	return map.name + '<i class="fa fa-info-circle" style="margin-left: 10px; cursor: pointer;" onclick=\'viewLayerInfo(event, "' + map.name + '", "' + map.desc + '")\'></i>';
 
 }
 
@@ -267,6 +272,27 @@ MapHandler.prototype.computeLayers = function(e)
 
 }
 
+MapHandler.prototype.computeClustering = function(e)
+{
+
+	var z = this.map.getZoom();
+	if(z>=16)
+	{
+
+		this.map.removeLayer(this.clusterLayer);
+		this.map.addLayer(this.markersLayer);
+
+	}
+	else
+	{
+
+		this.map.removeLayer(this.markersLayer);
+		this.map.addLayer(this.clusterLayer);
+
+	}
+
+}
+
 MapHandler.prototype.createMarker = function(lat, lon, accuracy, color, fillColor, 
 	opacity, options, callback, icon)
 {
@@ -309,8 +335,9 @@ MapHandler.prototype.createMarker = function(lat, lon, accuracy, color, fillColo
 MapHandler.prototype.addMarker = function(markerObj, setView)
 {
 
-	markerObj.marker.addTo(this.map);
-	markerObj.circle.addTo(this.map);
+	this.clusterLayer.addLayer(markerObj.marker);
+	this.markersLayer.addLayer(markerObj.marker);
+	this.markersLayer.addLayer(markerObj.circle);
 
 	if(setView)
 	{
@@ -324,8 +351,9 @@ MapHandler.prototype.addMarker = function(markerObj, setView)
 MapHandler.prototype.removeMarker = function(markerObj)
 {
 
-	this.map.removeLayer(markerObj.marker);
-	this.map.removeLayer(markerObj.circle);
+	this.clusterLayer.removeLayer(markerObj.marker);
+	this.markersLayer.removeLayer(markerObj.marker);
+	this.markersLayer.removeLayer(markerObj.circle);
 
 }
 
@@ -340,5 +368,31 @@ MapHandler.prototype.removeLayer = function(layer)
 {
 
 	this.map.removeLayer(layer);
+
+}
+
+function viewLayerInfo(event, name, innerHtml)
+{
+
+	var html = '' +
+		'<div id="layerInfoModal" class="modal fade">' +
+			'<div class="modal-dialog">' +
+				'<div class="modal-content">' +
+					'<div class="modal-header">' +
+						name +
+						'<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
+					'</div>' +
+					'<div class="modal-body" id="contentModalContents" style="text-align: center;">' +
+						innerHtml + 
+					'</div>' +
+				'</div>' +
+			'</div>' +
+		'</div>';
+	$("#layerInfoModal").remove();
+	$( "body" ).append(html);
+	$('#layerInfoModal').modal();
+
+	event.preventDefault();
+	event.stopPropagation();
 
 }

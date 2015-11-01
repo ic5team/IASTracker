@@ -154,5 +154,7 @@ return array(
 		'noObservationImages' => 'No hi ha imatges en aquesta observació',
 		'addValidationText' => 'Introdueix un comentari a la validació',
 		'validationTextError' => 'El text de validació és un camp requerit',
+		'cleanFilter' => 'Netejar',
+		'noNameUser' => 'Usuari desconegut'
 
 	);

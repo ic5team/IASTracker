@@ -1019,3 +1019,16 @@ function userReminded(data)
 	}
 
 }
+
+function cleanFilter()
+{
+
+	$('#input-group').val(-1);
+	$('#fromDate').val('');
+	$('#toDate').val('');
+	$('#input-state').val(-1);
+	$('#regionAndAreaSelect').html('');
+	$('#filterSelectLoader').hide();
+	filterObs();
+
+}

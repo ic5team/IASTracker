@@ -78,7 +78,7 @@
 		$current = $data->images[$i];
 		$img = HTML::image(Config::get('app.urlImg').$current->url,'', 
 			array('style'=>'width: 100px;'));
-		$str[] = '<a href="'.Config::get('app.urlImg').$current->url.'" data-lightbox="IASImages" data-title="'.$current->text.' '.$current->attribution.'">'.$img.'</a>';
+		$str[] = '<a href="'.Config::get('app.urlImg').$current->url.'" data-lightbox="IASImages" data-title="'.$current->text.' - '.$current->attribution.'">'.$img.'</a>';
 
 	}
 
@@ -86,7 +86,7 @@
 	{
 
 		$current = $data->images[$i];
-		$str[] = '<a href="'.Config::get('app.urlImg').$current->url.'" data-lightbox="IASImages" data-title="'.$current->text.' '.$current->attribution.'"></a>';
+		$str[] = '<a href="'.Config::get('app.urlImg').$current->url.'" data-lightbox="IASImages" data-title="'.$current->text.' - '.$current->attribution.'"></a>';
 
 	}
 

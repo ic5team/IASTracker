@@ -15,7 +15,7 @@
 				<img src="{{Config::get('app.urlImgThumbs').$current->photoURL}}" style="width:100px;" />
 			</div>
 			<div class="col-md-5">
-				<div><b>{{$current->fullName}}</b></div>
+				<div><b>{{$current->fullName or Lang::get('ui.noNameUser')}}</b></div>
 				<div>{{Lang::get('ui.observationsNumber', array('num' => $current->numObs))}}</div>
 				<div>{{Lang::get('ui.validatedNumber', array('num' => $current->numValidated))}}</div>
 				<div>{{Lang::get('ui.areYouAnExpert').' '.(($current->amIExpert) ? Lang::get('ui.yes') : Lang::get('ui.no'))}}</div>
