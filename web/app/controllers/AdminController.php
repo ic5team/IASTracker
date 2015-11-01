@@ -9,27 +9,6 @@ class AdminController extends BaseController {
 		{
 
 			$data = $this->getBasicData();
-			$data->users = User::all();
-
-			for($i=0; $i<count($data->users); ++$i)
-			{
-
-				$current = $data->users[$i];
-				$validator = IASValidator::find($current->id);
-				$current->numObs = Observation::withUserId($current->id)->count();
-				$current->numValidated = Observation::withUserId($current->id)->validated()->count();
-				$current->isValidator = (null != $validator);
-				$current->organization = '';
-				if(null != $validator)
-					$current->organization = $validator->organization;
-
-				if('' == $current->photoURL)
-					$current->photoURL = 'users/user.png';
-
-				$data->users[$i] = $current;
-
-			}
-
 			return View::make("admin/users", array('data' => $data));
 
 		}

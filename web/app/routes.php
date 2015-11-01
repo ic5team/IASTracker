@@ -55,10 +55,12 @@
 	Route::get('/v1/Maps/lastUpdate', array('uses' => 'IndexController@getLastMapUpdate'));
 	Route::get('/v1/States/{id}/Regions', array('uses' => 'StateController@getRegions'));
 	Route::get('/v1/Regions/{id}/Areas', array('uses' => 'RegionController@getAreas'));
+	Route::get('/v1/Users/', array('uses' => 'UserController@index'));
 	Route::post('/v1/Users/', array('uses' => 'UserController@store'));
 	Route::put('/v1/Users/', array('uses' => 'UserController@remind'));
 	Route::post('/v1/Users/login', array('uses' => 'UserController@login'));
 	Route::get('/v1/Users/{id}/token', array('uses' => 'UserController@checkUserToken'));
 	Route::put('/v1/Users/{id}', array('uses' => 'UserController@update'));
 	Route::get('/v1/Users/{id}', array('uses' => 'UserController@show'));
+	Route::delete('/v1/Users/{id}', array('uses' => 'UserController@destroy'));
 	Route::get('/v1/Users/{id}/Observations', array('uses' => 'UserController@getObservations'));

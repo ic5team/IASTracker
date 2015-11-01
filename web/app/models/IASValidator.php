@@ -9,7 +9,7 @@ class IASValidator extends Eloquent {
 	 */
 	protected $table = 'Validators';
 	protected $primaryKey = 'userId';
-	protected $fillable = array('userId', 'organization', 'createdId', 'created_at', 
+	protected $fillable = array('userId', 'organization', 'creatorId', 'created_at', 
 		'updated_at');
 
 	/**

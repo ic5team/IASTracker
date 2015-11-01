@@ -111,9 +111,9 @@ return array(
 		'validatedNumber' => ':num observacions validades',
 		'yes' => 'Sí',
 		'no' => 'No',
-		'isExpert' => 'És expert?',
-		'isAdmin' => 'És administrador?',
-		'isValidator' => 'És validador?',
+		'isExpert' => 'Exp?',
+		'isAdmin' => 'Admin?',
+		'isValidator' => 'Val?',
 		'organization' => 'Organització',
 		'store' => 'Guardar',
 		'ias' => 'IAS',
@@ -155,6 +155,7 @@ return array(
 		'addValidationText' => 'Introdueix un comentari a la validació',
 		'validationTextError' => 'El text de validació és un camp requerit',
 		'cleanFilter' => 'Netejar',
-		'noNameUser' => 'Usuari desconegut'
+		'noNameUser' => 'Usuari desconegut',
+		'created' => 'Creat'
 
 	);

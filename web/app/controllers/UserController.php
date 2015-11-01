@@ -11,8 +11,19 @@ class UserController extends RequestController {
 	protected function elements($first, $num)
 	{
 
-		$elements = $this->getElements($first, $num);
-		return Response::json($elements->toJson());
+		if(Auth::check())
+		{
+
+			$elements = $this->getElements($first, $num);
+			return Response::json($elements);
+
+		}
+		else
+		{
+
+			App::abort(403);
+
+		}
 
 	}
 
@@ -24,9 +35,6 @@ class UserController extends RequestController {
 	*/
 	protected function showListView($first, $num)
 	{
-
-		$elements = $this->getElements($first, $num);
-		return Response::view('adm/User/list', array('data' => $elements));
 
 	}
 
@@ -427,8 +435,66 @@ class UserController extends RequestController {
 	protected function getElements($first, $num)
 	{
 
-		return User::orderBy('username')
-			->skip($first)->take($num)->get();
+		$query = null;
+		$data = new stdClass();
+		if(Input::has('draw'))
+		{
+
+			try {
+
+				//Datatable request
+				$draw = Input::get('draw');
+				$search = Input::get('search');
+				$orders = Input::get('order');
+				$columns = Input::get('columns');
+				//$users = User::orderBy('username')
+				//->skip($first)->take($num)->get();
+				$users = User::withDataTableRequest($search, $orders, $columns)->get();
+				$data->draw = intval($draw);
+				$data->recordsTotal = User::count();
+				for($i=0; $i<count($users); ++$i)
+				{
+
+					$current = $users[$i];
+					$current->DT_RowId = $current->id;
+					$current->photoURL = Config::get('app.urlImgThumbs').$current->photoURL;
+					$current->observationNumber = $current->getObservationsNumber();
+					$current->validatedNumber = $current->getValidatedNumber();
+					$validator = IASValidator::userId($current->id)->first();
+					$current->isValidator = false;
+					if(null != $validator)
+					{
+
+						$current->isValidator = true;
+						$current->organization = $validator->organization;
+
+					}
+
+					$users[$i] = $current;
+
+				}
+
+				$data->recordsFiltered = count($users);
+				$data->data = $users;
+
+			}
+			catch(Exception $e)
+			{
+
+				$data->error = $e->getMessage();
+
+			}
+
+		}
+		else
+		{
+
+			$data = User::orderBy('username')
+				->skip($first)->take($num)->get();
+
+		}
+
+		return $data;
 
 	}
 

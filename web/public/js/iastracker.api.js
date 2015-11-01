@@ -199,6 +199,16 @@ IASTracker.prototype.getUser = function(userId, doneFunction, destinationId)
 
 }
 
+IASTracker.prototype.getUsers = function(data, doneFunction, destinationId)
+{
+
+	var completeURL = this.users.entryPoint;
+	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
+
+	return this.AJAXRequest(completeURL, destId, doneFunction, 'GET', data);
+
+}
+
 IASTracker.prototype.getUserObservations = function(userId, doneFunction, destinationId)
 {
 
@@ -227,6 +237,16 @@ IASTracker.prototype.addUserData = function(userId, params, doneFunction, destin
 	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
 
 	return this.AJAXRequest(completeURL, destId, doneFunction, 'PUT', params);
+
+}
+
+IASTracker.prototype.deleteUser = function(userId, doneFunction, destinationId)
+{
+
+	var completeURL = this.users.entryPoint + this.separator + userId;
+	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
+
+	return this.AJAXRequest(completeURL, destId, doneFunction, 'DELETE', {});
 
 }
 

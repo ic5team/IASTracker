@@ -90,8 +90,8 @@ abstract class RequestController extends BaseController {
 	public function index()
 	{
 		
-		$first = Input::has('first') ? Input::get('first') : 0;
-		$num = Input::has('num') ? Input::get('num') : PHP_INT_MAX;
+		$first = Input::has('start') ? Input::get('start') : 0;
+		$num = Input::has('length') ? Input::get('length') : PHP_INT_MAX;
 
 		//if(Request::ajax())
 		//{
@@ -231,8 +231,8 @@ abstract class RequestController extends BaseController {
 	public function destroy($id)
 	{
 		
-		if(Request::ajax())
-		{
+		//if(Request::ajax())
+		//{
 
 			try {
 
@@ -248,13 +248,13 @@ abstract class RequestController extends BaseController {
 
 			}
 
-		}
-		else
-		{
+		//}
+		//else
+		//{
 
-			return $this->requestNotAccepted();
+		//	return $this->requestNotAccepted();
 
-		}
+		//}
 
 	}
 
