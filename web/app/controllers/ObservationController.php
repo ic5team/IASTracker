@@ -242,7 +242,7 @@ class ObservationController extends RequestController {
 		$elements = $this->getFilteredElements($first, $num, $taxonsId, $fromDate, 
 			$toDate, $areaIds);
 
-		return Response::json($elements->toJson());
+		return $elements->toJson();
 
 	}
 
