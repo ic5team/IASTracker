@@ -101,7 +101,7 @@ class ObservationController extends RequestController {
 
 				}
 
-				$obs = $query->get();
+				$obs = $query->skip($first)->take($num)->get();
 				$data->draw = intval($draw);
 				$data->recordsTotal = $numTotals;
 				$languageId = Language::locale(App::getLocale())->first()->id;
