@@ -64,8 +64,7 @@ class ObservationController extends RequestController {
 					//Show all the observations
 					$query = Observation::withDataTableRequest($search, $orders, $columns)
 						->statuses($viewValidated, $viewDiscarded, $viewDeleted, $viewPending);
-					$numFiltered = Observation::statuses($viewValidated, $viewDiscarded, $viewDeleted, $viewPending)
-						->count();
+					$numFiltered = count($query->get());
 
 				}
 				else
@@ -88,8 +87,7 @@ class ObservationController extends RequestController {
 						$query = Observation::withDataTableRequest($search, $orders, $columns)
 							->statuses($viewValidated, $viewDiscarded, $viewDeleted, $viewPending)
 							->areas($ids);
-						$numFiltered = Observation::statuses($viewValidated, $viewDiscarded, $viewDeleted, $viewPending)
-							->areas($ids)->count();
+						$numFiltered = count($query->get());
 
 					}
 					else
