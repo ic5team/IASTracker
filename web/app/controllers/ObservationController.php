@@ -56,7 +56,7 @@ class ObservationController extends RequestController {
 				$viewPending = 'true' == Input::get('viewPending');
 
 				$obs = null;
-				$numTotals = 0;
+				$numTotals = Observation::count();
 
 				if(Auth::user()->isAdmin)
 				{
@@ -64,7 +64,7 @@ class ObservationController extends RequestController {
 					//Show all the observations
 					$query = Observation::withDataTableRequest($search, $orders, $columns)
 						->statuses($viewValidated, $viewDiscarded, $viewDeleted, $viewPending);
-					$numTotals = Observation::statuses($viewValidated, $viewDiscarded, $viewDeleted, $viewPending)
+					$numFiltered = Observation::statuses($viewValidated, $viewDiscarded, $viewDeleted, $viewPending)
 						->count();
 
 				}
@@ -88,7 +88,7 @@ class ObservationController extends RequestController {
 						$query = Observation::withDataTableRequest($search, $orders, $columns)
 							->statuses($viewValidated, $viewDiscarded, $viewDeleted, $viewPending)
 							->areas($ids);
-						$numTotals = Observation::statuses($viewValidated, $viewDiscarded, $viewDeleted, $viewPending)
+						$numFiltered = Observation::statuses($viewValidated, $viewDiscarded, $viewDeleted, $viewPending)
 							->areas($ids)->count();
 
 					}
@@ -152,7 +152,7 @@ class ObservationController extends RequestController {
 
 				}
 
-				$data->recordsFiltered = count($obs);
+				$data->recordsFiltered = $numFiltered;
 				$data->data = $obs;
 
 			}
