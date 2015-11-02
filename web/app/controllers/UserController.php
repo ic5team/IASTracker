@@ -447,6 +447,7 @@ class UserController extends RequestController {
 				$search = Input::get('search');
 				$orders = Input::get('order');
 				$columns = Input::get('columns');
+				$data->recordsFiltered = count(User::withDataTableRequest($search, $orders, $columns)->get());
 				$users = User::withDataTableRequest($search, $orders, $columns)->skip($first)->take($num)->get();
 				$data->draw = intval($draw);
 				$data->recordsTotal = User::count();
@@ -472,7 +473,6 @@ class UserController extends RequestController {
 
 				}
 
-				$data->recordsFiltered = User::withDataTableRequest($search, $orders, $columns)->count();
 				$data->data = $users;
 
 			}
