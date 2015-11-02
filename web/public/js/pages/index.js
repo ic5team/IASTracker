@@ -46,7 +46,7 @@ function getIASMapFilterOK(data)
 	iasList = data;
 	
 	configureSwitch(".IASCheck");
-	api.getObservations(addObservationMarkers);
+	api.getObservations({}, addObservationMarkers);
 	$('#taxonomyFilterSelect').change(onTaxonFilterChanged);
 
 	$('#searchIAS').keyup(function() {

@@ -156,6 +156,15 @@ return array(
 		'validationTextError' => 'El text de validació és un camp requerit',
 		'cleanFilter' => 'Netejar',
 		'noNameUser' => 'Usuari desconegut',
-		'created' => 'Creat'
+		'created' => 'Creat',
+		'status' => 'Estat',
+		'obsValidated' => 'Validada',
+		'obsPending' => 'Pendent',
+		'obsDiscarded' => 'Descartada',
+		'obsDeleted' => 'Eliminada',
+		'showPendingObs' => 'Veure observacions pendents',
+		'showValidatedObs' => 'Veure observacions validades',
+		'showDiscardedObs' => 'Veure observacions descartades',
+		'showDeletedObs' => 'Veure observacions eliminades',
 
 	);

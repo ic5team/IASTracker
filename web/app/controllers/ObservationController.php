@@ -17,6 +17,167 @@ class ObservationController extends RequestController {
 	protected function elements($first, $num)
 	{
 
+		$elements = null;
+
+		if(Input::has('draw'))
+		{
+
+			$elements = $this->getDataTablesData($first, $num);
+
+		}
+		else
+		{
+
+			$elements = $this->getFilteredData($first, $num);
+
+		}
+
+		return Response::json($elements);
+
+	}
+
+	protected function getDataTablesData($first, $num)
+	{
+
+		if(Auth::check())
+		{
+
+			try {
+
+				//Datatable request
+				$data = new stdClass();
+				$draw = Input::get('draw');
+				$search = Input::get('search');
+				$orders = Input::get('order');
+				$columns = Input::get('columns');
+				$viewValidated = 'true' == Input::get('viewValidated');
+				$viewDiscarded = 'true' == Input::get('viewDiscarded');
+				$viewDeleted = 'true' == Input::get('viewDeleted');
+				$viewPending = 'true' == Input::get('viewPending');
+
+				$obs = null;
+				$numTotals = 0;
+
+				if(Auth::user()->isAdmin)
+				{
+
+					//Show all the observations
+					$query = Observation::withDataTableRequest($search, $orders, $columns)
+						->statuses($viewValidated, $viewDiscarded, $viewDeleted, $viewPending);
+					$numTotals = Observation::statuses($viewValidated, $viewDiscarded, $viewDeleted, $viewPending)
+						->count();
+
+				}
+				else
+				{
+
+					$validator = IASValidator::userId(Auth::user()->id)->first();
+					if(null != $validator)
+					{
+
+						//Show the observations from areas the user can validate
+						$areas = AreaValidator::validatorId($validator->id)->get();
+						$ids = array();
+						for($i=0; $i<count($areas); ++$i)
+						{
+
+							$ids[] =$areas[$i]->areaId;
+
+						}
+
+						$query = Observation::withDataTableRequest($search, $orders, $columns)
+							->statuses($viewValidated, $viewDiscarded, $viewDeleted, $viewPending)
+							->areas($ids);
+						$numTotals = Observation::statuses($viewValidated, $viewDiscarded, $viewDeleted, $viewPending)
+							->areas($ids)->count();
+
+					}
+					else
+					{
+
+						App::abort(403);
+
+					}
+
+				}
+
+				$obs = $query->get();
+				$data->draw = intval($draw);
+				$data->recordsTotal = $numTotals;
+				$languageId = Language::locale(App::getLocale())->first()->id;
+				$configuration = Configuration::find(1);
+				$defaultLanguageId = $configuration->defaultLanguageId;
+				for($i=0; $i<count($obs); ++$i)
+				{
+
+					$current = $obs[$i];
+					$current->DT_RowId = $current->id;
+					$current->observations = new stdClass();
+					$current->observations->created_at = $current->created_at->format('Y-m-d H:i:s');
+					$current->ias = new stdClass();
+					$current->ias = IAS::find($current->IASId);
+					$current->ias->description = $current->ias->getDescriptionData($languageId, $defaultLanguageId);
+					$current->ias->image = $current->ias->getDefaultImageData($languageId, $defaultLanguageId);
+					$current->images = ObservationImage::withObservationId($current->id)->get();
+
+					if(null != $current->deleted_at)
+					{
+
+						$current->statusIcon = '';
+						$current->statusId = 4;
+
+					}
+					else
+					{
+
+						$current->statusIcon = $current->icon;
+
+					}
+					$user = User::find($current->userId);
+					if(null != $user)
+					{
+
+						$current->user = $user->name;
+
+					}
+					else
+					{
+
+						$current->user = Lang::get('ui.userUnknown');
+						
+					}
+
+					$current->innerHtml = View::make('admin/innerObservation', array('current' => $current))->render();
+					$obs[$i] = $current;
+
+				}
+
+				$data->recordsFiltered = count($obs);
+				$data->data = $obs;
+
+			}
+			catch(Exception $e)
+			{
+
+				$data->error = $e->getMessage();
+
+			}
+
+		}
+		else
+		{
+
+			App::abort(403);
+
+		}
+
+		return $data;
+
+	}
+
+	protected function getFilteredData($first, $num)
+	{
+
 		$taxonomyId = Input::has('taxonomyId') ? Input::get('taxonomyId') : -1;
 		$fromDate = Input::has('fromDate') ? Input::get('fromDate') : '1970-01-01';
 		$toDate = Input::has('toDate') ? Input::get('toDate') : (new DateTime())->format('Y-m-d');
@@ -303,7 +464,8 @@ class ObservationController extends RequestController {
 	protected function deleteResource($id)
 	{
 
-		Observation::destroy($id);
+		$obs = Observation::find($id);
+		$obs->delete();
 
 	}
 

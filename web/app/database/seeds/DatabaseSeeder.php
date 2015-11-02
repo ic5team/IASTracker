@@ -1490,7 +1490,7 @@ class StatusTableSeeder extends Seeder {
 
 		DB::table('Status')->insert(array(
 			'id'  => 3,
-			'icon' => 'fa fa-2x fa-cross',
+			'icon' => 'fa fa-2x fa-times',
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime

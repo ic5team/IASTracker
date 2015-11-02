@@ -116,13 +116,13 @@ IASTracker.prototype.getIASMapFilter = function(doneFunction, destinationId)
 
 }
 
-IASTracker.prototype.getObservations = function(doneFunction, destinationId)
+IASTracker.prototype.getObservations = function(data, doneFunction, destinationId)
 {
 
 	var completeURL = this.observations.entryPoint;
 	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
 
-	return this.AJAXRequest(completeURL, destId, doneFunction, 'GET', {});
+	return this.AJAXRequest(completeURL, destId, doneFunction, 'GET', data);
 
 }
 
@@ -297,6 +297,16 @@ IASTracker.prototype.discardObservation = function(obsId, text, doneFunction)
 	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
 
 	return this.AJAXRequest(completeURL, destId, doneFunction, 'PUT', {status: 3, text: text});
+
+}
+
+IASTracker.prototype.deleteObservation = function(obsId, doneFunction)
+{
+
+	var completeURL = this.observations.entryPoint + this.separator + obsId;
+	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
+
+	return this.AJAXRequest(completeURL, destId, doneFunction, 'DELETE', {});
 
 }
 

@@ -271,6 +271,7 @@ class Inicial extends Migration {
 			$table->decimal('accuracy', 6, 2)->nullable();
 			$table->integer('howMany')->unsigned();
 			$table->timestamps();
+			$table->softDeletes();
 
 		});
 

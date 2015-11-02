@@ -2,12 +2,15 @@
 
 class Observation extends Eloquent {
 
+	use SoftDeletingTrait;
+
 	/**
 	 * The database table used by the model.
 	 *
 	 * @var string
 	 */
 	protected $table = 'observations';
+	protected $softDelete = true;
 	protected $fillable = array('IASId','userId', 'languageId',
 				'statusId', 'notes', 'latitude', 'longitude',
 				'elevation', 'accuracy', 'howMany');
@@ -107,6 +110,40 @@ class Observation extends Eloquent {
 
 		return $query->join('ObservationAreas', 'observations.id', '=', 'ObservationAreas.observationId')
 			->whereIn('ObservationAreas.areaId', $areas)->select('observations.*');
+
+	}
+
+	public function scopeWithDataTableRequest($query, $search, $orders, $columns)
+	{
+
+		return $query->join('IAS', 'IASId', '=', 'IAS.id')			
+			->join('Status', 'statusId', '=', 'Status.id')
+			->leftJoin('Users', 'userId', '=', 'Users.id')
+			->whereRaw('((lower("latinName") LIKE lower(\'%'.$search['value'].'%\')) OR (lower("fullName") LIKE lower(\'%'.$search['value'].'%\')))')
+			->orderBy($columns[$orders[0]['column']]['data'], $orders[0]['dir'])->select('observations.*', 'Users.fullName', 'IAS.latinName', 'Status.icon', 'Status.id AS statusIdd');
+
+	}
+
+	public function scopeStatuses($query, $viewValidated, $viewDiscarded, $viewDeleted, $viewPending)
+	{
+
+		$status = array();
+		if($viewValidated)
+			$status[] = 1;
+
+		if($viewDiscarded)
+			$status[] = 3;
+
+		if($viewPending)
+			$status[] = 2;
+
+		$query = $query->whereIn('statusId', $status);
+
+		if($viewDeleted)
+			$query = $query->withTrashed();
+
+		return $query;
+
 
 	}
 
