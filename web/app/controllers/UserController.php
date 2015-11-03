@@ -11,7 +11,7 @@ class UserController extends RequestController {
 	protected function elements($first, $num)
 	{
 
-		if(Auth::check())
+		if(Auth::check() && Auth::user()->isAdmin)
 		{
 
 			$elements = $this->getElements($first, $num);

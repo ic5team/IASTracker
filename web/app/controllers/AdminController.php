@@ -2,10 +2,28 @@
 
 class AdminController extends BaseController {
 
-	public function showUsers()
+	public function showIndex()
 	{
 
 		if(Auth::check())
+		{
+
+			return Redirect::to('admin/observations');
+
+		}
+		else
+		{
+
+			App::abort(403);
+
+		}
+
+	}
+
+	public function showUsers()
+	{
+
+		if(Auth::check() && Auth::user()->isAdmin)
 		{
 
 			$data = $this->getBasicData();
@@ -46,7 +64,7 @@ class AdminController extends BaseController {
 	public function showIAS()
 	{
 
-		if(Auth::check())
+		if(Auth::check() && Auth::user()->isAdmin)
 		{
 
 			$languageId = Language::locale(App::getLocale())->first()->id;
@@ -85,7 +103,7 @@ class AdminController extends BaseController {
 	public function showAreas()
 	{
 
-		if(Auth::check())
+		if(Auth::check() && Auth::user()->isAdmin)
 		{
 
 			$languageId = Language::locale(App::getLocale())->first()->id;

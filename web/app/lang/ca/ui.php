@@ -166,5 +166,10 @@ return array(
 		'showValidatedObs' => 'Veure observacions validades',
 		'showDiscardedObs' => 'Veure observacions descartades',
 		'showDeletedObs' => 'Veure observacions eliminades',
+		'removeIASImage' => 'Elimina imatge',
+		'addIASImage' => 'Afegeix imatge',
+		'order' => 'Ordre',
+		'obsValidationTextTitle' => 'Validació',
+		'delete' => 'Eliminar',
 
 	);

@@ -109,7 +109,7 @@ class Observation extends Eloquent {
 	{
 
 		return $query->join('ObservationAreas', 'observations.id', '=', 'ObservationAreas.observationId')
-			->whereIn('ObservationAreas.areaId', $areas)->select('observations.*');
+			->whereIn('ObservationAreas.areaId', $areas);
 
 	}
 

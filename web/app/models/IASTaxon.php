@@ -24,6 +24,14 @@ class IASTaxon extends Eloquent {
 
 	}
 
+	public function scopeWithTaxonAndLanguageId($query, $taxonId, $languageId)
+	{
+
+		return $query->join('IASTaxonNames', 'taxonId', '=', 'id')
+			->where('languageId', '=', $languageId)->where('taxonId', '=', $taxonId);
+
+	}
+
 	public function getChildTaxons()
 	{
 

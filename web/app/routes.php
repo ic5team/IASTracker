@@ -26,7 +26,8 @@
 	Route::get('/logout', array('uses' => 'IndexController@logout'));
 	Route::get('/account/activate', array('uses' => 'UserController@activate'));
 	Route::get('/password/reset', array('uses' => 'UserController@resetPassword'));
-	Route::get('/admin', array('uses' => 'AdminController@showUsers'));
+	Route::get('/admin', array('uses' => 'AdminController@showIndex'));
+	Route::get('/admin/users', array('uses' => 'AdminController@showUsers'));
 	Route::get('/admin/observations', array('uses' => 'AdminController@showObservations'));
 	Route::get('/admin/ias', array('uses' => 'AdminController@showIAS'));
 	Route::get('/admin/areas', array('uses' => 'AdminController@showAreas'));
@@ -47,10 +48,13 @@
 	Route::get('/v1/Observations/{id}', array('uses' => 'ObservationController@show'));
 	Route::put('/v1/Observations/{id}', array('uses' => 'ObservationController@update'));
 	Route::delete('/v1/Observations/{id}', array('uses' => 'ObservationController@destroy'));
+	Route::delete('/v1/Observations/{id}/Images/{imageId}', array('uses' => 'ObservationController@destroyImage'));
 	Route::get('/v1/IAS/', array('uses' => 'IASController@index'));
 	Route::post('/v1/IAS/', array('uses' => 'IASController@store'));
 	Route::get('/v1/IAS/lastUpdate', array('uses' => 'IASController@getLastUpdate'));
 	Route::get('/v1/IAS/{id}', array('uses' => 'IASController@show'));
+	Route::put('/v1/IAS/{id}', array('uses' => 'IASController@update'));
+	Route::delete('/v1/IAS/{id}', array('uses' => 'IASController@destroy'));
 	Route::get('/v1/IAS/{id}/Observations', array('uses' => 'IASController@getObservations'));
 	Route::get('/v1/Maps/', array('uses' => 'IndexController@getAppMapData'));
 	Route::get('/v1/Maps/lastUpdate', array('uses' => 'IndexController@getLastMapUpdate'));

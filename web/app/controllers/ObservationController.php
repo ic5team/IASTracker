@@ -93,7 +93,11 @@ class ObservationController extends RequestController {
 					else
 					{
 
-						App::abort(403);
+						//Get our observations
+						$query = Observation::withDataTableRequest($search, $orders, $columns)
+							->statuses($viewValidated, $viewDiscarded, $viewDeleted, $viewPending)
+							->withUserId(Auth::user()->id);
+						$numFiltered = count($query->get());
 
 					}
 
@@ -144,6 +148,23 @@ class ObservationController extends RequestController {
 						$current->user = Lang::get('ui.userUnknown');
 						
 					}
+
+					if(null != $current->validatorId)
+					{
+
+						$validator = IASValidator::find($current->validatorId);
+						if(null != $validator)
+						{
+
+							$user = User::withTrashed()->find($validator->userId);
+							$current->validatorName = $user->fullName;
+							$current->validatorOrg = $validator->organization;
+
+						}
+
+					}
+
+					$current->ownObs = ($current->userId == Auth::user()->id);
 
 					$current->innerHtml = View::make('admin/innerObservation', array('current' => $current))->render();
 					$obs[$i] = $current;
@@ -462,8 +483,39 @@ class ObservationController extends RequestController {
 	protected function deleteResource($id)
 	{
 
-		$obs = Observation::find($id);
-		$obs->delete();
+		if(Auth::check() && Auth::user()->isAdmin)
+		{
+
+			$obs = Observation::find($id);
+			$obs->delete();
+
+		}
+
+	}
+
+	public function destroyImage($id, $imageId)
+	{
+
+		if(Auth::check())
+		{
+
+			$obs = Observation::find($id);
+			if($obs->userId == Auth::user()->id)
+			{
+
+				$image = ObservationImage::find($imageId);
+				if($obs->id == $image->observationId)
+				{
+
+					unlink('./img/'.$image->URL);
+					$image->delete();
+					return Response::json(true);
+
+				}
+
+			}
+
+		}
 
 	}
 

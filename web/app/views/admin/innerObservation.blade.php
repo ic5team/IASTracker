@@ -49,7 +49,15 @@
 			}
 
 			$img = HTML::image(Config::get('app.urlImg').$current->images[$j]->URL,'', $imageParams);
-			echo '<a href="'.Config::get('app.urlImg').$current->images[$j]->URL.'" data-lightbox="IASImages">'.$img.'</a>';
+			echo '<div><a href="'.Config::get('app.urlImg').$current->images[$j]->URL.'" data-lightbox="IASImages">'.$img.'</a>';
+			if($current->ownObs)
+			{
+				
+				echo '<button type="button" class="btn btn-danger" style="display:block;" onclick="deleteImage('.$current->id.','.$current->images[$j]->id.')">
+					<div class="deleteImageText" data-image-id='.$current->images[$j]->id.'><i class="fa fa-trash-o"></i>'.Lang::get('ui.delete').'</div><img src="'.Config::get('app.urlImg').'/loader.gif" class="deleting" data-image-id='.$current->images[$j]->id.' style="display:none;"/></button>';
+
+			}
+			echo '</div>';
 
 		}
 
@@ -64,8 +72,8 @@
 								</div>
 							</div>
 <?php
-			if(0 != count($current->images))
-			{
+	if(0 != count($current->images))
+	{
 ?>
 							<div id="obs{{$current->id}}ImageWarning" class="row alert alert-warning" style="display:none;">
 								<div class="col-md-12">
@@ -78,9 +86,9 @@
 								</div>
 							</div>
 <?php
-			}
-			else
-			{
+	}
+	else
+	{
 
 ?>
 							<div class="row">
@@ -90,7 +98,27 @@
 							</div>
 <?php
 
-			}
+	}
 ?>
 							<h1>{{Lang::get('ui.obsMapTitle')}}</h1>
 							<div id="obsMap{{$current->id}}" style="width: 100%; height: 500px;"></div>
+
+<?php
+
+	if(((1 == $current->statusId) || (3 == $current->statusId)) && !$current->isAutoValidated)
+	{
+?>
+							<h1>{{Lang::get('ui.obsValidationTextTitle')}}</h1>
+							<div class="row">
+								<div class="col-md-12">
+									{{$current->validationText}}
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									{{$current->validatorName.' ('.$current->validatorOrg.'), '.$current->validatorTS}}
+								</div>
+							</div>
+<?php
+	}
+?>

@@ -50,6 +50,7 @@ class BaseController extends Controller {
 		$data = new stdClass();
 		$data->isLogged = false;
 		$data->isAdmin = false;
+		$data->isValidator = false;
 
 		if(Auth::check())
 		{
@@ -71,6 +72,7 @@ class BaseController extends Controller {
 				$data->verifiedObservationsPC = 0;
 				$data->usrId = $user->id;
 				$data->isComplete = (null != $user->fullName);
+				$data->isValidator = (null != IASValidator::userId($user->id)->first());
 
 			}
 			else

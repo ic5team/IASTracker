@@ -40,10 +40,14 @@
 	<div class="container" style="margin-top: 50px;">
 		<div class="col-md-2 menu">
 			<div class="row">
-				<div class="col-md-12"><a href="{{Config::get('app.url')}}admin" >{{Lang::get('ui.users')}}</a></div>
-			</div>
-			<div class="row">
 				<div class="col-md-12"><a href="{{Config::get('app.url')}}admin/observations" >{{Lang::get('ui.obs')}}</a></div>
+			</div>
+<?php
+	if($data->isAdmin)
+	{
+?>
+			<div class="row">
+				<div class="col-md-12"><a href="{{Config::get('app.url')}}admin/users" >{{Lang::get('ui.users')}}</a></div>
 			</div>
 			<div class="row">
 				<div class="col-md-12"><a href="{{Config::get('app.url')}}admin/ias" >{{Lang::get('ui.ias')}}</a></div>
@@ -51,6 +55,9 @@
 			<div class="row">
 				<div class="col-md-12"><a href="{{Config::get('app.url')}}admin/areas" >{{Lang::get('ui.areas')}}</a></div>
 			</div>
+<?php
+	}
+?>	
 		</div>
 		<div class="col-md-10 menu">
 			<div class="row">

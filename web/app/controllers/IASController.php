@@ -17,6 +17,12 @@ class IASController extends RequestController {
 			return $this->getIASByLocation();
 
 		}
+		else if(Input::has('draw'))
+		{
+
+			return $this->getDataTablesData($first, $num);
+
+		}
 		else
 		{
 
@@ -51,6 +57,176 @@ class IASController extends RequestController {
 		}
 
 		return Response::json($vec);
+
+	}
+
+	protected function getDataTablesData($first, $num)
+	{
+
+		if(Auth::check() && Auth::user()->isAdmin)
+		{
+
+			try {
+
+				//Datatable request
+				$data = new stdClass();
+				$draw = Input::get('draw');
+				$search = Input::get('search');
+				$orders = Input::get('order');
+				$columns = Input::get('columns');
+
+				$ias = null;
+				$numTotals = IAS::count();
+				$query = IAS::withDataTableRequest($search, $orders, $columns);
+				$numFiltered = count($query->get());
+
+				$ias = $query->skip($first)->take($num)->get();
+				$data->draw = intval($draw);
+				$data->recordsTotal = $numTotals;
+
+				$languageId = Language::locale(App::getLocale())->first()->id;
+				$configuration = Configuration::find(1);
+				$defaultLanguageId = $configuration->defaultLanguageId;
+				$languages = Language::all();
+				$taxons = IASTaxon::all();
+				$areas = Area::all();
+
+				for($i=0; $i<count($taxons); ++$i)
+				{
+
+					$element = $taxons[$i];
+					$element->name = $taxons[$i]->getName($languageId, $defaultLanguageId);
+					$taxons[$element->id] = $element;
+
+				}
+				
+				for($i=0; $i<count($ias); ++$i)
+				{
+					
+					$aux = new stdClass();
+					$current = $ias[$i];
+					$aux->DT_RowId = $current->id;
+					$desc = array();
+
+					for($j=0; $j<count($languages); ++$j)
+					{
+
+						$iasDesc = IASDescription::withIASAndLanguageId(
+							$current->id, $languages[$j]->id)->first();
+
+						$descObj = new stdClass();
+						if(null == $iasDesc)
+						{
+
+							$descObj->name = '';
+							$descObj->shortDescription = '';
+							$descObj->sizeDescription = '';
+							$descObj->infoDescription = '';
+							$descObj->habitatDescription = '';
+							$descObj->confuseDescription = '';
+
+						}
+						else
+						{
+
+							$descObj->name = $iasDesc->name;
+							$descObj->shortDescription = $iasDesc->shortDescription;
+							$descObj->sizeDescription = $iasDesc->sizeLongDescription;
+							$descObj->infoDescription = $iasDesc->infoLongDescription;
+							$descObj->habitatDescription = $iasDesc->habitatLongDescription;
+							$descObj->confuseDescription = $iasDesc->confuseLongDescription;
+
+						}
+
+						$desc[$languages[$j]->id] = $descObj;
+
+					}
+
+					$current->description = $desc;
+
+					$aux->id = $current->id;
+					$aux->latinName = $current->latinName;
+					$aux->name = $current->description[$languageId]->name;
+					if('' == $aux->name)
+						$aux->name = $current->description[$defaultLanguageId]->name;
+
+					$images = IASImage::withIASId($current->id)->get();
+					$imgs = array();
+					for($j=0; $j<count($images); ++$j)
+					{
+
+						$obj = new stdClass();
+						$img = $images[$j];
+
+						$obj->id = $img->id;
+						$obj->order = $img->order;
+						$obj->url = $img->URL;
+						$obj->attribution = $img->attribution;
+						$obj->texts = array();
+						
+						for($k=0; $k<count($languages); ++$k)
+						{
+
+							$imgText = IASImageText::withIASImageAndLanguageId(
+								$img->id, $languages[$k]->id)->first();
+							
+							if(null != $imgText)
+								$obj->texts[$languages[$k]->id] = $imgText->text;
+							else
+								$obj->texts[$languages[$k]->id] = "";
+
+						}
+
+						$imgs[] = $obj;
+
+					}
+
+					$current->images = $imgs;
+
+					$areasIAS = IASArea::areasByIAS($current->id)->get();
+					$areasIds = array();
+					for($j=0; $j<count($areasIAS); ++$j)
+						$areasIds[] = $areasIAS[$j]->areaId;
+
+					for($j=0; $j<count($areas); ++$j)
+					{
+
+						$areas[$j]->hasIAS = in_array($areas[$j]->id, $areasIds);
+
+					}
+
+					$taxon = IASTaxon::withTaxonAndLanguageId($current->taxonId, $languageId)->first();
+					if(null == $taxon)
+						$taxon = IASTaxon::withTaxonAndLanguageId($current->taxonId, $defaultLanguageId)->first();
+					$aux->taxonName = $taxon->name;
+					$aux->created_at = $current->created_at->format('Y-m-d H:i:s');
+
+					$aux->innerHtml = View::make('admin/innerIAS', array('taxons' => $taxons, 'languages' => $languages, 'areas' => $areas,
+						'current' => $current))->render();
+					$obs[$i] = $aux;
+
+				}
+
+				$data->recordsFiltered = $numFiltered;
+				$data->data = $obs;
+
+			}
+			catch(Exception $e)
+			{
+
+				$data->error = $e->getMessage();
+
+			}
+
+		}
+		else
+		{
+
+			App::abort(403);
+
+		}
+
+		return Response::json($data);
 
 	}
 
@@ -145,7 +321,7 @@ class IASController extends RequestController {
 	protected function newResource()
 	{
 
-		if(Auth::check())
+		if(Auth::check() && Auth::user()->isAdmin)
 		{
 
 			$dto = new stdClass();
@@ -313,12 +489,168 @@ class IASController extends RequestController {
 	protected function updateResource($id)
 	{
 
-		$element = $this->getElement($id);
+		if(Auth::check() && Auth::user()->isAdmin)
+		{
 
-		//Update the data
+			$dto = new stdClass();
 
-		$element->touch();
-		$element->save();
+			if(Input::has('latinName') && Input::has('taxon') && 
+				Input::has('descriptions'))
+			{
+
+				$element = IAS::find($id);
+
+				$element->latinName = Input::get('latinName');
+				$element->taxonId = Input::get('taxon');
+				$element->creatorId = Auth::id();
+				$element->touch();
+				$element->save();
+
+				$descriptions = Input::get('descriptions');
+				for($i=0; $i<count($descriptions); ++$i)
+				{
+
+					$current = $descriptions[$i];
+					$iasDescription = IASDescription::withIASAndLanguageId($id, $current['id'])->first();
+					$iasDescription->name = $current['common'];
+					$iasDescription->shortDescription = $current['shortDesc'];
+					$iasDescription->sizeLongDescription = $current['sizeDesc'];
+					$iasDescription->infoLongDescription = $current['infoDesc'];
+					$iasDescription->habitatLongDescription = $current['infoHabitat'];
+					$iasDescription->confuseLongDescription = $current['infoConfuse'];
+					$iasDescription->creatorId = Auth::id();
+					$iasDescription->touch();
+					$iasDescription->save();
+
+				}
+
+				$portaitImageId = -1;
+				$images = Input::get('images');
+				$originalImages = IASImage::withIASId($element->id)->get();
+				$idsExistingImages = array();
+				for($i=0; $i<count($images); ++$i)
+				{
+
+					$current = $images[$i];
+					$iasImage = null;
+					if(array_key_exists('id', $current))
+					{
+
+						$iasImage = IASImage::find($current['id']);
+						$idsExistingImages[] = $current['id'];
+
+					}
+					else
+					{
+
+						$iasImage = new IASImage();
+						$iasImage->IASId = $element->id;
+
+					}
+
+					$iasImage->URL = str_replace('"', '', $current['url']);
+					$iasImage->attribution = $current['attribution'];
+					$iasImage->order = $current['order'];
+					$iasImage->creatorId = Auth::id();
+
+					$iasImage->touch();
+					$iasImage->save();
+
+					if(1 == $current['order'])
+						$portaitImageId = $iasImage->id;
+
+					if(-1 == $portaitImageId)
+						$portaitImageId = $iasImage->id;
+
+					for($k=0; $k<count($current['langs']); ++$k)
+					{
+
+						$lang = $current['langs'][$k];
+						$iasImageText = IASImageText::withIASImageAndLanguageId($iasImage->id, $lang['id'])->first();
+						if(null == $iasImageText)
+							$iasImageText = new IASImageText();
+
+						$iasImageText->IASIId = $iasImage->id;
+						$iasImageText->languageId = $lang['id'];
+						$iasImageText->text = $lang['text'];
+						$iasImageText->creatorId = Auth::id();
+
+						$iasImageText->touch();
+						$iasImageText->save();
+
+					}
+
+				}
+
+				//Delete the images that were present before but are deleted
+				for($i=0; $i<count($originalImages); ++$i)
+				{
+
+					if(!in_array($originalImages[$i]->id, $idsExistingImages))
+						IASImage::destroy($originalImages[$i]->id);
+
+				}
+
+				if(-1 != $portaitImageId)
+				{
+
+					$element->defaultImageId = $portaitImageId;
+					$element->save();
+
+				}
+
+				$originalAreas = IASArea::areasByIAS($element->id)->get();
+				$idsExistingAreas = array();
+				$areas = Input::get('areas');
+				for($i=0; $i<count($areas); ++$i)
+				{
+
+
+					$current = $areas[$i];
+					$area = IASArea::withIASAndAreaId($element->id, $current)->first();
+					if(null == $area)
+					{
+
+						$area = new IASArea();
+						$area->IASId = $element->id;
+						$area->areaId = $current;
+						$area->orderId = 1;	//TODO: Input order from the administration panel
+						$area->creatorId = Auth::id();
+						$area->touch();
+						$area->save();
+
+					}
+					else
+					{
+
+						$idsExistingAreas[] = $current;
+
+					}
+
+				}
+
+				//Delete the images that were present before but are deleted
+				for($i=0; $i<count($originalAreas); ++$i)
+				{
+
+					if(!in_array($originalAreas[$i]->areaId, $idsExistingAreas))
+						IASArea::destroy($originalAreas[$i]->id);
+
+				}
+
+				//TODO: Input repostitories and related DBs from the administration panel
+
+			}
+			else
+			{
+
+				$dto->error = Lang::get('ui.missingParameters');
+
+			}
+
+			return Response::json($dto);
+
+		}
 
 	}
 

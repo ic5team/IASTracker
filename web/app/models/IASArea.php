@@ -23,6 +23,22 @@ class IASArea extends Eloquent {
 
 	}
 
+	public function scopeAreasByIAS($query, $ias)
+	{
+
+		return $query->where('IASId', '=', $ias)->orderBy('orderId', 'DESC');
+
+	}
+
+	public function scopeWithIASAndAreaId($query, $ias, $area)
+	{
+
+		return $query->where('IASId', '=', $ias)
+			->where('areaId', '=', $area)
+			->orderBy('orderId', 'DESC');
+
+	}
+
 }
 
 ?>

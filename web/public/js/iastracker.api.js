@@ -18,7 +18,8 @@ function IASTracker(url)
 	this.filter.name = "IASFilter";
 	this.filter.entryPoint = this.APIBaseUrl + this.filter.name;
 	this.observations = new Object();
-	this.observations.name = "Observations"
+	this.observations.name = "Observations";
+	this.observations.images = "Images";
 	this.observations.entryPoint = this.APIBaseUrl + this.observations.name;
 	this.ias = new Object();
 	this.ias.entryPoint = this.APIBaseUrl + "IAS";
@@ -146,6 +147,17 @@ IASTracker.prototype.getIASObservation = function(observationId, doneFunction, d
 
 }
 
+IASTracker.prototype.deleteObservationImage = function(observationId, obsImageId, doneFunction, destinationId)
+{
+
+	var completeURL = this.observations.entryPoint + this.separator + observationId +
+		this.separator + this.observations.images + this.separator + obsImageId;
+	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
+
+	return this.AJAXRequest(completeURL, destId, doneFunction, 'DELETE', {});
+
+}
+
 IASTracker.prototype.getIAS = function(IASId, doneFunction, destinationId)
 {
 
@@ -153,6 +165,36 @@ IASTracker.prototype.getIAS = function(IASId, doneFunction, destinationId)
 	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
 
 	return this.AJAXRequest(completeURL, destId, doneFunction, 'GET', {});
+
+}
+
+IASTracker.prototype.editIAS = function(IASId, data, doneFunction, destinationId)
+{
+
+	var completeURL = this.ias.entryPoint + this.separator + IASId;
+	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
+
+	return this.AJAXRequest(completeURL, destId, doneFunction, 'PUT', data);
+
+}
+
+IASTracker.prototype.deleteIAS = function(IASId, doneFunction, destinationId)
+{
+
+	var completeURL = this.ias.entryPoint + this.separator + IASId;
+	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
+
+	return this.AJAXRequest(completeURL, destId, doneFunction, 'DELETE', {});
+
+}
+
+IASTracker.prototype.getIASList = function(data, doneFunction, destinationId)
+{
+
+	var completeURL = this.ias.entryPoint;
+	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
+
+	return this.AJAXRequest(completeURL, destId, doneFunction, 'GET', data);
 
 }
 

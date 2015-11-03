@@ -270,3 +270,19 @@ function obsStateChanged(data)
 	}
 
 }
+
+function deleteImage(obsId, imageId)
+{
+
+	$('.deleteImageText[data-image-id=' + imageId + ']').hide();
+	$('.deleting[data-image-id=' + imageId + ']').show();
+	api.deleteObservationImage(obsId, imageId, obsImageDeleted);
+
+}
+
+function obsImageDeleted(data)
+{
+
+	dt.ajax.reload();
+
+}
