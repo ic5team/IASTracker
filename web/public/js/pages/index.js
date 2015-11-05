@@ -210,7 +210,7 @@ function addObservationMarkers(data)
 
 			var greenIcon = constructValidatedIcon();
 			marker = mapHandler.createMarker(current.latitude, current.longitude, 
-				current.accuracy, 'red', '#f03', 0.5, {id : current.id, IASId: current.IASId}, onMarkerClick, greenIcon);
+				current.accuracy, '#8a6d3b', '#fcf8e3', 0.5, {id : current.id, IASId: current.IASId}, onMarkerClick, greenIcon);
 
 			if(current.userId != loggedUserId)
 				otherUsersValidatedMarkers.push(marker);
@@ -222,7 +222,7 @@ function addObservationMarkers(data)
 		{
 
 			marker = mapHandler.createMarker(current.latitude, current.longitude, 
-				current.accuracy, 'red', '#f03', 0.5, {id : current.id, IASId: current.IASId}, onMarkerClick);
+				current.accuracy, '#8a6d3b', '#fcf8e3', 0.5, {id : current.id, IASId: current.IASId}, onMarkerClick);
 
 			if(current.userId != loggedUserId)
 				otherUsersObservationsMarkers.push(marker);
@@ -310,14 +310,14 @@ function addIASMarkers(data)
 
 			var greenIcon = constructValidatedIcon();
 			marker = iasMapHandler.createMarker(current.latitude, current.longitude, 
-				current.accuracy, 'red', '#f03', 0.5, {id : current.id}, null, greenIcon);
+				current.accuracy, '#8a6d3b', '#fcf8e3', 0.5, {id : current.id}, null, greenIcon);
 
 		}
 		else
 		{
 
 			marker = iasMapHandler.createMarker(current.latitude, current.longitude, 
-				current.accuracy, 'red', '#f03', 0.5, {id : current.id}, null);
+				current.accuracy, '#8a6d3b', '#fcf8e3', 0.5, {id : current.id}, null);
 
 		}
 
@@ -342,14 +342,14 @@ function addUserMarkers(data)
 
 			var greenIcon = constructValidatedIcon();
 			marker = userMapHandler.createMarker(current.latitude, current.longitude, 
-				current.accuracy, 'red', '#f03', 0.5, {id : current.id, IASId: current.IASId}, onMarkerClick, greenIcon);
+				current.accuracy, '#8a6d3b', '#fcf8e3', 0.5, {id : current.id, IASId: current.IASId}, onMarkerClick, greenIcon);
 
 		}
 		else
 		{
 
 			marker = userMapHandler.createMarker(current.latitude, current.longitude, 
-				current.accuracy, 'red', '#f03', 0.5, {id : current.id, IASId: current.IASId}, onMarkerClick);
+				current.accuracy, '#8a6d3b', '#fcf8e3', 0.5, {id : current.id, IASId: current.IASId}, onMarkerClick);
 
 		}
 

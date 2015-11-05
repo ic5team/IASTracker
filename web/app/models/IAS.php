@@ -121,17 +121,21 @@ class IAS extends Eloquent {
 
 	}
 
-	public function getTaxons()
+	public function getTaxons($languageId, $defaultLanguageId)
 	{
 
 		$data = array();
 
 		$taxonId = $this->taxonId;
 
-		while(null != $taxonId)
+		while(null !== $taxonId)
 		{
 
 			$taxon = IASTaxon::find($taxonId);
+			$taxonName = IASTaxonName::withIASTaxonAndLanguageId($taxonId, $languageId)->first();
+			if(null == $taxonName)
+				$taxonName = IASTaxonName::withIASTaxonAndLanguageId($taxonId, $languageId)->first();
+			$taxon->name = $taxonName->name;
 			$taxonId = $taxon->parentTaxonId;
 
 			$data[] = $taxon;

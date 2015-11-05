@@ -86,7 +86,7 @@ body {
 #contentModal .modal-content
 {
 
-	height: calc(80vh);
+	max-height: calc(80vh);
 	overflow: auto;
 
 }
@@ -176,8 +176,9 @@ body {
 }
 
 .modal-rsp {
+  max-width: 1200px;
 	width: calc(80vw);
-	height: calc(80vh);
+	max-height: calc(80vh);
 }
 
 .tab-completar { 
@@ -269,4 +270,24 @@ body {
   border: 1px solid #66bd29;
   border-radius: 100px;
   background-color: #66bd29;
+}
+
+.iasTitleContainer {
+
+  float: left;
+  background-color: rgba(0,0,0,0.5);
+  width: 100%;
+  text-align: left;
+  height: 150px;
+
+}
+
+.iasTitleText {
+  margin-top: 50px;
+  margin-left: 15px;
+}
+
+.obsTitleText {
+  margin-top: 0px;
+  margin-left: 15px;
 }

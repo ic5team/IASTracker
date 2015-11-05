@@ -57,6 +57,7 @@ class ObservationController extends RequestController {
 
 				$obs = null;
 				$numTotals = Observation::count();
+				$bIsValidator = false;
 
 				if(Auth::user()->isAdmin)
 				{
@@ -65,6 +66,14 @@ class ObservationController extends RequestController {
 					$query = Observation::withDataTableRequest($search, $orders, $columns)
 						->statuses($viewValidated, $viewDiscarded, $viewDeleted, $viewPending);
 					$numFiltered = count($query->get());
+
+					$validator = IASValidator::userId(Auth::user()->id)->first();
+					if(null != $validator)
+					{
+
+						$bIsValidator = true;
+
+					}
 
 				}
 				else
@@ -88,6 +97,7 @@ class ObservationController extends RequestController {
 							->statuses($viewValidated, $viewDiscarded, $viewDeleted, $viewPending)
 							->areas($ids);
 						$numFiltered = count($query->get());
+						$bIsValidator = true;
 
 					}
 					else
@@ -121,6 +131,7 @@ class ObservationController extends RequestController {
 					$current->ias->description = $current->ias->getDescriptionData($languageId, $defaultLanguageId);
 					$current->ias->image = $current->ias->getDefaultImageData($languageId, $defaultLanguageId);
 					$current->images = ObservationImage::withObservationId($current->id)->get();
+					$current->canBeValidated = $bIsValidator;
 
 					if(null != $current->deleted_at)
 					{
@@ -425,9 +436,18 @@ class ObservationController extends RequestController {
 			$ias = $element->IAS;
 			$data->latinName = $ias->latinName;
 			$data->description = $ias->getDescriptionData($languageId, $defaultLanguageId);
-			$data->taxons = $ias->getTaxons();
+			$data->taxons = $ias->getTaxons($languageId, $defaultLanguageId);
 			$data->image = $ias->getDefaultImageData($languageId, $defaultLanguageId);
-			$data->user = $element->user;
+
+			if(null != $element->userId)
+			{
+
+				$user = User::find($element->userId);
+				if(null != $user)
+					$data->user = $user;
+
+			}
+
 			$data->status = $element->getStatus($languageId, $defaultLanguageId);
 			$data->images = $element->observationImages;
 
@@ -462,15 +482,21 @@ class ObservationController extends RequestController {
 		if(Input::has('status') && Auth::check())
 		{
 
-			$user = Auth::user();
-			$element->validatorId = $user->id;
-			$element->validatorTS = new DateTime();
-			$element->statusId = Input::get('status');
-			$element->validationText = Input::get('text');
-			$element->touch();
-			$element->save();
+			$validator = IASValidator::userId(Auth::user()->id)->first();
+			if(null != $validator)
+			{
 
-			return json_encode($id);
+				$user = Auth::user();
+				$element->validatorId = $user->id;
+				$element->validatorTS = new DateTime();
+				$element->statusId = Input::get('status');
+				$element->validationText = Input::get('text');
+				$element->touch();
+				$element->save();
+
+				return json_encode($id);
+
+			}
 
 		}
 

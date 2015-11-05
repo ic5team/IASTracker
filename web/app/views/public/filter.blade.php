@@ -27,21 +27,21 @@
 
 		$current = $data[$i];
 ?>
-<div class="row iasRow" id="IASRow{{$current->id}}" >
-	<div class="col-md-2" onclick="showIAS({{$current->id}})" style="cursor:pointer;">
+<div class="row iasRow" id="IASRow{{$current->id}}" style="margin-bottom: 5px;">
+	<div class="col-md-4" onclick="showIAS({{$current->id}})" style="cursor:pointer;">
 <?php
 		if(property_exists($current->image,'url'))
 		{
 ?>
-			{{ HTML::image(Config::get('app.urlImg').$current->image->url, $current->image->text, array('style' => 'width: 20px;')); }}
+			{{ HTML::image(Config::get('app.urlImg').$current->image->url, $current->image->text, array('style' => 'width: 100px;')); }}
 <?php
 		}
 ?>
 	</div>
-	<div id="IASName{{$current->id}}"class="col-md-6" onclick="showIAS({{$current->id}})" style="cursor:pointer;">
+	<div id="IASName{{$current->id}}"class="col-md-4" onclick="showIAS({{$current->id}})" style="cursor:pointer;margin-top:30px;">
 		{{$current->latinName}}
 	</div>
-	<div class="col-md-4">
+	<div class="col-md-4" style="margin-top: 30px;">
 		<input type="checkbox" id="IASCheck{{$current->id}}" class="IASCheck" onclick="activeIAS" data="{{$current->id}}" checked>
 	</div>
 </div>

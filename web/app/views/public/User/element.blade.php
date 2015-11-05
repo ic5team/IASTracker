@@ -1,19 +1,16 @@
 <div class="row">
 	<div class="col-md-3">
-		{{ HTML::image(Config::get('app.urlImg').$data->photoURL, '', array('style'=>'width: 300px;'))}}
-		{{$data->username}}
+		{{ HTML::image(Config::get('app.urlImgThumbs').$data->photoURL, '', array('style'=>'width: 150px;'))}}
 	</div>
-	<div class="col-md-3">
-		{{$data->obsNum.' '.Lang::get('ui.observations').' '.number_format((float)($data->validatedObsNum/$data->obsNum), 2, '.', '').' '.Lang::get('ui.validated')}}
-	</div>
-	<div class="col-md-3">
-		{{Lang::get('ui.lastObservation').' '.(new DateTime($data->lastObservation))->format('d/m/Y H:i:s')}}
-	</div>
-	<div class="col-md-3">
+	<div class="col-md-9" style="text-align: left; margin-top:30px;">
+		<b>{{$data->username}}</b><br>
+		{{$data->obsNum.' '.Lang::get('ui.observations').' '.$data->validatedObsNum.' '.Lang::get('ui.validated')}}<br>
+		{{Lang::get('ui.lastObservation').' '.(new DateTime($data->lastObservation))->format('d/m/Y H:i:s')}}<br>
 		{{Lang::get('ui.lastConnection').' '.(new DateTime($data->lastConnection))->format('d/m/Y H:i:s')}}
 	</div>
 </div>
 <div class="row">
+	<h1>{{mb_strtoupper(Lang::get('ui.observations'))}}</h1>
 	<div class="col-md-8">
 		<div id="UserObsMap" class="modalMap">
 			Mapa
@@ -27,13 +24,13 @@
 		$current = $ias[$i];
 ?>
 		<div class="row">
-			<div class="col-md-2">
-				{{ HTML::image(Config::get('app.urlImg').$current->image->url, $current->name, array('style' => 'width: 20px;')); }}
+			<div class="col-md-4">
+				{{ HTML::image(Config::get('app.urlImg').$current->image->url, $current->name, array('style' => 'width: 100px;')); }}
 			</div>
-			<div class="col-md-6">
+			<div class="col-md-5" style="margin-top:30px;">
 				{{$current->name}}
 			</div>
-			<div class="col-md-4">
+			<div class="col-md-3" style="margin-top:30px;">
 				<input type="checkbox" class="IASUserCheck" id="IASUserCheck{{$current->id}}" onclick="activeUserIAS" data="{{$current->id}}" checked>
 			</div>
 		</div>
@@ -43,7 +40,7 @@
 ?>
 	</div>
 </div>
-<div class="row">
+<div class="row" style="margin-top: 15px;">
 	<div class="col-md-12">
 <?php
 	$numImg = count($data->images);
@@ -54,7 +51,7 @@
 
 		$current = $data->images[$i];
 		$img = HTML::image(Config::get('app.urlImg').$current->URL,'', 
-			array('style'=>'width: 100px;'));
+			array('style'=>'width: 200px; margin-left: 10px;'));
 		$str[] = '<a href="'.Config::get('app.urlImg').$current->URL.'" data-lightbox="IASImages" data-title="">'.$img.'</a>';
 
 	}

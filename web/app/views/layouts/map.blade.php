@@ -33,6 +33,7 @@ if(property_exists($data, 'isComplete') && !$data->isComplete)
 	{{ HTML::script('js/catiline.js'); }}
 	{{ HTML::script('js/leaflet.shapefile.js'); }}
 	{{ HTML::script('js/leaflet.markercluster.js'); }}
+	{{ HTML::script('js/leaflet.OverlappingMarkerSpiderfier.js'); }}
 	{{ HTML::script('js/jcrop/js/jquery.Jcrop.min.js'); }}
 	{{ HTML::script('js/forms/completa-usuari.js'); }}
 	{{ HTML::script('js/completa-usuari.js'); }}

@@ -171,5 +171,6 @@ return array(
 		'order' => 'Ordre',
 		'obsValidationTextTitle' => 'Validació',
 		'delete' => 'Eliminar',
+		'viewUser' => 'Veure usuari',
 
 	);

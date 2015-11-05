@@ -57,7 +57,7 @@ $(document).ready(function() {
 					var discardBtn = '<button onclick="showValidationModal(' + row.id + ', false)" class="btn btn-danger insideCollapseButton" >Discard</button>';
 					var deleteBtn = '<button type="button" class="btn btn-danger" onclick="deleteObs(' + row.id + ')"><i class="fa fa-trash-o"></i></button>';
 					var loading = '<img src="' + urlImg + '/loader.gif" class="loading" data-id=' + row.id + ' style="display:none;"/>';
-                    return (4 != row.statusId) ? '<div class="btns" data-id="' + row.id + '" >' + ((2 == row.statusId) ? validateBtn + discardBtn : '' ) + deleteBtn + '</div>' + loading : '';
+                    return (4 != row.statusId) ? '<div class="btns" data-id="' + row.id + '" >' + ((2 == row.statusId && row.canBeValidated) ? validateBtn + discardBtn : '' ) + deleteBtn + '</div>' + loading : '';
                 } 
             }
 		],
@@ -136,7 +136,7 @@ function initRow(data)
 		mapHandlers[id] = new MapHandler('obsMap' + id, mapDescriptors, crsDescriptors);
 
 		//IAS marker
-		var marker = mapHandlers[id].createMarker(lat, lon, acc, 'red', '#f03', 0.5);
+		var marker = mapHandlers[id].createMarker(lat, lon, acc, '#8a6d3b', '#fcf8e3', 0.5);
 		mapHandlers[id].addMarker(marker);
 
 		//Images marker
@@ -153,7 +153,7 @@ function initRow(data)
 			if(imagesOk)
 			{
 
-				var imageMarker = mapHandlers[id].createMarker(lat, lon, 0, 'red', '#f03', 0.5, {}, null, cameraMarker);
+				var imageMarker = mapHandlers[id].createMarker(lat, lon, 0, '#8a6d3b', '#fcf8e3', 0.5, {}, null, cameraMarker);
 				mapHandlers[id].addMarker(imageMarker);
 				imageMarkers.push(imageMarker.marker);
 

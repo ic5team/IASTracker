@@ -24,6 +24,19 @@ function MapHandler(mapId, mapDescriptors, crsDescriptors, layersControlId, cont
 	});
 
 	this.map.addLayer(this.clusterLayer);
+	this.oms = new OverlappingMarkerSpiderfier(this.map, {keepSpiderfied : true});
+
+	this.oms.addListener('click', function(marker) {
+
+		if(marker.options.clickable)
+		{
+
+			marker.cbFunction = marker.options.cbFunction;
+			marker.cbFunction();
+
+		}
+
+	});
 
 	var collapsed = ('undefined' == layersControlId || null == layersControlId);
 
@@ -320,13 +333,13 @@ MapHandler.prototype.createMarker = function(lat, lon, accuracy, color, fillColo
 
 	if(null == cbFunction)
 		options.clickable = false;
+	else
+		options.cbFunction = cbFunction;
 
 	marker = L.marker([lat, lon], options);
 
 	var circle = L.circle([lat, lon], accuracy, circleOptions);
 
-	if(null != cbFunction)
-		marker.on('click', cbFunction);
 
 	return {marker : marker, circle: circle};
 
@@ -338,6 +351,7 @@ MapHandler.prototype.addMarker = function(markerObj, setView)
 	this.clusterLayer.addLayer(markerObj.marker);
 	this.markersLayer.addLayer(markerObj.marker);
 	this.markersLayer.addLayer(markerObj.circle);
+	this.oms.addMarker(markerObj.marker);
 
 	if(setView)
 	{

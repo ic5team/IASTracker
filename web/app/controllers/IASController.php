@@ -454,7 +454,7 @@ class IASController extends RequestController {
 
 			$data->description = $element->getDescriptionData($languageId, $defaultLanguageId);
 			$data->latinName = $element->latinName;
-			$data->taxons = $element->getTaxons();
+			$data->taxons = $element->getTaxons($languageId, $defaultLanguageId);
 			$data->image = $element->getDefaultImageData($languageId, $defaultLanguageId);
 			$data->relatedDBs = $element->getRelatedDBs();
 			$data->images = $element->getImageData($languageId, $defaultLanguageId);
