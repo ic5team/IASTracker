@@ -23,7 +23,7 @@
 	{{ HTML::script('js/bootstrap-datetimepicker.min.js'); }}
 	{{ HTML::script('js/catiline.js'); }}
 	{{ HTML::script('js/leaflet.shapefile.js'); }}
-	{{ HTML::script('js/leaflet.google.js'); }}
+	{{ HTML::script('js/leaflet.OverlappingMarkerSpiderfier.js'); }}
 
 	<script>
 		$('.langButtons').each(function(index) {
