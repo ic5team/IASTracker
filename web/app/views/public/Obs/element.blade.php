@@ -11,7 +11,7 @@
 	    		background-size: cover;">
 	    	<div class="iasTitleContainer">
 	    		<div class="obsTitleText">
-		    		<div style="font-size:32px; color:#5cb85c; font-weight: bold;">{{ $data->description->name }}<i class="fa fa-external-link" style="margin-left:15px; cursor:pointer;" title="{{Lang::get('ui.')}}" onclick="showIAS({{$data->id}})"></i></div>
+		    		<div style="font-size:32px; color:#5cb85c; font-weight: bold;">{{ $data->description->name }}<i class="fa fa-external-link" style="margin-left:15px; cursor:pointer;" title="{{Lang::get('ui.')}}" onclick="showIAS({{$data->IASId}})"></i></div>
 					<div style="color:#337ab7; font-weight: bold;">{{ $data->latinName }}</div>
 <?php
 		$num = count($data->taxons);
