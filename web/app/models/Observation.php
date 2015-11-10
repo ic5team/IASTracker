@@ -91,8 +91,13 @@ class Observation extends Eloquent {
 		$newQuery = $newQuery->where('observations.created_at', '>=', $fromDate.' 00:00:00');
 		$newQuery = $newQuery->where('observations.created_at', '<=', $toDate.' 23:59:59');
 
-		$newQuery = $newQuery->join('ObservationAreas', 'observations.id', '=', 'ObservationAreas.observationId')
-			->whereIn('ObservationAreas.areaId', $areaIds);
+		if(0 != count($areaIds))
+		{
+
+			$newQuery = $newQuery->join('ObservationAreas', 'observations.id', '=', 'ObservationAreas.observationId')
+				->whereIn('ObservationAreas.areaId', $areaIds);
+
+		}
 
 		return $newQuery->select('observations.*')->distinct();
 

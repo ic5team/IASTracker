@@ -259,15 +259,6 @@ class ObservationController extends RequestController {
 				$areaIds[] = $areas[$i]->areaId;
 
 		}
-		else
-		{
-
-			$areas = Area::all();
-
-			for($i=0; $i<count($areas); ++$i)
-				$areaIds[] = $areas[$i]->id;
-
-		}
 
 		$elements = $this->getFilteredElements($first, $num, $taxonsId, $fromDate, 
 			$toDate, $areaIds);
