@@ -48,6 +48,11 @@
 				{{ $data->image->text.' '.$data->image->attribution }}
 			</div>
 		</div>
+		<div class="row">
+			<div class="col-md-12" style="font-weight: bold; font-size: 12px; text-align: left;">
+				{{ Lang::get('ui.howMany').': '.((1 == $data->howMany) ? Lang::get('ui.one') : ((2 == $data->howMany) ? Lang::get('ui.few') : Lang::get('ui.several')))}}
+			</div>
+		</div>
 	</div>
 </div>
 <?php
