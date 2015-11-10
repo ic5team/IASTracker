@@ -37,7 +37,9 @@ class IndexController extends BaseController {
 			$user->resetKey = null;
 			$user->lastConnection = new DateTime();
 			$user->save();
-			App::setLocale(Language::find($lang)->locale);
+
+			if(!Input::has('lang'))
+				App::setLocale(Language::find($lang)->locale);
 
 		}
 

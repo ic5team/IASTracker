@@ -17,27 +17,29 @@
 		</div>
 	</div>
 	<div class="col-md-4">
+		<div id="UserIASList" style="height: calc(50vh); overflow-y: auto;">
 <?php
 	for($i=0; $i<count($ias); ++$i)
 	{
 
 		$current = $ias[$i];
 ?>
-		<div class="row">
-			<div class="col-md-4">
-				{{ HTML::image(Config::get('app.urlImg').$current->image->url, $current->name, array('style' => 'width: 100px;')); }}
+			<div class="row">
+				<div class="col-md-4">
+					{{ HTML::image(Config::get('app.urlImg').$current->image->url, $current->name, array('style' => 'width: 100px;')); }}
+				</div>
+				<div class="col-md-5" style="margin-top:30px;">
+					{{$current->name}}
+				</div>
+				<div class="col-md-3" style="margin-top:30px;">
+					<input type="checkbox" class="IASUserCheck" id="IASUserCheck{{$current->id}}" onclick="activeUserIAS" data="{{$current->id}}" checked>
+				</div>
 			</div>
-			<div class="col-md-5" style="margin-top:30px;">
-				{{$current->name}}
-			</div>
-			<div class="col-md-3" style="margin-top:30px;">
-				<input type="checkbox" class="IASUserCheck" id="IASUserCheck{{$current->id}}" onclick="activeUserIAS" data="{{$current->id}}" checked>
-			</div>
-		</div>
 <?php
 
 	}
 ?>
+		</div>
 	</div>
 </div>
 <div class="row" style="margin-top: 15px;">
