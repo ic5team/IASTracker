@@ -32,7 +32,7 @@
 					{{$current->name}}
 				</div>
 				<div class="col-md-3" style="margin-top:30px;">
-					<input type="checkbox" class="IASUserCheck" id="IASUserCheck{{$current->id}}" onclick="activeUserIAS({{$current->id}})" data="{{$current->id}}" checked>
+					<input type="checkbox" class="IASUserCheck" id="IASUserCheck{{$current->id}}" onclick="activeUserIAS" data="{{$current->id}}" checked>
 				</div>
 			</div>
 <?php
