@@ -17,7 +17,7 @@
 		</div>
 	</div>
 	<div class="col-md-4">
-		<div id="UserIASList" style="height: calc(50vh); overflow-y: auto;">
+		<div id="UserIASList" style="height: calc(50vh); overflow-y: auto; overflow-x: hidden;">
 <?php
 	for($i=0; $i<count($ias); ++$i)
 	{
