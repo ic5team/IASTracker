@@ -53,6 +53,32 @@ function MapHandler(mapId, mapDescriptors, crsDescriptors, layersControlId, cont
 
 	}
 
+	this.map.layers = this.layers;
+	this.map.on('overlayremove', function(event) {
+		var found = false;
+		for(var i=0; this.layers.length && !found; ++i)
+		{
+
+			found = (this.layers[i].leafletData == event.layer);
+			if(found && !this.layers[i].isModifying)
+				this.layers[i].isActive = false;
+
+		}
+
+	});
+
+	this.map.on('overlayadd', function(event) {
+		var found = false;
+		for(var i=0; this.layers.length && !found; ++i)
+		{
+
+			found = (this.layers[i].leafletData == event.layer);
+			if(found && !this.layers[i].isModifying)
+				this.layers[i].isActive = true;
+
+		}
+	});
+
 	this.map.on('moveend', function(e) {
 		self.computeLayers(e);
 	});
@@ -221,6 +247,7 @@ MapHandler.prototype.constructMapLayers = function(mapDescriptors)
 		mapLayer.zMax = currentMap.maxZoom;
 		mapLayer.name = currentMap.name;
 		mapLayer.isVisible = true;
+		mapLayer.isActive = false;
 		mapLayer.desc = currentMap.desc;
 
 		ret.push(mapLayer);
@@ -260,6 +287,15 @@ MapHandler.prototype.computeLayers = function(e)
 				if(!currentLayer.isVisible)
 				{
 
+					if(currentLayer.isActive)
+					{
+
+						this.layers[i].isModifying = true;
+						this.map.addLayer(currentLayer.leafletData);
+						this.layers[i].isModifying = false;
+
+					}
+
 					this.controls.addOverlay(currentLayer.leafletData, this.generateName(currentLayer));
 					this.layers[i].isVisible = true;
 
@@ -271,6 +307,15 @@ MapHandler.prototype.computeLayers = function(e)
 			
 				if(currentLayer.isVisible)
 				{
+
+					if(currentLayer.isActive)
+					{
+
+						this.layers[i].isModifying = true;
+						this.map.removeLayer(currentLayer.leafletData);
+						this.layers[i].isModifying = false;
+
+					}
 
 					this.controls.removeLayer(currentLayer.leafletData);
 					this.layers[i].isVisible = false;

@@ -173,7 +173,7 @@ class IAS extends Eloquent {
 
 		return $query->join('observations', 'IAS.id', '=', 'observations.IASId')
 			->where('observations.userId', '=', $userId)
-			->select('IAS.*');
+			->select('IAS.*')->distinct();
 
 	}
 
