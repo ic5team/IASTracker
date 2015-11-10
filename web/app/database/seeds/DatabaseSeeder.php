@@ -117,7 +117,7 @@ class MapProviderTableSeeder extends Seeder {
 			'SWBoundLon' => '0.02884',
 			'NEBoundLat' => '42.91822',
 			'NEBoundLon' => '3.46619',
-			'minZoom' => 5,
+			'minZoom' => 11,
 			'maxZoom' => 18,
 			'creatorId' => 1,
 			'subdomains' => null,
@@ -153,7 +153,7 @@ class MapProviderTableSeeder extends Seeder {
 			'SWBoundLon' => '2.835011',
 			'NEBoundLat' => '50.822978',
 			'NEBoundLon' => '6.438924',
-			'minZoom' => 5,
+			'minZoom' => 9,
 			'maxZoom' => 18,
 			'creatorId' => 1,
 			'subdomains' => null,
@@ -191,6 +191,78 @@ class MapProviderTableSeeder extends Seeder {
 			'NEBoundLon' => null,
 			'minZoom' => null,
 			'maxZoom' => null,
+			'creatorId' => 1,
+			'subdomains' => null,
+			'isOverlay' => true,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProvider')->insert(array(
+			'id'  => 10,
+			'url' => 'http://geoserveis.icc.cat/icc_mapesbase/wms/service?',
+			'attribution' => 'Institut Cartogràfic i Geològic de Catalunya -ICGC',
+			'zIndex' => 2,
+			'SWBoundLat' => '40.48456',
+			'SWBoundLon' => '0.02884',
+			'NEBoundLat' => '42.91822',
+			'NEBoundLon' => '3.46619',
+			'minZoom' => 10,
+			'maxZoom' => 10,
+			'creatorId' => 1,
+			'subdomains' => null,
+			'isOverlay' => true,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProvider')->insert(array(
+			'id'  => 11,
+			'url' => 'http://geoserveis.icc.cat/icc_mapesbase/wms/service?',
+			'attribution' => 'Institut Cartogràfic i Geològic de Catalunya -ICGC',
+			'zIndex' => 2,
+			'SWBoundLat' => '40.48456',
+			'SWBoundLon' => '0.02884',
+			'NEBoundLat' => '42.91822',
+			'NEBoundLon' => '3.46619',
+			'minZoom' => 8,
+			'maxZoom' => 9,
+			'creatorId' => 1,
+			'subdomains' => null,
+			'isOverlay' => true,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProvider')->insert(array(
+			'id'  => 12,
+			'url' => 'http://geoserveis.icc.cat/icc_mapesbase/wms/service?',
+			'attribution' => 'Institut Cartogràfic i Geològic de Catalunya -ICGC',
+			'zIndex' => 2,
+			'SWBoundLat' => '40.48456',
+			'SWBoundLon' => '0.02884',
+			'NEBoundLat' => '42.91822',
+			'NEBoundLon' => '3.46619',
+			'minZoom' => 6,
+			'maxZoom' => 7,
+			'creatorId' => 1,
+			'subdomains' => null,
+			'isOverlay' => true,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProvider')->insert(array(
+			'id'  => 13,
+			'url' => 'http://geoserveis.icc.cat/icc_mapesbase/wms/service?',
+			'attribution' => 'Institut Cartogràfic i Geològic de Catalunya -ICGC',
+			'zIndex' => 2,
+			'SWBoundLat' => '40.48456',
+			'SWBoundLon' => '0.02884',
+			'NEBoundLat' => '42.91822',
+			'NEBoundLon' => '3.46619',
+			'minZoom' => 5,
+			'maxZoom' => 5,
 			'creatorId' => 1,
 			'subdomains' => null,
 			'isOverlay' => true,
@@ -298,6 +370,54 @@ class WMSMapProviderTableSeeder extends Seeder {
 			'transparent' => true,
 			'continuousWorld' => true,
 			'crsId' => 2,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('WMSMapProvider')->insert(array(
+			'mapProviderId'  => 10,
+			'styles' => '',
+			'layers' => 'mtc10m',
+			'format' => 'image/png',
+			'transparent' => true,
+			'continuousWorld' => true,
+			'crsId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('WMSMapProvider')->insert(array(
+			'mapProviderId'  => 11,
+			'styles' => '',
+			'layers' => 'mtc25m',
+			'format' => 'image/png',
+			'transparent' => true,
+			'continuousWorld' => true,
+			'crsId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('WMSMapProvider')->insert(array(
+			'mapProviderId'  => 12,
+			'styles' => '',
+			'layers' => 'mtc50m',
+			'format' => 'image/png',
+			'transparent' => true,
+			'continuousWorld' => true,
+			'crsId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('WMSMapProvider')->insert(array(
+			'mapProviderId'  => 13,
+			'styles' => '',
+			'layers' => 'mtc250m',
+			'format' => 'image/png',
+			'transparent' => true,
+			'continuousWorld' => true,
+			'crsId' => 1,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime
 		));
@@ -785,6 +905,182 @@ class MapProviderTextsTableSeeder extends Seeder {
 			'languageId' => 4,
 			'text' => 'Live green vegetation density map',
 			'name' => 'Global NDVI',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 37,
+			'mapProviderId' => 10, 
+			'languageId' => 1,
+			'text' => 'Informació topogràfica del territori',
+			'name' => 'Mapa topogràfic de Catalunya 1:10000',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 38,
+			'mapProviderId' => 10, 
+			'languageId' => 2,
+			'text' => 'Información topográfica del territorio',
+			'name' => 'Mapa topográfico de Cataluña 1: 10000',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 39,
+			'mapProviderId' => 10, 
+			'languageId' => 3,
+			'text' => 'Information topographique du territoire',
+			'name' => 'Carte topographique de Catalogne 1: 10000',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 40,
+			'mapProviderId' => 10, 
+			'languageId' => 4,
+			'text' => 'Cartographic information',
+			'name' => 'Topographic map of Catalonia 1: 10000',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 41,
+			'mapProviderId' => 11, 
+			'languageId' => 1,
+			'text' => 'Informació topogràfica del territori',
+			'name' => 'Mapa topogràfic de Catalunya 1:25000',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 42,
+			'mapProviderId' => 11, 
+			'languageId' => 2,
+			'text' => 'Información topográfica del territorio',
+			'name' => 'Mapa topográfico de Cataluña 1: 25000',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 43,
+			'mapProviderId' => 11, 
+			'languageId' => 3,
+			'text' => 'Information topographique du territoire',
+			'name' => 'Carte topographique de Catalogne 1: 25000',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 44,
+			'mapProviderId' => 11, 
+			'languageId' => 4,
+			'text' => 'Cartographic information',
+			'name' => 'Topographic map of Catalonia 1: 25000',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 45,
+			'mapProviderId' => 12, 
+			'languageId' => 1,
+			'text' => 'Informació topogràfica del territori',
+			'name' => 'Mapa topogràfic de Catalunya 1:50000',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 46,
+			'mapProviderId' => 12, 
+			'languageId' => 2,
+			'text' => 'Información topográfica del territorio',
+			'name' => 'Mapa topográfico de Cataluña 1: 50000',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 47,
+			'mapProviderId' => 12, 
+			'languageId' => 3,
+			'text' => 'Information topographique du territoire',
+			'name' => 'Carte topographique de Catalogne 1: 50000',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 48,
+			'mapProviderId' => 12, 
+			'languageId' => 4,
+			'text' => 'Cartographic information',
+			'name' => 'Topographic map of Catalonia 1: 50000',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 49,
+			'mapProviderId' => 13, 
+			'languageId' => 1,
+			'text' => 'Informació topogràfica del territori',
+			'name' => 'Mapa topogràfic de Catalunya 1:250000',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 50,
+			'mapProviderId' => 13, 
+			'languageId' => 2,
+			'text' => 'Información topográfica del territorio',
+			'name' => 'Mapa topográfico de Cataluña 1: 250000',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 51,
+			'mapProviderId' => 13, 
+			'languageId' => 3,
+			'text' => 'Information topographique du territoire',
+			'name' => 'Carte topographique de Catalogne 1: 250000',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 52,
+			'mapProviderId' => 13, 
+			'languageId' => 4,
+			'text' => 'Cartographic information',
+			'name' => 'Topographic map of Catalonia 1: 250000',
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime

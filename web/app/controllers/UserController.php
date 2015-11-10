@@ -372,32 +372,43 @@ class UserController extends RequestController {
 		if(Input::has('imageURL'))
 		{
 
-			//Move the image
-			$originalName = explode("/", $image);
-			$originalName = $originalName[count($originalName) - 1];
-			$desinationFolder = '/users/';
-
-			$nameParts = explode(".", $originalName);
-			$ext = strtoupper($nameParts[count($nameParts)-1]);
-
-			$dbPhotoName = $desinationFolder.'u'.$element->id.'.'.$ext;
-
-			$thumbsPath = './img/thumbs/';
-			$photosPath = './img/fotos/';
-			$pathThumbDesti = $thumbsPath.$dbPhotoName;
-			$pathGranDesti = $photosPath.$dbPhotoName;
-
-			try 
+			if(false !== strpos($image, 'uploads'))
 			{
 
-				rename("./img/uploads/grans/".$originalName,$pathGranDesti);
-				rename("./img/uploads/thumbs/".$originalName,$pathThumbDesti);
+				//Move the image
+				$originalName = explode("/", $image);
+				$originalName = $originalName[count($originalName) - 1];
+				$desinationFolder = '/users/';
+
+				$nameParts = explode(".", $originalName);
+				$ext = strtoupper($nameParts[count($nameParts)-1]);
+
+				$dbPhotoName = $desinationFolder.'u'.$element->id.'.'.$ext;
+
+				$thumbsPath = './img/thumbs/';
+				$photosPath = './img/fotos/';
+				$pathThumbDesti = $thumbsPath.$dbPhotoName;
+				$pathGranDesti = $photosPath.$dbPhotoName;
+
+				try 
+				{
+
+					rename("./img/uploads/grans/".$originalName,$pathGranDesti);
+					rename("./img/uploads/thumbs/".$originalName,$pathThumbDesti);
+
+				}
+				catch(Exception $e)
+				{
+
+					$dbPhotoName = $e->getMessage(); //$element->photoURL;
+
+				}
 
 			}
-			catch(Exception $e)
+			else
 			{
 
-				$dbPhotoName = $e->getMessage();//$element->photoURL;
+				$dbPhotoName = $element->photoURL;
 
 			}
 

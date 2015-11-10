@@ -22,7 +22,7 @@
 <?php
 		}
 ?>
-							<div id="userNameDiv" style="margin-left: 45px; margin-top: 5px; font-size: 30px; color:#908787">
+							<div id="userNameDiv" style="margin-left: 55px; margin-top: 5px; font-size: 30px; color:#908787">
 							{{$data->username}}
 							</div>
 							<div id="panell-usuari" class="arrow_box menu_box hidden">
