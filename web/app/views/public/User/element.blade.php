@@ -53,7 +53,7 @@
 
 		$current = $data->images[$i];
 		$img = HTML::image(Config::get('app.urlImg').$current->URL,'', 
-			array('style'=>'width: 200px; margin-left: 10px;'));
+			array('style'=>'width: 200px; margin-left: 10px;margin-top: 10px;'));
 		$str[] = '<a href="'.Config::get('app.urlImg').$current->URL.'" data-lightbox="IASImages" data-title="">'.$img.'</a>';
 
 	}
