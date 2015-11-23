@@ -61,7 +61,10 @@
 ?>
 									<li>
 										<a href="?lang={{$data->languages[$i]->locale}}">
-											{{ HTML::image('img/thumbs/flags/'.$data->languages[$i]->img, $data->languages[$i]->name, array('class' => 'navbar-logo-img', 'pull-right', 'style' => 'width: 30px;margin-top:10px;')); }}
+											<div class="flag">
+												{{ HTML::image('img/thumbs/flags/'.$data->languages[$i]->img, $data->languages[$i]->name, array('class' => 'navbar-logo-img', 'pull-right', 'style' => 'width: 30px;margin-top:10px;')); }}
+												<div class="dotted {{ ($data->languages[$i]->locale == App::getLocale()) ? ' active' : '' }}"></div>
+											</div>
 										</a>
 									</li>
 <?php
