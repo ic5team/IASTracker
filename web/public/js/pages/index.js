@@ -26,14 +26,6 @@ $(document).ready(function () {
 		format: 'DD/MM/YYYY'
 	});
 
-	$("#navbar-loguejat").on("mouseover", function () {
-        $('#panell-usuari').removeClass('hidden');
-    });
-
-    $("#navbar-loguejat").on("mouseleave", function () {
-        $('#panell-usuari').addClass('hidden');
-    });
-
 	api.getIASMapFilter(getIASMapFilterOK, "#iasContents");
 	loadingImage = $('#contentModalContents').html();
 	configureShapes();

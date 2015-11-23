@@ -1,3 +1,15 @@
+$(document).ready(function() {
+	
+	$("#navbar-loguejat").on("mouseover", function () {
+		$('#panell-usuari').removeClass('hidden');
+	});
+
+	$("#navbar-loguejat").on("mouseleave", function () {
+		$('#panell-usuari').addClass('hidden');
+	});
+
+});
+
 function showLogInModal()
 {
 
