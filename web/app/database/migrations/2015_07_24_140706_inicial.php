@@ -26,6 +26,7 @@ class Inicial extends Migration {
 			$table->decimal('NEBoundLon','9','6')->nullable();
 			$table->integer('minZoom')->unsigned()->nullable();
 			$table->integer('maxZoom')->unsigned()->nullable();
+			$table->boolean('tms')->default(false);
 			$table->boolean('isOverlay');
 			$table->integer('creatorId')->unsigned()->nullable();
 			$table->timestamps();
