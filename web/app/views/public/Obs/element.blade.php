@@ -123,7 +123,24 @@
 	{
 
 ?>
-	<div class="col-md-4">
+	<div class="col-md-4" style="margin-top: 70px;">
+		<div class="row">
+			<div class="col-md-4">
+				{{ HTML::image(Config::get('app.urlImgThumbs').'/users/user.png', '', array("style" => "width: 100px;"))}}
+			</div>
+			<div class="col-md-8">
+				<div class="row">
+					<div class="col-md-12" style="margin-top:25px;">
+						{{Lang::get('ui.noNameUser')}}
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						{{$data->created_at}}
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 
 <?php

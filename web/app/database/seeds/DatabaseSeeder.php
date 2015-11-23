@@ -104,7 +104,7 @@ class MapProviderTableSeeder extends Seeder {
 			'maxZoom' => 18,
 			'creatorId' => 1,
 			'subdomains' => null,
-			'tms' => true,
+			'tms' => false,
 			'isOverlay' => true,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime
@@ -119,7 +119,7 @@ class MapProviderTableSeeder extends Seeder {
 			'SWBoundLon' => '0.02884',
 			'NEBoundLat' => '42.91822',
 			'NEBoundLon' => '3.46619',
-			'minZoom' => 5,
+			'minZoom' => 8,
 			'maxZoom' => 18,
 			'creatorId' => 1,
 			'subdomains' => null,
