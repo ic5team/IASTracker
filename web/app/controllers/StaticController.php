@@ -1,6 +1,6 @@
 <?php
 
-class StaticController extends Controller {
+class StaticController extends BaseController {
 
 	public function showIC5Info()
 	{
@@ -9,7 +9,10 @@ class StaticController extends Controller {
 		if(Input::has('lang'))
 			$locale = Input::get('lang');
 
-		return Redirect::to(Config::get('app.url').'/html/AboutIC5Team_'.strtoupper($locale).'.htm');
+		$data = $this->getBasicData();
+		$data->url = Config::get('app.url').'/html/AboutIC5Team_'.strtoupper($locale).'.htm';
+
+		return View::make("public/iframe", array('data' => $data));
 
 	}
 
@@ -20,7 +23,10 @@ class StaticController extends Controller {
 		if(Input::has('lang'))
 			$locale = Input::get('lang');
 
-		return Redirect::to(Config::get('app.url').'/html/AboutIASTracker_'.strtoupper($locale).'.htm');
+		$data = $this->getBasicData();
+		$data->url = Config::get('app.url').'/html/AboutIASTracker_'.strtoupper($locale).'.htm';
+
+		return View::make("public/iframe", array('data' => $data));
 
 	}
 
@@ -31,7 +37,10 @@ class StaticController extends Controller {
 		if(Input::has('lang'))
 			$locale = Input::get('lang');
 
-		return Redirect::to(Config::get('app.url').'/html/PRIVACYSTATEMENTIASTRACKER_'.strtoupper($locale).'.htm');
+		$data = $this->getBasicData();
+		$data->url = Config::get('app.url').'/html/PRIVACYSTATEMENTIASTRACKER_'.strtoupper($locale).'.htm';
+
+		return View::make("public/iframe", array('data' => $data));
 
 	}
 
@@ -42,7 +51,10 @@ class StaticController extends Controller {
 		if(Input::has('lang'))
 			$locale = Input::get('lang');
 
-		return Redirect::to(Config::get('app.url').'/html/USERAGREEMENTSIASTRACKER_'.strtoupper($locale).'.htm');
+		$data = $this->getBasicData();
+		$data->url = Config::get('app.url').'/html/USERAGREEMENTSIASTRACKER_'.strtoupper($locale).'.htm';
+
+		return View::make("public/iframe", array('data' => $data));
 
 	}
 

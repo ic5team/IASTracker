@@ -82,7 +82,7 @@ if(property_exists($data, 'isComplete') && !$data->isComplete)
 	{
 
 ?>
-	$('#loginModal').modal();
+		$('#loginModal').modal();
 
 <?php
 	}
@@ -277,16 +277,6 @@ if(property_exists($data, 'isComplete') && !$data->isComplete)
 ?>
 		@include('layouts.modals.info')
 <?php
-	}
-	else
-	{
-
-?>
-		@include('layouts.modals.login')
-		@include('layouts.modals.signup')
-		@include('layouts.modals.remind')
-<?php
-
 	}
 ?>
 	</div>

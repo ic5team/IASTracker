@@ -13,7 +13,7 @@
 
 @section('main_wrapper')
 	<div class="full-width" style="overflow: hidden;">
-		<div class="row" id="activationForm">
+		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
 				<div id="titol" style="text-align:center">
 					<h2>{{Lang::get('ui.cookieTitle')}}</h2>

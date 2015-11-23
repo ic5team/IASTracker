@@ -13,6 +13,7 @@
 	{{ HTML::script('js/bootstrap.min.js'); }}
 	{{ HTML::script('js/bootstrap-switch.min.js'); }}
 	{{ HTML::script('js/common.js'); }}
+	{{ HTML::script('js/pages/userNavbar.js'); }}
 	{{ HTML::script('js/iastracker.api.js'); }}
 	<script>
 		var api = new IASTracker("<?php echo Config::get('app.url'); ?>");
@@ -43,6 +44,9 @@
 	@show
 
 	@yield('main_wrapper')
+	@include('layouts.modals.login')
+	@include('layouts.modals.signup')
+	@include('layouts.modals.remind')
 
 	<script>
 		var loggedUserId = <?php echo (property_exists($data, 'usrId') ? $data->usrId : -1 ); ?>;
@@ -50,4 +54,3 @@
 		var urlImg = "<?php echo Config::get('app.urlImg'); ?>";
 	</script>
 @stop
-
