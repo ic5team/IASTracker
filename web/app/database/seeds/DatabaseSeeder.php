@@ -38,7 +38,7 @@ class MapProviderTableSeeder extends Seeder {
 	
 		DB::table('MapProvider')->insert(array(
 			'id'  => 1,
-			'url' => 'http://www.instamaps.cat/mapcache/tms/1.0.0/A250MON@GM14/{z}/{x}/{y}.png',
+			'url' => 'http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png',
 			'attribution' => '&copy; <a href="http://osm.org/copyright" title="OpenStreetMap" target="_blank">OpenStreetMap</a> contributors | Tiles Courtesy of <a href="http://www.mapquest.com/" title="MapQuest" target="_blank">MapQuest</a> <img src="http://developer.mapquest.com/content/osm/mq_logo.png" width="16" height="16">',
 			'zIndex' => 1,
 			'SWBoundLat' => null,
@@ -49,7 +49,6 @@ class MapProviderTableSeeder extends Seeder {
 			'maxZoom' => null,
 			'creatorId' => 1,
 			'subdomains' => '1234',
-			'tms' => true,
 			'isOverlay' => false,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime

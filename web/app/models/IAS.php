@@ -32,6 +32,7 @@ class IAS extends Eloquent {
 			$img = IASImage::find($this->defaultImageId);
 			$obj->url = $img->URL;
 			$obj->attribution = $img->attribution;
+			$obj->rotation = $img->rotation;
 			$imgText = IASImageText::withIASImageAndLanguageId(
 				$img->id, $languageId)->first();
 			if(null == $imgText)
@@ -70,6 +71,7 @@ class IAS extends Eloquent {
 
 				$obj->url = $img->URL;
 				$obj->attribution = $img->attribution;
+				$obj->rotation = $img->rotation;
 				$imgText = IASImageText::withIASImageAndLanguageId(
 					$img->id, $languageId)->first();
 				if(null == $imgText)

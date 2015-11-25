@@ -625,7 +625,8 @@ class UserController extends RequestController {
 		{
 
 			$lang = Language::find($user->languageId);
-			App::setLocale($lang->locale);
+			if(!Input::has('lang'))
+				App::setLocale($lang->locale);
 			return View::make("public/reset", array('data' => $data,
 				'token' => $token, 'userId' => $user->id));
 

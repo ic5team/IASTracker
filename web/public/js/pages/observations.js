@@ -9,6 +9,7 @@ var cameraMarker = L.icon({
     iconAnchor:   [13, 41], // point of the icon which will correspond to marker's location
     shadowAnchor: [12, 40]  // the same for the shadow
 });
+var imageRotationAngles = [];
 
 $(document).ready(function() {
 
@@ -53,11 +54,12 @@ $(document).ready(function() {
 				data: null, 
 				orderable: false,
 				render: function ( data, type, row ) {
-					var validateBtn = '<button onclick="showValidationModal(' + row.id + ', true)" class="btn btn-success insideCollapseButton" >Validate</button>';
-					var discardBtn = '<button onclick="showValidationModal(' + row.id + ', false)" class="btn btn-danger insideCollapseButton" >Discard</button>';
+					var validateBtn = '<button onclick="showValidationModal(' + row.id + ', true)" class="btn btn-success insideCollapseButton" >' + row.validateText + '</button>';
+					var undoValidateBtn = '<button onclick="undoValidation(' + row.id + ')" class="btn btn-warning insideCollapseButton" >' + row.undoValidateText + '</button>';
+					var discardBtn = '<button onclick="showValidationModal(' + row.id + ', false)" class="btn btn-danger insideCollapseButton" >' + row.discardText + '</button>';
 					var deleteBtn = '<button type="button" class="btn btn-danger" onclick="deleteObs(' + row.id + ')"><i class="fa fa-trash-o"></i></button>';
 					var loading = '<img src="' + urlImg + '/loader.gif" class="loading" data-id=' + row.id + ' style="display:none;"/>';
-                    return (4 != row.statusId) ? '<div class="btns" data-id="' + row.id + '" >' + ((2 == row.statusId && row.canBeValidated) ? validateBtn + discardBtn : '' ) + deleteBtn + '</div>' + loading : '';
+                    return (4 != row.statusId) ? '<div class="btns" data-id="' + row.id + '" >' + ((2 == row.statusId && row.canBeValidated) ? validateBtn + discardBtn : undoValidateBtn ) + deleteBtn + '</div>' + loading : '';
                 } 
             }
 		],
@@ -177,6 +179,13 @@ function initRow(data)
 		mapHandlers[id].imageMarkers = imageMarkers;
 		mapHandlers[id].fitBounds(imageMarkers);
 
+		$('.obsImage').each(function(index) {
+			var obsId = $(this).attr('data-obs-id');
+			var imageId = $(this).attr('data-id');
+			imageRotationAngles[obsId + '_' + imageId] = parseInt($(this).attr('data-rotation'));
+			$(this).rotate(imageRotationAngles[obsId + '_' + imageId]);
+		});
+
 	//}
 
 }
@@ -243,10 +252,51 @@ function discard(id)
 
 }
 
+function undoValidation(id)
+{
+
+	$('.btns[data-id=' + id + ']').hide();
+	$('.loading[data-id=' + id + ']').show();
+	api.unvalidateObservation(id, obsStateChanged);
+
+}
+
 function deleteObs(id)
 {
 
-	api.deleteObservation(id, obsStateChanged);
+	$('#confirmButton').attr('onclick', 'deleteObsAux(' + id + ')');
+	$('#confirmModal').modal();
+
+}
+
+function deleteObsAux(id)
+{
+
+	$('#confirmButtons').hide();
+	$('#confirmLoading').show();
+	api.deleteObservation(id, obsDeleted);
+	$('#confirmModal').modal();
+
+}
+
+function obsDeleted(data)
+{
+
+	var obj = data;
+	if(!obj.hasOwnProperty('ok') || obj.ok)
+	{
+
+		$('#confirmModal').modal('hide');
+		dt.ajax.reload();
+
+	}
+	else
+	{
+
+		$('#serverDeleteErrorMessage').html(obj.msg + ': ' + obj.internalMsg);
+		$('#serverDeleteError').show();
+
+	}
 
 }
 
@@ -283,6 +333,40 @@ function deleteImage(obsId, imageId)
 function obsImageDeleted(data)
 {
 
+	//TODO: Remove image from DOM instead of reloading
+	dt.ajax.reload();
+
+}
+
+function rotateImageLeft(obsId, imageId)
+{
+
+	imageRotationAngles[obsId + '_' + imageId] -= 90;
+	$(".obsImage[data-id=" + imageId + "][data-obs-id=" + obsId + "]").rotate(imageRotationAngles[obsId + '_' + imageId]);
+
+}
+
+function rotateImageRight(obsId, imageId)
+{
+
+	imageRotationAngles[obsId + '_' + imageId] += 90;
+	$(".obsImage[data-id=" + imageId + "][data-obs-id=" + obsId + "]").rotate(imageRotationAngles[obsId + '_' + imageId]);
+
+}
+
+function saveImage(obsId, imageId)
+{
+
+	$('.saveImageText[data-image-id=' + imageId + ']').hide();
+	$('.saving[data-image-id=' + imageId + ']').show();
+	api.rotateObservationImage(obsId, imageId, imageRotationAngles[obsId + '_' + imageId], obsImageRotated);
+
+}
+
+function obsImageRotated(data)
+{
+
+	//TODO: Change icon status instead of reloading
 	dt.ajax.reload();
 
 }

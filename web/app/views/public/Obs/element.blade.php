@@ -70,12 +70,15 @@
 	$numImg = count($data->images);
 	$num = ($numImg < 8 ? $numImg : 8);
 	$str = array();
+	$img = HTML::image(Config::get('app.urlImg').$data->image->url,'', 
+			array('style'=>'width: 200px; transform:rotate('.$data->image->rotation.'deg);  margin-left: 10px;margin-top: 10px;'));
+	$str[] = '<a href="'.Config::get('app.urlImg').$data->image->url.'" data-lightbox="IASImages" data-title="'.$data->image->text.' - '.$data->image->attribution.'">'.$img.'</a>';
 	for($i=0; $i<$num; ++$i)
 	{
 
 		$current = $data->images[$i];
 		$img = HTML::image(Config::get('app.urlImg').$current->URL,'', 
-			array('style'=>'width: 200px; margin-left: 10px;margin-top: 10px;'));
+			array('style'=>'width: 200px; transform:rotate('.$current->rotation.'deg); margin-left: 10px;margin-top: 10px;'));
 		$str[] = '<a href="'.Config::get('app.urlImg').$current->URL.'" data-lightbox="IASImages">'.$img.'</a>';
 
 	}
@@ -84,7 +87,9 @@
 	{
 
 		$current = $data->images[$i];
-		$str[] = '<a href="'.Config::get('app.urlImg').$current->URL.'" data-lightbox="IASImages"></a>';
+		$img = HTML::image(Config::get('app.urlImg').$current->URL,'', 
+			array('style'=>'display:none; width: 200px; transform:rotate('.$current->rotation.'deg); margin-left: 10px;margin-top: 10px;'));
+		$str[] = '<a href="'.Config::get('app.urlImg').$current->URL.'" data-lightbox="IASImages">'.$img.'</a>';
 
 	}
 

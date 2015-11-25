@@ -132,6 +132,9 @@ class ObservationController extends RequestController {
 					$current->ias->image = $current->ias->getDefaultImageData($languageId, $defaultLanguageId);
 					$current->images = ObservationImage::withObservationId($current->id)->get();
 					$current->canBeValidated = $bIsValidator;
+					$current->validateText = Lang::get('ui.validate');
+					$current->discardText = Lang::get('ui.discard');
+					$current->undoValidateText = Lang::get('ui.undoValidate');
 
 					if(null != $current->deleted_at)
 					{
@@ -175,7 +178,8 @@ class ObservationController extends RequestController {
 
 					}
 
-					$current->ownObs = ($current->userId == Auth::user()->id);
+					$current->canDelete = ($current->userId == Auth::user()->id) || $bIsValidator;
+					$current->canRotate = ($current->userId == Auth::user()->id) || $bIsValidator;
 
 					$current->innerHtml = View::make('admin/innerObservation', array('current' => $current))->render();
 					$obs[$i] = $current;
@@ -477,11 +481,25 @@ class ObservationController extends RequestController {
 			if(null != $validator)
 			{
 
-				$user = Auth::user();
-				$element->validatorId = $user->id;
-				$element->validatorTS = new DateTime();
 				$element->statusId = Input::get('status');
-				$element->validationText = Input::get('text');
+				if(2 != Input::get('status'))
+				{
+
+					$user = Auth::user();
+					$element->validatorId = $user->id;
+					$element->validatorTS = new DateTime();
+					$element->validationText = Input::get('text');
+
+				}
+				else
+				{
+
+					$element->validatorId = null;
+					$element->validatorTS = null;
+					$element->validationText = null;
+
+				}
+
 				$element->touch();
 				$element->save();
 
@@ -505,6 +523,30 @@ class ObservationController extends RequestController {
 
 			$obs = Observation::find($id);
 			$obs->delete();
+
+		}
+
+	}
+
+	public function updateImage($id, $imageId)
+	{
+
+		if(Input::has('angle') && Auth::check())
+		{
+
+			$validator = IASValidator::userId(Auth::user()->id)->first();
+			if(null != $validator || Auth::user()->isAdmin)
+			{
+
+				//We store the rotation on the database because imagecreatefromjpeg removes exif data
+				$image = ObservationImage::find($imageId);
+				$image->rotation = Input::get('angle');
+				$image->touch();
+				$image->save();
+
+				return Response::json(true);
+
+			}
 
 		}
 

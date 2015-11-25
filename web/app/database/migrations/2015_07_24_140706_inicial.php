@@ -298,6 +298,7 @@ class Inicial extends Migration {
 			$table->increments('id');
 			$table->integer('observationId')->unsigned();
 			$table->string('URL', 255);
+			$table->integer('rotation')->default(0);
 			$table->timestamps();
 		});
 

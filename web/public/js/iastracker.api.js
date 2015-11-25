@@ -158,6 +158,17 @@ IASTracker.prototype.deleteObservationImage = function(observationId, obsImageId
 
 }
 
+IASTracker.prototype.rotateObservationImage = function(observationId, obsImageId, angle, doneFunction, destinationId)
+{
+
+	var completeURL = this.observations.entryPoint + this.separator + observationId +
+		this.separator + this.observations.images + this.separator + obsImageId;
+	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
+
+	return this.AJAXRequest(completeURL, destId, doneFunction, 'PUT', {angle : angle});
+
+}
+
 IASTracker.prototype.getIAS = function(IASId, doneFunction, destinationId)
 {
 
@@ -329,6 +340,16 @@ IASTracker.prototype.validateObservation = function(obsId, text, doneFunction)
 	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
 
 	return this.AJAXRequest(completeURL, destId, doneFunction, 'PUT', {status: 1, text: text});
+
+}
+
+IASTracker.prototype.unvalidateObservation = function(obsId, doneFunction)
+{
+
+	var completeURL = this.observations.entryPoint + this.separator + obsId;
+	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
+
+	return this.AJAXRequest(completeURL, destId, doneFunction, 'PUT', {status: 2});
 
 }
 
