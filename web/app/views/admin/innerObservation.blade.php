@@ -23,7 +23,7 @@
 		{
 
 			$exif = exif_read_data('./img/'.$current->images[$j]->URL);
-			$imageParams = array('style'=>'max-width: 150px; max-height: 150px;', 
+			$imageParams = array('style'=>'max-width: 150px; max-height: 150px; margin-top:50px; margin-bottom:50px;', 
 				'class'=>'obs'.$current->id.'Image obsImage', 'data-obs-id' => $current->id, 
 				'data-id' => $current->images[$j]->id, 'data-rotation' => $current->images[$j]->rotation);
 			if(array_key_exists('GPSLatitude', $exif))
@@ -51,7 +51,7 @@
 			}
 
 			$img = HTML::image(Config::get('app.urlImg').$current->images[$j]->URL,'', $imageParams);
-			echo '<div style="width: 250px; height:250px; text-align:center;"><a href="'.Config::get('app.urlImg').$current->images[$j]->URL.'" data-lightbox="IASImages">'.$img.'</a>';
+			echo '<div style="width: 250px; height:250px; text-align:center; display:inline-block;"><a href="'.Config::get('app.urlImg').$current->images[$j]->URL.'" data-lightbox="IASImages">'.$img.'</a>';
 			if($current->canRotate)
 			{
 
@@ -65,14 +65,14 @@
 				echo '<button type="button" class="btn btn-warning" style="display:inline-block;" onclick="saveImage('.$current->id.','.$current->images[$j]->id.')">
 						<div class="saveImageText" data-image-id='.$current->images[$j]->id.'><i class="fa fa-floppy-o"></i></div><img src="'.Config::get('app.urlImg').'/loader.gif" class="saving" data-image-id='.$current->images[$j]->id.' style="display:none;"/>
 					</button>';
-				echo '</div>';
+				if($current->canDelete)
+				{
+					
+					echo '<button type="button" class="btn btn-danger" onclick="deleteImage('.$current->id.','.$current->images[$j]->id.')">
+						<div class="deleteImageText" data-image-id='.$current->images[$j]->id.'><i class="fa fa-trash-o"></i>'.Lang::get('ui.delete').'</div><img src="'.Config::get('app.urlImg').'/loader.gif" class="deleting" data-image-id='.$current->images[$j]->id.' style="display:none;"/></button>';
 
-			}
-			if($current->canDelete)
-			{
-				
-				echo '<button type="button" class="btn btn-danger" onclick="deleteImage('.$current->id.','.$current->images[$j]->id.')">
-					<div class="deleteImageText" data-image-id='.$current->images[$j]->id.'><i class="fa fa-trash-o"></i>'.Lang::get('ui.delete').'</div><img src="'.Config::get('app.urlImg').'/loader.gif" class="deleting" data-image-id='.$current->images[$j]->id.' style="display:none;"/></button>';
+				}
+				echo '</div>';
 
 			}
 			echo '</div>';
