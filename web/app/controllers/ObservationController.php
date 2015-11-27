@@ -705,7 +705,7 @@ class ObservationController extends RequestController {
 									<name>'.(property_exists($current->data, 'user') ? $current->data->user->username : '').' '.$current->data->created_at.'</name>
         							<visibility>1</visibility>
         							<aux>234</aux>
-        							<description><![CDATA[ <table width="600">'.$current->html.'</table>]]></description>
+        							<description><![CDATA[ <table width="800">'.$current->html.'</table>]]></description>
 									<Point>
 										<coordinates>'.$current->data->longitude.','.$current->data->latitude.',0</coordinates>
 									</Point>
