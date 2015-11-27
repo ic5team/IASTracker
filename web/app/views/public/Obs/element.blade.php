@@ -9,8 +9,8 @@
 				background-position-y: -150px;
 	    		background-repeat: no-repeat;
 	    		background-size: cover;">
-	    	<div class="iasTitleContainer">
-	    		<div class="obsTitleText">
+	    	<div class="iasTitleContainer" style="float: left;background-color: rgba(0,0,0,0.5);width: 100%;text-align: left;height: 150px;">
+	    		<div class="obsTitleText" style="margin-top: 0px;margin-left: 15px;">
 		    		<div style="font-size:32px; color:#5cb85c; font-weight: bold;">{{ $data->description->name }}<i class="fa fa-external-link" style="margin-left:15px; cursor:pointer;" title="{{Lang::get('ui.')}}" onclick="showIAS({{$data->IASId}})"></i></div>
 					<div style="color:#337ab7; font-weight: bold;">{{ $data->latinName }}</div>
 <?php

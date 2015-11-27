@@ -20,6 +20,7 @@ if(property_exists($data, 'isComplete') && !$data->isComplete)
 
 @section('footer_includes')
 	@parent
+	{{ HTML::script('js/jquery.fileDownload.js'); }}
 	{{ HTML::script('js/lightbox.min.js'); }}
 	{{ HTML::script('js/leaflet.js'); }}
 	{{ HTML::script('js/proj4-compressed.js'); }}
@@ -180,6 +181,7 @@ if(property_exists($data, 'isComplete') && !$data->isComplete)
 							<div class="col-md-12">
 								<button role="button" class="btn btn-large btn-primary" type="button" onclick="filterObs()">{{Lang::get('ui.filter')}}</button>
 								<button role="button" class="btn btn-large btn-primary" type="button" onclick="cleanFilter()">{{Lang::get('ui.cleanFilter')}}</button>
+								<button role="button" class="btn btn-large btn-primary" type="button" onclick="downloadObs()"><i class="fa fa-download"></i></button>
 							</div>
 						</div>
 					</div>

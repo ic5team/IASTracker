@@ -225,6 +225,35 @@ function addIAS()
 
 }
 
+function dismiss()
+{
+
+	resetForm();
+	$('#addIAS').hide();
+	$('#iasList').show();
+
+}
+
+function resetForm()
+{
+
+	$('#input-scientificName').val('');
+	$('#taxon').val(0);
+
+	for(var i=0; i<languageNum; ++i)
+	{
+
+		$('#input-name' + (i+1)).val('');
+		$('#input-shortDesc' + (i+1)).val('');
+		$('#input-sizeDesc' + (i+1)).val('');
+		$('#input-infoDesc' + (i+1)).val('');
+		$('#input-infoHabitat' + (i+1)).val('');
+		$('#input-infoConfuse' + (i+1)).val('');
+
+	}
+
+}
+
 function checkInput(id)
 {
 

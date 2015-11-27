@@ -137,6 +137,23 @@ IASTracker.prototype.getFilteredObservations = function(params, doneFunction, de
 
 }
 
+IASTracker.prototype.downloadFilteredObservations = function(params, doneFunction, destinationId)
+{
+
+	var completeURL = this.observations.entryPoint;
+	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
+
+	params.isDownload = true;
+
+	$.fileDownload(completeURL, {
+		data: params,
+		successCallback: function (url) {
+			doneFunction();
+		}
+	});
+
+}
+
 IASTracker.prototype.getIASObservation = function(observationId, doneFunction, destinationId)
 {
 

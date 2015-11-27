@@ -14,7 +14,7 @@
 			</button>
 		</div>
 	</div>
-	<div class="row">
+	<div class="row" id="iasList">
 		<div class="col-md-12">
 			<table id="dataContainer" class="display" cellspacing="0" width="100%">
 				<thead>
@@ -42,7 +42,6 @@
 			</table>
 		</div>
 	</div>
-
 	<div id="addIAS" style="display:none;">
 		<div class="row">
 			<div class="col-md-12">
@@ -167,8 +166,8 @@ for($i=0; $i<count($data->languages); ++$i)
 							</div>
 						</a>
 						<div id="collapseImages" data-id="" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-							<div class="panel-body" id="imageContents">
-								<div class="row imageRow" style="display:none;">
+							<div class="panel-body" id="imageContentsN">
+								<div class="row imageRow" style="margin-bottom: 50px;">
 									<div class="col-md-4" style="border: dashed 1px; min-height: 250px; text-align:center;">
 										<div style="margin-top: 110px;">
 											<form action="{{Config::get('app.url')}}/common/obsImageUpload.php" class="dropzone imageUpload" id="imageUpload">
@@ -176,34 +175,43 @@ for($i=0; $i<count($data->languages); ++$i)
 										</div>
 									</div>
 									<div class="col-md-8">
-										<label>
-											{{Lang::get('ui.attribution')}}
-											<input type="text" id="imageAttrib" class="imageAttrib" value="" />
-										</label>
+										<div style="display:inline-block;">
+											<label>
+												{{Lang::get('ui.attribution')}}
+												<input type="text" class="imageAttrib" data-id="" />
+											</label>
+											<label>
+												{{Lang::get('ui.order')}}
+												<input type="text" class="imageOrder" data-id="" />
+											</label>
+										</div>
 <?php
 for($i=0; $i<count($data->languages); ++$i)
 {
 
 ?>
 										<div class="row" style="margin-bottom: 15px;">
-											<div class="col-md-4">
+											<div class="col-md-2">
 												{{ HTML::image('img/thumbs/flags/'.$data->languages[$i]->img, $data->languages[$i]->name, array('class' => 'navbar-logo-img')); }}
 											</div>
-											<div class="col-md-8">
+											<div class="col-md-10">
 												<label>
 													{{Lang::get('ui.imageText')}}
-													<input type="text" id="imageText" data-row="" data-lang="{{$data->languages[$i]->id}}" class="imageText" value="" />
 												</label>
+												<input type="text" style="width: 100%;" data-row="" data-lang="{{$i}}" class="imageText" value="" />													
 											</div>
 										</div>
 <?php
 }
 ?>
-										<button class="btn btn-success imageRemove">
+										<button class="btn btn-success imageRemove" style="float:right;" onclick="">
 											{{Lang::get('ui.removeIASImage')}}
 										</button>
 									</div>
 								</div>
+								<button class="btn btn-success imageAdd" style="float:right;" data-id="" onclick="addImageN()">
+									{{Lang::get('ui.addIASImage')}}
+								</button>
 							</div>
 						</div>
 					</div>

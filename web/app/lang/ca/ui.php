@@ -174,6 +174,7 @@ return array(
 		'viewUser' => 'Veure usuari',
 		'nickPermanent' => 'Ep! El sobrenom NO es pot canviar un cop escollit, pensa\'l bé!',
 		'undoValidate' => 'Desvalida',
-		'confirmationText' => 'Segur que vols eliminar la observació? Aquesta acció no es pot desfer!'
+		'confirmationText' => 'Segur que vols eliminar la observació? Aquesta acció no es pot desfer!',
+		'downloadObservations' => 'Descarrega'
 
 	);

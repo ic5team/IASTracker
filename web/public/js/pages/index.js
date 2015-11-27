@@ -555,6 +555,39 @@ function filterObs()
 
 }
 
+function downloadObs()
+{
+
+	$('#overlay').show();
+
+	var taxonomyId = $('#input-group').val();
+	var fromDate = $('#fromDate').val();
+	var toDate = $('#toDate').val();
+	var stateId = $('#input-state').val();
+	var regionId = $('#input-regions').val();
+	var areaId = $('#input-areas').val();
+
+	api.downloadFilteredObservations( 
+		{
+			taxonomyId : taxonomyId,
+			fromDate : fromDate,
+			toDate : toDate,
+			stateId : stateId,
+			regionId : regionId,
+			areaId : areaId
+		}
+		,fileDownloaded
+	);
+
+}
+
+function fileDownloaded()
+{
+
+	$('#overlay').hide();
+
+}
+
 function clearObservations()
 {
 

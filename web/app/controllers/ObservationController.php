@@ -19,20 +19,30 @@ class ObservationController extends RequestController {
 
 		$elements = null;
 
-		if(Input::has('draw'))
+		if(!Input::has('isDownload'))
 		{
 
-			$elements = $this->getDataTablesData($first, $num);
+			if(Input::has('draw'))
+			{
 
+				$elements = $this->getDataTablesData($first, $num);
+
+			}
+			else
+			{
+
+				$elements = $this->getFilteredData($first, $num);
+
+			}
+
+			return Response::json($elements);
 		}
 		else
 		{
 
-			$elements = $this->getFilteredData($first, $num);
+			return $this->getFilteredData($first, $num);
 
 		}
-
-		return Response::json($elements);
 
 	}
 
@@ -267,7 +277,19 @@ class ObservationController extends RequestController {
 		$elements = $this->getFilteredElements($first, $num, $taxonsId, $fromDate, 
 			$toDate, $areaIds);
 
-		return $elements->toJson();
+		if(Input::has('isDownload') && Input::get('isDownload'))
+		{
+
+			//Generate the kml file
+			return $this->generateKML($elements);
+
+		}
+		else
+		{
+
+			return $elements->toJson();
+
+		}
 
 	}
 
@@ -423,35 +445,47 @@ class ObservationController extends RequestController {
 		if(NULL != $element)
 		{
 
-			$languageId = Language::locale(App::getLocale())->first()->id;
-			$configuration = Configuration::find(1);
-			$defaultLanguageId = $configuration->defaultLanguageId;
-
-			$data = $element;
-			$ias = $element->IAS;
-			$data->latinName = $ias->latinName;
-			$data->description = $ias->getDescriptionData($languageId, $defaultLanguageId);
-			$data->taxons = $ias->getTaxons($languageId, $defaultLanguageId);
-			$data->image = $ias->getDefaultImageData($languageId, $defaultLanguageId);
-
-			if(null != $element->userId)
-			{
-
-				$user = User::find($element->userId);
-				if(null != $user)
-					$data->user = $user;
-
-			}
-
-			$data->status = $element->getStatus($languageId, $defaultLanguageId);
-			$data->images = $element->observationImages;
-
-			$output = new stdClass();
-			$output->html = View::make('public/Obs/element', array('data' => $data))->render();
-
+			$output = $this->buildResource($element, false);
 			return json_encode($output);
 
 		}
+
+	}
+
+	protected function buildResource($element, $addData)
+	{
+
+		$languageId = Language::locale(App::getLocale())->first()->id;
+		$configuration = Configuration::find(1);
+		$defaultLanguageId = $configuration->defaultLanguageId;
+
+		$data = $element;
+		$ias = $element->IAS;
+		$data->latinName = $ias->latinName;
+		$data->description = $ias->getDescriptionData($languageId, $defaultLanguageId);
+		$data->taxons = $ias->getTaxons($languageId, $defaultLanguageId);
+		$data->image = $ias->getDefaultImageData($languageId, $defaultLanguageId);
+
+		if(null != $element->userId)
+		{
+
+			$user = User::find($element->userId);
+			if(null != $user)
+				$data->user = $user;
+
+		}
+
+		$data->status = $element->getStatus($languageId, $defaultLanguageId);
+		$data->images = $element->observationImages;
+
+		$output = new stdClass();
+		$output->html = View::make('public/Obs/element', array('data' => $data))->render();
+
+		if($addData)
+			$output->data = $data;
+
+
+		return $output;
 
 	}
 
@@ -611,6 +645,87 @@ class ObservationController extends RequestController {
 			->skip($first)->take($num)->get();
 
 		return $values;
+
+	}
+
+	protected function generateKML($observations)
+	{
+
+		setcookie('fileDownload', 'true', 0 , '/');
+		$folders = array();
+
+		for($i=0; $i<count($observations); ++$i)
+		{
+
+			$currentFolder = null;
+			$current = $observations[$i];
+			$resource = $this->buildResource($current, true);
+
+			if(array_key_exists($resource->data->latinName, $folders))
+			{
+
+				$currentFolder = $folders[$resource->data->latinName];
+
+			}
+			else
+			{
+
+				$currentFolder = array();
+
+			}
+
+			$currentFolder[] = $resource;
+			$folders[$resource->data->latinName] = $currentFolder;
+
+		}
+
+		$kml = '<?xml version="1.0" encoding="UTF-8"?>
+				<kml xmlns="http://www.opengis.net/kml/2.2">
+  					<Document>
+						<name>IASTracker Observations</name>
+						<open>1</open>
+						<description>Observations from IC5Team\'s IASTracker project at iastracker.ic5team.org</description>
+						<Folder>
+  							<name>Validated Observations</name>
+						';
+
+		$keys = array_keys($folders);
+		for($i=0; $i<count($folders); ++$i)
+		{
+
+			$currentFolder = $folders[$keys[$i]];
+			$kml .= '		<Folder>
+								<name>'.$keys[$i].'</name>
+  								';
+			for($j=0; $j<count($currentFolder); ++$j)
+			{
+
+				$current = $currentFolder[$j];
+				$kml .= '		<Placemark>
+									<name>'.$current->data->user->username.' '.$current->data->created_at.'</name>
+        							<visibility>1</visibility>
+        							<aux>234</aux>
+        							<description><![CDATA[ <table width="600">'.$current->html.'</table>]]></description>
+									<Point>
+										<coordinates>'.$current->data->longitude.','.$current->data->latitude.',0</coordinates>
+									</Point>
+								</Placemark>
+					';
+
+			}
+
+			$kml .= '		</Folder>';
+
+		}
+
+		$kml .= '		</Folder>
+					</Document>
+				</kml>';
+
+		$resp = Response::make($kml);
+		$resp->header('Content-Type', 'application/vnd.google-earth.kml+xml');
+
+		return $resp;
 
 	}
 
