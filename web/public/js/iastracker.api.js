@@ -140,7 +140,8 @@ IASTracker.prototype.getFilteredObservations = function(params, doneFunction, de
 IASTracker.prototype.downloadFilteredObservations = function(params, doneFunction, destinationId)
 {
 
-	var completeURL = this.observations.entryPoint;
+	var lang = window.location.search;
+	var completeURL = this.observations.entryPoint + lang;
 	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
 
 	params.isDownload = true;
