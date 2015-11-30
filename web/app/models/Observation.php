@@ -39,7 +39,7 @@ class Observation extends Eloquent {
 	public function scopeValidated($query)
 	{
 
-		return $query->whereNotNull('observations.validatorId');
+		return $query->where('observations.statusId', '=', 1);
 
 	}
 

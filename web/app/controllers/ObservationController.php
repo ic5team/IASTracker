@@ -661,21 +661,26 @@ class ObservationController extends RequestController {
 			$current = $observations[$i];
 			$resource = $this->buildResource($current, true);
 
-			if(array_key_exists($resource->data->latinName, $folders))
+			if(1 == $current->statusId)	//Only download the validated data
 			{
 
-				$currentFolder = $folders[$resource->data->latinName];
+				if(array_key_exists($resource->data->latinName, $folders))
+				{
+
+					$currentFolder = $folders[$resource->data->latinName];
+
+				}
+				else
+				{
+
+					$currentFolder = array();
+
+				}
+
+				$currentFolder[] = $resource;
+				$folders[$resource->data->latinName] = $currentFolder;
 
 			}
-			else
-			{
-
-				$currentFolder = array();
-
-			}
-
-			$currentFolder[] = $resource;
-			$folders[$resource->data->latinName] = $currentFolder;
 
 		}
 
@@ -714,7 +719,8 @@ class ObservationController extends RequestController {
 
 			}
 
-			$kml .= '		</Folder>';
+			$kml .= '		</Folder>
+					';
 
 		}
 
