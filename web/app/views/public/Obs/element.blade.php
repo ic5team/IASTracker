@@ -70,9 +70,6 @@
 	$numImg = count($data->images);
 	$num = ($numImg < 8 ? $numImg : 8);
 	$str = array();
-	$img = HTML::image(Config::get('app.urlImg').$data->image->url,'', 
-			array('style'=>'width: 200px; transform:rotate('.$data->image->rotation.'deg);  margin-left: 10px;margin-top: 10px;margin-bottom: 30px;'));
-	$str[] = '<a href="'.Config::get('app.urlImg').$data->image->url.'" data-lightbox="IASImages" data-title="'.$data->image->text.' - '.$data->image->attribution.'">'.$img.'</a>';
 	for($i=0; $i<$num; ++$i)
 	{
 

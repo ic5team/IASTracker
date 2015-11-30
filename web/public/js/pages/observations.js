@@ -264,6 +264,8 @@ function undoValidation(id)
 function deleteObs(id)
 {
 
+	$('#confirmButtons').show();
+	$('#confirmLoading').hide ();
 	$('#confirmButton').attr('onclick', 'deleteObsAux(' + id + ')');
 	$('#confirmModal').modal();
 
