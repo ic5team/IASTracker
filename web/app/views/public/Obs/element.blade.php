@@ -150,3 +150,27 @@
 ?>
 
 </div>
+<div class="row">
+	<div class="col-md-12">
+
+<?php
+
+	if(((1 == $data->statusId) || (3 == $data->statusId)) && !$data->isAutoValidated)
+	{
+?>
+							<h1>{{Lang::get('ui.obsValidationTextTitle')}}</h1>
+							<div class="row">
+								<div class="col-md-12">
+									{{$data->validationText}}
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									{{$data->validatorName.' ('.$data->validatorOrg.'), '.$data->validatorTS}}
+								</div>
+							</div>
+<?php
+	}
+?>
+	</div>
+</div>

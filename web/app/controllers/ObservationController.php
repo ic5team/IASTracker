@@ -475,6 +475,21 @@ class ObservationController extends RequestController {
 
 		}
 
+		if(null != $element->validatorId)
+		{
+
+			$validator = IASValidator::find($element->validatorId);
+			if(null != $validator)
+			{
+
+				$user = User::withTrashed()->find($validator->userId);
+				$data->validatorName = $user->fullName;
+				$data->validatorOrg = $validator->organization;
+
+			}
+
+		}
+
 		$data->status = $element->getStatus($languageId, $defaultLanguageId);
 		$data->images = $element->observationImages;
 

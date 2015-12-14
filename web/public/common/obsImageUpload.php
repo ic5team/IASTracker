@@ -15,7 +15,7 @@ $fieldName = 'image';
 $maxWidth = 2580;
 $maxHeight = 2048;
 
-$max_file_size = 10*1024*1024;	//5MB
+$max_file_size = 10*1024*1024;	//10MB
 $errors = array(1 => 'Ep! La imatge és massa gran', 
                 2 => 'Ep! La imatge és massa gran', 
                 3 => 'file upload was only partial', 

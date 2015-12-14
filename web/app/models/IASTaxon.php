@@ -98,6 +98,33 @@ class IASTaxon extends Eloquent {
 
 	}
 
+	public function getNames($defaultLanguageId)
+	{
+
+		$langs = Language::all();
+		$names = array();
+
+		for($i=0; $i<count($langs); ++$i)
+		{
+
+			$taxonName = IASTaxonName::withIASTaxonAndLanguageId(
+				$this->id, $langs[$i]->id)->first();
+			if(null == $taxonName)
+			{
+
+				$taxonName = IASTaxonName::withIASTaxonAndLanguageId(
+					$this->id, $defaultLanguageId)->first();
+
+			}
+
+			$names[$langs[$i]->locale] = $taxonName->name;
+
+		}
+
+		return $names;
+
+	}
+
 	function scopeLastUpdated($query)
 	{
 

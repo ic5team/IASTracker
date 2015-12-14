@@ -25,6 +25,7 @@ class IAS extends Eloquent {
 	{
 
 		$obj = new stdClass();
+		$langs = Language::all();
 
 		if(null != $this->defaultImageId)
 		{
@@ -48,6 +49,27 @@ class IAS extends Eloquent {
 			else
 				$obj->text = "";
 
+			$obj->texts = array();
+			for($i=0; $i<count($langs); ++$i)
+			{
+
+				$imgText = IASImageText::withIASImageAndLanguageId(
+					$img->id, $langs[$i]->id)->first();
+				if(null == $imgText)
+				{
+
+					$imgText = IASImageText::withIASImageAndLanguageId(
+						$img->id, $defaultLanguageId)->first();
+
+				}
+
+				if(null != $imgText)
+					$obj->texts[$langs[$i]->locale] = $imgText->text;
+				else
+					$obj->texts[$langs[$i]->locale] = "";
+
+			}
+
 		}
 
 		return $obj;
@@ -59,6 +81,7 @@ class IAS extends Eloquent {
 
 		$data = array();
 		$images = IASImage::withIASId($this->id)->get();
+		$langs = Language::all();
 
 		for($i=0; $i<count($images); ++$i)
 		{
@@ -86,6 +109,27 @@ class IAS extends Eloquent {
 					$obj->text = $imgText->text;
 				else
 					$obj->text = "";
+
+				$obj->texts = array();
+				for($i=0; $i<count($langs); ++$i)
+				{
+
+					$imgText = IASImageText::withIASImageAndLanguageId(
+						$img->id, $langs[$i]->id)->first();
+					if(null == $imgText)
+					{
+
+						$imgText = IASImageText::withIASImageAndLanguageId(
+							$img->id, $defaultLanguageId)->first();
+
+					}
+
+					if(null != $imgText)
+						$obj->texts[$langs[$i]->locale] = $imgText->text;
+					else
+						$obj->texts[$langs[$i]->locale] = "";
+
+				}
 
 				$data[] = $obj;
 
@@ -120,6 +164,42 @@ class IAS extends Eloquent {
 		$obj->longDescription = $iasDesc->sizeLongDescription.' '.$iasDesc->infoLongDescription.' '.$iasDesc->habitatLongDescription.' '.$iasDesc->confuseLongDescription;
 
 		return $obj;
+
+	}
+
+	public function getDescriptionsData($defaultLanguageId)
+	{
+
+		$langs = Language::all();
+		$descs = array();
+		for($i=0; $i<count($langs); ++$i)
+		{
+
+			$obj = new stdClass();
+			$languageId = $langs[$i]->id;
+
+			$iasDesc = IASDescription::withIASAndLanguageId(
+				$this->id, $languageId)->first();
+			if(null == $iasDesc)
+			{
+
+				$iasDesc = IASDescription::withIASAndLanguageId(
+					$this->id, $defaultLanguageId)->first();
+
+			}
+			$obj->name = $iasDesc->name;
+			$obj->shortDescription = $iasDesc->shortDescription;
+			$obj->sizeLongDescription = $iasDesc->sizeLongDescription;
+			$obj->infoLongDescription = $iasDesc->infoLongDescription;
+			$obj->habitatLongDescription = $iasDesc->habitatLongDescription;
+			$obj->confuseLongDescription = $iasDesc->confuseLongDescription;
+			$obj->longDescription = $iasDesc->sizeLongDescription.' '.$iasDesc->infoLongDescription.' '.$iasDesc->habitatLongDescription.' '.$iasDesc->confuseLongDescription;
+
+			$descs[$langs[$i]->locale] = $obj;
+
+		}
+
+		return $descs;
 
 	}
 

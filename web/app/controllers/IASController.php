@@ -253,6 +253,7 @@ class IASController extends RequestController {
 			$aux = new stdClass();
 			$element = $elements[$i];
 			$aux->description = $element->getDescriptionData($languageId, $defaultLanguageId);
+			$aux->descriptions = $element->getDescriptionsData($defaultLanguageId);
 			$aux->latinName = $element->latinName;
 			$aux->taxons = $element->taxonId;
 			$aux->image = $element->getDefaultImageData($languageId, $defaultLanguageId);
@@ -277,6 +278,7 @@ class IASController extends RequestController {
 
 			$element = $taxons[$i];
 			$element->name = $taxons[$i]->getName($languageId, $defaultLanguageId);
+			$element->names = $taxons[$i]->getNames($defaultLanguageId);
 			$data->taxons[$element->id] = $element;
 
 			$lastUpdated = ($element->updated_at > $lastUpdated) ? $element->updated_at : $lastUpdated;
