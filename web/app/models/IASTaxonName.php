@@ -24,6 +24,13 @@ class IASTaxonName extends Eloquent {
 
 	}
 
+	public function scopeLastUpdated($query)
+	{
+
+		return $query->orderBy('updated_at', 'DESC');
+
+	}
+
 }
 
 ?>
