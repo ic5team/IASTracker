@@ -111,11 +111,11 @@ class IAS extends Eloquent {
 					$obj->text = "";
 
 				$obj->texts = array();
-				for($i=0; $i<count($langs); ++$i)
+				for($j=0; $j<count($langs); ++$j)
 				{
 
 					$imgText = IASImageText::withIASImageAndLanguageId(
-						$img->id, $langs[$i]->id)->first();
+						$img->id, $langs[$j]->id)->first();
 					if(null == $imgText)
 					{
 
@@ -125,9 +125,9 @@ class IAS extends Eloquent {
 					}
 
 					if(null != $imgText)
-						$obj->texts[$langs[$i]->locale] = $imgText->text;
+						$obj->texts[$langs[$j]->locale] = $imgText->text;
 					else
-						$obj->texts[$langs[$i]->locale] = "";
+						$obj->texts[$langs[$j]->locale] = "";
 
 				}
 
