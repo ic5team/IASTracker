@@ -663,6 +663,8 @@ class UserController extends RequestController {
 			$obj->fullName = $user->fullName;
 			$obj->amIExpert = $user->amIExpert;
 			$user->appKey = $obj->token;
+			$lang = Language::find($user->languageId);
+			$obj->locale = $lang->locale;
 			$user->lastConnection = new DateTime();
 			$user->save();
 
