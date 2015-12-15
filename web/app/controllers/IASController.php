@@ -777,25 +777,25 @@ class IASController extends RequestController {
 		$obj = new stdClass();
 		$obj->lastUpdated = $lastIAS->updated_at;
 
-		if($obj->lastUpdated > $lastTaxon->updated_at)
+		if($obj->lastUpdated < $lastTaxon->updated_at)
 			$obj->lastUpdated = $lastTaxon->updated_at;
 
-		if($obj->lastUpdated > $lastArea->updated_at)
+		if($obj->lastUpdated < $lastArea->updated_at)
 			$obj->lastUpdated = $lastArea->updated_at;
 
-		if($obj->lastUpdated > $lastDescription->updated_at)
+		if($obj->lastUpdated < $lastDescription->updated_at)
 			$obj->lastUpdated = $lastDescription->updated_at;
 
-		if($obj->lastUpdated > $lastImage->updated_at)
+		if($obj->lastUpdated < $lastImage->updated_at)
 			$obj->lastUpdated = $lastImage->updated_at;
 
-		if($obj->lastUpdated > $lastImageText->updated_at)
+		if($obj->lastUpdated < $lastImageText->updated_at)
 			$obj->lastUpdated = $lastImageText->updated_at;
 
-		if($obj->lastUpdated > $lastTaxonName->updated_at)
+		if($obj->lastUpdated < $lastTaxonName->updated_at)
 			$obj->lastUpdated = $lastTaxonName->updated_at;
 
-		if($obj->lastUpdated > $lastRelatedDBs->updated_at)
+		if($obj->lastUpdated < $lastRelatedDBs->updated_at)
 			$obj->lastUpdated = $lastRelatedDBs->updated_at;
 
 		return Response::json($obj);
