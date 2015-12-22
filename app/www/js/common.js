@@ -1,3 +1,5 @@
+currentLocale = 'en';
+
 /*!
 	Checks if a value is a valid email
 	@param[in] value The value to check
@@ -52,14 +54,14 @@ function isConnected()
 
 }
 
-function downloadFile(URL, Folder_Name, File_Name, callback) 
+function downloadFile(URL, Folder_Name, File_Name, callback, errorCallback) 
 {
 
 	var networkState = navigator.connection.type;
 	if (isConnected()) 
 	{
 
-		download(URL, Folder_Name, File_Name, callback); 
+		download(URL, Folder_Name, File_Name, callback, errorCallback); 
 
 	}
 
@@ -87,7 +89,7 @@ function getFilePath()
 
 }
 
-function download(URL, Folder_Name, File_Name, callback) 
+function download(URL, Folder_Name, File_Name, callback, errorCallback) 
 {
 
 	//step to request a file system 
@@ -107,7 +109,7 @@ function download(URL, Folder_Name, File_Name, callback)
 		window.localStorage.setItem('path', fp);
 
 		fp = fp + "/" + Folder_Name + "/" + File_Name + "." + ext.toLowerCase();
-		filetransfer(download_link, fp, callback);
+		filetransfer(download_link, fp, callback, errorCallback);
 
 	}
 
@@ -127,7 +129,7 @@ function download(URL, Folder_Name, File_Name, callback)
 	}
 }
 
-function filetransfer(download_link, fp, callback) 
+function filetransfer(download_link, fp, callback, errorCallback) 
 {
 
 	var fileTransfer = new FileTransfer();
@@ -138,6 +140,8 @@ function filetransfer(download_link, fp, callback)
 		},
 		function (error) {
 			console.log("download error source " + error.source);
+			if('undefined' !== typeof errorCallback)
+				errorCallback();
 		}
 	);
 }

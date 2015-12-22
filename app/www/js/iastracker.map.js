@@ -5,12 +5,13 @@
 * ======================================================================== 
 */
 
-function MapHandler(mapId, mapDescriptors, crsDescriptors, mapCenter)
+function MapHandler(mapId, mapDescriptors, crsDescriptors, mapCenter, layersControlId, controlsId, observationsControlId)
 {
 
 	var self = this;
 	this.baseMaps = new Object();
 	this.overlayMaps = new Object();
+	this.markersLayer = L.layerGroup();
 	this.crs = this.constructCRS(crsDescriptors);
 	this.layers = this.constructMapLayers(mapDescriptors);
 	this.locationCircle = null;
@@ -22,20 +23,69 @@ function MapHandler(mapId, mapDescriptors, crsDescriptors, mapCenter)
 		zoom: 2,
 	});
 
+	this.markersLayer.addTo(this.map);
+	var collapsed = ('undefined' == layersControlId || null == layersControlId);
+
 	this.controls = L.control.layers(this.baseMaps, this.overlayMaps, 
-		{collapsed: true, autoZIndex: false});
+		{collapsed: collapsed, autoZIndex: false});
 	this.controls.addTo(this.map);
+	L.control.scale().addTo(this.map);
+
+	if('undefined' !== typeof layersControlId)
+	{
+
+		$(this.controls._container).remove();
+		$('#'+layersControlId).html(this.controls.onAdd(this.map));
+
+	}
+
+	this.map.layers = this.layers;
+	this.map.on('overlayremove', function(event) {
+		var found = false;
+		for(var i=0; this.layers.length && !found; ++i)
+		{
+
+			found = (this.layers[i].leafletData == event.layer);
+			if(found && !this.layers[i].isModifying)
+				this.layers[i].isActive = false;
+
+		}
+
+	});
+
+	this.map.on('overlayadd', function(event) {
+		var found = false;
+		for(var i=0; this.layers.length && !found; ++i)
+		{
+
+			found = (this.layers[i].leafletData == event.layer);
+			if(found && !this.layers[i].isModifying)
+				this.layers[i].isActive = true;
+
+		}
+	});
 
 	this.map.on('moveend', function(e) {
-		self.computeLayers(e)
+		self.computeLayers(e);
 	});
 	this.map.on('zoomend', function(e) {
-		self.computeLayers(e)
+		self.computeLayers(e);
 	});
+
+	this.computeLayers();
 
 	this.map.locate({setView: true, maxZoom: 16});
 
-	this.computeLayers();
+	this.map.on('baselayerchange', this.closeLayerControl);
+	this.map.on('overlayadd', this.closeLayerControl);
+	this.map.on('overlayremove', this.closeLayerControl);
+
+}
+
+MapHandler.prototype.closeLayerControl = function()
+{
+
+	$(".leaflet-control-layers-expanded").removeClass("leaflet-control-layers-expanded")
 
 }
 
@@ -48,7 +98,7 @@ MapHandler.prototype.setLocation = function(e)
     var radius = e.accuracy / 2;
     this.locationCircle = L.circle([e.latitude, e.longitude], radius);
     this.locationCircle.addTo(this.map);
-    this.map.setView([e.latitude, e.longitude], 16);
+    this.map.setView([e.latitude, e.longitude]);
 
 }
 
@@ -117,6 +167,12 @@ MapHandler.prototype.constructMapLayers = function(mapDescriptors)
 		var mapLayer = new Object();
 		var options = new Object();
 
+		if(undefined !== currentMap.tms)
+			options.tms = currentMap.tms;
+
+		if(undefined !== currentMap.styles)
+			options.styles = currentMap.styles;
+
 		if(undefined !== currentMap.layers)
 			options.layers = currentMap.layers;
 
@@ -160,13 +216,13 @@ MapHandler.prototype.constructMapLayers = function(mapDescriptors)
 		if(currentMap.isOverlay)
 		{
 
-			this.overlayMaps[currentMap.name] = mapLayer.leafletData;
+			this.overlayMaps[this.generateName(currentMap)] = mapLayer.leafletData;
 
 		}
 		else
 		{
 
-			this.baseMaps[currentMap.name] = mapLayer.leafletData;
+			this.baseMaps[this.generateName(currentMap)] = mapLayer.leafletData;
 
 		}
 
@@ -191,12 +247,21 @@ MapHandler.prototype.constructMapLayers = function(mapDescriptors)
 		mapLayer.zMax = currentMap.maxZoom;
 		mapLayer.name = currentMap.name;
 		mapLayer.isVisible = true;
+		mapLayer.isActive = false;
+		mapLayer.desc = currentMap.desc;
 
 		ret.push(mapLayer);
 
 	}
 
 	return ret;
+
+}
+
+MapHandler.prototype.generateName= function(map)
+{
+
+	return map.name;
 
 }
 
@@ -222,7 +287,16 @@ MapHandler.prototype.computeLayers = function(e)
 				if(!currentLayer.isVisible)
 				{
 
-					this.controls.addOverlay(currentLayer.leafletData, currentLayer.name);
+					if(currentLayer.isActive)
+					{
+
+						this.layers[i].isModifying = true;
+						this.map.addLayer(currentLayer.leafletData);
+						this.layers[i].isModifying = false;
+
+					}
+
+					this.controls.addOverlay(currentLayer.leafletData, this.generateName(currentLayer));
 					this.layers[i].isVisible = true;
 
 				}
@@ -233,6 +307,15 @@ MapHandler.prototype.computeLayers = function(e)
 			
 				if(currentLayer.isVisible)
 				{
+
+					if(currentLayer.isActive)
+					{
+
+						this.layers[i].isModifying = true;
+						this.map.removeLayer(currentLayer.leafletData);
+						this.layers[i].isModifying = false;
+
+					}
 
 					this.controls.removeLayer(currentLayer.leafletData);
 					this.layers[i].isVisible = false;
@@ -261,6 +344,9 @@ MapHandler.prototype.createMarker = function(lat, lon, accuracy, color, fillColo
 
 	var marker;
 
+	if('undefined' == typeof options)
+		options = {};
+
 	if('undefined' !== typeof icon)
 	{
 	
@@ -268,30 +354,38 @@ MapHandler.prototype.createMarker = function(lat, lon, accuracy, color, fillColo
 
 	}
 
+	if(null != cbFunction)
+		options.cbFunction = cbFunction;
+
 	marker = L.marker([lat, lon], options);
 
 	var circle = L.circle([lat, lon], accuracy, circleOptions);
 
-	if(null != cbFunction)
-		marker.on('click', cbFunction);
 
 	return {marker : marker, circle: circle};
 
 }
 
-MapHandler.prototype.addMarker = function(markerObj)
+MapHandler.prototype.addMarker = function(markerObj, setView)
 {
 
-	markerObj.marker.addTo(this.map);
-	markerObj.circle.addTo(this.map);
+	this.markersLayer.addLayer(markerObj.marker);
+	this.markersLayer.addLayer(markerObj.circle);
+
+	if(setView)
+	{
+
+		this.map.setView(markerObj.marker._latlng, 16, {animate: true});
+
+	}
 
 }
 
 MapHandler.prototype.removeMarker = function(markerObj)
 {
 
-	this.map.removeLayer(markerObj.marker);
-	this.map.removeLayer(markerObj.circle);
+	this.markersLayer.removeLayer(markerObj.marker);
+	this.markersLayer.removeLayer(markerObj.circle);
 
 }
 
