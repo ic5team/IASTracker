@@ -57,7 +57,6 @@
 	if('' != $data->description->confuseLongDescription)
 		echo '<br><br><i class="fa fa-check fa-2x" style="margin-right: 10px;"></i>'.$data->description->confuseLongDescription;
 ?>
-		{{ $data->description->longDescription }}
 	</div>
 </div>
 <div class="row" style="margin-top: 15px;">

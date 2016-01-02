@@ -3,10 +3,10 @@
 return array(
 		'inici' => 'Web de l\'IASTracker',	//Text que surt a la barra del navegador
 		'filter' => 'Filtra',				//Text del botó per aplicar el filtre
-		'signup' => 'Registre',				//Text del botó per registrar-te al geoportal
-		'login' => 'Entra',					//Text del botó per iniciar sessió
+		'signup' => 'Registrar-se',			//Text del botó per registrar-te al geoportal
+		'login' => 'Iniciar sessió',		//Text del botó per iniciar sessió
 		'search' => 'Cerca...',				//Text que surt a la barra de cerca en el panell dels IAS del geoportal
-		'ic5Info' => 'Nosaltres',			//Text que surt al costat del logo de l'ic5 a la barra superior. Fent-hi click s'ha d'obrir la finestra amb el vostre text
+		'ic5Info' => 'Sobre IC5Team',		//Text que surt al costat del logo de l'ic5 a la barra superior. Fent-hi click s'ha d'obrir la finestra amb el vostre text
 		'taxonomy' => 'Per taxó',			
 		'group' => 'Grup',
 		'all' => 'Tots',
@@ -79,7 +79,7 @@ return array(
 		'notRegisteredQuestion' => 'Encara no estàs registrat?',
 		'notRegisteredAction' => 'Registra\'t',
 		'pwForgottenQuestion' => 'Has oblidat la contrasenya?',
-		'pwForgottenAction' => 'Recorda-la!',
+		'pwForgottenAction' => 'Recorda-me-la!',
 		'wrongUserCredentials' => 'No hi ha cap usuari amb aquest correu electrònic i contrasenya',
 		'missingParameters' => 'Falten paràmetres',
 		'logOut' => 'Sortir',
@@ -97,7 +97,7 @@ return array(
 		'notUsedEmail' => 'No hi ha cap usuari registrat amb aquest correu electrònic',
 		'remindPasswordDone' => 'Aviat rebràs un correu electrònic amb les instruccions per recordar la contrasenya',
 		'remindPasswordAction' => 'Recorda',
-		'resetPassword' => 'Restauració de la contrasenya',
+		'resetPassword' => 'Restaura la contrasenya',
 		'resetAction' => 'Restaura',
 		'passwordChanged' => 'La contrasenya s\'ha canviat correctament, fes click :link per entrar',
 
@@ -107,8 +107,8 @@ return array(
 		'user' => 'Usuari',
 		'userUnknown' => 'Anònim',
 		'obs' => 'Observacions',
-		'observationsNumber' => ':num observacions realitzades',
-		'validatedNumber' => ':num observacions validades',
+		'observationsNumber' => ':núm. observacions realitzades',
+		'validatedNumber' => ':núm. observacions validades',
 		'yes' => 'Sí',
 		'no' => 'No',
 		'isExpert' => 'Exp?',
@@ -122,7 +122,7 @@ return array(
 		'taxon'	=> 'Taxó',
 		'descriptions' => 'Descripcions',
 		'shortDescription' => 'Descripció curta',
-		'sizeDescription' => 'Descripció de mida',
+		'sizeDescription' => 'Mesures',
 		'infoDescription' => 'Informació sobre l\'IAS',
 		'habitatDescription' => 'Descripció de l\'hàbitat',
 		'notConfuseDescription' => 'Descripció de similituds',
@@ -153,9 +153,9 @@ return array(
 		'observationImagesError' => 'Les imatges no s\'han pogut geolocalitzar!',
 		'noObservationImages' => 'No hi ha imatges en aquesta observació',
 		'addValidationText' => 'Introdueix un comentari a la validació',
-		'validationTextError' => 'El text de validació és un camp requerit',
+		'validationTextError' => 'El text de validació és un camp obligatori',
 		'cleanFilter' => 'Netejar',
-		'noNameUser' => 'Usuari desconegut',
+		'noNameUser' => 'Usuari anònim',
 		'created' => 'Creat',
 		'status' => 'Estat',
 		'obsValidated' => 'Validada',

@@ -51,6 +51,26 @@ var app = {
 	initialize: function() {
 		this.bindEvents();
 
+		$('#signupScreen').on('pagebeforeshow', function(e) {
+
+			$('#input-signUpEmail').val('');
+			$('#error-signUpEmail').addClass('hidden');
+			$('#error-generalSignUp').hide();
+			$('#btSignUpText').show();
+			$('#btSignUpLdg').hide();
+
+		});
+
+		$('#screen2').on('pagebeforeshow', function(e) {
+
+			$('#help0').show();
+			$('#help1').hide();
+			$('#help2').hide();
+			$('#help3').hide();
+			$('#help4').hide();
+
+		});
+
 		$('#screen4').on('pagebeforeshow', function(e) {
 
 			$('#error-general-profile').hide();
@@ -70,6 +90,8 @@ var app = {
 				$('#btLogout').hide();
 
 			}
+			$('#languageSelector').val(app.userLocale);
+			$('#languageSelector').selectmenu('refresh', true);
 
 		});
 
@@ -307,6 +329,12 @@ var app = {
 					$("body").pagecontainer("change", $('#backLinkLocation').attr('href'));					
 
 				}
+				else if("signupScreen" == from)
+				{
+
+					$("body").pagecontainer("change", '#screen3');					
+
+				}
 
 			}
 
@@ -317,7 +345,6 @@ var app = {
 		app.userLocale = window.localStorage.getItem('userLocale');
 		if(null == app.userLocale || "null" == app.userLocale)
 			app.userLocale = 'en';
-		$('#languageSelector').val(app.userLocale);
 		$('.LocalizedText').each(function(index) {
 			$(this).html(Lang[app.userLocale][$(this).attr('text-label')]);
 		});
@@ -383,8 +410,6 @@ var app = {
 	// 'load', 'deviceready', 'offline', and 'online'.
 	bindEvents: function() {
 		document.addEventListener('deviceready', this.onDeviceReady, false);
-		document.addEventListener('offline', this.onOffline, false);
-		document.addEventListener('online', this.onOnline, false);
 
 		$('#btAgree').on('click', app.termsAgreed);
 		$('#btNoNever').on('click', app.neverSignUp);
@@ -503,6 +528,28 @@ var app = {
 				var taxon = app.TaxonList[$(this).attr('taxon-key')];
 				$(this).html(taxon.names[app.userLocale]);
 			});
+			var latinNames = $('#cbScientificNames').is(':checked');
+			if(!latinNames)
+			{
+
+				$('.iasName').each(function(index) {
+
+					var pos = $(this).attr('data-pos');
+					var taxonId = $(this).attr('data-taxonid');
+					var id = $(this).attr('data-id');
+					var ias = app.IASList[taxonId][pos];
+
+					$('.IAS'+id+'Name').html(ias.descriptions[app.userLocale].name);
+
+				});
+
+			}
+
+			$('#help0 > img').attr('src', 'img/' + app.userLocale + '/help0.PNG');
+			$('#help1 > img').attr('src', 'img/' + app.userLocale + '/help1.PNG');
+			$('#help2 > img').attr('src', 'img/' + app.userLocale + '/help2.PNG');
+			$('#help3 > img').attr('src', 'img/' + app.userLocale + '/help3.PNG');
+			$('#help4 > img').attr('src', 'img/' + app.userLocale + '/help4.PNG');
 
 		});
 
@@ -731,6 +778,9 @@ var app = {
 	// The scope of 'this' is the event. In order to call the 'receivedEvent'
 	// function, we must explicitly call 'app.receivedEvent(...);'
 	onDeviceReady: function() {
+		app.receivedEvent('deviceready');
+		document.addEventListener('offline', this.onOffline, false);
+		document.addEventListener('online', this.onOnline, false);
 		options = { enableHighAccuracy: true };
 		app.watchId = navigator.geolocation.watchPosition(app.onLocationSuccess, app.onLocationError, options);
 		app.IASPendingObservations = JSON.parse(window.localStorage.getItem('pendingObservations'));
@@ -741,8 +791,6 @@ var app = {
 
 		if(app.isOnline)
 			app.uploadPendingObservations();
-		
-		app.receivedEvent('deviceready');
 	},
 	uploadPendingObservations: function() {
 
@@ -1076,7 +1124,7 @@ var app = {
 							screenHtml += '<div class="iasBlock" data-taxonId="' + taxon.id + '" data-id="' + current.id + '" data-pos="' + iasKeys[j] + '" style="background-color:' + taxon.appInnerColor + '; width: 95%; margin-bottom: 10px; height: 180px;">';
 							screenHtml += '<img class="iasImage" src="' + path + '/IASTracker/ias' + current.id + '.jpg" />';
 
-							screenHtml += '<div data-taxonId="' + taxon.id + '" data-id="' + current.id + '" data-pos="' + iasKeys[j] + '" class="iasName"><div class="IAS' + current.id + 'Name iasName" style="height: 40px;">';
+							screenHtml += '<div data-taxonId="' + taxon.id + '" data-id="' + current.id + '" data-pos="' + iasKeys[j] + '" class="iasName"><div class="IAS' + current.id + 'Name" style="height: 40px;">';
 							if(latinNames)
 								screenHtml += current.latinName;
 							else
@@ -1675,7 +1723,6 @@ var app = {
 
 			$('#input-name').val(data.name);
 			$('#amIExpert').prop('checked', data.amIExpert);
-			$('#languageSelector').val(data.languageId);
 			downloadFile(fotosImgURL + data.image, 'IASTracker', 'user' + app.userId, app.profileImageDownloaded);
 
 		}
@@ -1752,6 +1799,12 @@ var app = {
 				app.showIASCurrentLocation();
 
 		}
+
+		$('#help0 > img').attr('src', 'img/' + app.userLocale + '/help0.PNG');
+		$('#help1 > img').attr('src', 'img/' + app.userLocale + '/help1.PNG');
+		$('#help2 > img').attr('src', 'img/' + app.userLocale + '/help2.PNG');
+		$('#help3 > img').attr('src', 'img/' + app.userLocale + '/help3.PNG');
+		$('#help4 > img').attr('src', 'img/' + app.userLocale + '/help4.PNG');
 
 	},
 	showNoGPSScreen: function()
@@ -2055,7 +2108,6 @@ var app = {
 				app.userId = data.id;
 				app.userLocale = data.locale;
 				downloadFile(fotosImgURL + data.image, 'IASTracker', 'user' + data.id, app.profileImageDownloaded);
-				$('#languageSelector').val(app.userLocale);
 				$('#userData').show();
 				$('#btCompleteData').show();
 				$('#userLogin').hide();

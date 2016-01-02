@@ -160,7 +160,7 @@ return array(
 		'status' => 'Status',
 		'obsValidated' => 'Validated',
 		'obsPending' => 'Pending',
-		'obsDiscarded' => 'Descarded',
+		'obsDiscarded' => 'Discarded',
 		'obsDeleted' => 'Deleted',
 		'showPendingObs' => 'Show pending observations',
 		'showValidatedObs' => 'Show validated observations',
@@ -172,6 +172,10 @@ return array(
 		'obsValidationTextTitle' => 'Validation',
 		'delete' => 'Delete',
 		'viewUser' => 'Show user',
-		
+		'nickPermanent' => 'Careful, nickname cannot be changed later, think twice!',
+		'undoValidate' => 'Undo Validate',
+		'confirmationText' => 'Are you sure to delete the observation? This action cannot be undone!',
+		'downloadObservations' => 'Download'
+	
 
 	);

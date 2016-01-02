@@ -29,7 +29,7 @@ class IndexController extends BaseController {
 
 		}
 
-		if(Auth::user())
+		if(Auth::user() && !Input::has('lang'))
 		{
 
 			$user = Auth::user();
@@ -38,8 +38,8 @@ class IndexController extends BaseController {
 			$user->lastConnection = new DateTime();
 			$user->save();
 
-			if(!Input::has('lang'))
-				App::setLocale(Language::find($lang)->locale);
+			App::setLocale(Language::find($lang)->locale);
+			return Redirect::intended('/?lang='.Language::find($lang)->locale);
 
 		}
 

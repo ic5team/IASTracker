@@ -78,12 +78,13 @@
 			<div data-role="header" data-position="fixed" data-tap-toggle="false">
 				<h1 class="LocalizedText PageHeader" text-label="help">Help</h1>
 			</div>
-			<div id="help1" class="helpWindow almostFullscreen" next="help2"><img src="img/help1.PNG" style="width: 100vw; height: 83vh;" /></div>
-			<div id="help2" class="helpWindow almostFullscreen" prev="help1" next="help3" style="display: none"><img src="img/help2.PNG" style="width: 100vw; height: 83vh;" /></div>
-			<div id="help3" class="helpWindow almostFullscreen" prev="help2" next="help4" style="display: none"><img src="img/help3.PNG" style="width: 100vw; height: 83vh;" /></div>
-			<div id="help4" class="helpWindow almostFullscreen" prev="help3" style="display: none"><img src="img/help4.PNG" style="width: 100vw; height: 83vh;" /></div>
+			<div id="help0" class="helpWindow almostFullscreen" next="help1"><img src="img/en/help0.PNG" style="width: 100vw; height: 83vh;" /></div>
+			<div id="help1" class="helpWindow almostFullscreen" prev="help0" next="help2"><img src="img/en/help1.PNG" style="width: 100vw; height: 83vh;" /></div>
+			<div id="help2" class="helpWindow almostFullscreen" prev="help1" next="help3" style="display: none"><img src="img/en/help2.PNG" style="width: 100vw; height: 83vh;" /></div>
+			<div id="help3" class="helpWindow almostFullscreen" prev="help2" next="help4" style="display: none"><img src="img/en/help3.PNG" style="width: 100vw; height: 83vh;" /></div>
+			<div id="help4" class="helpWindow almostFullscreen" prev="help3" style="display: none"><img src="img/en/help4.PNG" style="width: 100vw; height: 83vh;" /></div>
 			<div data-role="footer" data-position="fixed" data-tap-toggle="false">
-				<a href="#screen3" data-transition="pop" class="right LocalizedText" text-label="skip">Skip</a>
+				<a id="helpSkipBtn" href="#screen3" data-transition="pop" class="right LocalizedText" text-label="skip">Skip</a>
 			</div>
 		</div>
 		<div id="screen3" data-role="page" class="fullscreen background" data-url="screen3">
@@ -95,11 +96,11 @@
 				<span class="LocalizedText" text-label="loginMessage">You are not logged in. Please enter your email and password</span>
 				<div class="form-group" id="form-email">
 					<input name="email" type="email" class="form-control block" placeholder="me@example.com" id="input-email">
-					<span id="error-email" class="help-block hidden" class="LocalizedText" text-label="invalidEmail">Invalid email</span>
+					<span id="error-email" class="help-block hidden LocalizedText" text-label="invalidEmail">Invalid email</span>
 				</div>
 				<div class="form-group" id="form-password">
 					<input name="password" type="password" id="input-password"/>
-					<span id="error-password" class="help-block hidden" class="LocalizedText" text-label="invalidPassword">Invalid password</span>
+					<span id="error-password" class="help-block hidden LocalizedText" text-label="invalidPassword">Invalid password</span>
 				</div>
 				<div class="row alert alert-danger" id="error-general" style="display: none;">
 					<div class="col-md-12" id="error-general-text">
@@ -119,15 +120,11 @@
 			</div>
 		</div>
 		<div id="signupScreen" data-role="page" class="fullscreen background" data-url="signupScreen">
-			<div data-role="content" class="whitePanel LocalizedText" text-label="registerText" style="margin-top: 25vh;">
-				To register enter your email
+			<div data-role="content" class="whitePanel" style="margin-top: 25vh;">
+				<span class="LocalizedText" text-label="registerText">To register enter your email</span>
 				<div class="form-group" id="form-signUpEmail">
 					<input name="signUpEmail" type="email" class="form-control block" placeholder="me@example.com" id="input-signUpEmail">
 					<span id="error-signUpEmail" class="help-block hidden LocalizedText" text-label="invalidEmail">Invalid email</span>
-				</div>
-				<div class="row alert alert-danger" id="error-generalSignUp" style="display: none;">
-					<div class="col-md-12" id="error-general-textSignUp">
-					</div>
 				</div>
 				<div class="row alert alert-danger" id="error-generalSignUp" style="display: none;">
 					<div class="col-md-12" id="error-general-textSignUp">
@@ -191,11 +188,12 @@
 				</div>
 				<div class="form-group" id="form-language">
 					<span class="LocalizedText" text-label="language">Select your language</span>
+					<label for="languageSelector" class="ui-hidden-accessible">Select your language</label>
 					<select id="languageSelector">
+						<option value="en">English</option>
 						<option value="ca">Català</option>
 						<option value="es">Español</option>
 						<option value="fr">Français</option>
-						<option value="en" selected="selected">English</option>
 					</select>
 				</div>
 				<div class="row alert alert-danger" id="error-general-profile" style="display: none;">
@@ -355,7 +353,7 @@
 						</div>
 					</div>
 					<div class="row alert alert-danger" id="error-no-image" style="display: none;">
-						<div class="col-md-12" class="LocalizedText" text-label="noPhotoErrorText">
+						<div class="col-md-12 LocalizedText" text-label="noPhotoErrorText">
 							As a non registered user you have to take at least a photo
 						</div>
 					</div>
@@ -364,7 +362,7 @@
 						</div>
 					</div>
 					<div class="row alert alert-warning" id="warn-max-image-num" style="display: none;">
-						<div class="col-md-12" class="LocalizedText" text-label="maxPhotosErrorText">
+						<div class="col-md-12 LocalizedText" text-label="maxPhotosErrorText">
 							You have taken the maximum amount of photos permitted
 						</div>
 					</div>

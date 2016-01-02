@@ -4,22 +4,31 @@ if('undefined' == typeof Lang)
 Lang['ca'] = {
 	checkUpdated: "Comprovant actualitzacions",
 	userAgreements: "<h1>ACORDS  D’USUARI</h1>" +
-				"IASTracker és un projecte per obtenir la geolocaltizació de les principals espècies invasores exòtiques (IAS) de les regions d’Europa. Aquest projecte es basa en recollir les observacions de les IAS amb la col·laboració dels ciutadans. Per tant, es crea una base de dades d’observacions alimentada per la col·laboració de voluntaris. Per participar al projecte d’IASTracker has de ser major d’edat o participar sota la supervisió d’un adult. <br /><br />" +
-				"Abans d’instal·lar l’aplicació d’IAStracker has de conèixer les <a href='http://iastracker.ic5team.org/privacy?lang=ca'>normes de privacitat </a> i has d’estar d’acord amb els següents termes:" +
+				"IASTracker és un projecte per obtenir la geolocaltizació de " +
+				"les principals espècies invasores exòtiques (IAS) de les regions d’Europa. "+
+				"Aquest projecte es basa en recollir les observacions de les IAS amb la col·laboració dels ciutadans. " +
+				"Per tant, es crea una base de dades d’observacions alimentada per la col·laboració de voluntaris. " +
+				"Per participar al projecte d’IASTracker has de ser major d’edat o participar sota la supervisió d’un adult. <br /><br />" +
+				"Abans d’instal·lar l’aplicació IAStracker has de conèixer les <a href='http://iastracker.ic5team.org/privacy?lang=ca'>normes de privacitat </a> i has d’estar d’acord amb els següents termes:" +
 				"<ul>" +
-				"	<li>Estàs  d’acord en compartir les teves observacions, fotos i comentaris com a dades obertes. Aquestes dades es podran reutilitzar sense restriccions. Això significa que concedeixes al projecte IASTracker una llicencia d’àmbit mundial, a títol gratuït, no exclusiva i que es pot subcontractar, i que també l’autoritzes al projecte per usar, reproduir, modificar, fer treballs derivats, adaptar, publicar, traduir, distribuir, prestar i subcontractar els drets de la teva contribució.</li>" +
-				"	<li>Has de garantir que les teves dades no són difamatòries, no envaeixen la privacitat dels altres, no infringeixen els drets d’autor de ningú, i no violen cap llei ni cap dret de ningú. </li>" +
-				"	<li>Estàs d’acord a indemnitzar als membres i col·laboradors del projecte IASTracker per qualsevol carrega o despesa en la que puguin incórrer en relació al material que tu enviïs.</li>" +
+				"	<li>Estàs  d’acord en compartir les teves observacions, fotos i comentaris com a dades obertes. Aquestes dades es podran " +
+					"reutilitzar sense restriccions. Això significa que concedeixes al projecte IASTracker una llicencia d’àmbit mundial, " +
+					"a títol gratuït, no exclusiva i que es pot subcontractar, i que també l’autoritzes al projecte per usar, reproduir, modificar, " +
+					"fer treballs derivats, adaptar, publicar, traduir, distribuir, prestar i subcontractar els drets de la teva contribució.</li>" +
+				"	<li>Has de garantir que les teves dades no són difamatòries, no envaeixen la privacitat dels altres, " +
+					"no infringeixen els drets d’autor de ningú, i no violen cap llei ni cap dret de ningú. </li>" +
+				"	<li>Estàs d’acord a indemnitzar als membres i col·laboradors del projecte IASTracker per qualsevol carrega o despesa " +
+					"en la que puguin incórrer en relació al material que tu enviïs.</li>" +
 				"</ul>",
 	agree: "D'acord",
 	help: "Ajuda",
-	skip: "Següent",
+	skip: "Saltar",
 	menu: "Menú",
-	login: "Log In",
-	loginMessage: "No has iniciat sessió. Si us plau introdueix el teu email i contrasenya",
+	login: "Iniciar sessió",
+	loginMessage: "No has iniciat sessió. Si us plau, introdueix el teu email i contrasenya",
 	invalidEmail: "Email incorrecte",
 	invalidPassword: "Contrasenya incorrecta",
-	signup: "Registre",
+	signup: "Registrar-se",
 	notNow: "Ara no",
 	noNever: "No, no m'ho tornis a preguntar",
 	registerText: "Per registrar-te introdueix el teu email",
@@ -32,7 +41,7 @@ Lang['ca'] = {
 	language: "Selecciona el teu idioma",
 	save: "Guarda",
 	logout: "Tanca sessió",
-	adquiringLocation: "Ubican-te...",
+	adquiringLocation: "Ubicant-te...",
 	cantConnect: "No es pot connectar amb el servidor",
 	starredIAS: "IAS preferits",
 	otherLocations: "Altres ubicacions",
@@ -41,20 +50,20 @@ Lang['ca'] = {
 	listNameRequired: "Nom de la llista requerit",
 	waitingLocation: "Esperant la localització...",
 	storeList: "Guarda la llista",
-	aboutIASTracker: "A sobre de IASTracker",
+	aboutIASTracker: "Sobre IASTracker",
 	aboutText: "<div class=WordSection1>" +
 				"	<h3>" +
 				"		<span lang=FR-BE style='mso-ansi-language:FR-BE'>" +
-				"			About " +
-				"			<span class=SpellE>IASTracker</span>" +
-				"			<span class=SpellE>project</span>" +
-				"			&nbsp;:<o:p></o:p>" +
+				"			Sobre " +
+				"			<span class=SpellE>el projecte</span>" +
+				"			<span class=SpellE>IASTracker:</span>" +
+				"			<o:p></o:p>" +
 				"		</span>" +
 				"	</h3>" +
 				"	<p class=MsoNormal style='text-align:justify'><span lang=EN-GB" +
 				"	style='font-family:\"Calibri\",\"sans-serif\";mso-bidi-font-family:Arial;" +
 				"	mso-ansi-language:EN-GB'>Invasive Alien Species Tracker (<span class=SpellE>IASTracker</span>)" +
-				"	és una App per localitzar espècies invasores exòtiques (IAS), ja siguin animals o vegetals, inicialment sobre Catalunya i Bèlgica, però escalable a qualsevol regió europea. Les observacions dels usuaris es poden visualitzar, controlar i gestionar al <span" +
+				"	és una App per a localitzar espècies invasores exòtiques (IAS), ja siguin animals o vegetals, inicialment a Catalunya i Bèlgica, però escalable a qualsevol regió europea. Les observacions dels usuaris es poden visualitzar, controlar i gestionar al <span" +
 				"	class=SpellE>Geoportal</span> <span class=SpellE>d'IASTracker</span>.<o:p></o:p></span></p>" +
 				"	<p class=MsoNormal><span lang=EN-GB style='mso-ansi-language:EN-GB'><o:p>&nbsp;</o:p></span></p>" +
 				"	<p class=MsoNormal style='text-align:justify'><span class=SpellE><span" +
@@ -66,7 +75,7 @@ Lang['ca'] = {
 				"	<h3><span lang=EN-GB style='mso-ansi-language:EN-GB'>IC5Team:<o:p></o:p></span></h3>" +
 				"	<p class=MsoNormal style='text-align:justify'><span lang=EN-GB" +
 				"	style='font-family:\"Calibri\",\"sans-serif\";mso-bidi-font-family:Arial;" +
-				"	mso-ansi-language:EN-GB'>IC5Team  està format per un grup de 5 investigadors que tenen un interès per la <span class=SpellE>Geoinformació</span> , les noves tecnologies i la seva interrelació<o:p></o:p></span></p>" +
+				"	mso-ansi-language:EN-GB'>IC5Team està format per un grup de 5 investigadors que tenen un interès per la <span class=SpellE>Geoinformació</span>, les noves tecnologies i la seva interrelació.<o:p></o:p></span></p>" +
 				"	<p class=MsoNormal style='text-align:justify'><span lang=EN-GB" +
 				"	style='font-family:\"Calibri\",\"sans-serif\";mso-bidi-font-family:Arial;" +
 				"	mso-ansi-language:EN-GB'><o:p>&nbsp;</o:p></span></p>" +
@@ -75,17 +84,17 @@ Lang['ca'] = {
 				"	mso-ansi-language:EN-GB'>IC5Team vol posar al servei de la societat eines de Geoinformació que permetin donar resposta a les necessitats d'una societat cada vegada més complexa.<o:p></o:p></span></p>" +
 				"	<p class=MsoNormal style='text-align:justify'><span lang=EN-GB" +
 				"	style='mso-ansi-language:EN-GB'><o:p>&nbsp;</o:p></span></p>" +
-				"	<h3><span class=SpellE><span lang=FR-BE style='mso-ansi-language:FR-BE'>Agraïments</span></span><span" +
-				"	lang=FR-BE style='mso-ansi-language:FR-BE'>&nbsp;:<o:p></o:p></span></h3>" +
+				"	<h3><span class=SpellE><span lang=FR-BE style='mso-ansi-language:FR-BE'>Agraïments:</span></span><span" +
+				"	lang=FR-BE style='mso-ansi-language:FR-BE'><o:p></o:p></span></h3>" +
 				"	<p class=MsoNormal style='text-align:justify'><span lang=EN-GB" +
 				"	style='font-family:\"Calibri\",\"sans-serif\";mso-bidi-font-family:Arial;" +
-				"	mso-ansi-language:EN-GB'>Aquesta aplicació has estat desenvolupada amb el projecte MyGEOSS, el qual ha rebut el finançament del programa de Recerca i Innovació de Horizon 2020 de la Unió Europea.<o:p></o:p></span></p>" +
+				"	mso-ansi-language:EN-GB'>Aquesta aplicació has estat desenvolupada dins el projecte MyGEOSS, el qual ha rebut el finançament del programa de Recerca i Innovació de Horizon 2020 de la Unió Europea.<o:p></o:p></span></p>" +
 				"	<p class=MsoNormal style='text-align:justify'><span lang=EN-GB" +
 				"	style='font-family:\"Calibri\",\"sans-serif\";mso-bidi-font-family:Arial;" +
 				"	mso-ansi-language:EN-GB'><o:p>&nbsp;</o:p></span></p>" +
 				"	<p class=MsoNormal style='text-align:justify'><span lang=EN-GB" +
 				"	style='font-family:\"Calibri\",\"sans-serif\";mso-bidi-font-family:Arial;" +
-				"	mso-ansi-language:EN-GB'>El JRC, on en el seu cas la Comissió Europea,  no podran ser considerats com a responsables dels danys directes o indirectes,  fortuïts, conseqüents o altres danys,  incloent, però no limitat, la pèrdua  de dades, pèrdua  de beneficis, o altres pèrdues financeres derivades  de l’ús d’aquesta aplicació, o de la impossibilitat d’usar-la, fins i tot si el JRC és notificat de la possibilitat d’aquests danys.<o:p></o:p></span></p>" +
+				"	mso-ansi-language:EN-GB'>El JRC, o en el seu cas la Comissió Europea,  no podran ser considerats com a responsables dels danys directes o indirectes,  fortuïts, conseqüents o altres danys,  incloent, però no limitat, la pèrdua  de dades, pèrdua  de beneficis, o altres pèrdues financeres derivades  de l’ús d’aquesta aplicació, o de la impossibilitat d’usar-la, fins i tot si el JRC és notificat de la possibilitat d’aquests danys.<o:p></o:p></span></p>" +
 				"	<p class=MsoNormal style='text-align:justify'><span lang=EN-GB" +
 				"	style='font-family:\"Calibri\",\"sans-serif\";mso-bidi-font-family:Arial;" +
 				"	mso-ansi-language:EN-GB'><o:p>&nbsp;</o:p></span></p>" +
@@ -167,16 +176,16 @@ Lang['ca'] = {
 	noGPS		: "No GPS",
 	sendIAS		: "Envia IAS",
 	obsSent		: "Observació enviada",
-	obsNotSent	: "Observació guardada, s'enviarà quan es trobi connexíó a internet",
+	obsNotSent	: "Observació guardada, s'enviarà quan es trobi connexió a internet",
 	obsError	: "Observation NO enviada",
-	ok			: "D'acord",
+	ok			: "Entesos!",
 	iasLocation	: "IAS ubicació actual",
 	selectOther	: "Selecciona altres ubicacions",
 	scientific	: "Noms científics?",
 	removeList	: "Elimina la llista",
 	noInternet	: "Sense connexió a internet",
-	noPhotoErrorText: "Com a usuari no registrat has d'enviar almenys una imatge",
-	maxPhotosErrorText: "Has seleccionat el nombre d'imatges permeses",
+	noPhotoErrorText: "Com a usuari no registrat has d'enviar si més no una imatge",
+	maxPhotosErrorText: "Ja has seleccionat el màxim nombre d'imatges permeses",
 	myIAS : "IAS preferides",
 	otherIAS: "Selecciona altres ubicacions",
 	downloading : "Descarregant",
