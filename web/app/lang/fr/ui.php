@@ -126,7 +126,7 @@ return array(
 		'habitatDescription' => 'Description de l\'habitat',
 		'notConfuseDescription' => 'Description des similitudes',
 		'images' => 'Images',
-		'attribution' => 'Photographe'
+		'attribution' => 'Photographe',
 		'imageText' => 'Texte',
 		'dragImage' => 'Cliquez pour selectionner l\'image',
 		'areas' => 'Zones',
