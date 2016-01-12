@@ -99,8 +99,7 @@ return array(
 		'remindPasswordAction' => 'Recuerda',
 		'resetPassword' => 'Restaura la contraseña',
 		'resetAction' => 'Restaura',
-		'passwordChanged' => 'La contraseña  se ha cambiado correctamente, haz click: link para entrar'
-
+		'passwordChanged' => 'La contraseña  se ha cambiado correctamente, haz click: link para entrar',
 		'noObservationsToValidate' => 'No hay observaciones pendientes de validar',
 		'administration' => 'Administración',
 		'users' => 'Usuarios',

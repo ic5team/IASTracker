@@ -100,7 +100,6 @@ return array(
 		'resetPassword' => 'Reset password',
 		'resetAction' => 'Reset',
 		'passwordChanged' => 'Password has been reset correctly, click here :link to enter',
-
 		'noObservationsToValidate' => 'No observations to validate',
 		'administration' => 'Administration',
 		'users' => 'Users',

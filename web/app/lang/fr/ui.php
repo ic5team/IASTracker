@@ -99,8 +99,7 @@ return array(
 		'remindPasswordAction' => 'Rappel du mot de passe',					// Aqui no muy seguro sin contexto...
 		'resetPassword' => 'Restauration du mot de passe',
 		'resetAction' => 'Restaurer',
-		'passwordChanged' => 'Le mot de passe s\'est modifié correctement, cliquez :lien per entrer'
-		
+		'passwordChanged' => 'Le mot de passe s\'est modifié correctement, cliquez :lien per entrer',
 		'noObservationsToValidate' => 'Il n\' y a pas d\'observations en attente de validation',
 		'administration' => 'Administration',
 		'users' => 'Utilisateurs',

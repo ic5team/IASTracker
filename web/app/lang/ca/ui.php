@@ -100,7 +100,6 @@ return array(
 		'resetPassword' => 'Restaura la contrasenya',
 		'resetAction' => 'Restaura',
 		'passwordChanged' => 'La contrasenya s\'ha canviat correctament, fes click :link per entrar',
-
 		'noObservationsToValidate' => 'No hi ha observacions pendents de validar',
 		'administration' => 'Administració',
 		'users' => 'Usuaris',
