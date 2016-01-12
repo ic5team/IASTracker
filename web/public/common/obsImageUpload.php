@@ -36,6 +36,14 @@ if(isset($_FILES[$fieldName]))
 					$name = $_FILES[$fieldName]["name"];
 					$partsNom = explode(".", $name);
 					$ext = strtoupper($partsNom[count($partsNom)-1]);
+					$posInt = strpos($ext, '?');
+					if(FALSE !== $posInt)
+					{
+
+						$ext = substr($ext, 0, $posInt);
+						echo '_'.$ext.'_';
+
+					}
 
 					if('JPG' == $ext || 'JPEG' == $ext)
 					{
