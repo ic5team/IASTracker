@@ -41,7 +41,6 @@ if(isset($_FILES[$fieldName]))
 					{
 
 						$ext = substr($ext, 0, $posInt);
-						echo '_'.$ext.'_';
 
 					}
 
