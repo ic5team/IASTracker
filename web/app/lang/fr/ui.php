@@ -177,5 +177,3 @@ return array(
 		'downloadObservations' => 'Télécharger'
 
 	);
-
-	);
