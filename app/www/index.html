@@ -71,12 +71,12 @@
 				</ul>
 			</div>
 			<div data-role="footer" data-position="fixed" data-tap-toggle="false">
-				<a href="#screen2" id="btAgree" data-transition="pop" class="right LocalizedText" text-label="agree">Agree</a>
+				<a href="#screen2" id="btAgree" data-transition="pop" class="right LocalizedText iasTrackerButton" text-label="agree">Agree</a>
 			</div>
 		</div>
 		<div id="screen2" data-role="page" class="fullscreen" data-url="screen2">
 			<div data-role="header" data-position="fixed" data-tap-toggle="false">
-				<h1 class="LocalizedText PageHeader" text-label="help">Help</h1>
+				<h1 class="LocalizedText PageHeader helpLabel" text-label="help">Help</h1>
 			</div>
 			<div id="help0" class="helpWindow almostFullscreen" next="help1"><img src="img/en/help0.PNG" style="width: 100vw; height: 83vh;" /></div>
 			<div id="help1" class="helpWindow almostFullscreen" prev="help0" next="help2"><img src="img/en/help1.PNG" style="width: 100vw; height: 83vh;" /></div>
@@ -84,29 +84,29 @@
 			<div id="help3" class="helpWindow almostFullscreen" prev="help2" next="help4" style="display: none"><img src="img/en/help3.PNG" style="width: 100vw; height: 83vh;" /></div>
 			<div id="help4" class="helpWindow almostFullscreen" prev="help3" style="display: none"><img src="img/en/help4.PNG" style="width: 100vw; height: 83vh;" /></div>
 			<div data-role="footer" data-position="fixed" data-tap-toggle="false">
-				<a id="helpSkipBtn" href="#screen3" data-transition="pop" class="right LocalizedText" text-label="skip">Skip</a>
+				<a id="helpSkipBtn" href="#screen3" data-transition="pop" class="right LocalizedText iasTrackerButton" text-label="skip">Skip</a>
 			</div>
 		</div>
 		<div id="screen3" data-role="page" class="fullscreen background" data-url="screen3">
 			<div id="loginHeader" data-role="header" data-position="fixed" data-tap-toggle="false" style="display:none;">
-				<a href="#menuPanel" data-icon="bars" data-iconpos="notext" class="LocalizedText" text-label="menu">Menu</a>
+				<a href="#menuPanel"><i class="fa fa-2x fa-bars"></i></a>
 				<h1 class="LocalizedText PageHeader" text-label="login">Log In</h1>
 			</div>
 			<div data-role="content" class="whitePanel" style="margin-top: 17vh;">
-				<span class="LocalizedText" text-label="loginMessage">You are not logged in. Please enter your email and password</span>
+				<span class="LocalizedText sisco" text-label="loginMessage">You are not logged in. Please enter your email and password</span>
 				<div class="form-group" id="form-email">
 					<input name="email" type="email" class="form-control block" placeholder="me@example.com" id="input-email">
-					<span id="error-email" class="help-block hidden LocalizedText" text-label="invalidEmail">Invalid email</span>
+					<span id="error-email" class="help-block hidden LocalizedText sisco" text-label="invalidEmail">Invalid email</span>
 				</div>
 				<div class="form-group" id="form-password">
 					<input name="password" type="password" id="input-password"/>
-					<span id="error-password" class="help-block hidden LocalizedText" text-label="invalidPassword">Invalid password</span>
+					<span id="error-password" class="help-block hidden LocalizedText sisco" text-label="invalidPassword">Invalid password</span>
 				</div>
 				<div class="row alert alert-danger" id="error-general" style="display: none;">
-					<div class="col-md-12" id="error-general-text">
+					<div class="col-md-12 sisco" id="error-general-text">
 					</div>
 				</div>
-				<a data-transition="pop" id="btSignIn" data-role="button" data-theme="b">
+				<a data-transition="pop" id="btSignIn" data-role="button" class="iasTrackerButton">
 					<div id="btSignInText" class="LocalizedText" text-label="login">
 						Log in
 					</div>
@@ -114,23 +114,23 @@
 						<img src="img/loader.gif"  />
 					</div>
 				</a>
-				<a href="#signupScreen" data-transition="pop" data-role="button" id="signinSignUpBtn" class="LocalizedText" text-label="signup">Sign Up</a>
-				<a href="#screen5" data-transition="pop" data-role="button" id="notNowBtn" class="LocalizedText" text-label="notNow">Not now</a>
-				<a href="#screen5" data-transition="pop" id="btNoNever" data-role="button" class="LocalizedText" text-label="noNever">No, don't ask me again</a>
+				<a href="#signupScreen" data-transition="pop" data-role="button" id="signinSignUpBtn" class="LocalizedText iasTrackerButton" text-label="signup">Sign Up</a>
+				<a href="#screen5" data-transition="pop" data-role="button" id="notNowBtn" class="LocalizedText iasTrackerButton" text-label="notNow">Not now</a>
+				<a href="#screen5" data-transition="pop" id="btNoNever" data-role="button" class="LocalizedText iasTrackerButton" text-label="noNever">No, don't ask me again</a>
 			</div>
 		</div>
 		<div id="signupScreen" data-role="page" class="fullscreen background" data-url="signupScreen">
 			<div data-role="content" class="whitePanel" style="margin-top: 25vh;">
-				<span class="LocalizedText" text-label="registerText">To register enter your email</span>
+				<span class="LocalizedText sisco" text-label="registerText">To register enter your email</span>
 				<div class="form-group" id="form-signUpEmail">
 					<input name="signUpEmail" type="email" class="form-control block" placeholder="me@example.com" id="input-signUpEmail">
-					<span id="error-signUpEmail" class="help-block hidden LocalizedText" text-label="invalidEmail">Invalid email</span>
+					<span id="error-signUpEmail" class="help-block hidden LocalizedText sisco" text-label="invalidEmail">Invalid email</span>
 				</div>
 				<div class="row alert alert-danger" id="error-generalSignUp" style="display: none;">
-					<div class="col-md-12" id="error-general-textSignUp">
+					<div class="col-md-12 sisco" id="error-general-textSignUp">
 					</div>
 				</div>
-				<a data-transition="pop" id="btSignUp" data-role="button" data-theme="b">
+				<a data-transition="pop" id="btSignUp" data-role="button" class="iasTrackerButton">
 					<div id="btSignUpText" class="LocalizedText" text-label="signup">
 						SignUp
 					</div>
@@ -152,7 +152,7 @@
 		</div>
 		<div id="noGPSScreen" data-role="page" data-url="noGPSScreen" class="fullscreen background">
 			<div data-role="header" data-position="fixed" data-tap-toggle="false">
-				<a href="#menuPanel" data-icon="bars" data-iconpos="notext" class="LocalizedText" text-label="menu">Menu</a>
+				<a href="#menuPanel"><i class="fa fa-2x fa-bars"></i></a>
 				<h1 class="LocalizedText PageHeader" text-label="locationIAS">Location IAS</h1>
 			</div>
 			<div data-role="content">
@@ -166,7 +166,7 @@
 		</div>
 		<div id="screen4" data-role="page" class="fullscreen background" data-url="screen4">
 			<div data-role="header" data-position="fixed" data-tap-toggle="false">
-				<a href="#menuPanel" data-icon="bars" data-iconpos="notext" class="LocalizedText" text-label="menu">Menu</a>
+				<a href="#menuPanel"><i class="fa fa-2x fa-bars"></i></a>
 				<h1 class="LocalizedText PageHeader" text-label="configuration">Configuration</h1>
 			</div>
 			<div data-role="content" class="whitePanel" style="margin-top: 9vh;">
@@ -200,7 +200,7 @@
 					<div class="col-md-12" id="error-general-profile-text">
 					</div>
 				</div>
-				<a data-transition="pop" data-role="button" id="btCompleteData" data-theme="b" style="display: none;">
+				<a data-transition="pop" data-role="button" id="btCompleteData" style="display: none;" class="iasTrackerButton">
 					<div id="btCompleteDataText" class="LocalizedText" text-label="save">
 						Save
 					</div>
@@ -208,7 +208,7 @@
 						<img src="img/loader.gif"  />
 					</div>
 				</a>
-				<a data-transition="pop" data-role="button" id="btLogout" data-theme="b" style="display: none;">
+				<a data-transition="pop" data-role="button" id="btLogout" style="display: none;" class="iasTrackerButton">
 					<div id="btLogoutText" class="LocalizedText" text-label="logout">
 						Log out
 					</div>
@@ -220,7 +220,7 @@
 		</div>
 		<div id="screen5" data-role="page" data-url="screen5" class="fullscreen background">
 			<div data-role="header" data-position="fixed" data-tap-toggle="false">
-				<a href="#menuPanel" data-icon="bars" data-iconpos="notext" class="LocalizedText" text-label="menu">Menu</a>
+				<a href="#menuPanel"><i class="fa fa-2x fa-bars"></i></a>
 				<h1 class="LocalizedText PageHeader" text-label="locationIAS">Location IAS</h1>
 			</div>
 			<div data-role="content">
@@ -238,7 +238,7 @@
 		</div>
 		<div id="screen6" data-role="page" data-url="screen6" class="fullscreen background">
 			<div data-role="header" data-position="fixed" data-tap-toggle="false">
-				<a href="#menuPanel" data-icon="bars" data-iconpos="notext" class="LocalizedText" text-label="menu">Menu</a>
+				<a href="#menuPanel"><i class="fa fa-2x fa-bars"></i></a>
 				<h1 class="LocalizedText PageHeader" text-label="starredIAS">Starred IAS</h1>
 			</div>
 			<div data-role="content">
@@ -246,7 +246,7 @@
 		</div>
 		<div id="screen8" data-role="page" data-url="screen8">
 			<div data-role="header" data-position="fixed" data-tap-toggle="false" id="taxonScreenHeader">
-				<a href="#menuPanel" data-icon="bars" data-iconpos="notext" class="LocalizedText" text-label="menu">Menu</a>
+				<a href="#menuPanel"><i class="fa fa-2x fa-bars"></i></a>
 				<h1>&nbsp;</h1>
 			</div>
 			<div data-role="content" id="taxonScreen">
@@ -254,7 +254,7 @@
 		</div>
 		<div id="screenList" data-role="page" data-url="screenList">
 			<div data-role="header" data-position="fixed" data-tap-toggle="false">
-				<a href="#menuPanel" data-icon="bars" data-iconpos="notext" class="LocalizedText" text-label="menu">Menu</a>
+				<a href="#menuPanel"><i class="fa fa-2x fa-bars"></i></a>
 				<h1 id="listTitle" class="PageHeader"></h1>
 			</div>
 			<div data-role="content" id="listContent">
@@ -262,34 +262,35 @@
 		</div>
 		<div id="screen11" data-role="page" data-url="screen11" class="fullscreen background">
 			<div data-role="header" data-position="fixed" data-tap-toggle="false">
-				<a href="#menuPanel" data-icon="bars" data-iconpos="notext" class="LocalizedText" text-label="menu">Menu</a>
+				<a href="#menuPanel"><i class="fa fa-2x fa-bars"></i></a>
 				<h1 class="LocalizedText PageHeader" text-label="otherLocations">Other Locations</h1>
 			</div>
 			<div data-role="content">
 				<div id="listCreated" class="whitePanel" style="margin-top: 20vh;text-align:center; display:none;">
 					<i class="fa fa-check" style="font-size: 180px;"></i><br />
 					<span class="LocalizedText" text-label="listCreated">List created</span>
+					<div id="closeListConfirmationScreen" data-role="button" class="ui-btn LocalizedText iasTrackerButton" text-label="ok">Ok</div>
 				</div>
 				<div id="createList">
 					<!-- Other areas IAS -->
 					<div id="otherAreasMap" style="height: 70vh;"></div>
-					<label for="name" class="LocalizedText" text-label="listName">List name</label>
+					<label for="name" class="LocalizedText sisco topMargin" text-label="listName">List name</label>
 					<input name="name" type="text" class="form-control block" id="input-list-name">
 					<div class="row alert alert-danger" id="error-no-listName" style="display: none;">
-						<div class="col-md-12 LocalizedText" text-label="listNameRequired">
+						<div class="col-md-12 LocalizedText sisco" text-label="listNameRequired">
 							List name required
 						</div>
 					</div>
 					<div class="row alert alert-warning" id="error-no-position">
-						<div class="col-md-12" class="LocalizedText" text-label="waitingLocation">
+						<div class="col-md-12" class="LocalizedText sisco" text-label="waitingLocation">
 							Waiting for the location...
 						</div>
 					</div>
 					<div class="row alert alert-warning" id="error-general-list" style="display:none;">
-						<div class="col-md-12" id="error-general-list-text">
+						<div class="col-md-12" id="error-general-list-text" class="sisco">
 						</div>
 					</div>
-					<button id="acceptListBtn" class="btn btn-primary ui-disabled">
+					<button id="acceptListBtn" class="btn btn-primary ui-disabled iasTrackerButton">
 						<div id="btStoreListText" class="LocalizedText" text-label="storeList">
 							Store list
 						</div>
@@ -302,7 +303,7 @@
 		</div>
 		<div id="screen12" data-role="page" data-url="screen12">
 			<div data-role="header" data-position="fixed" data-tap-toggle="false">
-				<a href="#menuPanel" data-icon="bars" data-iconpos="notext" class="LocalizedText" text-label="menu">Menu</a>
+				<a href="#menuPanel"><i class="fa fa-2x fa-bars"></i></a>
 				<h1 class="LocalizedText PageHeader" text-label="aboutIASTracker">About IASTracker</h1>
 			</div>
 			<div data-role="content" class="LocalizedText" text-label="aboutText">
@@ -310,7 +311,7 @@
 		</div>
 		<div id="screen13" data-role="page" data-url="screen13" class="fullscreen background">
 			<div data-role="header" data-position="fixed" data-tap-toggle="false">
-				<a id="backLink" href="" data-icon="arrow-l" data-iconpos="notext" class="LocalizedText" text-label="menu">Menu</a>
+				<a id="backLink" href=""><i class="fa fa-2x fa-arrow-left"></i></a>
 				<h1 id="IASCommonName" class="PageHeader"></h1>
 			</div>
 			<div data-role="content">
@@ -318,14 +319,14 @@
 				<div id="bigIASImage" style="height: 280px;">
 				</div>
 				<div id="screen13InnerContent">
-					<div id="LocateIASButton" data-role="button" class="LocalizedText" text-label="locateIAS">Locate IAS</div>
-					<div id="IASDescription"></div>
+					<div id="LocateIASButton" data-role="button" class="LocalizedText sisco uppercase bold italic" text-label="locateIAS">Locate IAS</div>
+					<div id="IASDescription" class="sisco"></div>
 				</div>
 			</div>
 		</div>
 		<div id="screen14" data-role="page" data-url="screen14" class="fullscreen background">
 			<div data-role="header" data-position="fixed" data-tap-toggle="false">
-				<a id="backLinkLocation" href="" data-icon="arrow-l" data-iconpos="notext" class="LocalizedText" text-label="menu">Menu</a>
+				<a id="backLinkLocation" href=""><i class="fa fa-2x fa-arrow-left"></i></a>
 				<h1 id="LocationCommonName" class="PageHeader"></h1>
 			</div>
 			<div data-role="content">
@@ -340,34 +341,34 @@
 					<div id="IASObservationMap" class="map"></div>
 					<div id="TakeImageBtn" class="obsButton"><i class="fa fa-camera"></i></div>
 					<div id="SelectImageBtn" class="obsButton"><i class="fa fa-picture-o"></i></div>
-					<div id="addNoteBtn" class="ui-btn ui-icon-carat-d ui-btn-icon-right LocalizedText" text-label="addNote">Add a note</div>
+					<div id="addNoteBtn" class="ui-btn ui-icon-carat-d ui-btn-icon-right LocalizedText sisco" text-label="addNote">Add a note</div>
 					<textarea id="obsText" rows="4" cols="50" style="display:none;"></textarea> 
 					<select id="numberOfSpecies">
-						<option value="1" class="LocalizedText" text-label="one">One</option>
-						<option value="2" class="LocalizedText" text-label="few">Few</option>
-						<option value="3" class="LocalizedText" text-label="several">Several</option>
+						<option value="1" class="LocalizedText sisco" text-label="one">One</option>
+						<option value="2" class="LocalizedText sisco" text-label="few">Few</option>
+						<option value="3" class="LocalizedText sisco" text-label="several">Several</option>
 					</select>
 					<div class="row alert alert-danger" id="error-no-gps" style="display: none;">
-						<div class="col-md-12" class="LocalizedText" text-label="noGPS">
+						<div class="col-md-12" class="LocalizedText sisco" text-label="noGPS">
 							No GPS
 						</div>
 					</div>
 					<div class="row alert alert-danger" id="error-no-image" style="display: none;">
-						<div class="col-md-12 LocalizedText" text-label="noPhotoErrorText">
+						<div class="col-md-12 LocalizedText sisco" text-label="noPhotoErrorText">
 							As a non registered user you have to take at least a photo
 						</div>
 					</div>
 					<div class="row alert alert-danger" id="error-general-obs" style="display: none;">
-						<div class="col-md-12" id="error-general-obs-text" >
+						<div class="col-md-12 sisco" id="error-general-obs-text" >
 						</div>
 					</div>
 					<div class="row alert alert-warning" id="warn-max-image-num" style="display: none;">
-						<div class="col-md-12 LocalizedText" text-label="maxPhotosErrorText">
+						<div class="col-md-12 LocalizedText sisco" text-label="maxPhotosErrorText">
 							You have taken the maximum amount of photos permitted
 						</div>
 					</div>
 					<div id="SendObservationButton" data-role="button" >
-						<div id="btSendIASText" class="LocalizedText" text-label="sendIAS">
+						<div id="btSendIASText" class="LocalizedText sisco uppercase bold italic" text-label="sendIAS">
 							Send IAS
 						</div>
 						<div id="btSendIASLdg" style="display: none;">
@@ -378,7 +379,7 @@
 				<div id="obsSentConfirmationScreen" class="locationMessage whitePanel" style="display: none;text-align:center;">
 					<i class="fa fa-cloud-upload" style="font-size: 180px;"></i><br />
 					<span class="LocalizedText" text-label="obsSent">Observation sent</span>
-					<div id="closeConfirmationScreen" data-role="button" class="ui-btn LocalizedText" text-label="ok">Ok</div>
+					<div id="closeConfirmationScreen" data-role="button" class="ui-btn LocalizedText iasTrackerButton" text-label="ok">Ok</div>
 				</div>
 				<div id="obsStoredScreen" class="locationMessage whitePanel" style="display: none;text-align:center;">
 					<i class="fa fa-archive" style="font-size: 180px;"></i><br />
@@ -388,43 +389,43 @@
 				<div id="obsSentErrorScreen" class="locationMessage whitePanel" style="display: none;text-align:center;">
 					<i class="fa fa-exclamation-triangle" style="font-size: 180px;"></i><br />
 					<span class="LocalizedText" text-label="obsError">Observation NOT sent</span>
-					<div id="closeObsNotSentScreen" data-role="button" class="ui-btn LocalizedText" text-label="ok">Ok</div>
+					<div id="closeObsNotSentScreen" data-role="button" class="ui-btn LocalizedText iasTrackerButton" text-label="ok">Ok</div>
 				</div>
 			</div>
 		</div>
 		<div data-role="panel"  data-position-fixed="true" id="menuPanel" data-position="left" data-display="overlay" data-theme="a" class="ui-panel ui-panel-position-left ui-panel-display-overlay ui-body-a ui-panel-animate ui-panel-closed">
-			<div class="ui-panel-inner">
+			<div class="ui-panel-inner innerMenu">
 				<div id="scrollablePanel">
 					<div class="row menuElement">
 						<div class="col-md-12">
-							<a href="#screen5" class="LocalizedText" text-label="iasLocation">IAS current location</a>
+							<a href="#screen5" class="LocalizedText menuItem" text-label="iasLocation">IAS current location</a>
 						</div>
 					</div>
 					<div class="row menuElement" id="myIASRow">
 						<div class="col-md-12">
-							<a href="#screen6" class="LocalizedText" text-label="myIAS">My IAS</a>
+							<a href="#screen6" class="LocalizedText menuItem" text-label="myIAS">My IAS</a>
 						</div>
 					</div>
 				</div>
 				<div id="fixedPanel">
 					<div class="row menuElement" id="otherAreasIAS">
 						<div class="col-md-12">
-							<a href="#screen11" class="LocalizedText" text-label="otherIAS">Select other IAS areas</a>
+							<a href="#screen11" class="LocalizedText menuItem" text-label="otherIAS">Select other IAS areas</a>
 						</div>
 					</div>
 					<div class="row menuElement" id="userProfile">
 						<div class="col-md-12">
-							<a href="#screen4" class="LocalizedText" text-label="configuration">Configuration</a>
+							<a href="#screen4" class="LocalizedText menuItem" text-label="configuration">Configuration</a>
 						</div>
 					</div>
 					<div class="row menuElement" id="userLogin" style="display:none;">
 						<div class="col-md-12">
-							<a href="#screen3" class="LocalizedText" text-label="login">Log in</a>
+							<a href="#screen3" class="LocalizedText menuItem" text-label="login">Log in</a>
 						</div>
 					</div>
 					<div class="row menuElement" id="aboutIAS">
 						<div class="col-md-12">
-							<a href="#screen12" class="LocalizedText" text-label="aboutIASTracker">About IAS Tracker</a>
+							<a href="#screen12" class="LocalizedText menuItem" text-label="aboutIASTracker">About IAS Tracker</a>
 						</div>
 					</div>
 					<div class="row menuElement">
@@ -432,7 +433,7 @@
 							<form>
 								<label>
 								 <span class="LocalizedText" text-label="scientific">Scientific names?</span>
-								 <input type="checkbox" class="IASCheck" name="cbScientificNames" id="cbScientificNames" checked data-mini="true" style="display: none;">
+								 <input type="checkbox" class="IASCheck menuItem" name="cbScientificNames" id="cbScientificNames" checked data-mini="true" style="display: none;">
 								</label>
 							</form>
 						</div>
@@ -449,7 +450,7 @@
 					</div>-->
 					<div class="row menuElement" id="help">
 						<div class="col-md-12">
-							<a id="helpBt" class="LocalizedText" text-label="help">Help</a>
+							<a id="helpBt" class="LocalizedText menuItem" text-label="help">Help</a>
 						</div>
 					</div>
 				</div>

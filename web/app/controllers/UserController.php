@@ -415,7 +415,8 @@ class UserController extends RequestController {
 		}
 
 		$element->fullName = $name;
-		$element->languageId = $language;
+		$lang = Language::locale($language)->first();
+		$element->languageId = $lang->id;
 		$element->amIExpert = $isExpert;
 		$element->photoURL = $dbPhotoName;
 		$element->lastConnection = new DateTime();

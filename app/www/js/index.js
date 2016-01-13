@@ -141,24 +141,7 @@ var app = {
 
 		});
 
-		$('#screen11').on('pageshow', function(e) {
-
-			$('#listCreated').hide();
-			$('#error-no-position').show();
-			$('#error-general-list').hide();
-			$('#input-list-name').val('');
-			$('#createList').show();
-			app.bWaitingForLocation = true;
-			var mapDescriptors = JSON.parse(window.localStorage.getItem('MapList'));
-			var crsDescriptors = JSON.parse(window.localStorage.getItem('MapCRSDescriptors'));
-			var mapCenter = JSON.parse(window.localStorage.getItem('MapCenter'));
-
-			if(null != app.OtherMapHandler)
-				app.OtherMapHandler.destroy();
-
-			app.OtherMapHandler = new MapHandler("otherAreasMap", mapDescriptors, crsDescriptors, mapCenter);
-
-		});
+		$('#screen11').on('pageshow', app.resetListScreen);
 
 		$('#screen14').on('pagebeforeshow', function(e) {
 
@@ -350,6 +333,25 @@ var app = {
 		});
 
 	},
+	resetListScreen: function() 
+	{
+
+		$('#listCreated').hide();
+		$('#error-no-position').show();
+		$('#error-general-list').hide();
+		$('#input-list-name').val('');
+		$('#createList').show();
+		app.bWaitingForLocation = true;
+		var mapDescriptors = JSON.parse(window.localStorage.getItem('MapList'));
+		var crsDescriptors = JSON.parse(window.localStorage.getItem('MapCRSDescriptors'));
+		var mapCenter = JSON.parse(window.localStorage.getItem('MapCenter'));
+
+		if(null != app.OtherMapHandler)
+			app.OtherMapHandler.destroy();
+
+		app.OtherMapHandler = new MapHandler("otherAreasMap", mapDescriptors, crsDescriptors, mapCenter);
+
+	},
 	iasLocated: function(data)
 	{
 
@@ -410,6 +412,8 @@ var app = {
 	// 'load', 'deviceready', 'offline', and 'online'.
 	bindEvents: function() {
 		document.addEventListener('deviceready', this.onDeviceReady, false);
+		document.addEventListener('offline', this.onOffline, false);
+		document.addEventListener('online', this.onOnline, false);
 
 		$('#btAgree').on('click', app.termsAgreed);
 		$('#btNoNever').on('click', app.neverSignUp);
@@ -427,6 +431,7 @@ var app = {
 		$('#closeObsNotSentScreen').on('click', function(e){ 
 			$('#obsSentErrorScreen').hide();
 		});
+		$('#closeListConfirmationScreen').on('click', app.resetListScreen);
 		$('#helpBt').on('click', function(e){
 			$('#helpSkipBtn').attr('href', "#screen5");
 			$("body").pagecontainer("change", '#screen2');
@@ -700,7 +705,7 @@ var app = {
 	addListMenu: function(id, name)
 	{
 
-		var menuHtml = '<div class="row menuElement" id="list' + id +'" data-id="' + id +'"><div class="col-md-12"><a href="#screenList" class="scroll">' + name + '</a></div></div>';
+		var menuHtml = '<div class="row menuElement" id="list' + id +'" data-id="' + id +'"><div class="col-md-12"><a href="#screenList" class="scroll menuItem">' + name + '</a></div></div>';
 		$('#scrollablePanel').append(menuHtml);
 
 		$('#list' + id).on('click', function(e) 
@@ -737,7 +742,7 @@ var app = {
 
 			}
 
-			html += '<button id="removeListBtn" class="btn btn-primary" data-id="' + id + '" style="width: 100%;">' + Lang[app.userLocale]['removeList'] + '</button>';
+			html += '<button id="removeListBtn" class="btn iasTrackerButton" data-id="' + id + '" style="width: 100%;">' + Lang[app.userLocale]['removeList'] + '</button>';
 
 			$('#listContent').html(html);
 
@@ -770,8 +775,6 @@ var app = {
 
 		}
 
-		$('#input-name').val('');
-
 	},
 	// deviceready Event Handler
 	//
@@ -779,8 +782,6 @@ var app = {
 	// function, we must explicitly call 'app.receivedEvent(...);'
 	onDeviceReady: function() {
 		app.receivedEvent('deviceready');
-		document.addEventListener('offline', this.onOffline, false);
-		document.addEventListener('online', this.onOnline, false);
 		options = { enableHighAccuracy: true };
 		app.watchId = navigator.geolocation.watchPosition(app.onLocationSuccess, app.onLocationError, options);
 		app.IASPendingObservations = JSON.parse(window.localStorage.getItem('pendingObservations'));
@@ -1121,7 +1122,7 @@ var app = {
 							var block = 'ias' + current.id +'Block';
 
 							screenHtml += '<div style="width: 50%; display: inline-block; text-align: center;">';
-							screenHtml += '<div class="iasBlock" data-taxonId="' + taxon.id + '" data-id="' + current.id + '" data-pos="' + iasKeys[j] + '" style="background-color:' + taxon.appInnerColor + '; width: 95%; margin-bottom: 10px; height: 180px;">';
+							screenHtml += '<div class="iasBlock" data-taxonId="' + taxon.id + '" data-id="' + current.id + '" data-pos="' + iasKeys[j] + '" style="background-color:' + taxon.appInnerColor + '; margin-right: 5px; margin-left:5px; margin-bottom: 10px; height: 180px;">';
 							screenHtml += '<img class="iasImage" src="' + path + '/IASTracker/ias' + current.id + '.jpg" />';
 
 							screenHtml += '<div data-taxonId="' + taxon.id + '" data-id="' + current.id + '" data-pos="' + iasKeys[j] + '" class="iasName"><div class="IAS' + current.id + 'Name" style="height: 40px;">';
@@ -1142,7 +1143,7 @@ var app = {
 						screenHtml += '</div>';
 
 						//Add taxon to menu
-						menuHtml += '<div class="row menuElement"><div class="col-md-12"><a href="#screen8" scrollTo="taxon' + taxon.id + '" class="scroll LocalizedTaxon" taxon-key="' + keys[i] + '">' + taxon.names[app.userLocale] + '</a></div></div>';
+						menuHtml += '<div class="row menuElement"><div class="col-md-12"><a href="#screen8" scrollTo="taxon' + taxon.id + '" class="scroll LocalizedTaxon menuItem" taxon-key="' + keys[i] + '">' + taxon.names[app.userLocale] + '</a></div></div>';
 
 					}
 
@@ -1168,7 +1169,12 @@ var app = {
 
 			}
 
+			$('#menuPanel').on('scroll', function(e) {
+				return false;
+			});
+
 			$("#menuPanel").enhanceWithin().panel();
+
 	  		$(".scroll").on("click", function(e) {
 
 				e.preventDefault();
