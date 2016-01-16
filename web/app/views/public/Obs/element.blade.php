@@ -2,17 +2,17 @@
 	if(property_exists($data, 'image') || isset($data->image))
 	{
 ?>
-<div class="row" style="margin-top:15px;">
+<div class="row">
 	<div class="col-md-12">
-		<div class="row" style="height: 150px; overflow: hidden; 
+		<div class="row" style="height: 170px; overflow: hidden; 
 				background-image: url({{Config::get('app.urlImg').$data->image->url}}); 
 				background-position-y: -150px;
 	    		background-repeat: no-repeat;
 	    		background-size: cover;">
-	    	<div class="iasTitleContainer" style="float: left;background-color: rgba(0,0,0,0.5);width: 100%;text-align: left;height: 150px;">
-	    		<div class="obsTitleText" style="margin-top: 0px;margin-left: 15px;">
-		    		<div style="font-size:32px; color:#5cb85c; font-weight: bold;">{{ $data->description->name }}<i class="fa fa-external-link" style="margin-left:15px; cursor:pointer;" title="{{Lang::get('ui.')}}" onclick="showIAS({{$data->IASId}})"></i></div>
-					<div style="color:#337ab7; font-weight: bold;">{{ $data->latinName }}</div>
+	    	<div class="iasTitleContainer">
+	    		<div class="obsTitleText">
+		    		<div class="iasCommonName lobster">{{ $data->description->name }}<i class="fa fa-external-link" style="margin-left:15px; cursor:pointer;" title="{{Lang::get('ui.')}}" onclick="showIAS({{$data->IASId}})"></i></div>
+					<div class="iasLatinName lobster">{{ $data->latinName }}</div>
 <?php
 		$num = count($data->taxons);
 		$str = array();
@@ -20,7 +20,7 @@
 		{
 
 			$current = $data->taxons[$i];
-			$str[] = '<div style="color:'.$current->appOuterColor.'; font-weight: bold; display: inline-block;">'.$current->name.'</div>';
+			$str[] = '<div style="color:'.$current->appOuterColor.'; font-weight: bold; display: inline-block;" class="lobster">'.$current->name.'</div>';
 
 		}
 
@@ -32,10 +32,16 @@
 			echo '<div class="row"><div class="col-md-3 alert alert-success" style="margin-left: 15px;"><i class="'.$data->status->icon.'" style="margin-right: 10px;"></i>'.Lang::get('ui.observationValidated').'</div></div>';
 
 		}
+		else if(2 == $data->status->id)
+		{
+
+			echo '<div class="row"><div class="col-md-3 alert alert-info" style="margin-left: 15px;"><i class="'.$data->status->icon.'" style="margin-right: 10px;"></i>'.Lang::get('ui.invasorObserved').'</div></div>';
+
+		}
 		else
 		{
 
-			echo '<div class="row"><div class="col-md-3 alert alert-warning" style="margin-left: 15px;"><i class="'.$data->status->icon.'" style="margin-right: 10px;"></i>'.Lang::get('ui.invasorObserved').'</div></div>';
+			echo '<div class="row"><div class="col-md-3 alert alert-grey" style="margin-left: 15px;"><i class="'.$data->status->icon.'" style="margin-right: 10px;"></i>'.Lang::get('ui.observationDiscarded').'</div></div>';
 
 		}
 

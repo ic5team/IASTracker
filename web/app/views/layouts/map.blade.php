@@ -177,6 +177,10 @@ if(property_exists($data, 'isComplete') && !$data->isComplete)
 								</div>
 							</div>
 						</div>
+						<div class="row alert alert-warning" id="filterError" style="display: none;">
+							<div class="col-md-12" id="filterErrorMsg">
+							</div>
+						</div>
 						<div class="row">
 							<div class="col-md-12">
 								<button role="button" class="btn btn-large btn-primary" type="button" onclick="filterObs()">{{Lang::get('ui.filter')}}</button>

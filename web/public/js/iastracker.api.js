@@ -137,7 +137,7 @@ IASTracker.prototype.getFilteredObservations = function(params, doneFunction, de
 
 }
 
-IASTracker.prototype.downloadFilteredObservations = function(params, doneFunction, destinationId)
+IASTracker.prototype.downloadFilteredObservations = function(params, doneFunction, failFunction, destinationId)
 {
 
 	var lang = window.location.search;
@@ -150,6 +150,9 @@ IASTracker.prototype.downloadFilteredObservations = function(params, doneFunctio
 		data: params,
 		successCallback: function (url) {
 			doneFunction();
+		},
+		failCallback: function(responseHtml, url, error) {
+			failFunction(responseHtml);
 		}
 	});
 

@@ -91,6 +91,8 @@ function guardarDadesUsr()
             {
                 $('#completar-dades-modal').modal('hide');
                 $('#imgPerfilBarra').attr('src',fotoPerfil);
+                var url = window.location.href;
+                window.location.href = url.substr(0, url.indexOf(window.location.search)) + '?lang=' + selectedLanguage;
             }
             else{
                 mostraErrorInesperat();    

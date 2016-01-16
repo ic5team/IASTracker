@@ -59,7 +59,7 @@ $(document).ready(function() {
 					var discardBtn = '<button onclick="showValidationModal(' + row.id + ', false)" class="btn btn-danger insideCollapseButton" >' + row.discardText + '</button>';
 					var deleteBtn = '<button type="button" class="btn btn-danger" onclick="deleteObs(' + row.id + ')"><i class="fa fa-trash-o"></i></button>';
 					var loading = '<img src="' + urlImg + '/loader.gif" class="loading" data-id=' + row.id + ' style="display:none;"/>';
-                    return (4 != row.statusId) ? '<div class="btns" data-id="' + row.id + '" >' + ((2 == row.statusId && row.canBeValidated) ? validateBtn + discardBtn : undoValidateBtn ) + deleteBtn + '</div>' + loading : '';
+                    return (4 != row.statusId) ? '<div class="btns" data-id="' + row.id + '" >' + ((2 == row.statusId && row.canBeValidated) ? validateBtn + discardBtn : (row.canBeValidated ? undoValidateBtn : '') ) + deleteBtn + '</div>' + loading : '';
                 } 
             }
 		],

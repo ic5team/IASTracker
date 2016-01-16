@@ -2,17 +2,17 @@
 	if(property_exists($data, 'image'))
 	{
 ?>
-<div class="row" style="margin-top:15px;">
+<div class="row">
 	<div class="col-md-12">
-		<div class="row" style="height: 150px; overflow: hidden; 
+		<div class="row" style="height: 170px; overflow: hidden; 
 				background-image: url({{Config::get('app.urlImg').$data->image->url}}); 
 				background-position-y: -150px;
 	    		background-repeat: no-repeat;
 	    		background-size: cover;">
 	    	<div class="iasTitleContainer">
 	    		<div class="iasTitleText">
-		    		<div style="font-size:32px; color:#5cb85c; font-weight: bold;">{{ $data->description->name }}</div>
-					<div style="color:#337ab7; font-weight: bold;">{{ $data->latinName }}</div>
+		    		<div class="iasCommonName lobster">{{ $data->description->name }}</div>
+					<div class="iasLatinName lobster">{{ $data->latinName }}</div>
 <?php
 		$num = count($data->taxons);
 		$str = array();
@@ -49,7 +49,7 @@
 		echo '<br><br><i class="fa fa-arrows fa-2x" style="margin-right: 10px;"></i>'.$data->description->sizeLongDescription;
 
 	if('' != $data->description->infoLongDescription)
-		echo '<br><br><i class="fa fa-info-circle fa-2x" style="margin-right: 10px;"></i>'.$data->description->infoLongDescription;
+		echo '<br><br><span class="icon-stack"><i class="fa fa-info-circle icon-stack-3x"></i><i class="fa fa-plus icon-stack-1x"></i></span>'.$data->description->infoLongDescription;
 
 	if('' != $data->description->habitatLongDescription)
 		echo '<br><br><i class="fa fa-globe fa-2x" style="margin-right: 10px;"></i>'.$data->description->habitatLongDescription;

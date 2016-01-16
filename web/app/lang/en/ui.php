@@ -25,6 +25,7 @@ return array(
 		'scientificName' => 'Scientific name',
 		'iasTrackerObservations' => 'IASTracker observations',
 		'invasorObserved' => 'Invader observed',
+		'observationDiscarded' => 'Observació descartada',
 		'observationValidated' => 'Validated observation',
 		'userObsOnly' => 'Only user observations',
 		'iasTrackerAreas' => 'IASTracker areas',
@@ -174,7 +175,9 @@ return array(
 		'nickPermanent' => 'Careful, nickname cannot be changed later, think twice!',
 		'undoValidate' => 'Undo Validate',
 		'confirmationText' => 'Are you sure to delete the observation? This action cannot be undone!',
-		'downloadObservations' => 'Download'
+		'downloadObservations' => 'Download',
+		'toggleIAS' => 'Activa/Desactiva totes les espècies',
+		'noObservations' => 'Aquesta cerca no retorna cap resultat'
 	
 
 	);

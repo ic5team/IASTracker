@@ -71,7 +71,7 @@
 	{
 ?>
 										<li>
-											<button type="button" data="{{ $data->languages[$i]->id }}" 
+											<button type="button" data="{{ $data->languages[$i]->locale }}" 
 												class="btn btn-default langButtons {{ ( $data->userLanguage == $data->languages[$i]->id) ? 'active' : '' }}">
 												{{ HTML::image('img/thumbs/flags/'.$data->languages[$i]->img, $data->languages[$i]->name); }}
 											</button>

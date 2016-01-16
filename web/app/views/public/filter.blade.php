@@ -21,6 +21,14 @@
 	</div>
 </div>
 <br />
+<div class="row" style="text-align: center;">
+	<div class="col-md-8">
+		{{Lang::get('ui.toggleIAS')}}
+	</div>
+	<div class="col-md-4">
+		<input type="checkbox" id="IASCheckAll" class="IASCheck" onclick="toggleIAS" checked>
+	</div>
+</div>
 <?php
 	for($i=0; $i<count($data); ++$i)
 	{
@@ -42,7 +50,7 @@
 		{{$current->latinName}}
 	</div>
 	<div class="col-md-4" style="margin-top: 30px;">
-		<input type="checkbox" id="IASCheck{{$current->id}}" class="IASCheck" onclick="activeIAS" data="{{$current->id}}" checked>
+		<input type="checkbox" id="IASCheck{{$current->id}}" class="IASCheck IIASCheck" onclick="activeIAS" data="{{$current->id}}" checked>
 	</div>
 </div>
 <?php

@@ -1,17 +1,42 @@
+@font-face {
+  font-family: "lobster";
+  src: url("../fonts/Lobster1.4.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "sisco";
+  src: url("../fonts/Sisco-Book.otf") format("opentype");
+}
+
+html * {
+  font-family: "sisco";
+}
+
+.lobster {
+  font-family: "lobster";
+}
+
 .navbar-default {
 	background-color: #FFF;
 	margin-bottom: 0px;
-	height: 70px;
+	height: 80px;
   position:  relative;
 }
 
 #navbar-no-loguejat {
-	margin-top: 15px;
-	width: 80%;
+	margin-top: 20px;
+  margin-left: 15px;
+	width: 300px;
 }
 
 #navbar-no-loguejat > button {
 	width: 45%;
+}
+
+#navbar-loguejat {
+  margin-top: 5px;
+  margin-left: 15px;
+  width: 300px; 
 }
 
 #languages-bar {
@@ -40,6 +65,7 @@
 	max-height: calc(60vh);
 	overflow-x: hidden;
 	overflow-y: auto;
+  min-height: 435px;
 }
 
 .obsControls {
@@ -64,14 +90,17 @@
 }
 .left{
 	float: left;
-	width: 362px;
+	width: 60%;
 }
 .right{
 	float: right;
 }
+#navbar-logo {
+  margin-left: calc(50vw - 620px);
+}
 
 .map {
-	height:calc(100vh - 70px);
+	height:calc(100vh - 80px);
 }
 
 .modalMap {
@@ -83,7 +112,7 @@ body {
    margin: 0px;
 }
 
-#contentModal .modal-content
+#contentModal .modal-body
 {
 
 	max-height: calc(80vh);
@@ -252,7 +281,15 @@ body {
   margin-left: -10px;
 }
 
-.menu_box { position: absolute; top: 45px; left: 100%; margin-left: -175px; width: 200px; z-index: 1001;  background: white; }
+.menu_box {
+  position: absolute;
+  top: 65px;
+  left: 100%;
+  margin-left: -275px;
+  width: 200px;
+  z-index: 1001;
+  background: white;
+}
 
 .observedCircle {
   height: 10px;
@@ -278,8 +315,20 @@ body {
   background-color: rgba(0,0,0,0.5);
   width: 100%;
   text-align: left;
-  height: 150px;
+  height: 170px;
 
+}
+
+.iasCommonName {
+  font-size:32px; 
+  color:#5cb85c; 
+  font-weight: bold; 
+}
+
+.iasLatinName {
+  color:#337ab7; 
+  font-weight: bold; 
+  font-size: 20px;
 }
 
 .iasTitleText {
@@ -298,6 +347,42 @@ body {
   border: 1px solid #337ab7;
   border-radius: 100px;
   background-color: #337ab7;
-  margin-left: 10px;
+  margin-left: 15px;
   margin-top: 2px;
+}
+
+.alert-grey {
+  color: #4B555A;
+  background-color: #C7C9CA;
+  border-color: #838C8E;
+}
+
+.icon-stack {
+  position: relative;
+  display: inline-block;
+  width:1em;
+  height: 2em;
+  line-height: 2em;
+  vertical-align: middle;
+  margin-right: 34px;
+  margin-left: -10px;
+}
+
+.icon-stack-1x,
+.icon-stack-2x,
+.icon-stack-3x {
+  position: absolute;
+  left: 14px;
+  width: 100%;
+  text-align: center;
+}
+.icon-stack-1x {
+  line-height: inherit;
+  left: 0px;
+}
+.icon-stack-2x {
+  font-size: 1.5em;
+}
+.icon-stack-3x {
+  font-size: 2em;
 }

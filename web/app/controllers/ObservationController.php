@@ -666,87 +666,100 @@ class ObservationController extends RequestController {
 	protected function generateKML($observations)
 	{
 
-		setcookie('fileDownload', 'true', 0 , '/');
-		$folders = array();
-
-		for($i=0; $i<count($observations); ++$i)
+		if(0 == count($observations))
 		{
 
-			$currentFolder = null;
-			$current = $observations[$i];
-			$resource = $this->buildResource($current, true);
+			$data = new stdClass();
+			$data->error = Lang::get('ui.noObservations');
+			return json_encode($data);
 
-			if(1 == $current->statusId)	//Only download the validated data
+		}
+		else
+		{
+
+			setcookie('fileDownload', 'true', 0 , '/');
+			$folders = array();
+
+			for($i=0; $i<count($observations); ++$i)
 			{
 
-				if(array_key_exists($resource->data->latinName, $folders))
+				$currentFolder = null;
+				$current = $observations[$i];
+				$resource = $this->buildResource($current, true);
+
+				if(1 == $current->statusId)	//Only download the validated data
 				{
 
-					$currentFolder = $folders[$resource->data->latinName];
+					if(array_key_exists($resource->data->latinName, $folders))
+					{
+
+						$currentFolder = $folders[$resource->data->latinName];
+
+					}
+					else
+					{
+
+						$currentFolder = array();
+
+					}
+
+					$currentFolder[] = $resource;
+					$folders[$resource->data->latinName] = $currentFolder;
 
 				}
-				else
-				{
-
-					$currentFolder = array();
-
-				}
-
-				$currentFolder[] = $resource;
-				$folders[$resource->data->latinName] = $currentFolder;
 
 			}
 
-		}
+			$kml = '<?xml version="1.0" encoding="UTF-8"?>
+					<kml xmlns="http://www.opengis.net/kml/2.2">
+	  					<Document>
+							<name>IASTracker Observations</name>
+							<open>1</open>
+							<description>Observations from IC5Team\'s IASTracker project at iastracker.ic5team.org</description>
+							<Folder>
+	  							<name>Validated Observations</name>
+							';
 
-		$kml = '<?xml version="1.0" encoding="UTF-8"?>
-				<kml xmlns="http://www.opengis.net/kml/2.2">
-  					<Document>
-						<name>IASTracker Observations</name>
-						<open>1</open>
-						<description>Observations from IC5Team\'s IASTracker project at iastracker.ic5team.org</description>
-						<Folder>
-  							<name>Validated Observations</name>
-						';
-
-		$keys = array_keys($folders);
-		for($i=0; $i<count($folders); ++$i)
-		{
-
-			$currentFolder = $folders[$keys[$i]];
-			$kml .= '		<Folder>
-								<name>'.$keys[$i].'</name>
-  								';
-			for($j=0; $j<count($currentFolder); ++$j)
+			$keys = array_keys($folders);
+			for($i=0; $i<count($folders); ++$i)
 			{
 
-				$current = $currentFolder[$j];
-				$kml .= '		<Placemark>
-									<name>'.(property_exists($current->data, 'user') ? $current->data->user->username : '').' '.$current->data->created_at.'</name>
-        							<visibility>1</visibility>
-        							<aux>234</aux>
-        							<description><![CDATA[ <table width="800">'.$current->html.'</table>]]></description>
-									<Point>
-										<coordinates>'.$current->data->longitude.','.$current->data->latitude.',0</coordinates>
-									</Point>
-								</Placemark>
-					';
+				$currentFolder = $folders[$keys[$i]];
+				$kml .= '		<Folder>
+									<name>'.$keys[$i].'</name>
+	  								';
+				for($j=0; $j<count($currentFolder); ++$j)
+				{
+
+					$current = $currentFolder[$j];
+					$kml .= '		<Placemark>
+										<name>'.(property_exists($current->data, 'user') ? $current->data->user->username : '').' '.$current->data->created_at.'</name>
+	        							<visibility>1</visibility>
+	        							<aux>234</aux>
+	        							<description><![CDATA[ <table width="800">'.$current->html.'</table>]]></description>
+										<Point>
+											<coordinates>'.$current->data->longitude.','.$current->data->latitude.',0</coordinates>
+										</Point>
+									</Placemark>
+						';
+
+				}
+
+				$kml .= '		</Folder>
+						';
 
 			}
 
 			$kml .= '		</Folder>
-					';
+						</Document>
+					</kml>';
+
+			$resp = Response::make($kml);
+			$resp->header('Content-Type', 'application/vnd.google-earth.kml+xml');
+
+			return $resp;
 
 		}
-
-		$kml .= '		</Folder>
-					</Document>
-				</kml>';
-
-		$resp = Response::make($kml);
-		$resp->header('Content-Type', 'application/vnd.google-earth.kml+xml');
-
-		return $resp;
 
 	}
 

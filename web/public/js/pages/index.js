@@ -266,6 +266,24 @@ function showIAS(id)
 
 }
 
+function toggleIAS()
+{
+
+	var allIAS = $('#IASCheckAll').is(':checked');
+
+	$('.IIASCheck').each(function(index) {
+
+		if($(this).is(':checked') != allIAS)
+		{
+
+			$(this).click();
+
+		}
+
+	});
+
+}
+
 function observationLoaded(data)
 {
 
@@ -576,7 +594,7 @@ function downloadObs()
 			regionId : regionId,
 			areaId : areaId
 		}
-		,fileDownloaded
+		,fileDownloaded, fileNotDownloaded
 	);
 
 }
@@ -584,6 +602,17 @@ function downloadObs()
 function fileDownloaded()
 {
 
+	$('#filterError').hide();
+	$('#overlay').hide();
+
+}
+
+function fileNotDownloaded(response)
+{
+
+	var obj = JSON.parse(response);
+	$('#filterErrorMsg').html(obj.error);
+	$('#filterError').show();
 	$('#overlay').hide();
 
 }
@@ -655,6 +684,22 @@ function activeUserIAS(id)
 
 function activeIAS(id)
 {
+
+	var actius = $('.IIASCheck:checked').length;
+	var totals = $('.IIASCheck').length;
+
+	if(0 == actius)
+	{
+
+		$('#IASCheckAll').bootstrapSwitch('state', false);
+
+	}
+	else if(totals == actius)
+	{
+
+		$('#IASCheckAll').bootstrapSwitch('state', true);
+
+	}
 
 	if($('#IASCheck'+id).is(':checked'))
 	{
