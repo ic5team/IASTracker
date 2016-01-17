@@ -17,8 +17,8 @@
 <?php
 		}
 ?>
-							<div id="userNameDiv" style="margin-top: 5px; font-size: 30px; color:#908787; display: inline-block;">
-							{{$data->username}}
+							<div id="userNameDiv" style="margin-top: 5px; font-size: 30px; color:#908787; display: inline-block; width: 220px; ">
+							{{(strlen($data->username) > 13 ? substr($data->username, 0, 10).'...' : $data->username)}}
 							</div>
 							<div id="panell-usuari" class="arrow_box menu_box hidden">
 								<div style="padding: 10px;">
@@ -77,17 +77,17 @@
 						<li id="navbar-info">
 							<ul class="nav navbar-nav">
 								<li>
-									<a href="https://www.facebook.com/iastracker" target="_blank" style="padding-top: 0px; padding-bottom: 0px;">
+									<a href="https://www.facebook.com/iastracker" target="_blank" style="padding: 0px;">
 										{{ HTML::image('img/thumbs/facebook.png', '', array('class' => 'navbar-logo-img', 'pull-right', 'style' => 'height: 40px; margin-top: 20px;')); }}
 									</a>
 								</li>
 								<li>
-									<a href="https://twitter.com/IASTracker_ic5" target="_blank" style="padding-top: 0px; padding-bottom: 0px;">
+									<a href="https://twitter.com/IASTracker_ic5" target="_blank" style="padding: 0px;">
 										{{ HTML::image('img/thumbs/twitter.png', '', array('class' => 'navbar-logo-img', 'pull-right', 'style' => 'height: 40px; margin-top: 20px;')); }}
 									</a>
 								</li>
 								<li>
-									<a href="#" target="_blank" style="padding-top: 0px; padding-bottom: 0px;">
+									<a href="#" target="_blank" style="padding: 0px;">
 										{{ HTML::image('img/thumbs/In-2C-75px-TM.png', '', array('class' => 'navbar-logo-img', 'pull-right', 'style' => 'height: 40px; margin-top: 20px;')); }}
 									</a>
 								</li>
