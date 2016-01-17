@@ -29,10 +29,6 @@ html * {
 	max-width: 320px;
 }
 
-#navbar-no-loguejat > button {
-	width: 45%;
-}
-
 #navbar-loguejat {
   margin-top: 5px;
   margin-left: 15px;
