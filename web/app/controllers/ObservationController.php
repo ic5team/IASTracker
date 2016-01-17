@@ -608,7 +608,16 @@ class ObservationController extends RequestController {
 		{
 
 			$obs = Observation::find($id);
-			if($obs->userId == Auth::user()->id)
+			$bIsValidator = false;
+			$validator = IASValidator::userId(Auth::user()->id)->first();
+			if(null != $validator)
+			{
+
+				$bIsValidator = true;
+
+			}
+
+			if($obs->userId == Auth::user()->id || $bIsValidator)
 			{
 
 				$image = ObservationImage::find($imageId);
