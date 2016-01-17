@@ -26,7 +26,7 @@ html * {
 #navbar-no-loguejat {
 	margin-top: 20px;
   margin-left: 15px;
-	width: 300px;
+	max-width: 320px;
 }
 
 #navbar-no-loguejat > button {
@@ -36,7 +36,7 @@ html * {
 #navbar-loguejat {
   margin-top: 5px;
   margin-left: 15px;
-  width: 300px; 
+  max-width: 320px; 
 }
 
 #languages-bar {
@@ -90,13 +90,35 @@ html * {
 }
 .left{
 	float: left;
-	width: 58%;
+	width: 600px;
 }
 .right{
 	float: right;
 }
+.center{
+  text-align:center;
+}
 #navbar-logo {
-  margin-left: calc(50vw - 620px);
+  float: right;
+}
+
+.languageSelector {
+  display: none;
+  margin-top: 20px;
+  margin-left: 10px;
+}
+
+#languagesDiv {
+  margin: 0; 
+  min-width:250px;
+}
+
+@media (max-width: 1279px) {
+  .languageList     { display: none; }
+  .languageSelector { display: inline-block; }
+  .left { width: 400px;}
+  #languagesDiv {min-width: 60px;}
+  #imgLogoBarra {margin-top: 14px; width: 55px;}
 }
 
 .map {

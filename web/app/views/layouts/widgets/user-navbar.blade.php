@@ -17,7 +17,7 @@
 <?php
 		}
 ?>
-							<div id="userNameDiv" style="margin-top: 5px; font-size: 30px; color:#908787; display: inline-block; width: 220px; ">
+							<div id="userNameDiv" style="margin-top: 5px; font-size: 30px; color:#908787; display: inline-block; max-width: 250px; ">
 							{{(strlen($data->username) > 13 ? substr($data->username, 0, 10).'...' : $data->username)}}
 							</div>
 							<div id="panell-usuari" class="arrow_box menu_box hidden">
@@ -44,14 +44,14 @@
 	} 
 ?>
 						<li id="navbar-languages">
-							<div class="form-group pull-right" style="margin: 0; min-width:250px;">
-								<ul class="nav navbar-nav">
+							<div class="form-group pull-right" id="languagesDiv">
+								<ul class="nav navbar-nav languageList">
 <?php
 	for($i=0; $i<count($data->languages); ++$i)
 	{
 ?>
 									<li>
-										<a href="?lang={{$data->languages[$i]->locale}}">
+										<a href="?lang={{$data->languages[$i]->locale}}" {{$i == count($data->languages)-1 ? 'style="padding-right: 0px;"' : ''}}>
 											<div class="flag">
 												{{ HTML::image('img/thumbs/flags/'.$data->languages[$i]->img, $data->languages[$i]->name, array('class' => 'navbar-logo-img', 'pull-right', 'style' => 'width: 40px;margin-top:10px;')); }}
 												<div class="dotted {{ ($data->languages[$i]->locale == App::getLocale()) ? ' active' : '' }}"></div>
@@ -62,16 +62,22 @@
 	}
 ?>
 								</ul>
+								<select class="languageSelector">
+<?php
+	for($i=0; $i<count($data->languages); ++$i)
+	{
+?>
+									<option value="?lang={{$data->languages[$i]->locale}}" {{ ($data->languages[$i]->locale == App::getLocale()) ? ' selected="selected"' : '' }}>
+										{{ $data->languages[$i]->name}}
+									</option>
+<?php
+	}
+?>
+								</select>
 							</div>
 						</li>
-						<li id="navbar-logo">
-							<a href="<?php echo Config::get('app.url')?>" style="padding: 0px;">
-								{{ HTML::image('img/thumbs/Home.png', $data->logoAlt, array('class' => 'navbar-logo-img', 'id' => 'imgLogoBarra')); }}
-							</a>
-						</li>
-
 					</ul>
-				</div>	    
+				</div>
 				<div class="right">
 					<ul class="nav navbar-nav" id="languages-bar">
 						<li id="navbar-info">
@@ -104,7 +110,12 @@
 							</ul>
 						</li>
 					</ul>
-				</div> 
+				</div>
+				<div class="center">
+					<a href="<?php echo Config::get('app.url')?>" style="padding: 0px;">
+						{{ HTML::image('img/thumbs/Home.png', $data->logoAlt, array('class' => 'navbar-logo-img', 'id' => 'imgLogoBarra')); }}
+					</a>
+				</div>
 			</div>
 		</div>
 	</div>

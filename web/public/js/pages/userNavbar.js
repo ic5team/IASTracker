@@ -8,6 +8,11 @@ $(document).ready(function() {
 		$('#panell-usuari').addClass('hidden');
 	});
 
+	$(".languageSelector").change(function() {
+		var url = window.location.href;
+		window.location.href = url.substr(0, url.indexOf(window.location.search)) + $(this).find("option:selected").val();
+	});
+
 });
 
 function showLogInModal()
