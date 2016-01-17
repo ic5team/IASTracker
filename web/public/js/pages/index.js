@@ -248,7 +248,7 @@ function addObservationMarkers(data)
 
 	$("#observedCheckBox").bootstrapSwitch('disabled', false);
 	$("#validatedCheckBox").bootstrapSwitch('disabled', false);
-	$("discardedCheckBox").bootstrapSwitch('disabled', false);
+	$("#discardedCheckBox").bootstrapSwitch('disabled', false);
 	$("#userObsCheckBox").bootstrapSwitch('disabled', false);
 
 	$('#overlay').hide();
@@ -465,6 +465,7 @@ function showOnlyUserObservations()
 	var onlyUserObs = (-1 != loggedUserId) && $('#userObsCheckBox').is(':checked');
 	showObservationsAux(onlyUserObs);
 	showValidatedAux(onlyUserObs);
+	showDiscardedAux(onlyUserObs);
 
 }
 
