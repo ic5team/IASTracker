@@ -218,6 +218,13 @@ if(property_exists($data, 'isComplete') && !$data->isComplete)
 						<span>{{Lang::get('ui.observationValidated')}}</span>
 					</div>
 				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<input type="checkbox" id="discardedCheckBox" class="IASCheck" onclick="showDiscardedObservations" checked>
+						<span class="discardedCircle"></span>
+						<span>{{Lang::get('ui.observationDiscarded')}}</span>
+					</div>
+				</div>
 <?php
 	if(Auth::check())
 	{

@@ -327,6 +327,15 @@ body {
   background-color: #66bd29;
 }
 
+.discardedCircle {
+  height: 10px;
+  width: 10px;
+  display: inline-block;
+  border: 1px solid #C7C9CA;
+  border-radius: 100px;
+  background-color: #C7C9CA;
+}
+
 .iasTitleContainer {
 
   float: left;

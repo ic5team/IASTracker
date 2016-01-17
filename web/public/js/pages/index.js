@@ -6,8 +6,10 @@ var loadingImage = null;
 var userMarkers = null;
 var userObservationsMarkers = null;
 var userValidatedMarkers = null;
+var userDiscardedMarkers = null;
 var otherUsersObservationsMarkers = null;
 var otherUsersValidatedMarkers = null;
+var otherUsersDiscardedMarkers = null;
 var shapeLayers = null;
 var activeTimeOut = null;
 
@@ -29,7 +31,6 @@ $(document).ready(function () {
 	api.getIASMapFilter(getIASMapFilterOK, "#iasContents");
 	loadingImage = $('#contentModalContents').html();
 	configureShapes();
-
 });
 
 function getIASMapFilterOK(data)
@@ -189,8 +190,13 @@ function addObservationMarkers(data)
 	var numObservacions = data.length;
 	userObservationsMarkers = new Array();
 	userValidatedMarkers = new Array();
+	userDiscardedMarkers = new Array();
 	otherUsersObservationsMarkers = new Array();
 	otherUsersValidatedMarkers = new Array();
+	otherUsersDiscardedMarkers = new Array();
+
+	var greenIcon = constructValidatedIcon();
+	var greyIcon = constructDiscardedIcon();
 
 	for(var i=0; i<numObservacions; ++i)
 	{
@@ -200,7 +206,6 @@ function addObservationMarkers(data)
 		if(1 == current.statusId)
 		{
 
-			var greenIcon = constructValidatedIcon();
 			marker = mapHandler.createMarker(current.latitude, current.longitude, 
 				current.accuracy, '#8a6d3b', '#fcf8e3', 0.5, {id : current.id, IASId: current.IASId}, onMarkerClick, greenIcon);
 
@@ -210,7 +215,7 @@ function addObservationMarkers(data)
 				userValidatedMarkers.push(marker);
 
 		}
-		else
+		else if(2 == current.statusId)
 		{
 
 			marker = mapHandler.createMarker(current.latitude, current.longitude, 
@@ -222,14 +227,28 @@ function addObservationMarkers(data)
 				userObservationsMarkers.push(marker);
 
 		}
+		else if(3 == current.statusId)
+		{
+
+			marker = mapHandler.createMarker(current.latitude, current.longitude, 
+				current.accuracy, '#8a6d3b', '#fcf8e3', 0.5, {id : current.id, IASId: current.IASId}, onMarkerClick, greyIcon);
+
+			if(current.userId != loggedUserId)
+				otherUsersDiscardedMarkers.push(marker);
+			else
+				userDiscardedMarkers.push(marker);
+
+		}
 
 	}
 
 	showObservations();
 	showValidatedObservations();
+	showDiscardedObservations();
 
 	$("#observedCheckBox").bootstrapSwitch('disabled', false);
 	$("#validatedCheckBox").bootstrapSwitch('disabled', false);
+	$("discardedCheckBox").bootstrapSwitch('disabled', false);
 	$("#userObsCheckBox").bootstrapSwitch('disabled', false);
 
 	$('#overlay').hide();
@@ -310,6 +329,8 @@ function addIASMarkers(data)
 {
 
 	var numObservacions = data.length;
+	var greenIcon = constructValidatedIcon();
+	var greyIcon = constructDiscardedIcon();
 	for(var i=0; i<numObservacions; ++i)
 	{
 
@@ -318,16 +339,22 @@ function addIASMarkers(data)
 		if(1 == current.statusId)
 		{
 
-			var greenIcon = constructValidatedIcon();
 			marker = iasMapHandler.createMarker(current.latitude, current.longitude, 
 				current.accuracy, '#8a6d3b', '#fcf8e3', 0.5, {id : current.id}, null, greenIcon);
 
 		}
-		else
+		else if(2 == current.statusId)
 		{
 
 			marker = iasMapHandler.createMarker(current.latitude, current.longitude, 
 				current.accuracy, '#8a6d3b', '#fcf8e3', 0.5, {id : current.id}, null);
+
+		}
+		else if(3 == current.statusId)
+		{
+
+			marker = iasMapHandler.createMarker(current.latitude, current.longitude, 
+				current.accuracy, '#8a6d3b', '#fcf8e3', 0.5, {id : current.id}, null, greyIcon);
 
 		}
 
@@ -342,6 +369,8 @@ function addUserMarkers(data)
 
 	userMarkers = new Array();
 	var numObservacions = data.length;
+	var greenIcon = constructValidatedIcon();
+	var greyIcon = constructValidatedIcon();
 	for(var i=0; i<numObservacions; ++i)
 	{
 
@@ -350,16 +379,22 @@ function addUserMarkers(data)
 		if(1 == current.statusId)
 		{
 
-			var greenIcon = constructValidatedIcon();
 			marker = userMapHandler.createMarker(current.latitude, current.longitude, 
 				current.accuracy, '#8a6d3b', '#fcf8e3', 0.5, {id : current.id, IASId: current.IASId}, onMarkerClick, greenIcon);
 
 		}
-		else
+		else if(2 == current.statusId)
 		{
 
 			marker = userMapHandler.createMarker(current.latitude, current.longitude, 
 				current.accuracy, '#8a6d3b', '#fcf8e3', 0.5, {id : current.id, IASId: current.IASId}, onMarkerClick);
+
+		}
+		else if(3 == current.statusId)
+		{
+
+			marker = userMapHandler.createMarker(current.latitude, current.longitude, 
+				current.accuracy, '#8a6d3b', '#fcf8e3', 0.5, {id : current.id, IASId: current.IASId}, onMarkerClick, greyIcon);
 
 		}
 
@@ -385,6 +420,21 @@ function constructValidatedIcon()
 
 }
 
+function constructDiscardedIcon()
+{
+
+	return L.icon({
+	    iconUrl: 'js/images/greyMarker-icon.png',
+	    shadowUrl: 'js/images/marker-shadow.png',
+
+	    iconSize:     [25, 41], // size of the icon
+	    shadowSize:   [41, 41], // size of the shadow
+	    iconAnchor:   [13, 41], // point of the icon which will correspond to marker's location
+	    shadowAnchor: [12, 40]  // the same for the shadow
+	});
+
+}
+
 function showObservations()
 {
 
@@ -398,6 +448,14 @@ function showValidatedObservations()
 
 	var onlyUserObs = (-1 != loggedUserId) && $('#userObsCheckBox').is(':checked');
 	showValidatedAux(onlyUserObs);
+
+}
+
+function showDiscardedObservations()
+{
+
+	var onlyUserObs = (-1 != loggedUserId) && $('#userObsCheckBox').is(':checked');
+	showDiscardedAux(onlyUserObs);
 
 }
 
@@ -546,6 +604,74 @@ function showValidatedAux( onlyUserObs )
 
 }
 
+function showDiscardedAux( onlyUserObs )
+{
+
+	if($('#discardedCheckBox').is(':checked'))
+	{
+
+		for(var i=0; i<userDiscardedMarkers.length; ++i)
+		{
+
+			var current = userDiscardedMarkers[i];
+			if($('#IASCheck' + current.marker.options.IASId).is(':checked'))
+				mapHandler.addMarker(userDiscardedMarkers[i]);
+
+		}
+
+		if(!onlyUserObs)
+		{
+
+			for(var i=0; i<otherUsersDiscardedMarkers.length; ++i)
+			{
+
+				var current = otherUsersDiscardedMarkers[i];
+				if($('#IASCheck' + current.marker.options.IASId).is(':checked'))
+					mapHandler.addMarker(otherUsersDiscardedMarkers[i]);
+
+			}
+
+		}
+		else
+		{
+
+			for(var i=0; i<otherUsersDiscardedMarkers.length; ++i)
+			{
+
+				var current = otherUsersDiscardedMarkers[i];
+				if($('#IASCheck' + current.marker.options.IASId).is(':checked'))
+					mapHandler.removeMarker(otherUsersDiscardedMarkers[i]);
+
+			}
+
+		}
+
+	}
+	else
+	{
+
+		for(var i=0; i<userDiscardedMarkers.length; ++i)
+		{
+
+			var current = userDiscardedMarkers[i];
+			if($('#IASCheck' + current.marker.options.IASId).is(':checked'))
+				mapHandler.removeMarker(userDiscardedMarkers[i]);
+
+		}
+
+		for(var i=0; i<otherUsersDiscardedMarkers.length; ++i)
+		{
+
+			var current = otherUsersDiscardedMarkers[i];
+			if($('#IASCheck' + current.marker.options.IASId).is(':checked'))
+				mapHandler.removeMarker(otherUsersDiscardedMarkers[i]);
+
+		}
+
+	}
+
+}
+
 function filterObs()
 {
 
@@ -648,6 +774,20 @@ function clearObservations()
 
 	}
 
+	for(var i=0; i<userDiscardedMarkers.length; ++i)
+	{
+
+		mapHandler.removeMarker(userDiscardedMarkers[i]);
+
+	}
+
+	for(var i=0; i<otherUsersDiscardedMarkers.length; ++i)
+	{
+
+		mapHandler.removeMarker(otherUsersDiscardedMarkers[i]);
+
+	}
+
 }
 
 function activeUserIAS(id)
@@ -735,6 +875,20 @@ function activeIAS(id)
 
 			}
 
+			if($('#discardedCheckBox').is(':checked'))
+			{
+
+				for(var i=0; i<otherUsersDiscardedMarkers.length; ++i)
+				{
+
+					var current = otherUsersDiscardedMarkers[i];
+					if(current.marker.options.IASId == id)
+						mapHandler.addMarker(current);
+
+				}
+
+			}
+
 		}
 
 		if($('#validatedCheckBox').is(':checked'))
@@ -758,6 +912,20 @@ function activeIAS(id)
 			{
 
 				var current = userObservationsMarkers[i];
+				if(current.marker.options.IASId == id)
+					mapHandler.addMarker(current);
+
+			}
+
+		}
+
+		if($('#discardedCheckBox').is(':checked'))
+		{
+
+			for(var i=0; i<userDiscardedMarkers.length; ++i)
+			{
+
+				var current = userDiscardedMarkers[i];
 				if(current.marker.options.IASId == id)
 					mapHandler.addMarker(current);
 
@@ -800,6 +968,20 @@ function activeIAS(id)
 
 			}
 
+			if($('#discardedCheckBox').is(':checked'))
+			{
+
+				for(var i=0; i<otherUsersDiscardedMarkers.length; ++i)
+				{
+
+					var current = otherUsersDiscardedMarkers[i];
+					if(current.marker.options.IASId == id)
+						mapHandler.removeMarker(current);
+
+				}
+
+			}
+
 		}
 
 		if($('#validatedCheckBox').is(':checked'))
@@ -823,6 +1005,20 @@ function activeIAS(id)
 			{
 
 				var current = userObservationsMarkers[i];
+				if(current.marker.options.IASId == id)
+					mapHandler.removeMarker(current);
+
+			}
+
+		}
+
+		if($('#discardedCheckBox').is(':checked'))
+		{
+
+			for(var i=0; i<userDiscardedMarkers.length; ++i)
+			{
+
+				var current = userDiscardedMarkers[i];
 				if(current.marker.options.IASId == id)
 					mapHandler.removeMarker(current);
 
