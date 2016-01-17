@@ -18,6 +18,7 @@ $(document).ready(function () {
 	$().tooltip();
 	$("#observedCheckBox").attr("disabled", true);
 	$("#validatedCheckBox").attr("disabled", true);
+	$("#discardedCheckBox").attr("disabled", true);
 	$("#userObsCheckBox").attr("disabled", true);
 
 	$('#input-state').change(onStateChanged);
