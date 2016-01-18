@@ -5,7 +5,7 @@
 <div class="row">
 	<div class="col-md-12">
 		<div class="row" style="height: 170px; overflow: hidden; 
-				background-image: url(\"{{Config::get('app.urlImg').$data->image->url}}\"); 
+				background-image: url({{'"'.Config::get('app.urlImg').$data->image->url.'"'}}); 
 				background-position-y: -150px;
 	    		background-repeat: no-repeat;
 	    		background-size: cover;">
