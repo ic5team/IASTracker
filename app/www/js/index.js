@@ -219,15 +219,12 @@ var app = {
 			else
 			{
 
-				navigator.camera.getPicture( app.onCameraSuccess, app.onCameraError, 
+				window.imagePicker.getPictures( app.onCameraSuccess, app.onCameraError, 
 					{
-						quality : 75, 
-						destinationType : Camera.DestinationType.NATIVE_URI, 
-						sourceType : Camera.PictureSourceType.PHOTOLIBRARY, 
-						allowEdit : false,
-						targetWidth: 1090,
-						targetHeight: 1090,
-						correctOrientation: true
+						maximumImagesCount: 5 - app.locationImages.length,
+						width: 1090,
+						height: 1090,
+						quality: 75
 					}
 				);
 
@@ -1464,7 +1461,23 @@ var app = {
 	{
 
 		$('#error-no-image').hide();
-		app.locationImages.push(imageURI);
+		if(typeof imageURI == 'string')
+		{
+
+			app.locationImages.push(imageURI);
+
+		}
+		else
+		{
+
+			for(var i =0; i<imageURI.length; ++i)
+			{
+
+				app.locationImages.push(imageURI[i]);
+
+			}
+
+		}
 
 	},
 	onCameraError: function(message)
