@@ -207,11 +207,11 @@ class UserController extends RequestController {
 
 		}
 		else if(Input::has('expert') 
-			&& Input::has('ValidatorUser')
+			&& Input::has('validator')
 			&& Input::has('admin'))
 		{
 
-			$isValidatorUser = Input::get('ValidatorUser');
+			$isValidatorUser = Input::get('validator');
 			$element->isExpert = Input::get('expert');
 			$element->isAdmin = Input::get('admin');
 			$element->touch();

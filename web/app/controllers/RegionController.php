@@ -174,7 +174,7 @@ class RegionController extends RequestController {
 
 					$val = new AreaValidator();
 					$val->areaId = $element->id;
-					$val->ValidatorUserId = $ValidatorUsers[$i];
+					$val->validatorId = $ValidatorUsers[$i];
 					$val->creatorId = Auth::id();
 					$val->touch();
 					$val->save();

@@ -192,7 +192,7 @@ class ObservationController extends RequestController {
 						
 					}
 
-					if(null != $current->ValidatorUserId)
+					if(null != $current->validatorId)
 					{
 
 						$ValidatorUser = ValidatorUser::find($current->ValidatorUserId);
@@ -200,8 +200,8 @@ class ObservationController extends RequestController {
 						{
 
 							$user = User::withTrashed()->find($ValidatorUser->userId);
-							$current->ValidatorUserName = $user->fullName;
-							$current->ValidatorUserOrg = $ValidatorUser->organization;
+							$current->validatorName = $user->fullName;
+							$current->validatorOrg = $ValidatorUser->organization;
 
 						}
 
@@ -494,16 +494,16 @@ class ObservationController extends RequestController {
 
 		}
 
-		if(null != $element->ValidatorUserId)
+		if(null != $element->validatorId)
 		{
 
-			$ValidatorUser = ValidatorUser::find($element->ValidatorUserId);
+			$ValidatorUser = ValidatorUser::find($element->validatorId);
 			if(null != $ValidatorUser)
 			{
 
 				$user = User::withTrashed()->find($ValidatorUser->userId);
-				$data->ValidatorUserName = $user->fullName;
-				$data->ValidatorUserOrg = $ValidatorUser->organization;
+				$data->validatorName = $user->fullName;
+				$data->validatorOrg = $ValidatorUser->organization;
 
 			}
 
@@ -554,16 +554,16 @@ class ObservationController extends RequestController {
 				{
 
 					$user = Auth::user();
-					$element->ValidatorUserId = $user->id;
-					$element->ValidatorUserTS = new DateTime();
+					$element->validatorId = $user->id;
+					$element->validatorTS = new DateTime();
 					$element->validationText = Input::get('text');
 
 				}
 				else
 				{
 
-					$element->ValidatorUserId = null;
-					$element->ValidatorUserTS = null;
+					$element->validatorId = null;
+					$element->validatorTS = null;
 					$element->validationText = null;
 
 				}
