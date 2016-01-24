@@ -472,11 +472,11 @@ class UserController extends RequestController {
 					$current->observationNumber = $current->getObservationsNumber();
 					$current->validatedNumber = $current->getValidatedNumber();
 					$ValidatorUser = ValidatorUser::userId($current->id)->first();
-					$current->isValidatorUser = false;
+					$current->isValidator = false;
 					if(null != $ValidatorUser)
 					{
 
-						$current->isValidatorUser = true;
+						$current->isValidator = true;
 						$current->organization = $ValidatorUser->organization;
 
 					}
