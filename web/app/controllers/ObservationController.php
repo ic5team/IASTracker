@@ -195,7 +195,7 @@ class ObservationController extends RequestController {
 					if(null != $current->validatorId)
 					{
 
-						$ValidatorUser = ValidatorUser::find($current->ValidatorUserId);
+						$ValidatorUser = ValidatorUser::find($current->validatorId);
 						if(null != $ValidatorUser)
 						{
 
