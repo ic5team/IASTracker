@@ -134,7 +134,7 @@
 							</div>
 							<div class="row">
 								<div class="col-md-12">
-									{{$current->validatorName.' ('.$current->validatorOrg.'), '.$current->validatorTS}}
+									{{$current->validatorName.('' != $current->validatorOrg ? '('.$current->validatorOrg.'), ' : ' ').$current->validatorTS}}
 								</div>
 							</div>
 <?php
