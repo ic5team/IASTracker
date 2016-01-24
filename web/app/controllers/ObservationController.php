@@ -118,7 +118,7 @@ class ObservationController extends RequestController {
 							->statuses($viewValidated, $viewDiscarded, $viewDeleted, $viewPending)
 							->ias($ids);
 
-						if(!$viewOutOfBounds)
+						if(!$viewOutOfBounds && 0 == count($areas))
 						{
 
 							$query->areas($areasIds);
