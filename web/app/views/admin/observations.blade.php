@@ -24,7 +24,7 @@
 	if($data->canViewOutOfBounds)
 	{
 ?>
-			<input type="checkbox" id="outOfBoundsCheckBox" class="IASCheck">
+			<input type="checkbox" id="outOfBoundsCheckBox" class="IASCheck" {{$data->outOfBoundsActive ? 'checked' : ''}}>
 			<span>{{Lang::get('ui.showOutOfBoundsObs')}}</span>
 <?php
 	}

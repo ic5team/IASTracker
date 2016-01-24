@@ -57,6 +57,8 @@ class AdminController extends BaseController {
 				$data->canViewOutOfBounds = $data->canViewOutOfBounds || $ias[$i]->outOfBounds;
 
 			}
+			$areas = AreaValidator::withValidatorId($ValidatorUser->userId)->get();
+			$data->outOfBoundsActive = (0 == count($areas));
 
 			return View::make("admin/observations", array('data' => $data));
 
