@@ -69,3 +69,25 @@ function isValidNickName(value)
 	return ok;
 
 }
+
+/*!
+	Checks if a value is a valid positive integer and has the desired length
+	@param[in] value The value to check
+	@return A bool telling us if the value is a correct integer or not
+*/
+function isValidInteger(value)
+{
+
+	var ok = false;
+ 
+	if('' != value)
+	{
+	
+		var re = /^[0-9]*$/;
+		ok = re.test(value);
+ 
+	}
+ 
+	return ok;
+
+}

@@ -80,9 +80,9 @@
 	{
 
 		$current = $data->images[$i];
-		$img = HTML::image(Config::get('app.urlImg').$current->URL,'', 
+		$img = HTML::image(Config::get('app.urlImgFotos').'observations/'.$current->URL,'', 
 			array('style'=>'width: 200px; transform:rotate('.$current->rotation.'deg); margin-left: 10px;margin-top: 10px;margin-bottom: 30px;'));
-		$str[] = '<a href="'.Config::get('app.urlImg').$current->URL.'" data-lightbox="IASImages">'.$img.'</a>';
+		$str[] = '<a href="'.Config::get('app.urlImgFotos').'observations/'.$current->URL.'" data-lightbox="IASImages">'.$img.'</a>';
 
 	}
 
@@ -90,9 +90,9 @@
 	{
 
 		$current = $data->images[$i];
-		$img = HTML::image(Config::get('app.urlImg').$current->URL,'', 
+		$img = HTML::image(Config::get('app.urlImgFotos').'observations/'.$current->URL,'', 
 			array('style'=>'display:none; width: 200px; transform:rotate('.$current->rotation.'deg); margin-left: 10px;margin-top: 10px;margin-bottom: 30px;'));
-		$str[] = '<a href="'.Config::get('app.urlImg').$current->URL.'" data-lightbox="IASImages">'.$img.'</a>';
+		$str[] = '<a href="'.Config::get('app.urlImgFotos').'observations/'.$current->URL.'" data-lightbox="IASImages">'.$img.'</a>';
 
 	}
 

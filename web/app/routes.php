@@ -70,3 +70,8 @@
 	Route::get('/v1/Users/{id}', array('uses' => 'UserController@show'));
 	Route::delete('/v1/Users/{id}', array('uses' => 'UserController@destroy'));
 	Route::get('/v1/Users/{id}/Observations', array('uses' => 'UserController@getObservations'));
+	Route::get('/v1/Areas/', array('uses' => 'RegionController@index'));
+	Route::post('/v1/Areas/', array('uses' => 'RegionController@store'));
+	Route::get('/v1/Areas/{id}', array('uses' => 'RegionController@show'));
+	Route::put('/v1/Areas/{id}', array('uses' => 'RegionController@update'));
+	Route::delete('/v1/Areas/{id}', array('uses' => 'RegionController@destroy'));

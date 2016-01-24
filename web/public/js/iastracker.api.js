@@ -61,6 +61,9 @@ IASTracker.prototype.AJAXRequest = function(url, id, doneFunction, method, value
 {
 
 	var lang = window.location.search;
+	if('GET' != method) 
+		lang = '';
+	
 	var asObject = this;
 	var xhr = $.ajax({
 			url: url + lang, 
@@ -401,5 +404,55 @@ IASTracker.prototype.addIAS = function(params, doneFunction)
 	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
 
 	return this.AJAXRequest(completeURL, destId, doneFunction, 'POST', params);
+
+}
+
+IASTracker.prototype.addArea = function(params, doneFunction)
+{
+
+	var completeURL = this.areas.entryPoint;
+	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
+
+	return this.AJAXRequest(completeURL, destId, doneFunction, 'POST', params);
+
+}
+
+IASTracker.prototype.getArea = function(areaId, doneFunction, destinationId)
+{
+
+	var completeURL = this.areas.entryPoint + this.separator + areaId;
+	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
+
+	return this.AJAXRequest(completeURL, destId, doneFunction, 'GET', {});
+
+}
+
+IASTracker.prototype.editArea = function(areaId, data, doneFunction, destinationId)
+{
+
+	var completeURL = this.areas.entryPoint + this.separator + areaId;
+	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
+
+	return this.AJAXRequest(completeURL, destId, doneFunction, 'PUT', data);
+
+}
+
+IASTracker.prototype.deleteArea = function(areaId, doneFunction, destinationId)
+{
+
+	var completeURL = this.areas.entryPoint + this.separator + areaId;
+	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
+
+	return this.AJAXRequest(completeURL, destId, doneFunction, 'DELETE', {});
+
+}
+
+IASTracker.prototype.getAreasList = function(data, doneFunction, destinationId)
+{
+
+	var completeURL = this.areas.entryPoint;
+	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
+
+	return this.AJAXRequest(completeURL, destId, doneFunction, 'GET', data);
 
 }

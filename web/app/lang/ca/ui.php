@@ -174,9 +174,14 @@ return array(
 		'viewUser' => 'Veure usuari',
 		'nickPermanent' => 'Ep! El sobrenom NO es pot canviar un cop escollit, pensa\'l bé!',
 		'undoValidate' => 'Desvalida',
-		'confirmationText' => 'Segur que vols eliminar la observació? Aquesta acció no es pot desfer!',
+		'confirmationText' => 'Segur que vols eliminar? Aquesta acció no es pot desfer!',
 		'downloadObservations' => 'Descarrega',
 		'toggleIAS' => 'Activa/Desactiva totes les espècies',
-		'noObservations' => 'Aquesta cerca no retorna cap resultat'
+		'noObservations' => 'Aquesta cerca no retorna cap resultat',
+		'shapeFile' => 'Fitxer shape',
+		'shapeFileInfo' => 'Un fitxer .zip que contingui els fitxers .dbf, .prj, .shp i .shx del shape',
+		'polygonInfo' => 'Columna de geometria generada a partir d\'un fitxer .shp mitjançant shp2pgsql',
+		'outOfBounds' => 'Pot validar observacions d\'aquesta espècie en altres àrees?',
+		'showOutOfBoundsObs' => 'Veure observacions d\'àrees no assignades'
 
 	);

@@ -68,14 +68,12 @@ if(isset($_FILES[$fieldName]))
 	      				imagecopyresized($tmpImg, $img, 0, 0, 0, 0, $newWidth, $newHeight, 
 	      					$width, $height);
 
+						$key = '';
+						$keys = array_merge(range(0, 9), range('a', 'z'));
 
-	    $key = '';
-	    $keys = array_merge(range(0, 9), range('a', 'z'));
-
-	    for ($i = 0; $i < 10; $i++) {
-	        $key .= $keys[array_rand($keys)];
-	    }
-
+						for ($i = 0; $i < 10; $i++) {
+							$key .= $keys[array_rand($keys)];
+						}
 
 	      				$imageName = $key.'.jpg';
 	      				imagejpeg($tmpImg, $uploadsDirectoryThumbs.$imageName, 75);

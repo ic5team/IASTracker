@@ -118,6 +118,13 @@ class Observation extends Eloquent {
 
 	}
 
+	public function scopeIAS($query, $ias)
+	{
+
+		return $query->whereIn('observations.IASId', $ias);
+
+	}
+
 	public function scopeWithDataTableRequest($query, $search, $orders, $columns)
 	{
 

@@ -17,8 +17,18 @@
 			<span>{{Lang::get('ui.showValidatedObs')}}</span>
 			<input type="checkbox" id="discardedCheckBox" class="IASCheck">
 			<span>{{Lang::get('ui.showDiscardedObs')}}</span>
+			<br />
 			<input type="checkbox" id="deletedCheckBox" class="IASCheck">
 			<span>{{Lang::get('ui.showDeletedObs')}}</span>
+<?php
+	if($data->canViewOutOfBounds)
+	{
+?>
+			<input type="checkbox" id="outOfBoundsCheckBox" class="IASCheck">
+			<span>{{Lang::get('ui.showOutOfBoundsObs')}}</span>
+<?php
+	}
+?>
 		</div>
 	</div>
 	<div class="row">

@@ -4,7 +4,9 @@ $(document).ready(function() {
 
 	Dropzone.autoDiscover = false;
 
-	$('.IASAreaCheck').bootstrapSwitch({size: 'mini'});
+	$('.IASNewAreaCheck').bootstrapSwitch({size: 'mini'});
+	$('.IASNewValidatorCheck').bootstrapSwitch({size: 'mini'});
+    $('.outOfAreaNewCheck').bootstrapSwitch({size: 'mini'});
 	$('#imageContents').append($('.imageRow:first').clone());
 	updateLastImageRow(0);
 	$('.imageRow:last').show();
@@ -28,8 +30,10 @@ $(document).ready(function() {
             	visible: false
         	},
         	{ data: 'latinName' },
-			{ data: 'name' },
-			{ data: 'taxonName' },
+			{ data: 'name',
+			orderable:      false },
+			{ data: 'taxonName',
+			orderable:      false },
 			{ data: 'created_at'},
 			{ 
 				data: null, 
@@ -68,6 +72,10 @@ $(document).ready(function() {
                 detailRows.push( tr.attr('id') );
             }
         }
+
+        $('.IASAreaCheck').bootstrapSwitch({size: 'mini'});
+        $('.IASValidatorCheck').bootstrapSwitch({size: 'mini'});
+        $('.outOfAreaCheck').bootstrapSwitch({size: 'mini'});
     } );
  
     // On each draw, loop over the `detailRows` array and show any child rows
@@ -82,14 +90,23 @@ $(document).ready(function() {
 
 });
 
-function removeImage(imageRow)
+function removeImage(id, imageRow)
 {
 
-	var iasId = $('.imageRow[data-row=' + imageRow + ']').attr('data-id');
-	$('.imageRow[data-row=' + imageRow + ']').remove();
+	$('.imageRow[data-row=' + imageRow + '][data-id=' + id + ']').remove();
 
 	if(null != uploadedFiles && null != uploadedFiles[iasId])
 		delete uploadedFiles[iasId][imageRow];
+
+}
+
+function removeImageNew(imageRow)
+{
+
+	$('.imageRowNew[data-row=' + imageRow + ']').remove();
+
+	if(null != uploadedFiles)
+		delete uploadedFiles[imageRow];
 
 }
 
@@ -141,7 +158,7 @@ function addImage(iasId)
 
 	}
 
-	$('#imageContents'+iasId+' .imageRemove:last').attr('onclick', 'removeImage(' + num + ')');
+	$('#imageContents'+iasId+' .imageRemove:last').attr('onclick', 'removeImage(' + iasId + ',' + num + ')');
 
 	$('#imageContents'+iasId+' .imageRow:last').show();
 	$('#imageContents'+iasId+' .imageRow:last').attr('id', num);
@@ -149,26 +166,38 @@ function addImage(iasId)
 
 }
 
+function addImageN()
+{
+
+	var num = -1;
+	$('.imageRowNew').each(function(index) {
+		var dataRow = $(this).attr('data-row');
+		if(num < dataRow)
+			num = dataRow;
+	});
+	num = parseInt(num)+1;
+
+	$('.imageRowNew:last').after($('#imageContentsN .imageRowNew:first').clone());
+
+	updateLastImageRow(num);
+
+}
+
 function updateLastImageRow(num)
 {
 
-	$('.imageUpload:last').prop('id', 'imageUpload' + num);
-	$('.imageUpload:last').attr('data-pos', num);
-	$('.imageAttrib:last').prop('id', 'imageAttrib' + num);
-	for(var i=0; i<languageNum; ++i)
-	{
+	$('#imageContentsN .imageUpload:last').prop('id', 'imageUploadNew' + num);
+	$('#imageContentsN .imageUpload:last').attr('data-pos', num);
+	$('#imageContentsN .imageAttrib:last').prop('id', 'imageAttrib' + num);
+	$('#imageContentsN .imageOrder:last').prop('id', 'imageOrder' + num);
 
-		$('.imageText[data-lang="' + i + '"]:last').attr('data-row', num);
-
-	}
-
-	var myDropzone = new Dropzone('#imageUpload' + num, {
+	var myDropzone = new Dropzone('#imageUploadNew' + num, {
 		paramName: "image", // The name that will be used to transfer the file
 		maxFilesize: 5, // MB
 		maxFiles: 1,
 		dictDefaultMessage: "Click here to add an image",
 		init: function() {
-			this.on("success", fileAdded);
+			this.on("success", fileAddedToNewIAS);
 			this.on("maxfilesexceeded", function(file) {
 				this.removeAllFiles();
 				this.addFile(file);
@@ -176,23 +205,19 @@ function updateLastImageRow(num)
 		}
 	});
 
-}
+	$('#imageContentsN .imageRowNew:last').attr('data-row', num);
 
-function fileAdded(file, data)
-{
+	for(var i=0; i<languageNum; ++i)
+	{
 
-	var pos = $(this.element).attr('data-pos');
-	if(pos < uploadedFiles.length)
-		uploadedFiles[pos] = data;
-	else
-		uploadedFiles.push(data);
+		$('#imageContentsN .imageText[data-lang="' + i + '"]:last').attr('data-row', num);
 
-	var num = $('.imageRow').length -1;
-	$('#imageContents').append($('.imageRow:first').clone());
-	updateLastImageRow(num);
-	$('.imageRow:last').show();
-	$('.imageRow:last').attr('id', num);
-	$('.imageRemove:last').attr('data-id', num);
+	}
+
+	$('#imageContentsN .imageRemove:last').attr('onclick', 'removeImageNew(' + num + ')');
+
+	$('#imageContentsN .imageRowNew:last').show();
+	$('#imageContentsN .imageRowNew:last').attr('id', num);
 
 }
 
@@ -213,6 +238,18 @@ function fileAddedToIAS(file, data)
 	}
 
 	uploadedFiles[id][pos] = data;
+
+}
+
+function fileAddedToNewIAS(file, data)
+{
+
+	var pos = $(this.element).attr('data-pos');
+
+	if(null == uploadedFiles)
+		uploadedFiles = new Array();
+
+	uploadedFiles[pos] = data;
 
 }
 
@@ -252,6 +289,14 @@ function resetForm()
 
 	}
 
+	$('#form-scientificName').removeClass('has-error');
+	$('#error-scientificName').addClass('hidden');
+	$('#form-name' + defaultLanguageId).removeClass('has-error');
+	$('#error-name').addClass('hidden');
+	$('#error-IAS').hide();
+	$('.form-new-areaOrder').removeClass('has-error');
+	$('.IASNewAreaCheck').bootstrapSwitch('state', false);
+
 }
 
 function checkInput(id)
@@ -286,7 +331,35 @@ function checkForm()
 
 	var hasLatinName = checkInput('scientificName');
 	var hasName = checkInput('name' + defaultLanguageId);
-	var error = !hasLatinName || !hasName;
+	
+	var missingOrder = false;
+	$('.IASNewAreaCheck').each(function(index) {
+
+			if($(this).bootstrapSwitch('state'))
+			{
+			
+				var areaId = $(this).attr('data');
+				var order = $('.iasNewOrder[data-id=' + areaId + ']').val();
+				missingOrder = missingOrder || ("" == order.trim()) || ("" != order.trim && !isValidInteger(order));
+
+				if('' != order.trim() && isValidInteger(order))
+				{
+
+					$('.form-new-areaOrder[data=' + areaId + ']').removeClass('has-error');
+
+				}
+				else
+				{
+
+					$('.form-new-areaOrder[data=' + areaId + ']').addClass('has-error');
+
+				}
+
+			}
+
+		});
+
+	var error = (!hasLatinName || !hasName || missingOrder);
 
 	return !error;
 
@@ -332,39 +405,58 @@ function store()
 		}
 
 		var images = new Array();
-		for(var i=0; i<uploadedFiles.length; ++i)
-		{
+		$('#imageContentsN .imageRowNew').each(function(index) {
 
 			var obj = new Object();
-			obj.url = uploadedFiles[i];
-			obj.attribution = $('#imageAttrib' + i).val();
+			var dataRow = $(this).attr('data-row');
+			obj.attribution = $('#imageContentsN #imageAttrib'+dataRow).val();
+			obj.order = $('#imageContentsN #imageOrder'+dataRow).val();
 			obj.langs = new Array();
 			for(var j=0; j<languageNum; ++j)
 			{
 
-				var inp = $('.imageText[data-row="' + i + '"][data-lang="' + j + '"]:first');
-				obj.langs.push({id: j, text: inp.val()});
+				var inp = $('#imageContentsN .imageText[data-row="' + dataRow + '"][data-lang="' + j + '"]:first');
+				obj.langs.push({id: j+1, text: inp.val()});
 
 			}
 
-			images.push(obj)
+			if(null != uploadedFiles && null != uploadedFiles[dataRow])
+				obj.url = uploadedFiles[dataRow];
 
-		}
+			if(obj.hasOwnProperty('url') && 'undefined' != typeof obj.url)
+				images.push(obj);
+
+		});
 
 		var areas = new Array();
-		$('.IASAreaCheck').each(function(index) {
+		$('.IASNewAreaCheck').each(function(index) {
 
 			if($(this).bootstrapSwitch('state'))
 			{
 			
 				var val = $(this).attr('data');
-				areas.push(val);
+				var order = $('.iasNewOrder[data-id=' + val + ']').val();
+				areas.push({id: val, order: order});
 
 			}
 
 		});
 
-		api.addIAS({latinName: latinName, taxon: taxon, descriptions: descriptions, images: images, areas: areas}, iasSaved);
+		var validators = new Array();
+		$('.IASNewValidatorCheck').each(function(index) {
+
+			if($(this).bootstrapSwitch('state'))
+			{
+			
+				var val = $(this).attr('data-validator');
+				var outOfBounds = $('.outOfAreaNewCheck[data-validator=' + val + ']').bootstrapSwitch('state');
+				validators.push({id: val, outOfBounds: outOfBounds});
+
+			}
+
+		});
+
+		api.addIAS({latinName: latinName, taxon: taxon, descriptions: descriptions, images: images, areas: areas, validators: validators}, iasSaved);
 
 	}
 	else
@@ -382,7 +474,23 @@ function iasSaved(data)
 	$('#iasNewLoading').hide();
 	$('#iasNewBtn').prop('disabled', false);
 	$('#iasNewBtnText').show();
-	window.location.reload();
+
+	if(!data.hasOwnProperty('error') && !(data.hasOwnProperty('ok') && !data.ok))
+	{
+
+		window.location.reload();
+
+	}
+	else
+	{
+
+		if(data.hasOwnProperty('error'))
+			$('#error-IAS').html(data.error);
+		else if(data.hasOwnProperty('internalMsg'))
+			$('#error-IAS').html(data.internalMsg);
+		$('#error-IAS').show();
+
+	}
 
 }
 
@@ -391,7 +499,35 @@ function checkEditForm(iasId)
 
 	var hasLatinName = checkInput('scientificName' + iasId);
 	var hasName = checkInput('name' + defaultLanguageId + '_' + iasId);
-	var error = !hasLatinName || !hasName;
+
+	var missingOrder = false;
+	$('.IASAreaCheck[data-id=' + iasId + ']').each(function(index) {
+
+		if($(this).is(':checked'))
+		{
+		
+			var areaId = $(this).attr('data-area');
+			var order = $('.iasOrder[data-id=' + areaId + ']').val();
+			missingOrder = missingOrder || ("" == order.trim()) || ("" != order.trim && !isValidInteger(order));
+
+			if('' != order.trim() && isValidInteger(order))
+			{
+
+				$('.form-areaOrder[data=' + areaId + ']').removeClass('has-error');
+
+			}
+			else
+			{
+
+				$('.form-areaOrder[data=' + areaId + ']').addClass('has-error');
+
+			}
+
+		}
+
+	});
+
+	var error = (!hasLatinName || !hasName || missingOrder);
 
 	return !error;
 
@@ -480,23 +616,38 @@ function edit(iasId)
 		var areas = new Array();
 		$('.IASAreaCheck[data-id=' + iasId + ']').each(function(index) {
 
-			if($(this).is(':checked'))
+			if($(this).bootstrapSwitch('state'))
 			{
 			
 				var val = $(this).attr('data-area');
-				areas.push(val);
+				var order = $('.iasOrder[data-id=' + val + ']').val();
+				areas.push({id: val, order: order});
 
 			}
 
 		});
 
-		api.editIAS(iasId, {latinName: latinName, taxon: taxon, descriptions: descriptions, images: images, areas: areas}, iasEdited);
+		var validators = new Array();
+		$('.IASValidatorCheck[data-id=' + iasId + ']').each(function(index) {
+
+			if($(this).bootstrapSwitch('state'))
+			{
+			
+				var val = $(this).attr('data-validator');
+				var outOfBounds = $('.outOfAreaCheck[data-validator=' + val + ']').bootstrapSwitch('state');
+				validators.push({id: val, outOfBounds: outOfBounds});
+
+			}
+
+		});
+
+		api.editIAS(iasId, {latinName: latinName, taxon: taxon, descriptions: descriptions, images: images, areas: areas, validators: validators}, iasEdited);
 
 	}
 	else
 	{
 
-		$('#error-IAS').show();
+		$('#error-IAS' + iasId).show();
 
 	}
 
@@ -505,9 +656,6 @@ function edit(iasId)
 function iasEdited(data)
 {
 
-	$('#iasNewLoading').hide();
-	$('#iasNewBtn').prop('disabled', false);
-	$('#iasNewBtnText').show();
 	dt.ajax.reload();
 
 }

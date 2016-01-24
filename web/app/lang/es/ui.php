@@ -174,7 +174,7 @@ return array(
 		'viewUser' => 'Ver usuario',
 		'nickPermanent' => 'Ojo! El nombre de usuario NO se puede cambiar una vez escogido, ¡piensalo bién!',
 		'undoValidate' => 'Desvalida',
-		'confirmationText' => 'Seguro que quieres eliminar la observación? ¡Esta acción no se puede deshacer!',
+		'confirmationText' => 'Seguro que quieres eliminar? ¡Esta acción no se puede deshacer!',
 		'downloadObservations' => 'Descarga',
 		'toggleIAS' => 'Activa/Desactiva totes les espècies',
 		'noObservations' => 'Aquesta cerca no retorna cap resultat'

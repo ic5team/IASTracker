@@ -49,6 +49,15 @@ class AdminController extends BaseController {
 			$mapData = $this->getMapData();
 			$data = (object) array_merge((array) $data, (array) $mapData);
 
+			$data->canViewOutOfBounds = false;
+			$ias = IASValidator::withValidatorId(Auth::user()->id)->get();
+			for($i=0; $i<count($ias); ++$i)
+			{
+
+				$data->canViewOutOfBounds = $data->canViewOutOfBounds || $ias[$i]->outOfBounds;
+
+			}
+
 			return View::make("admin/observations", array('data' => $data));
 
 		}
@@ -88,7 +97,16 @@ class AdminController extends BaseController {
 
 			}
 
-			return View::make("admin/ias", array('data' => $data));
+			$ValidatorUsers = ValidatorUser::all();
+			for($j=0; $j<count($ValidatorUsers); ++$j)
+			{
+
+				$user = User::find($ValidatorUsers[$j]->userId);
+				$ValidatorUsers[$j]->fullName = $user->fullName;
+
+			}
+
+			return View::make("admin/ias", array('data' => $data, 'validators' => $ValidatorUsers));
 
 		}
 		else
@@ -111,10 +129,16 @@ class AdminController extends BaseController {
 			$defaultLanguageId = $configuration->defaultLanguageId;
 
 			$data = $this->getBasicData();
-			$data->areas = Area::all();
-			$data->validators = User::all();	//TODO: Han de ser només els validadors
+			$validators = ValidatorUser::all();
+			for($i=0; $i<count($validators); ++$i)
+			{
 
-			return View::make("admin/areas", array('data' => $data));
+				$user = User::find($validators[$i]->userId);
+				$validators[$i]->fullName = $user->fullName;
+
+			}
+
+			return View::make("admin/areas", array('data' => $data, 'validators' => $validators));
 
 		}
 		else

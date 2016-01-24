@@ -22,7 +22,7 @@
 		for($j=0; $j<count($current->images); ++$j)
 		{
 
-			$exif = exif_read_data('./img/'.$current->images[$j]->URL);
+			$exif = exif_read_data('./img/fotos/observations/'.$current->images[$j]->URL);
 			$imageParams = array('style'=>'max-width: 150px; max-height: 150px; margin-top:50px; margin-bottom:50px;', 
 				'class'=>'obs'.$current->id.'Image obsImage', 'data-obs-id' => $current->id, 
 				'data-id' => $current->images[$j]->id, 'data-rotation' => $current->images[$j]->rotation);
@@ -50,8 +50,8 @@
 
 			}
 
-			$img = HTML::image(Config::get('app.urlImg').$current->images[$j]->URL,'', $imageParams);
-			echo '<div style="width: 250px; height:250px; text-align:center; display:inline-block;"><a href="'.Config::get('app.urlImg').$current->images[$j]->URL.'" data-lightbox="IASImages">'.$img.'</a>';
+			$img = HTML::image(Config::get('app.urlImgFotos').'observations/'.$current->images[$j]->URL,'', $imageParams);
+			echo '<div style="width: 250px; height:250px; text-align:center; display:inline-block;"><a href="'.Config::get('app.urlImgFotos').'observations/'.$current->images[$j]->URL.'" data-lightbox="IASImages">'.$img.'</a>';
 			if($current->canRotate)
 			{
 

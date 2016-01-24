@@ -174,7 +174,7 @@ return array(
 		'viewUser' => 'Voir utilisateur',
 		'nickPermanent' => 'Attention, le nickname ne pourra pas être changé une fois choisi, pensez bien votre choix!',
 		'undoValidate' => 'Annuler validation',
-		'confirmationText' => 'Êtes-vous sûr de vouloir éliminer l\'observation? Cette action sera irréversible!',
+		'confirmationText' => 'Êtes-vous sûr de vouloir éliminer? Cette action sera irréversible!',
 		'downloadObservations' => 'Télécharger',
 		'toggleIAS' => 'Activa/Desactiva totes les espècies',
 		'noObservations' => 'Aquesta cerca no retorna cap resultat'

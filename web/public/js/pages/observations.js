@@ -21,6 +21,7 @@ $(document).ready(function() {
 			data.viewValidated = $('#validatedCheckBox').is(':checked');
 			data.viewDiscarded = $('#discardedCheckBox').is(':checked');
 			data.viewDeleted = $('#deletedCheckBox').is(':checked');
+			data.viewOutOfBounds = $('#outOfBoundsCheckBox').is(':checked');
 
 			api.getObservations(data, callback);
 
@@ -107,6 +108,7 @@ $(document).ready(function() {
     $('#validatedCheckBox').click(function() { dt.ajax.reload(); });
     $('#discardedCheckBox').click(function() { dt.ajax.reload(); });
     $('#deletedCheckBox').click(function() { dt.ajax.reload(); });
+    $('#outOfBoundsCheckBox').click(function() { dt.ajax.reload(); });
 
 });
 

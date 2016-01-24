@@ -167,7 +167,7 @@ for($i=0; $i<count($data->languages); ++$i)
 						</a>
 						<div id="collapseImages" data-id="" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
 							<div class="panel-body" id="imageContentsN">
-								<div class="row imageRow" style="margin-bottom: 50px;">
+								<div class="row imageRowNew" style="margin-bottom: 50px; display:none;" data-row="-1">
 									<div class="col-md-4" style="border: dashed 1px; min-height: 250px; text-align:center;">
 										<div style="margin-top: 110px;">
 											<form action="{{Config::get('app.url')}}/common/obsImageUpload.php" class="dropzone imageUpload" id="imageUpload">
@@ -204,7 +204,50 @@ for($i=0; $i<count($data->languages); ++$i)
 <?php
 }
 ?>
+
 										<button class="btn btn-success imageRemove" style="float:right;" onclick="">
+											{{Lang::get('ui.removeIASImage')}}
+										</button>
+									</div>
+								</div>
+								<div class="row imageRowNew" style="margin-bottom: 50px;" data-row="0">
+									<div class="col-md-4" style="border: dashed 1px; min-height: 250px; text-align:center;">
+										<div style="margin-top: 110px;">
+											<form action="{{Config::get('app.url')}}/common/obsImageUpload.php" class="dropzone imageUpload" id="imageUpload0">
+											</form>
+										</div>
+									</div>
+									<div class="col-md-8">
+										<div style="display:inline-block;">
+											<label>
+												{{Lang::get('ui.attribution')}}
+												<input type="text" class="imageAttrib" data-id="" id="imageAttrib0"/>
+											</label>
+											<label>
+												{{Lang::get('ui.order')}}
+												<input type="text" class="imageOrder" data-id="" id="imageAttrib0" />
+											</label>
+										</div>
+<?php
+for($i=0; $i<count($data->languages); ++$i)
+{
+
+?>
+										<div class="row" style="margin-bottom: 15px;">
+											<div class="col-md-2">
+												{{ HTML::image('img/thumbs/flags/'.$data->languages[$i]->img, $data->languages[$i]->name, array('class' => 'navbar-logo-img')); }}
+											</div>
+											<div class="col-md-10">
+												<label>
+													{{Lang::get('ui.imageText')}}
+												</label>
+												<input type="text" style="width: 100%;" data-row="" data-lang="{{$i}}" class="imageText" value="" />													
+											</div>
+										</div>
+<?php
+}
+?>
+										<button class="btn btn-success imageRemove" style="float:right;" onclick="removeImageNew(0);">
 											{{Lang::get('ui.removeIASImage')}}
 										</button>
 									</div>
@@ -231,13 +274,56 @@ for($i=0; $i<count($data->areas); ++$i)
 
 ?>
 								<div class="row">
-									<div class="col-md-6">
+									<div class="col-md-4">
 										<label>
 											{{$data->areas[$i]->name}}
 										</label>
 									</div>
-									<div class="col-md-6">
-										<input type="checkbox" class="IASAreaCheck" data="{{$data->areas[$i]->id}}">
+									<div class="col-md-3">
+										<input type="checkbox" class="IASNewAreaCheck" data="{{$data->areas[$i]->id}}">
+									</div>
+									<div class="col-md-5">
+										<div class="form-group form-new-areaOrder" data="{{$data->areas[$i]->id}}">
+											<label for="areaOrder">{{Lang::get('ui.order')}}</label>
+											<input type="text" class="iasNewOrder form-control block" data-id="{{$data->areas[$i]->id}}" style="display: inline-block; width: 80%;">
+										</div>
+									</div>
+								</div>
+<?php
+}
+?>
+							</div>
+						</div>
+					</div>
+					<div id="panel" class="panel panel-default">
+						<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseValidators" aria-expanded="false" aria-controls="collapseValidators">
+							<div class="panel-heading" role="tab" id="heading">
+								<h4>
+									{{Lang::get('ui.validators')}}
+								</h4>
+							</div>
+						</a>
+						<div id="collapseValidators" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+							<div class="panel-body">
+<?php
+for($i=0; $i<count($validators); ++$i)
+{
+
+?>
+								<div class="row">
+									<div class="col-md-4">
+										<label>
+											{{$validators[$i]->fullName}}
+										</label>
+									</div>
+									<div class="col-md-1">
+										<input type="checkbox" class="IASNewValidatorCheck" data-validator="{{$validators[$i]->userId}}">
+									</div>
+									<div class="col-md-7">
+										<div class="form-group form-new-outOfBounds">
+											<label for="outOfBounds">{{Lang::get('ui.outOfBounds')}}</label>
+											<input name="outOfBounds" type="checkbox" class="outOfAreaNewCheck" data-validator="{{$validators[$i]->userId}}" style="display: inline-block;">
+										</div>
 									</div>
 								</div>
 <?php

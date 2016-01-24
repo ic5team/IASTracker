@@ -206,7 +206,7 @@
 <?php
 		}
 ?>
-											<button class="btn btn-success imageRemove" style="float:right;" onclick="removeImage({{$i}})">
+											<button class="btn btn-success imageRemove" style="float:right;" onclick="removeImage({{$current->id}}, {{$i}})">
 												{{Lang::get('ui.removeIASImage')}}
 											</button>
 										</div>
@@ -242,8 +242,51 @@
 												{{$areas[$i]->name}}
 											</label>
 										</div>
-										<div class="col-md-6">
+										<div class="col-md-1">
 											<input type="checkbox" class="IASAreaCheck" data-area="{{$areas[$i]->id}}" data-id="{{$current->id}}" {{($areas[$i]->hasIAS ? 'checked' : '')}}>
+										</div>
+										<div class="col-md-5">
+											<div class="form-group form-areaOrder" data="{{$areas[$i]->id}}">
+												<label for="areaOrder">{{Lang::get('ui.order')}}</label>
+												<input type="text" class="iasOrder form-control block" data-id="{{$areas[$i]->id}}" style="display: inline-block; width: 80%;"  value="{{$areas[$i]->hasIAS ? $areas[$i]->order : ''}}">
+											</div>
+										</div>
+									</div>
+<?php
+	}
+?>
+								</div>
+							</div>
+						</div>
+						<div id="panel" class="panel panel-default">
+							<a role="button" data-toggle="collapse" data-parent="#accordion{{$current->id}}" href="#collapseValidators{{$current->id}}" aria-expanded="false" aria-controls="collapseValidators">
+								<div class="panel-heading" role="tab" id="heading">
+									<h4>
+										{{Lang::get('ui.validators')}}
+									</h4>
+								</div>
+							</a>
+							<div id="collapseValidators{{$current->id}}" data-id="" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+								<div class="panel-body">
+<?php
+	for($i=0; $i<count($validators); ++$i)
+	{
+
+?>
+									<div class="row">
+										<div class="col-md-4">
+											<label>
+												{{$validators[$i]->fullName}}
+											</label>
+										</div>
+										<div class="col-md-1">
+											<input type="checkbox" class="IASValidatorCheck" data-id="{{$current->id}}" data-validator="{{$validators[$i]->userId}}" {{($validators[$i]->isChecked ? 'checked' : '' )}}>
+										</div>
+										<div class="col-md-7">
+											<div class="form-group form-outOfBounds" data-id="{{$current->id}}">
+												<label for="outOfBounds">{{Lang::get('ui.outOfBounds')}}</label>
+												<input name="outOfBounds" type="checkbox" class="outOfAreaCheck" data-id="{{$current->id}}" data-validator="{{$validators[$i]->userId}}" style="display: inline-block;"  {{($validators[$i]->outOfBounds ? 'checked' : '' )}}>
+											</div>
 										</div>
 									</div>
 <?php

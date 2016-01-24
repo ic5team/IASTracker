@@ -276,6 +276,16 @@ class Inicial extends Migration {
 
 		});
 
+		Schema::create('IASValidators', function(Blueprint $table)
+		{
+			$table->increments('id');
+			$table->integer('IASId')->unsigned();
+			$table->integer('validatorId')->unsigned();
+			$table->boolean('outOfAreas')->default(false);
+			$table->integer('creatorId')->unsigned()->nullable();
+			$table->timestamps();
+		});
+
 		Schema::create('AreasValidators', function(Blueprint $table)
 		{
 			$table->increments('id');
@@ -397,7 +407,8 @@ class Inicial extends Migration {
 		Schema::drop('IASTaxons');
 		Schema::drop('IASTaxonNames');
 		Schema::drop('observations');
-		Schema::drop('IASAreasValidators');
+		Schema::drop('IASValidators');
+		Schema::drop('AreasValidators');
 		Schema::drop('ObservationAreas');
 		Schema::drop('ObservationImages');
 		Schema::drop('Status');

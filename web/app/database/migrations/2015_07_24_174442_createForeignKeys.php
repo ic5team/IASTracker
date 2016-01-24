@@ -169,6 +169,16 @@ class CreateForeignKeys extends Migration {
 				->onDelete('cascade');
 		});
 
+		Schema::table('IASValidators', function(Blueprint $table)
+		{
+			$table->foreign('IASId')->references('id')->on('IAS')
+				->onDelete('cascade');
+			$table->foreign('validatorId')->references('userId')->on('Validators')
+				->onDelete('cascade');
+			$table->foreign('creatorId')->references('id')->on('Users')
+				->onDelete('cascade');
+		});
+
 		Schema::table('AreasValidators', function(Blueprint $table)
 		{
 			$table->foreign('areaId')->references('id')->on('Areas')

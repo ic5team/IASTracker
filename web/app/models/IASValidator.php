@@ -7,10 +7,7 @@ class IASValidator extends Eloquent {
 	 *
 	 * @var string
 	 */
-	protected $table = 'Validators';
-	protected $primaryKey = 'userId';
-	protected $fillable = array('userId', 'organization', 'creatorId', 'created_at', 
-		'updated_at');
+	protected $table = 'IASValidators';
 
 	/**
 	 * The attributes excluded from the model's JSON form.
@@ -19,10 +16,24 @@ class IASValidator extends Eloquent {
 	 */
 	protected $hidden = array();
 
-	public function scopeUserId($query, $id)
+	public function scopeWithValidatorId($query, $id)
 	{
 
-		return $query->where('userId', '=', $id);
+		return $query->where('validatorId', $id);
+
+	}
+
+	public function scopeWithIASId($query, $id)
+	{
+
+		return $query->where('IASId', $id);
+
+	}
+
+	public function scopeWithIASAndValidatorId($query, $IASId, $validatorId)
+	{
+
+		return $query->where('IASId', $IASId)->where('validatorId', $validatorId);
 
 	}
 

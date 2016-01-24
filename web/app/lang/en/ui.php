@@ -174,7 +174,7 @@ return array(
 		'viewUser' => 'Show user',
 		'nickPermanent' => 'Careful, nickname cannot be changed later, think twice!',
 		'undoValidate' => 'Undo Validate',
-		'confirmationText' => 'Are you sure to delete the observation? This action cannot be undone!',
+		'confirmationText' => 'Are you sure to delete? This action cannot be undone!',
 		'downloadObservations' => 'Download',
 		'toggleIAS' => 'Activa/Desactiva totes les espècies',
 		'noObservations' => 'Aquesta cerca no retorna cap resultat'

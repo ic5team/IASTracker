@@ -13,6 +13,8 @@ class IAS extends Eloquent {
 	 */
 	protected $table = 'IAS';
 	protected $softDelete = true;
+	protected $fillable = array('latinName','taxonId', 'creatorId');
+
 
 	/**
 	 * The attributes excluded from the model's JSON form.
@@ -280,7 +282,7 @@ class IAS extends Eloquent {
 
 	}
 
-	function scopeWithDataTableRequest($query, $search, $orders, $columns)
+	public function scopeWithDataTableRequest($query, $search, $orders, $columns)
 	{
 
 		return $query->whereRaw('lower("latinName") LIKE lower(\'%'.$search['value'].'%\')')->orderBy($columns[$orders[0]['column']]['data'], $orders[0]['dir']);

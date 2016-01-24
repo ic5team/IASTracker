@@ -56,6 +56,23 @@ class Area extends Eloquent {
 
 	}
 
+	public function scopeWithDataTableRequest($query, $search, $orders, $columns)
+	{
+
+		return $query->whereRaw('lower("name") LIKE lower(\'%'.$search['value'].'%\')')->orderBy($columns[$orders[0]['column']]['data'], $orders[0]['dir']);
+
+	}
+
+	public static function recomputeIntersections()
+	{
+
+		DB::statement('DELETE FROM "RegionAreas";');
+		DB::statement('DELETE FROM "StateAreas";');
+		DB::statement('INSERT INTO "RegionAreas"("areaId", "regionId", "created_at", "updated_at") SELECT a.id, r.id, NOW()::timestamp(0), NOW()::timestamp(0) FROM "Areas" a, "regions" r WHERE ST_Intersects(a.geom, r.geom) AND a.id != 100;');
+		DB::statement('INSERT INTO "StateAreas"("areaId", "stateId", "created_at", "updated_at") SELECT a.id, s.id, NOW()::timestamp(0), NOW()::timestamp(0) FROM "Areas" a, "States" s WHERE ST_Intersects(a.geom, s.geom) AND a.id != 100;');
+
+	}
+
 }
 
 ?>

@@ -214,7 +214,7 @@ abstract class RequestController extends BaseController {
 		catch(Illuminate\Database\QueryException $e)
 		{
 
-			return Response::json(array('ok' => 0, 'msg' => Lang::get('errors.errorUpdatingElement'), 
+			return Response::json(array('id' => $id, 'ok' => 0, 'msg' => Lang::get('errors.errorUpdatingElement'), 
 				'internalMsg' => $e->getMessage()));
 
 		}

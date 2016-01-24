@@ -93,18 +93,18 @@
 									</a>
 								</li>
 								<li>
-									<a href="#" target="_blank" style="padding: 0px;">
+									<a href="https://www.linkedin.com/company/ic5team" target="_blank" style="padding: 0px;">
 										{{ HTML::image('img/thumbs/In-2C-75px-TM.png', '', array('class' => 'navbar-logo-img', 'pull-right', 'style' => 'height: 40px; margin-top: 20px;')); }}
 									</a>
 								</li>
 								<li>
 									<a href="ic5Info?lang={{App::getLocale()}}" target="_blank" style="padding-top: 0px; padding-bottom: 0px;">
-										{{ HTML::image('img/thumbs/flags/ic5Logo.png', '', array('class' => 'navbar-logo-img', 'pull-right')); }}
+										{{ HTML::image('img/thumbs/flags/ic5Logo.png', '', array('class' => 'navbar-logo-img', 'pull-right', 'style' => 'height: 40px; margin-top: 20px;')); }}
 									</a>
 								</li>
 								<li>
 									<a href="iasTrackerInfo?lang={{App::getLocale()}}" target="_blank" style="padding: 0px;">
-										{{ HTML::image('img/thumbs/logoIASTracker2.png', '', array('class' => 'navbar-logo-img', 'pull-right')); }}
+										{{ HTML::image('img/thumbs/logoIASTracker3.png', '', array('class' => 'navbar-logo-img', 'pull-right', 'style' => 'height: 40px; margin-top: 20px;')); }}
 									</a>
 								</li>
 							</ul>

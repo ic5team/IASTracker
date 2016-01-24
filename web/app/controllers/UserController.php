@@ -69,12 +69,12 @@ class UserController extends RequestController {
 
 		}
 
-		$validator = Validator::make($params, $paramAttribs);
+		$ValidatorUser = ValidatorUser::make($params, $paramAttribs);
 
-		if($validator->fails())
+		if($ValidatorUser->fails())
 		{
 
-			$dto->error = $validator->messages()->first();
+			$dto->error = $ValidatorUser->messages()->first();
 
 		}
 		else
@@ -207,24 +207,24 @@ class UserController extends RequestController {
 
 		}
 		else if(Input::has('expert') 
-			&& Input::has('validator')
+			&& Input::has('ValidatorUser')
 			&& Input::has('admin'))
 		{
 
-			$isValidator = Input::get('validator');
+			$isValidatorUser = Input::get('ValidatorUser');
 			$element->isExpert = Input::get('expert');
 			$element->isAdmin = Input::get('admin');
 			$element->touch();
 			$element->save();
 
-			$val = IASValidator::userId($element->id)->first();
-			if("true" == $isValidator)
+			$val = ValidatorUser::userId($element->id)->first();
+			if("true" == $isValidatorUser)
 			{
 
 				if(null == $val)
 				{
 
-					$val = new IASValidator(array(
+					$val = new ValidatorUser(array(
 						'userId' => $element->id,
 						'organization' => Input::get('organization'),
 						'creatorId' => Auth::id(),
@@ -471,13 +471,13 @@ class UserController extends RequestController {
 					$current->photoURL = Config::get('app.urlImgThumbs').$current->photoURL;
 					$current->observationNumber = $current->getObservationsNumber();
 					$current->validatedNumber = $current->getValidatedNumber();
-					$validator = IASValidator::userId($current->id)->first();
-					$current->isValidator = false;
-					if(null != $validator)
+					$ValidatorUser = ValidatorUser::userId($current->id)->first();
+					$current->isValidatorUser = false;
+					if(null != $ValidatorUser)
 					{
 
-						$current->isValidator = true;
-						$current->organization = $validator->organization;
+						$current->isValidatorUser = true;
+						$current->organization = $ValidatorUser->organization;
 
 					}
 

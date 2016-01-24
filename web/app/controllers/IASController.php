@@ -191,7 +191,26 @@ class IASController extends RequestController {
 					for($j=0; $j<count($areas); ++$j)
 					{
 
-						$areas[$j]->hasIAS = in_array($areas[$j]->id, $areasIds);
+						$key = array_search($areas[$j]->id, $areasIds);
+						$areas[$j]->hasIAS = (FALSE !== $key);
+						if(FALSE !== $key)
+						{
+
+							$areas[$j]->order = $areasIAS[$key]->orderId;
+
+						}
+
+					}
+
+					$ValidatorUsers = ValidatorUser::all();
+					for($j=0; $j<count($ValidatorUsers); ++$j)
+					{
+
+						$av = IASValidator::withIASAndValidatorId($current->id, $ValidatorUsers[$j]->userId)->first();
+						$user = User::find($ValidatorUsers[$j]->userId);
+						$ValidatorUsers[$j]->fullName = $user->fullName;
+						$ValidatorUsers[$j]->isChecked = (null != $av);
+						$ValidatorUsers[$j]->outOfBounds = (null != $av && $av->outOfBounds);
 
 					}
 
@@ -202,13 +221,13 @@ class IASController extends RequestController {
 					$aux->created_at = $current->created_at->format('Y-m-d H:i:s');
 
 					$aux->innerHtml = View::make('admin/innerIAS', array('taxons' => $taxons, 'languages' => $languages, 'areas' => $areas,
-						'current' => $current))->render();
-					$obs[$i] = $aux;
+						'current' => $current, 'validators' => $ValidatorUsers))->render();
+					$ias[$i] = $aux;
 
 				}
 
 				$data->recordsFiltered = $numFiltered;
-				$data->data = $obs;
+				$data->data = $ias;
 
 			}
 			catch(Exception $e)
@@ -348,13 +367,13 @@ class IASController extends RequestController {
 					$current = $descriptions[$i];
 					$iasDescription = new IASDescription();
 					$iasDescription->IASId = $element->id;
-					$iasDescription->languageId = $current->id;
-					$iasDescription->name = $current->common;
-					$iasDescription->shortDescription = $current->shortDesc;
-					$iasDescription->sizeLongDescription = $current->sizeDesc;
-					$iasDescription->infoLongDescription = $current->infoDesc;
-					$iasDescription->habitatLongDescription = $current->infoHabitat;
-					$iasDescription->confuseLongDescription = $current->infoConfuse;
+					$iasDescription->languageId = $current['id'];
+					$iasDescription->name = $current['common'];
+					$iasDescription->shortDescription = $current['shortDesc'];
+					$iasDescription->sizeLongDescription = $current['sizeDesc'];
+					$iasDescription->infoLongDescription = $current['infoDesc'];
+					$iasDescription->habitatLongDescription = $current['infoHabitat'];
+					$iasDescription->confuseLongDescription = $current['infoConfuse'];
 					$iasDescription->creatorId = Auth::id();
 					$iasDescription->touch();
 					$iasDescription->save();
@@ -369,9 +388,9 @@ class IASController extends RequestController {
 					$current = $images[$i];
 					$iasImage = new IASImage();
 					$iasImage->IASId = $element->id;
-					$iasImage->URL = $element->url;
-					$iasImage->attribution = $element->attribution;
-					$iasImage->order = 1;	//TODO: Input order from the administration panel
+					$iasImage->URL = str_replace('"', '', $current['url']);
+					$iasImage->attribution = $current['attribution'];
+					$iasImage->order = $current['order'];
 					$iasImage->creatorId = Auth::id();
 
 					$iasImage->touch();
@@ -380,14 +399,14 @@ class IASController extends RequestController {
 					if(-1 == $portaitImageId)
 						$portaitImageId = $iasImage->id;
 
-					for($k=0; $k<count($current->langs); ++$k)
+					for($k=0; $k<count($current['langs']); ++$k)
 					{
 
-						$lang = $current->langs[$k];
+						$lang = $current['langs'][$k];
 						$iasImageText = new IASImageText();
 						$iasImageText->IASIId = $iasImage->id;
-						$iasImageText->languageId = $lang->id;
-						$iasImageText->text = $lang->text;
+						$iasImageText->languageId = $lang['id'];
+						$iasImageText->text = $lang['text'];
 						$iasImageText->creatorId = Auth::id();
 
 						$iasImageText->touch();
@@ -405,18 +424,44 @@ class IASController extends RequestController {
 
 				}
 
-				for($i=0; $i<count($areas); ++$i)
+				if(Input::has('areas'))
 				{
 
+					$areas = Input::get('areas');
+					for($i=0; $i<count($areas); ++$i)
+					{
 
-					$current = $areas[$i];
-					$area = new IASArea();
-					$area->IASId = $element->id;
-					$area->areaId = $current;
-					$area->orderId = 1;	//TODO: Input order from the administration panel
-					$area->creatorId = Auth::id();
-					$area->touch();
-					$area->save();
+
+						$current = $areas[$i];
+						$area = new IASArea();
+						$area->IASId = $element->id;
+						$area->areaId = $current['id'];
+						$area->orderId = $current['order'];
+						$area->creatorId = Auth::id();
+						$area->touch();
+						$area->save();
+
+					}
+
+				}
+
+				if(Input::has('validators'))
+				{
+
+					$validators = Input::get('validators');
+					for($i=0; $i<count($validators); ++$i)
+					{
+
+						$current = $validators[$i];
+						$val = new IASValidator();
+						$val->IASId = $element->id;
+						$val->validatorId = $current['id'];
+						$val->outOfBounds = $current['outOfBounds'];
+						$val->creatorId = Auth::id();
+						$val->touch();
+						$val->save();
+
+					}
 
 				}
 
@@ -495,6 +540,7 @@ class IASController extends RequestController {
 		{
 
 			$dto = new stdClass();
+			$dto->id = $id;
 
 			if(Input::has('latinName') && Input::has('taxon') && 
 				Input::has('descriptions'))
@@ -609,34 +655,85 @@ class IASController extends RequestController {
 
 
 					$current = $areas[$i];
-					$area = IASArea::withIASAndAreaId($element->id, $current)->first();
+					$area = IASArea::withIASAndAreaId($element->id, $current['id'])->first();
 					if(null == $area)
 					{
 
 						$area = new IASArea();
 						$area->IASId = $element->id;
-						$area->areaId = $current;
-						$area->orderId = 1;	//TODO: Input order from the administration panel
+						$area->areaId = $current['id'];
+						$area->orderId = $current['order'];
 						$area->creatorId = Auth::id();
-						$area->touch();
-						$area->save();
 
 					}
 					else
 					{
 
-						$idsExistingAreas[] = $current;
+						$area->orderId = $current['order'];
+						$idsExistingAreas[] = $current['id'];
+
+					}
+
+					$area->touch();
+					$area->save();
+
+				}
+
+				//Delete the areas that were present before but are deleted and update the order value
+				for($i=0; $i<count($originalAreas); ++$i)
+				{
+
+					if(!in_array($originalAreas[$i]->areaId, $idsExistingAreas))
+					{
+
+						IASArea::destroy($originalAreas[$i]->id);
 
 					}
 
 				}
 
-				//Delete the images that were present before but are deleted
-				for($i=0; $i<count($originalAreas); ++$i)
+				$originalValidators = IASValidator::withIASId($element->id)->get();
+				$idsExistingVal = array();
+				$validators = Input::get('validators');
+				for($i=0; $i<count($validators); ++$i)
 				{
 
-					if(!in_array($originalAreas[$i]->areaId, $idsExistingAreas))
-						IASArea::destroy($originalAreas[$i]->id);
+
+					$current = $validators[$i];
+					$val = IASValidator::withIASAndValidatorId($element->id, $current['id'])->first();
+					if(null == $val)
+					{
+
+						$val = new IASValidator();
+						$val->IASId = $element->id;
+						$val->validatorId = $current['id'];
+						$val->outOfBounds = $current['outOfBounds'];
+						$val->creatorId = Auth::id();
+
+					}
+					else
+					{
+
+						$val->outOfBounds = $current['outOfBounds'];
+						$idsExistingVal[] = $current['id'];
+
+					}
+
+					$val->touch();
+					$val->save();
+
+				}
+
+				//Delete the validators that were present before but are now deleted
+				for($i=0; $i<count($originalValidators); ++$i)
+				{
+
+					if(!in_array($originalValidators[$i]->validatorId, $idsExistingVal))
+					{
+
+						IASValidator::destroy($originalValidators[$i]->id);
+
+					}
 
 				}
 

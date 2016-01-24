@@ -64,10 +64,11 @@ class ObservationController extends RequestController {
 				$viewDiscarded = 'true' == Input::get('viewDiscarded');
 				$viewDeleted = 'true' == Input::get('viewDeleted');
 				$viewPending = 'true' == Input::get('viewPending');
+				$viewOutOfBounds = 'true' == Input::get('viewOutOfBounds');
 
 				$obs = null;
 				$numTotals = Observation::count();
-				$bIsValidator = false;
+				$bIsValidatorUser = false;
 
 				if(Auth::user()->isAdmin)
 				{
@@ -77,11 +78,11 @@ class ObservationController extends RequestController {
 						->statuses($viewValidated, $viewDiscarded, $viewDeleted, $viewPending);
 					$numFiltered = count($query->get());
 
-					$validator = IASValidator::userId(Auth::user()->id)->first();
-					if(null != $validator)
+					$ValidatorUser = ValidatorUser::userId(Auth::user()->id)->first();
+					if(null != $ValidatorUser)
 					{
 
-						$bIsValidator = true;
+						$bIsValidatorUser = true;
 
 					}
 
@@ -89,25 +90,43 @@ class ObservationController extends RequestController {
 				else
 				{
 
-					$validator = IASValidator::userId(Auth::user()->id)->first();
-					if(null != $validator)
+					$ValidatorUser = ValidatorUser::userId(Auth::user()->id)->first();
+					if(null != $ValidatorUser)
 					{
 
 						//Show the observations from areas the user can validate
-						$areas = AreaValidator::validatorId($validator->id)->get();
-						$ids = array();
+						$areas = AreaValidator::withValidatorId($ValidatorUser->userId)->get();
+						$areasIds = array();
 						for($i=0; $i<count($areas); ++$i)
 						{
 
-							$ids[] =$areas[$i]->areaId;
+							$areasIds[] =$areas[$i]->areaId;
+
+						}
+
+						//Show the observations from IAS the user can validate
+						$ias = IASValidator::withValidatorId($ValidatorUser->userId)->get();
+						$ids = array();
+						for($i=0; $i<count($ias); ++$i)
+						{
+
+							$ids[] =$ias[$i]->IASId;
 
 						}
 
 						$query = Observation::withDataTableRequest($search, $orders, $columns)
 							->statuses($viewValidated, $viewDiscarded, $viewDeleted, $viewPending)
-							->areas($ids);
+							->ias($ids);
+
+						if(!$viewOutOfBounds)
+						{
+
+							$query->areas($areasIds);
+							
+						}
+
 						$numFiltered = count($query->get());
-						$bIsValidator = true;
+						$bIsValidatorUser = true;
 
 					}
 					else
@@ -141,7 +160,7 @@ class ObservationController extends RequestController {
 					$current->ias->description = $current->ias->getDescriptionData($languageId, $defaultLanguageId);
 					$current->ias->image = $current->ias->getDefaultImageData($languageId, $defaultLanguageId);
 					$current->images = ObservationImage::withObservationId($current->id)->get();
-					$current->canBeValidated = $bIsValidator;
+					$current->canBeValidated = $bIsValidatorUser;
 					$current->validateText = Lang::get('ui.validate');
 					$current->discardText = Lang::get('ui.discard');
 					$current->undoValidateText = Lang::get('ui.undoValidate');
@@ -173,23 +192,23 @@ class ObservationController extends RequestController {
 						
 					}
 
-					if(null != $current->validatorId)
+					if(null != $current->ValidatorUserId)
 					{
 
-						$validator = IASValidator::find($current->validatorId);
-						if(null != $validator)
+						$ValidatorUser = ValidatorUser::find($current->ValidatorUserId);
+						if(null != $ValidatorUser)
 						{
 
-							$user = User::withTrashed()->find($validator->userId);
-							$current->validatorName = $user->fullName;
-							$current->validatorOrg = $validator->organization;
+							$user = User::withTrashed()->find($ValidatorUser->userId);
+							$current->ValidatorUserName = $user->fullName;
+							$current->ValidatorUserOrg = $ValidatorUser->organization;
 
 						}
 
 					}
 
-					$current->canDelete = ($current->userId == Auth::user()->id) || $bIsValidator;
-					$current->canRotate = ($current->userId == Auth::user()->id) || $bIsValidator;
+					$current->canDelete = ($current->userId == Auth::user()->id) || $bIsValidatorUser;
+					$current->canRotate = ($current->userId == Auth::user()->id) || $bIsValidatorUser;
 
 					$current->innerHtml = View::make('admin/innerObservation', array('current' => $current))->render();
 					$obs[$i] = $current;
@@ -475,16 +494,16 @@ class ObservationController extends RequestController {
 
 		}
 
-		if(null != $element->validatorId)
+		if(null != $element->ValidatorUserId)
 		{
 
-			$validator = IASValidator::find($element->validatorId);
-			if(null != $validator)
+			$ValidatorUser = ValidatorUser::find($element->ValidatorUserId);
+			if(null != $ValidatorUser)
 			{
 
-				$user = User::withTrashed()->find($validator->userId);
-				$data->validatorName = $user->fullName;
-				$data->validatorOrg = $validator->organization;
+				$user = User::withTrashed()->find($ValidatorUser->userId);
+				$data->ValidatorUserName = $user->fullName;
+				$data->ValidatorUserOrg = $ValidatorUser->organization;
 
 			}
 
@@ -526,8 +545,8 @@ class ObservationController extends RequestController {
 		if(Input::has('status') && Auth::check())
 		{
 
-			$validator = IASValidator::userId(Auth::user()->id)->first();
-			if(null != $validator)
+			$ValidatorUser = ValidatorUser::userId(Auth::user()->id)->first();
+			if(null != $ValidatorUser)
 			{
 
 				$element->statusId = Input::get('status');
@@ -535,16 +554,16 @@ class ObservationController extends RequestController {
 				{
 
 					$user = Auth::user();
-					$element->validatorId = $user->id;
-					$element->validatorTS = new DateTime();
+					$element->ValidatorUserId = $user->id;
+					$element->ValidatorUserTS = new DateTime();
 					$element->validationText = Input::get('text');
 
 				}
 				else
 				{
 
-					$element->validatorId = null;
-					$element->validatorTS = null;
+					$element->ValidatorUserId = null;
+					$element->ValidatorUserTS = null;
 					$element->validationText = null;
 
 				}
@@ -583,8 +602,8 @@ class ObservationController extends RequestController {
 		if(Input::has('angle') && Auth::check())
 		{
 
-			$validator = IASValidator::userId(Auth::user()->id)->first();
-			if(null != $validator || Auth::user()->isAdmin)
+			$ValidatorUser = ValidatorUser::userId(Auth::user()->id)->first();
+			if(null != $ValidatorUser || Auth::user()->isAdmin)
 			{
 
 				//We store the rotation on the database because imagecreatefromjpeg removes exif data
@@ -608,23 +627,23 @@ class ObservationController extends RequestController {
 		{
 
 			$obs = Observation::find($id);
-			$bIsValidator = false;
-			$validator = IASValidator::userId(Auth::user()->id)->first();
-			if(null != $validator)
+			$bIsValidatorUser = false;
+			$ValidatorUser = ValidatorUser::userId(Auth::user()->id)->first();
+			if(null != $ValidatorUser)
 			{
 
-				$bIsValidator = true;
+				$bIsValidatorUser = true;
 
 			}
 
-			if($obs->userId == Auth::user()->id || $bIsValidator)
+			if($obs->userId == Auth::user()->id || $bIsValidatorUser)
 			{
 
 				$image = ObservationImage::find($imageId);
 				if($obs->id == $image->observationId)
 				{
 
-					unlink('./img/'.$image->URL);
+					unlink('./img/fotos/observations/'.$image->URL);
 					$image->delete();
 					return Response::json(true);
 
