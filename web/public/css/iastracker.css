@@ -30,6 +30,7 @@ html * {
 }
 
 #navbar-loguejat {
+  height: 70px;
   margin-top: 5px;
   margin-left: 15px;
   max-width: 320px; 
