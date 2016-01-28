@@ -69,7 +69,7 @@ class UserController extends RequestController {
 
 		}
 
-		$ValidatorUser = ValidatorUser::make($params, $paramAttribs);
+		$ValidatorUser = Validator::make($params, $paramAttribs);
 
 		if($ValidatorUser->fails())
 		{
