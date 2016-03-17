@@ -167,7 +167,7 @@ input {
 }
 
 .iasImage {
-	max-height: 120px;
+	max-height: 100px;
 	padding: 5px;
 }
 
@@ -251,7 +251,7 @@ h1.ui-title {
 	text-overflow: ellipsis !important;
 	padding-left: 70px !important;
 	padding-right: 15px !important;
-	height: 55px !important;
+	min-height: 55px !important;
 	padding-top: 1.2em !important;
 }
 
@@ -286,6 +286,7 @@ a.ui-link.ui-btn-left.ui-btn.ui-icon-arrow-l.ui-btn-icon-notext.ui-shadow.ui-cor
 	text-transform: uppercase;
 	font-style: italic;
 	font-weight: bold;
+	white-space: inherit !important;
 }
 
 .iasName {

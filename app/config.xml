@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.ic5team.iastracker" version="0.1.0" android-versionCode="9" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.ic5team.iastracker" version="0.1.5" android-versionCode="15" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>IASTracker</name>
     <description>
         The IASTracker ic5Team project
@@ -18,6 +18,7 @@
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
 	<preference name="Orientation" value="portrait" />
+    <preference name="BackupWebStorage" value="none" />
     <preference name="android-minSdkVersion" value="19" />
     <platform name="android">
         <splash src="res/splash.png" density="port-hdpi"/>
@@ -30,5 +31,26 @@
     <platform name="ios">
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
+        <!-- iOS 8.0+ -->
+        <!-- iPhone 6 Plus  -->
+        <icon src="res/IconaAPP_180x180.png" width="180" height="180" />
+        <!-- iOS 7.0+ -->
+        <!-- iPhone / iPod Touch  -->
+        <icon src="res/IconaAPP_60x60.png" width="60" height="60" />
+        <icon src="res/IconaAPP_120x120.png" width="120" height="120" />
+        <!-- iOS 6.1 -->
+        <!-- Spotlight Icon -->
+        <icon src="res/IconaAPP_40x40.png" width="40" height="40" />
+        <icon src="res/IconaAPP_80x80.png" width="80" height="80" />
+        <!-- iPhone / iPod Touch -->
+        <icon src="res/IconaAPP_57x57.png" width="57" height="57" />
+        <icon src="res/IconaAPP_114x114.png" width="114" height="114" />
+        <!-- iPhone Spotlight and Settings Icon -->
+        <icon src="res/IconaAPP_29x29.png" width="29" height="29" />
+        <icon src="res/IconaAPP_58x58.png" width="58" height="58" />
+        <!-- images are determined by width and height. The following are supported -->
+        <splash src="res/presentacio_IAS_640x960.png" width="640" height="960"/>
+        <splash src="res/presentacio_IAS_750x1334.png" width="750" height="1334"/>
+        <splash src="res/presentacio_IAS_1242x2208.png" width="1242" height="2208"/>
     </platform>
 </widget>

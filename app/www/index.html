@@ -29,6 +29,7 @@
 				* Enable inline JS: add 'unsafe-inline' to default-src
 		-->
 		<meta http-equiv="Content-Security-Policy" content="default-src * data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *;connect-src 'self' http://iastracker.ic5team.org; img-src *;">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<meta name="format-detection" content="telephone=no">
 		<meta name="msapplication-tap-highlight" content="no">
 		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height">
@@ -36,6 +37,7 @@
 		<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="css/leaflet.css">
+		<link rel="stylesheet" type="text/css" href="css/platform.css"/>
 		<link rel="stylesheet" type="text/css" href="css/index.css">
 		<title>IASTracker</title>
 	</head>
@@ -75,7 +77,7 @@
 			</div>
 		</div>
 		<div id="screen2" data-role="page" class="fullscreen" data-url="screen2">
-			<div data-role="header" data-position="fixed" data-tap-toggle="false">
+			<div data-role="header" data-position="fixed" data-tap-toggle="false" class="barraTitol">
 				<h1 class="LocalizedText PageHeader helpLabel" text-label="help">Help</h1>
 			</div>
 			<div id="help0" class="helpWindow almostFullscreen" next="help1"><img src="img/en/help0.PNG" style="width: 100vw; height: 83vh;" /></div>
@@ -88,8 +90,8 @@
 			</div>
 		</div>
 		<div id="screen3" data-role="page" class="fullscreen background" data-url="screen3">
-			<div id="loginHeader" data-role="header" data-position="fixed" data-tap-toggle="false" style="display:none;">
-				<a href="#menuPanel"><i class="fa fa-2x fa-bars"></i></a>
+			<div id="loginHeader" data-role="header" data-position="fixed" data-tap-toggle="false" style="display:none;" class="barraTitol">
+				<a href="#menuPanel" class="btTitol"><i class="fa fa-2x fa-bars"></i></a>
 				<h1 class="LocalizedText PageHeader" text-label="login">Log In</h1>
 			</div>
 			<div data-role="content" class="whitePanel" style="margin-top: 17vh;">
@@ -151,8 +153,8 @@
 			</div>
 		</div>
 		<div id="noGPSScreen" data-role="page" data-url="noGPSScreen" class="fullscreen background">
-			<div data-role="header" data-position="fixed" data-tap-toggle="false">
-				<a href="#menuPanel"><i class="fa fa-2x fa-bars"></i></a>
+			<div data-role="header" data-position="fixed" data-tap-toggle="false" class="barraTitol">
+				<a href="#menuPanel" class="btTitol"><i class="fa fa-2x fa-bars"></i></a>
 				<h1 class="LocalizedText PageHeader" text-label="locationIAS">Location IAS</h1>
 			</div>
 			<div data-role="content">
@@ -165,8 +167,8 @@
 			</div>
 		</div>
 		<div id="screen4" data-role="page" class="fullscreen background" data-url="screen4">
-			<div data-role="header" data-position="fixed" data-tap-toggle="false">
-				<a href="#menuPanel"><i class="fa fa-2x fa-bars"></i></a>
+			<div data-role="header" data-position="fixed" data-tap-toggle="false" class="barraTitol">
+				<a href="#menuPanel" class="btTitol"><i class="fa fa-2x fa-bars"></i></a>
 				<h1 class="LocalizedText PageHeader" text-label="configuration">Configuration</h1>
 			</div>
 			<div data-role="content" class="whitePanel" style="margin-top: 9vh;">
@@ -219,8 +221,8 @@
 			</div>
 		</div>
 		<div id="screen5" data-role="page" data-url="screen5" class="fullscreen background">
-			<div data-role="header" data-position="fixed" data-tap-toggle="false">
-				<a href="#menuPanel"><i class="fa fa-2x fa-bars"></i></a>
+			<div data-role="header" data-position="fixed" data-tap-toggle="false" class="barraTitol">
+				<a href="#menuPanel" class="btTitol"><i class="fa fa-2x fa-bars"></i></a>
 				<h1 class="LocalizedText PageHeader" text-label="locationIAS">Location IAS</h1>
 			</div>
 			<div data-role="content">
@@ -237,32 +239,32 @@
 			</div>
 		</div>
 		<div id="screen6" data-role="page" data-url="screen6" class="fullscreen background">
-			<div data-role="header" data-position="fixed" data-tap-toggle="false">
-				<a href="#menuPanel"><i class="fa fa-2x fa-bars"></i></a>
+			<div data-role="header" data-position="fixed" data-tap-toggle="false" class="barraTitol">
+				<a href="#menuPanel" class="btTitol"><i class="fa fa-2x fa-bars"></i></a>
 				<h1 class="LocalizedText PageHeader" text-label="starredIAS">Starred IAS</h1>
 			</div>
 			<div data-role="content">
 			</div>
 		</div>
 		<div id="screen8" data-role="page" data-url="screen8">
-			<div data-role="header" data-position="fixed" data-tap-toggle="false" id="taxonScreenHeader">
-				<a href="#menuPanel"><i class="fa fa-2x fa-bars"></i></a>
+			<div data-role="header" data-position="fixed" data-tap-toggle="false" id="taxonScreenHeader" class="barraTitol">
+				<a href="#menuPanel" class="btTitol"><i class="fa fa-2x fa-bars"></i></a>
 				<h1>&nbsp;</h1>
 			</div>
 			<div data-role="content" id="taxonScreen">
 			</div>
 		</div>
 		<div id="screenList" data-role="page" data-url="screenList">
-			<div data-role="header" data-position="fixed" data-tap-toggle="false">
-				<a href="#menuPanel"><i class="fa fa-2x fa-bars"></i></a>
+			<div data-role="header" data-position="fixed" data-tap-toggle="false" class="barraTitol">
+				<a href="#menuPanel" class="btTitol"><i class="fa fa-2x fa-bars"></i></a>
 				<h1 id="listTitle" class="PageHeader"></h1>
 			</div>
 			<div data-role="content" id="listContent">
 			</div>
 		</div>
 		<div id="screen11" data-role="page" data-url="screen11" class="fullscreen background">
-			<div data-role="header" data-position="fixed" data-tap-toggle="false">
-				<a href="#menuPanel"><i class="fa fa-2x fa-bars"></i></a>
+			<div data-role="header" data-position="fixed" data-tap-toggle="false" class="barraTitol">
+				<a href="#menuPanel" class="btTitol"><i class="fa fa-2x fa-bars"></i></a>
 				<h1 class="LocalizedText PageHeader" text-label="otherLocations">Other Locations</h1>
 			</div>
 			<div data-role="content">
@@ -302,21 +304,21 @@
 			</div>
 		</div>
 		<div id="screen12" data-role="page" data-url="screen12">
-			<div data-role="header" data-position="fixed" data-tap-toggle="false">
-				<a href="#menuPanel"><i class="fa fa-2x fa-bars"></i></a>
+			<div data-role="header" data-position="fixed" data-tap-toggle="false" class="barraTitol">
+				<a href="#menuPanel" class="btTitol"><i class="fa fa-2x fa-bars"></i></a>
 				<h1 class="LocalizedText PageHeader" text-label="aboutIASTracker">About IASTracker</h1>
 			</div>
 			<div data-role="content" class="LocalizedText" text-label="aboutText">
 			</div>
 		</div>
 		<div id="screen13" data-role="page" data-url="screen13" class="fullscreen background">
-			<div data-role="header" data-position="fixed" data-tap-toggle="false">
-				<a id="backLink" href=""><i class="fa fa-2x fa-arrow-left"></i></a>
+			<div data-role="header" data-position="fixed" data-tap-toggle="false" class="barraTitol">
+				<a id="backLink" href="" class="btTitol"><i class="fa fa-2x fa-arrow-left"></i></a>
 				<h1 id="IASCommonName" class="PageHeader"></h1>
 			</div>
 			<div data-role="content">
 				<h4 id="IASLatinName"></h4>
-				<div id="bigIASImage" style="height: 280px;">
+				<div id="bigIASImage" style="height: 250px;">
 				</div>
 				<div id="screen13InnerContent">
 					<div id="LocateIASButton" data-role="button" class="LocalizedText sisco uppercase bold italic" text-label="locateIAS">Locate IAS</div>
@@ -325,8 +327,8 @@
 			</div>
 		</div>
 		<div id="screen14" data-role="page" data-url="screen14" class="fullscreen background">
-			<div data-role="header" data-position="fixed" data-tap-toggle="false">
-				<a id="backLinkLocation" href=""><i class="fa fa-2x fa-arrow-left"></i></a>
+			<div data-role="header" data-position="fixed" data-tap-toggle="false" class="barraTitol">
+				<a id="backLinkLocation" href="" class="btTitol"><i class="fa fa-2x fa-arrow-left"></i></a>
 				<h1 id="LocationCommonName" class="PageHeader"></h1>
 			</div>
 			<div data-role="content">
@@ -470,6 +472,7 @@
 		<script type="text/javascript" src="js/Lang/en.js"></script>
 		<script type="text/javascript" src="js/Lang/es.js"></script>
 		<script type="text/javascript" src="js/Lang/fr.js"></script>
+		<script type="text/javascript" src="js/platform.js"></script>
 		<script type="text/javascript" src="js/index.js"></script>
 	</body>
 </html>

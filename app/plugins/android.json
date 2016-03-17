@@ -97,9 +97,6 @@
         "cordova-plugin-battery-status": {
             "PACKAGE_NAME": "com.ic5team.iastracker"
         },
-        "cordova-plugin-camera": {
-            "PACKAGE_NAME": "com.ic5team.iastracker"
-        },
         "cordova-plugin-file": {
             "PACKAGE_NAME": "com.ic5team.iastracker"
         },
@@ -122,6 +119,12 @@
             "PACKAGE_NAME": "com.ic5team.iastracker"
         },
         "com.synconset.imagepicker": {
+            "PACKAGE_NAME": "com.ic5team.iastracker"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.ic5team.iastracker"
+        },
+        "cordova-plugin-camera": {
             "PACKAGE_NAME": "com.ic5team.iastracker"
         }
     },
