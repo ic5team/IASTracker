@@ -149,17 +149,6 @@ class Observation extends Eloquent {
 		if($viewPending)
 			$status[] = 2;
 
-		if($viewDeleted && 0 == count($status))
-		{
-
-			//If we are looking for the deleted ones but haven't selected an status, select all
-
-			$status[] = 1;
-			$status[] = 2;
-			$status[] = 3;
-
-		}
-
 		$query = $query->whereIn('statusId', $status);
 
 		if($viewDeleted)
