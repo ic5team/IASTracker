@@ -50,7 +50,13 @@ class IASController extends RequestController {
 
 				$current = $ias[$j];
 				if(FALSE === array_search($current->IASId, $vec))
-					$vec[] = $current->IASId;
+				{
+
+					$aux = IAS::find($current->IASId);
+					if(NULL != $aux)	//Check to see if it has been deleted
+						$vec[] = $current->IASId;
+
+				}
 
 			}
 
