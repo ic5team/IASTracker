@@ -177,7 +177,12 @@ return array(
 		'confirmationText' => 'Are you sure to delete? This action cannot be undone!',
 		'downloadObservations' => 'Download',
 		'toggleIAS' => 'Activa/Desactiva totes les espècies',
-		'noObservations' => 'Aquesta cerca no retorna cap resultat'
+		'noObservations' => 'Aquesta cerca no retorna cap resultat',
+		'shapeFile' => 'Shape file',
+		'shapeFileInfo' => 'A zip file containing the .dbf, .prj, .shp and .shx files',
+		'polygonInfo' => 'Geometry column generated from a .shp file with shp2pgsql -s 4326 file.shp',
+		'outOfBounds' => 'Can validate observations of this IAS in other areas?',
+		'showOutOfBoundsObs' => 'See observations from non managed areas'
 	
 
 	);
