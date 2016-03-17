@@ -490,7 +490,13 @@ class ObservationController extends RequestController {
 
 			$user = User::find($element->userId);
 			if(null != $user)
+			{
+
 				$data->user = $user;
+				if('' == $user->photoURL)
+					$user->photoURL = '/users/user.png';
+
+			}
 
 		}
 
