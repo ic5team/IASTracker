@@ -22,7 +22,7 @@ class ObservationImage extends Eloquent {
 	{
 
 		return $query->join('observations', 'ObservationImages.observationId', 
-			'=', 'observations.id')->where('userId', '=', $userId);
+			'=', 'observations.id')->where('userId', '=', $userId)->orderBy('ObservationImages.created_at', 'DESC');
 
 	}
 
