@@ -469,6 +469,8 @@ class UserController extends RequestController {
 					$current = $users[$i];
 					$current->DT_RowId = $current->id;
 					$current->photoURL = Config::get('app.urlImgThumbs').$current->photoURL;
+					if(Config::get('app.urlImgThumbs') == $current->photoURL)
+						$current->photoURL = Config::get('app.urlImgThumbs').'/users/user.png';
 					$current->observationNumber = $current->getObservationsNumber();
 					$current->validatedNumber = $current->getValidatedNumber();
 					$ValidatorUser = ValidatorUser::userId($current->id)->first();
