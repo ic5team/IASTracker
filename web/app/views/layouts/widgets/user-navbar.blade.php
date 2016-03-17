@@ -47,11 +47,30 @@
 							<div class="form-group pull-right" id="languagesDiv">
 								<ul class="nav navbar-nav languageList">
 <?php
+	$query = $_SERVER['QUERY_STRING'];
+	$queryParams = explode('&', $query);
 	for($i=0; $i<count($data->languages); ++$i)
 	{
+
+		$query = '?lang='.$data->languages[$i]->locale;
+		for($j=0; $j<count($queryParams); ++$j)
+		{
+
+			if(FALSE === strpos($queryParams[$j], 'lang'))
+			{
+
+				$query = $query.'&'.$queryParams[$j];
+
+			}
+			else
+			{
+			}
+
+		}
+
 ?>
 									<li>
-										<a href="?lang={{$data->languages[$i]->locale}}" {{$i == count($data->languages)-1 ? 'style="padding-right: 0px;"' : ''}}>
+										<a href="{{$query}}" {{$i == count($data->languages)-1 ? 'style="padding-right: 0px;"' : ''}}>
 											<div class="flag">
 												{{ HTML::image('img/thumbs/flags/'.$data->languages[$i]->img, $data->languages[$i]->name, array('class' => 'navbar-logo-img', 'pull-right', 'style' => 'width: 40px;margin-top:10px;')); }}
 												<div class="dotted {{ ($data->languages[$i]->locale == App::getLocale()) ? ' active' : '' }}"></div>

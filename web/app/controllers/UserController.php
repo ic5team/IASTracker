@@ -541,6 +541,7 @@ class UserController extends RequestController {
 	{
 
 		$token = Input::get('token');
+		$lang = Input::get('lang');
 		$data = $this->getBasicData();
 
 		$user = User::activationKey($token)->first();
@@ -548,8 +549,14 @@ class UserController extends RequestController {
 		if ($user != NULL && !$user->isActive)
 		{
 
-			$lang = Language::find($user->languageId);
-			App::setLocale($lang->locale);
+			if('' == $lang)
+			{
+			
+				$lang = Language::find($user->languageId);
+				App::setLocale($lang->locale);
+
+			}
+			
 			return View::make("public/activate", array('data' => $data,
 				'token' => $token, 'userId' => $user->id));
 
