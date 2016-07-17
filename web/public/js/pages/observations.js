@@ -38,7 +38,7 @@ $(document).ready(function() {
             	visible: false
         	},
         	{ data: 'latinName' },
-			{ data: 'fullName' },
+			{ data: 'user' },
 			{ 	data: 'status',
 				orderable: false,
 				render: function ( data, type, row ) 

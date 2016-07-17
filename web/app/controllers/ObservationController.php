@@ -182,7 +182,7 @@ class ObservationController extends RequestController {
 					if(null != $user)
 					{
 
-						$current->user = $user->name;
+						$current->user = $user->username;
 
 					}
 					else
