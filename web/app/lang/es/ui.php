@@ -177,7 +177,8 @@ return array(
 		'confirmationText' => 'Seguro que quieres eliminar? ¡Esta acción no se puede deshacer!',
 		'downloadObservations' => 'Descarga',
 		'toggleIAS' => 'Activa/Desactiva totes les espècies',
-		'noObservations' => 'Aquesta cerca no retorna cap resultat'
+		'noObservations' => 'Aquesta cerca no retorna cap resultat',
+		'selectFileTypeText' => 'Selecciona que tipo de fichero quieres descargar'
 		
 
 	);

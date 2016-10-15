@@ -300,7 +300,10 @@ class ObservationController extends RequestController {
 		{
 
 			//Generate the kml file
-			return $this->generateKML($elements);
+			if(Input::has('fileType') && ("csv" == Input::get('fileType')))
+				return $this->generateCSV($elements);
+			else
+				return $this->generateKML($elements);
 
 		}
 		else
@@ -790,6 +793,85 @@ class ObservationController extends RequestController {
 
 			$resp = Response::make($kml);
 			$resp->header('Content-Type', 'application/vnd.google-earth.kml+xml');
+
+			return $resp;
+
+		}
+
+	}
+
+	protected function generateCSV($observations)
+	{
+
+		if(0 == count($observations))
+		{
+
+			$data = new stdClass();
+			$data->error = Lang::get('ui.noObservations');
+			return json_encode($data);
+
+		}
+		else
+		{
+
+			setcookie('fileDownload', 'true', 0 , '/');
+			$folders = array();
+
+			for($i=0; $i<count($observations); ++$i)
+			{
+
+				$currentFolder = null;
+				$current = $observations[$i];
+				$resource = $this->buildResource($current, true);
+
+				if(1 == $current->statusId)	//Only download the validated data
+				{
+
+					if(array_key_exists($resource->data->latinName, $folders))
+					{
+
+						$currentFolder = $folders[$resource->data->latinName];
+
+					}
+					else
+					{
+
+						$currentFolder = array();
+
+					}
+
+					$currentFolder[] = $resource;
+					$folders[$resource->data->latinName] = $currentFolder;
+
+				}
+
+			}
+
+			$csv = '"Latin name","Common name","Latitude","Longitude","Title","Description"
+';
+
+			$keys = array_keys($folders);
+			for($i=0; $i<count($folders); ++$i)
+			{
+
+				$currentFolder = $folders[$keys[$i]];
+				for($j=0; $j<count($currentFolder); ++$j)
+				{
+
+					$current = $currentFolder[$j];
+					$csv .= '"'.$keys[$i].'","'.utf8_decode($current->data->description->name).'","'
+						.$current->data->longitude.'","'.$current->data->latitude.'","'
+						.(property_exists($current->data, 'user') ? $current->data->user->username : '').' '.$current->data->created_at.'","'
+						.utf8_decode(str_replace('"', '', $current->data->notes)).'"
+						';
+
+				}
+
+			}
+
+			$resp = Response::make($csv);
+			$resp->header('Content-Type', 'text/csv');
+			$resp->header('Content-Disposition', 'attachment; filename="observations.csv"');
 
 			return $resp;
 

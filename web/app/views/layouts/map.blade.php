@@ -185,7 +185,7 @@ if(property_exists($data, 'isComplete') && !$data->isComplete)
 							<div class="col-md-12">
 								<button role="button" class="btn btn-large btn-primary" type="button" onclick="filterObs()">{{Lang::get('ui.filter')}}</button>
 								<button role="button" class="btn btn-large btn-primary" type="button" onclick="cleanFilter()">{{Lang::get('ui.cleanFilter')}}</button>
-								<button role="button" class="btn btn-large btn-primary" type="button" onclick="downloadObs()"><i class="fa fa-download"></i></button>
+								<button role="button" class="btn btn-large btn-primary" type="button" data-toggle="modal" data-target="#downloadTypeModal"><i class="fa fa-download"></i></button>
 							</div>
 						</div>
 					</div>
@@ -284,6 +284,7 @@ if(property_exists($data, 'isComplete') && !$data->isComplete)
 			</div>
 		</div>
 		@include('layouts.modals.base')
+		@include('layouts.modals.download')
 <?php
 	if(Auth::check())
 	{

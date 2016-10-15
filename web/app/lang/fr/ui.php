@@ -177,6 +177,7 @@ return array(
 		'confirmationText' => 'Êtes-vous sûr de vouloir éliminer? Cette action sera irréversible!',
 		'downloadObservations' => 'Télécharger',
 		'toggleIAS' => 'Activa/Desactiva totes les espècies',
-		'noObservations' => 'Aquesta cerca no retorna cap resultat'
+		'noObservations' => 'Aquesta cerca no retorna cap resultat',
+		'selectFileTypeText' => 'Sélectionnez ce type de fichier que vous voulez télécharger'
 
 	);

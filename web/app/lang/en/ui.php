@@ -182,7 +182,8 @@ return array(
 		'shapeFileInfo' => 'A zip file containing the .dbf, .prj, .shp and .shx files',
 		'polygonInfo' => 'Geometry column generated from a .shp file with shp2pgsql -s 4326 file.shp',
 		'outOfBounds' => 'Can validate observations of this IAS in other areas?',
-		'showOutOfBoundsObs' => 'See observations from non managed areas'
+		'showOutOfBoundsObs' => 'See observations from non managed areas',
+		'selectFileTypeText' => 'Select which kind of file do you want to download'
 	
 
 	);

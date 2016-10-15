@@ -712,6 +712,7 @@ function downloadObs()
 	var stateId = $('#input-state').val();
 	var regionId = $('#input-regions').val();
 	var areaId = $('#input-areas').val();
+	var fileType = $('#cbFileFormat').val();
 
 	api.downloadFilteredObservations( 
 		{
@@ -720,7 +721,8 @@ function downloadObs()
 			toDate : toDate,
 			stateId : stateId,
 			regionId : regionId,
-			areaId : areaId
+			areaId : areaId,
+			fileType : fileType
 		}
 		,fileDownloaded, fileNotDownloaded
 	);

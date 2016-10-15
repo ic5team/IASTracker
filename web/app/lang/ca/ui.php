@@ -182,6 +182,7 @@ return array(
 		'shapeFileInfo' => 'Un fitxer .zip que contingui els fitxers .dbf, .prj, .shp i .shx del shape',
 		'polygonInfo' => 'Columna de geometria generada a partir d\'un fitxer .shp mitjançant shp2pgsql -s 4326 file.shp',
 		'outOfBounds' => 'Pot validar observacions d\'aquesta espècie en altres àrees?',
-		'showOutOfBoundsObs' => 'Veure observacions d\'àrees no assignades'
+		'showOutOfBoundsObs' => 'Veure observacions d\'àrees no assignades',
+		'selectFileTypeText' => 'Selecciona quin tipus de fitxer vols descarregar'
 
 	);
