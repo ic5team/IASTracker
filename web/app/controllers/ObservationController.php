@@ -863,7 +863,7 @@ class ObservationController extends RequestController {
 						.$current->data->longitude.'","'.$current->data->latitude.'","'
 						.(property_exists($current->data, 'user') ? $current->data->user->username : '').' '.$current->data->created_at.'","'
 						.utf8_decode(str_replace('"', '', $current->data->notes)).'"
-						';
+';
 
 				}
 
