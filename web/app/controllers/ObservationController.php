@@ -860,7 +860,7 @@ class ObservationController extends RequestController {
 
 					$current = $currentFolder[$j];
 					$csv .= '"'.$keys[$i].'","'.utf8_decode($current->data->description->name).'","'
-						.$current->data->longitude.'","'.$current->data->latitude.'","'
+						.$current->data->latitude.'","'.$current->data->longitude.'","'
 						.(property_exists($current->data, 'user') ? $current->data->user->username : '').' '.$current->data->created_at.'","'
 						.utf8_decode(str_replace('"', '', $current->data->notes)).'"
 ';
