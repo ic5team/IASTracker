@@ -170,7 +170,7 @@ for($i=0; $i<count($data->languages); ++$i)
 								<div class="row imageRowNew" style="margin-bottom: 50px; display:none;" data-row="-1">
 									<div class="col-md-4" style="border: dashed 1px; min-height: 250px; text-align:center;">
 										<div style="margin-top: 110px;">
-											<form action="{{Config::get('app.url')}}/common/obsImageUpload.php" class="dropzone imageUpload" id="imageUpload">
+											<form action="{{Config::get('app.url')}}/common/iasImageUpload.php" class="dropzone imageUpload" id="imageUpload">
 											</form>
 										</div>
 									</div>
@@ -213,7 +213,7 @@ for($i=0; $i<count($data->languages); ++$i)
 								<div class="row imageRowNew" style="margin-bottom: 50px;" data-row="0">
 									<div class="col-md-4" style="border: dashed 1px; min-height: 250px; text-align:center;">
 										<div style="margin-top: 110px;">
-											<form action="{{Config::get('app.url')}}/common/obsImageUpload.php" class="dropzone imageUpload" id="imageUpload0">
+											<form action="{{Config::get('app.url')}}/common/iasImageUpload.php" class="dropzone imageUpload" id="imageUpload0">
 											</form>
 										</div>
 									</div>
