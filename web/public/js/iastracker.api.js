@@ -18,7 +18,8 @@ function IASTracker(url)
 	this.filter.name = "IASFilter";
 	this.filter.entryPoint = this.APIBaseUrl + this.filter.name;
 	this.observations = new Object();
-	this.observations.name = "Observations"
+	this.observations.name = "Observations";
+	this.observations.images = "Images";
 	this.observations.entryPoint = this.APIBaseUrl + this.observations.name;
 	this.ias = new Object();
 	this.ias.entryPoint = this.APIBaseUrl + "IAS";
@@ -59,9 +60,13 @@ IASTracker.prototype.getLastErrorMessage = function()
 IASTracker.prototype.AJAXRequest = function(url, id, doneFunction, method, values)
 {
 
+	var lang = window.location.search;
+	if('GET' != method) 
+		lang = '';
+	
 	var asObject = this;
 	var xhr = $.ajax({
-			url: url, 
+			url: url + lang, 
 			type: method, 
 			data: values
 		})
@@ -115,13 +120,13 @@ IASTracker.prototype.getIASMapFilter = function(doneFunction, destinationId)
 
 }
 
-IASTracker.prototype.getObservations = function(doneFunction, destinationId)
+IASTracker.prototype.getObservations = function(data, doneFunction, destinationId)
 {
 
 	var completeURL = this.observations.entryPoint;
 	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
 
-	return this.AJAXRequest(completeURL, destId, doneFunction, 'GET', {});
+	return this.AJAXRequest(completeURL, destId, doneFunction, 'GET', data);
 
 }
 
@@ -135,6 +140,27 @@ IASTracker.prototype.getFilteredObservations = function(params, doneFunction, de
 
 }
 
+IASTracker.prototype.downloadFilteredObservations = function(params, doneFunction, failFunction, destinationId)
+{
+
+	var lang = window.location.search;
+	var completeURL = this.observations.entryPoint + lang;
+	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
+
+	params.isDownload = true;
+
+	$.fileDownload(completeURL, {
+		data: params,
+		successCallback: function (url) {
+			doneFunction();
+		},
+		failCallback: function(responseHtml, url, error) {
+			failFunction(responseHtml);
+		}
+	});
+
+}
+
 IASTracker.prototype.getIASObservation = function(observationId, doneFunction, destinationId)
 {
 
@@ -145,6 +171,28 @@ IASTracker.prototype.getIASObservation = function(observationId, doneFunction, d
 
 }
 
+IASTracker.prototype.deleteObservationImage = function(observationId, obsImageId, doneFunction, destinationId)
+{
+
+	var completeURL = this.observations.entryPoint + this.separator + observationId +
+		this.separator + this.observations.images + this.separator + obsImageId;
+	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
+
+	return this.AJAXRequest(completeURL, destId, doneFunction, 'DELETE', {});
+
+}
+
+IASTracker.prototype.rotateObservationImage = function(observationId, obsImageId, angle, doneFunction, destinationId)
+{
+
+	var completeURL = this.observations.entryPoint + this.separator + observationId +
+		this.separator + this.observations.images + this.separator + obsImageId;
+	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
+
+	return this.AJAXRequest(completeURL, destId, doneFunction, 'PUT', {angle : angle});
+
+}
+
 IASTracker.prototype.getIAS = function(IASId, doneFunction, destinationId)
 {
 
@@ -152,6 +200,36 @@ IASTracker.prototype.getIAS = function(IASId, doneFunction, destinationId)
 	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
 
 	return this.AJAXRequest(completeURL, destId, doneFunction, 'GET', {});
+
+}
+
+IASTracker.prototype.editIAS = function(IASId, data, doneFunction, destinationId)
+{
+
+	var completeURL = this.ias.entryPoint + this.separator + IASId;
+	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
+
+	return this.AJAXRequest(completeURL, destId, doneFunction, 'PUT', data);
+
+}
+
+IASTracker.prototype.deleteIAS = function(IASId, doneFunction, destinationId)
+{
+
+	var completeURL = this.ias.entryPoint + this.separator + IASId;
+	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
+
+	return this.AJAXRequest(completeURL, destId, doneFunction, 'DELETE', {});
+
+}
+
+IASTracker.prototype.getIASList = function(data, doneFunction, destinationId)
+{
+
+	var completeURL = this.ias.entryPoint;
+	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
+
+	return this.AJAXRequest(completeURL, destId, doneFunction, 'GET', data);
 
 }
 
@@ -198,6 +276,16 @@ IASTracker.prototype.getUser = function(userId, doneFunction, destinationId)
 
 }
 
+IASTracker.prototype.getUsers = function(data, doneFunction, destinationId)
+{
+
+	var completeURL = this.users.entryPoint;
+	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
+
+	return this.AJAXRequest(completeURL, destId, doneFunction, 'GET', data);
+
+}
+
 IASTracker.prototype.getUserObservations = function(userId, doneFunction, destinationId)
 {
 
@@ -226,6 +314,16 @@ IASTracker.prototype.addUserData = function(userId, params, doneFunction, destin
 	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
 
 	return this.AJAXRequest(completeURL, destId, doneFunction, 'PUT', params);
+
+}
+
+IASTracker.prototype.deleteUser = function(userId, doneFunction, destinationId)
+{
+
+	var completeURL = this.users.entryPoint + this.separator + userId;
+	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
+
+	return this.AJAXRequest(completeURL, destId, doneFunction, 'DELETE', {});
 
 }
 
@@ -259,22 +357,102 @@ IASTracker.prototype.resetUserPassword = function(userId, params, doneFunction, 
 
 }
 
-IASTracker.prototype.validateObservation = function(obsId, doneFunction)
+IASTracker.prototype.validateObservation = function(obsId, text, doneFunction)
 {
 
 	var completeURL = this.observations.entryPoint + this.separator + obsId;
 	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
 
-	return this.AJAXRequest(completeURL, destId, doneFunction, 'PUT', {status: 1});
+	return this.AJAXRequest(completeURL, destId, doneFunction, 'PUT', {status: 1, text: text});
 
 }
 
-IASTracker.prototype.discardObservation = function(obsId, doneFunction)
+IASTracker.prototype.unvalidateObservation = function(obsId, doneFunction)
 {
 
 	var completeURL = this.observations.entryPoint + this.separator + obsId;
 	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
 
-	return this.AJAXRequest(completeURL, destId, doneFunction, 'PUT', {status: 3});
+	return this.AJAXRequest(completeURL, destId, doneFunction, 'PUT', {status: 2});
+
+}
+
+IASTracker.prototype.discardObservation = function(obsId, text, doneFunction)
+{
+
+	var completeURL = this.observations.entryPoint + this.separator + obsId;
+	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
+
+	return this.AJAXRequest(completeURL, destId, doneFunction, 'PUT', {status: 3, text: text});
+
+}
+
+IASTracker.prototype.deleteObservation = function(obsId, doneFunction)
+{
+
+	var completeURL = this.observations.entryPoint + this.separator + obsId;
+	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
+
+	return this.AJAXRequest(completeURL, destId, doneFunction, 'DELETE', {});
+
+}
+
+IASTracker.prototype.addIAS = function(params, doneFunction)
+{
+
+	var completeURL = this.ias.entryPoint;
+	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
+
+	return this.AJAXRequest(completeURL, destId, doneFunction, 'POST', params);
+
+}
+
+IASTracker.prototype.addArea = function(params, doneFunction)
+{
+
+	var completeURL = this.areas.entryPoint;
+	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
+
+	return this.AJAXRequest(completeURL, destId, doneFunction, 'POST', params);
+
+}
+
+IASTracker.prototype.getArea = function(areaId, doneFunction, destinationId)
+{
+
+	var completeURL = this.areas.entryPoint + this.separator + areaId;
+	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
+
+	return this.AJAXRequest(completeURL, destId, doneFunction, 'GET', {});
+
+}
+
+IASTracker.prototype.editArea = function(areaId, data, doneFunction, destinationId)
+{
+
+	var completeURL = this.areas.entryPoint + this.separator + areaId;
+	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
+
+	return this.AJAXRequest(completeURL, destId, doneFunction, 'PUT', data);
+
+}
+
+IASTracker.prototype.deleteArea = function(areaId, doneFunction, destinationId)
+{
+
+	var completeURL = this.areas.entryPoint + this.separator + areaId;
+	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
+
+	return this.AJAXRequest(completeURL, destId, doneFunction, 'DELETE', {});
+
+}
+
+IASTracker.prototype.getAreasList = function(data, doneFunction, destinationId)
+{
+
+	var completeURL = this.areas.entryPoint;
+	var destId = (typeof destinationId === 'undefined') ? null : destinationId;
+
+	return this.AJAXRequest(completeURL, destId, doneFunction, 'GET', data);
 
 }

@@ -8,7 +8,7 @@ use Illuminate\Auth\Reminders\RemindableInterface;
 
 class User extends Eloquent implements UserInterface, RemindableInterface {
 
-    use UserTrait, RemindableTrait;
+    use UserTrait, RemindableTrait, SoftDeletingTrait;
 
 	/**
 	 * The database table used by the model.
@@ -119,6 +119,13 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	{
 
 		return $query->orderBy('id', 'DESC');
+
+	}
+
+	function scopeWithDataTableRequest($query, $search, $orders, $columns)
+	{
+
+		return $query->whereRaw('lower("fullName") LIKE lower(\'%'.$search['value'].'%\')')->orderBy($columns[$orders[0]['column']]['data'], $orders[0]['dir']);
 
 	}
 

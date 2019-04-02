@@ -21,10 +21,9 @@ class DatabaseSeeder extends Seeder {
 		$this->call('ConfigurationTableSeeder');
 		$this->call('ConfigurationTextsTableSeeder');
 		$this->call('IASTaxonsTableSeeder');
+		$this->call('IASTaxonNamesTableSeeder');
 		$this->call('IASTableSeeder');
 		$this->call('IASImagesTextTableSeeder');
-		$this->call('RepositoriesTableSeeder');
-		$this->call('IASRelatedDBsTableSeeder');
 		$this->call('StatusTableSeeder');
 		$this->call('StatusTextsTableSeeder');
 
@@ -93,7 +92,7 @@ class MapProviderTableSeeder extends Seeder {
 
 		DB::table('MapProvider')->insert(array(
 			'id'  => 4,
-			'url' => 'http://geoserveis.icc.cat/icc_mapesbase/wms/service?',
+			'url' => 'http://mapcache.icc.cat/map/bases_noutm/wmts/orto/GRID3857/{z}/{x}/{y}.jpeg',
 			'attribution' => 'Institut Cartogràfic i Geològic de Catalunya -ICGC',
 			'zIndex' => 2,
 			'SWBoundLat' => '40.48456',
@@ -104,6 +103,7 @@ class MapProviderTableSeeder extends Seeder {
 			'maxZoom' => 18,
 			'creatorId' => 1,
 			'subdomains' => null,
+			'tms' => false,
 			'isOverlay' => true,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime
@@ -111,17 +111,18 @@ class MapProviderTableSeeder extends Seeder {
 
 		DB::table('MapProvider')->insert(array(
 			'id'  => 5,
-			'url' => 'http://geoserveis.icc.cat/icc_mapesbase/wms/service?',
+			'url' => 'http://www.instamaps.cat/mapcache/tms/1.0.0/A250TARJ3857@GMTOT/{z}/{x}/{y}.png',
 			'attribution' => 'Institut Cartogràfic i Geològic de Catalunya -ICGC',
 			'zIndex' => 2,
 			'SWBoundLat' => '40.48456',
 			'SWBoundLon' => '0.02884',
 			'NEBoundLat' => '42.91822',
 			'NEBoundLon' => '3.46619',
-			'minZoom' => 5,
+			'minZoom' => 8,
 			'maxZoom' => 18,
 			'creatorId' => 1,
 			'subdomains' => null,
+			'tms' => true,
 			'isOverlay' => true,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime
@@ -154,8 +155,44 @@ class MapProviderTableSeeder extends Seeder {
 			'SWBoundLon' => '2.835011',
 			'NEBoundLat' => '50.822978',
 			'NEBoundLon' => '6.438924',
-			'minZoom' => 5,
+			'minZoom' => 9,
 			'maxZoom' => 18,
+			'creatorId' => 1,
+			'subdomains' => null,
+			'isOverlay' => true,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProvider')->insert(array(
+			'id'  => 8,
+			'url' => 'http://neowms.sci.gsfc.nasa.gov/wms/wms?',
+			'attribution' => 'Remote sensing imagery from NASA Earth Observations (NEO)',
+			'zIndex' => 2,
+			'SWBoundLat' => null,
+			'SWBoundLon' => null,
+			'NEBoundLat' => null,
+			'NEBoundLon' => null,
+			'minZoom' => null,
+			'maxZoom' => null,
+			'creatorId' => 1,
+			'subdomains' => null,
+			'isOverlay' => true,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProvider')->insert(array(
+			'id'  => 9,
+			'url' => 'http://neowms.sci.gsfc.nasa.gov/wms/wms?',
+			'attribution' => 'Remote sensing imagery from NASA Earth Observations (NEO)',
+			'zIndex' => 2,
+			'SWBoundLat' => null,
+			'SWBoundLon' => null,
+			'NEBoundLat' => null,
+			'NEBoundLon' => null,
+			'minZoom' => null,
+			'maxZoom' => null,
 			'creatorId' => 1,
 			'subdomains' => null,
 			'isOverlay' => true,
@@ -196,30 +233,6 @@ class WMSMapProviderTableSeeder extends Seeder {
 		));
 
 		DB::table('WMSMapProvider')->insert(array(
-			'mapProviderId'  => 4,
-			'styles' => '',
-			'layers' => 'orto25c',
-			'format' => 'image/png',
-			'transparent' => true,
-			'continuousWorld' => true,
-			'crsId' => 1,
-			'created_at' => new DateTime,   
-			'updated_at' => new DateTime
-		));
-
-		DB::table('WMSMapProvider')->insert(array(
-			'mapProviderId'  => 5,
-			'styles' => '',
-			'layers' => 'mtc5m',
-			'format' => 'image/png',
-			'transparent' => true,
-			'continuousWorld' => true,
-			'crsId' => 1,
-			'created_at' => new DateTime,   
-			'updated_at' => new DateTime
-		));
-
-		DB::table('WMSMapProvider')->insert(array(
 			'mapProviderId'  => 6,
 			'styles' => '',
 			'layers' => 'OMZ09VLRGB',
@@ -243,6 +256,30 @@ class WMSMapProviderTableSeeder extends Seeder {
 			'updated_at' => new DateTime
 		));
 
+		DB::table('WMSMapProvider')->insert(array(
+			'mapProviderId'  => 8,
+			'styles' => '',
+			'layers' => 'SRTM_RAMP2_TOPO',
+			'format' => 'image/png',
+			'transparent' => true,
+			'continuousWorld' => true,
+			'crsId' => 2,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('WMSMapProvider')->insert(array(
+			'mapProviderId'  => 9,
+			'styles' => '',
+			'layers' => 'MOD13A2_E_NDVI',
+			'format' => 'image/png',
+			'transparent' => true,
+			'continuousWorld' => true,
+			'crsId' => 2,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
 	}
 }
 
@@ -255,6 +292,19 @@ class CRSTableSeeder extends Seeder {
 			'id'  => 1,
 			'code' => 'EPSG:25831',
 			'proj4def' => '+proj=utm +zone=31 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs',
+			'origin' => null,
+			'transformation' => null,
+			'scales' => null,
+			'resolutions' => '[1100,550,275,100,50,25,10,5,2,1,0.5,0.25]',
+			'bounds' => null,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('CRS')->insert(array(
+			'id'  => 2,
+			'code' => 'EPSG:4326',
+			'proj4def' => '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs ',
 			'origin' => null,
 			'transformation' => null,
 			'scales' => null,
@@ -326,7 +376,7 @@ class MapProviderTextsTableSeeder extends Seeder {
 			'id'  => 1,
 			'mapProviderId' => 1, 
 			'languageId' => 1,
-			'text' => 'Mapa d\'OSM',
+			'text' => 'Mapa OpenStreetMap',
 			'name' => 'OSM',
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
@@ -337,7 +387,7 @@ class MapProviderTextsTableSeeder extends Seeder {
 			'id'  => 2,
 			'mapProviderId' => 2, 
 			'languageId' => 1,
-			'text' => 'Catalunya NDVI. 2014',
+			'text' => 'Mapa de la vigorositat de  la vegetació. <a href=\"http://www.icc.cat/cat/Home-ICC/Mapas-escolares-y-divulgacion/Preguntas-frecuentes/Que-es-NDVI\" target=\"_blank\"><i class=\"fa fa-external-link\"></i></a>',
 			'name' => 'Catalunya NDVI. 2014',
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
@@ -348,7 +398,7 @@ class MapProviderTextsTableSeeder extends Seeder {
 			'id'  => 3,
 			'mapProviderId' => 3, 
 			'languageId' => 1,
-			'text' => 'CORINE Landcover (CLC)',
+			'text' => 'Cobertes del sòl. <a href=\"http://www.eea.europa.eu/data-and-maps/figures/corine-land-cover-2006-by-country/legend\" target=\"_blank\"><i class=\"fa fa-external-link\"></i></a>',
 			'name' => 'CORINE Landcover (CLC)',
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
@@ -359,8 +409,8 @@ class MapProviderTextsTableSeeder extends Seeder {
 			'id'  => 4,
 			'mapProviderId' => 4, 
 			'languageId' => 1,
-			'text' => 'Ortofoto de Catalunya 1:2.500',
-			'name' => 'Ortofoto de Catalunya 1:2.500',
+			'text' => 'Imatges àrees georreferenciades en color RGB',
+			'name' => 'Ortofoto de Catalunya',
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime
@@ -370,8 +420,8 @@ class MapProviderTextsTableSeeder extends Seeder {
 			'id'  => 5,
 			'mapProviderId' => 5, 
 			'languageId' => 1,
-			'text' => 'Mapa topogràfic de Catalunya 1:5000',
-			'name' => 'Mapa topogràfic de Catalunya 1:5000',
+			'text' => 'Informació topogràfica del territori',
+			'name' => 'Mapa topogràfic de Catalunya',
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime
@@ -381,7 +431,7 @@ class MapProviderTextsTableSeeder extends Seeder {
 			'id'  => 6,
 			'mapProviderId' => 6, 
 			'languageId' => 1,
-			'text' => 'Ortofoto 2009 Flandes color',
+			'text' => 'Ortofotomosaic (8 bits) RGB, 2009',
 			'name' => 'Ortofoto 2009 Flandes color',
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
@@ -392,8 +442,8 @@ class MapProviderTextsTableSeeder extends Seeder {
 			'id'  => 7,
 			'mapProviderId' => 7, 
 			'languageId' => 1,
-			'text' => 'Ortofoto 2012-2013 Valonia color 25m pixel',
-			'name' => 'Ortofoto 2012-2013 Valonia color 25m pixel',
+			'text' => 'Imatges àrees georreferenciades en color RGB',
+			'name' => 'Ortofoto 2012-2013 Valonia color 25m pixel',	
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime
@@ -403,7 +453,7 @@ class MapProviderTextsTableSeeder extends Seeder {
 			'id'  => 8,
 			'mapProviderId' => 1, 
 			'languageId' => 2,
-			'text' => 'OSM',
+			'text' => 'Mapa de OpenStreetMap',
 			'name' => 'OSM',
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
@@ -414,7 +464,7 @@ class MapProviderTextsTableSeeder extends Seeder {
 			'id'  => 9,
 			'mapProviderId' => 2, 
 			'languageId' => 2,
-			'text' => 'Indice de vegetación (NDVI)',
+			'text' => 'Mapa de la vigorosidad de la vegetación. <a href=\"http://www.icc.cat/esl/Home-ICC/Mapes-escolars-i-divulgacio/Preguntes-frequeents/Que-es-NDVI\" target=\"_blank\"><i class=\"fa fa-external-link\"></i></a>',
 			'name' => 'Indice de vegetación (NDVI)',
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
@@ -425,7 +475,7 @@ class MapProviderTextsTableSeeder extends Seeder {
 			'id'  => 10,
 			'mapProviderId' => 3, 
 			'languageId' => 2,
-			'text' => 'Corine Land cover 2006 (CLC2006)LAEA',
+			'text' => 'Cubiertas del suelo. <a href=\"http://www.eea.europa.eu/data-and-maps/figures/corine-land-cover-2006-by-country/legend\" target=\"_blank\"><i class=\"fa fa-external-link\"></i></a>',
 			'name' => 'Corine Land cover 2006 (CLC2006)LAEA',
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
@@ -436,8 +486,8 @@ class MapProviderTextsTableSeeder extends Seeder {
 			'id'  => 11,
 			'mapProviderId' => 4, 
 			'languageId' => 2,
-			'text' => 'Ortofoto de Cataluña 1: 2.500',
-			'name' => 'Ortofoto de Cataluña 1: 2.500',
+			'text' => 'Imágenes aéreas georreferenciadas en color RGB',
+			'name' => 'Ortofoto de Cataluña',
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime
@@ -447,8 +497,8 @@ class MapProviderTextsTableSeeder extends Seeder {
 			'id'  => 12,
 			'mapProviderId' => 5, 
 			'languageId' => 2,
-			'text' => 'Mapa topográfico de Cataluña 1: 5000',
-			'name' => 'Mapa topográfico de Cataluña 1: 5000',
+			'text' => 'Información topográfica del territorio',
+			'name' => 'Mapa topográfico de Cataluña',
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime
@@ -458,7 +508,7 @@ class MapProviderTextsTableSeeder extends Seeder {
 			'id'  => 13,
 			'mapProviderId' => 6, 
 			'languageId' => 2,
-			'text' => 'Ortofoto 2009 Flandes color',
+			'text' => 'Ortofotomosaico (8 bits) RGB, 2009',
 			'name' => 'Ortofoto 2009 Flandes color',
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
@@ -469,7 +519,7 @@ class MapProviderTextsTableSeeder extends Seeder {
 			'id'  => 14,
 			'mapProviderId' => 7, 
 			'languageId' => 2,
-			'text' => 'Ortofoto 2012-2013 Valonia color 25m pixel',
+			'text' => 'Imágenes aéreas georreferenciadas en color RGB',
 			'name' => 'Ortofoto 2012-2013 Valonia color 25m pixel',
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
@@ -480,7 +530,7 @@ class MapProviderTextsTableSeeder extends Seeder {
 			'id'  => 15,
 			'mapProviderId' => 1, 
 			'languageId' => 3,
-			'text' => 'OSM',
+			'text' => 'OpenStreetMap cartographie',
 			'name' => 'OSM',
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
@@ -491,7 +541,7 @@ class MapProviderTextsTableSeeder extends Seeder {
 			'id'  => 16,
 			'mapProviderId' => 2, 
 			'languageId' => 3,
-			'text' => 'Indice de végétation (NDVI)',
+			'text' => 'Cartographie de le vigueur végétative. <a href=\"http://www.icc.cat/eng/Home-ICC/Mapas-escolares-y-divulgacion/Preguntas-frecuentes/Que-es-NDVI\" target=\"_blank\"><i class=\"fa fa-external-link\"></i></a>',
 			'name' => 'Indice de végétation (NDVI)',
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
@@ -502,7 +552,7 @@ class MapProviderTextsTableSeeder extends Seeder {
 			'id'  => 17,
 			'mapProviderId' => 3, 
 			'languageId' => 3,
-			'text' => 'Corine Land cover 2006 (CLC2006)LAEA',
+			'text' => 'Occupations du sol. <a href=\"http://www.eea.europa.eu/data-and-maps/figures/corine-land-cover-2006-by-country/legend\" target=\"_blank\"><i class=\"fa fa-external-link\"></i></a>',
 			'name' => 'Corine Land cover 2006 (CLC2006)LAEA',
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
@@ -513,8 +563,8 @@ class MapProviderTextsTableSeeder extends Seeder {
 			'id'  => 18,
 			'mapProviderId' => 4, 
 			'languageId' => 3,
-			'text' => 'Orthophoto de la Catalogne 1: 2 500',
-			'name' => 'Orthophoto de la Catalogne 1: 2 500',
+			'text' => 'Images aériennes géoréférencées couleurs RGB',
+			'name' => 'Orthophoto de la Catalogne',
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime
@@ -524,8 +574,8 @@ class MapProviderTextsTableSeeder extends Seeder {
 			'id'  => 19,
 			'mapProviderId' => 5, 
 			'languageId' => 3,
-			'text' => 'Carte topographique de Catalogne 1: 5 000',
-			'name' => 'Carte topographique de Catalogne 1: 5 000',
+			'text' => 'Information topographique du territoire',
+			'name' => 'Carte topographique de Catalogne',
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime
@@ -535,7 +585,7 @@ class MapProviderTextsTableSeeder extends Seeder {
 			'id'  => 20,
 			'mapProviderId' => 6, 
 			'languageId' => 3,
-			'text' => 'Orthophoto Flandre 2009 couleur',
+			'text' => 'Orthophotomosaique (8 bits) RGB, 2009',
 			'name' => 'Orthophoto Flandre 2009 couleur',
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
@@ -546,7 +596,7 @@ class MapProviderTextsTableSeeder extends Seeder {
 			'id'  => 21,
 			'mapProviderId' => 7, 
 			'languageId' => 3,
-			'text' => 'Ortho Wallonie 2012-13 couleur 25m pixel',
+			'text' => 'Images aériennes géoréférencées couleurs RGB',
 			'name' => 'Ortho Wallonie 2012-13 couleur 25m pixel',
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
@@ -557,7 +607,7 @@ class MapProviderTextsTableSeeder extends Seeder {
 			'id'  => 22,
 			'mapProviderId' => 1, 
 			'languageId' => 4,
-			'text' => 'OSM',
+			'text' => 'OpenStreetMap map',
 			'name' => 'OSM',
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
@@ -568,7 +618,7 @@ class MapProviderTextsTableSeeder extends Seeder {
 			'id'  => 23,
 			'mapProviderId' => 2, 
 			'languageId' => 4,
-			'text' => 'Vegetation Index [NDVI]',
+			'text' => 'Live green vegetation density map. <a href=\"http://www.icc.cat/eng/Home-ICC/Mapas-escolares-y-divulgacion/Preguntas-frecuentes/Que-es-NDVI\" target=\"_blank\"><i class=\"fa fa-external-link\"></i></a>',
 			'name' => 'Vegetation Index [NDVI]',
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
@@ -579,7 +629,7 @@ class MapProviderTextsTableSeeder extends Seeder {
 			'id'  => 24,
 			'mapProviderId' => 3, 
 			'languageId' => 4,
-			'text' => 'Corine Land cover 2006 (CLC2006)LAEA',
+			'text' => 'Land covers. <a href=\"http://www.eea.europa.eu/data-and-maps/figures/corine-land-cover-2006-by-country/legend\" target=\"_blank\"><i class=\"fa fa-external-link\"></i></a>',
 			'name' => 'Corine Land cover 2006 (CLC2006)LAEA',
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
@@ -590,8 +640,8 @@ class MapProviderTextsTableSeeder extends Seeder {
 			'id'  => 25,
 			'mapProviderId' => 4, 
 			'languageId' => 4,
-			'text' => 'Orthofoto of Catalonia 1: 2 500',
-			'name' => 'Orthofoto of Catalonia 1: 2 500',
+			'text' => 'Georeferenced aerial images in RGB color',
+			'name' => 'Orthofoto of Catalonia',
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime
@@ -601,8 +651,8 @@ class MapProviderTextsTableSeeder extends Seeder {
 			'id'  => 26,
 			'mapProviderId' => 5, 
 			'languageId' => 4,
-			'text' => 'Topographic map of Catalonia 1: 5000',
-			'name' => 'Topographic map of Catalonia 1: 5000',
+			'text' => 'Cartographic information',
+			'name' => 'Topographic map of Catalonia',
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime
@@ -612,7 +662,7 @@ class MapProviderTextsTableSeeder extends Seeder {
 			'id'  => 27,
 			'mapProviderId' => 6, 
 			'languageId' => 4,
-			'text' => 'Ortho 2009 Flanders color',
+			'text' => 'Orthophotomosaic (8 bits) RGB, 2009',
 			'name' => 'Ortho 2009 Flanders color',
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
@@ -623,8 +673,96 @@ class MapProviderTextsTableSeeder extends Seeder {
 			'id'  => 28,
 			'mapProviderId' => 7, 
 			'languageId' => 4,
-			'text' => 'Ortho Wallonie 2012-13 color 25m pixel',
+			'text' => 'Georeferenced aerial images in RGB color',
 			'name' => 'Ortho Wallonie 2012-13 color 25m pixel',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 29,
+			'mapProviderId' => 8, 
+			'languageId' => 1,
+			'text' => 'Relleu de la superfície terrestre',
+			'name' => 'Global DEM',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 30,
+			'mapProviderId' => 8, 
+			'languageId' => 2,
+			'text' => 'Relieve de la superficie terrestre',
+			'name' => 'Global DEM',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 31,
+			'mapProviderId' => 8, 
+			'languageId' => 3,
+			'text' => 'Relief de la superficie terrestre',
+			'name' => 'Global DEM',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 32,
+			'mapProviderId' => 8, 
+			'languageId' => 4,
+			'text' => 'Elevation of earth surface',
+			'name' => 'Global DEM',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 33,
+			'mapProviderId' => 9, 
+			'languageId' => 1,
+			'text' => 'Mapa de la vigorositat de la vegetació',
+			'name' => 'Global NDVI',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 34,
+			'mapProviderId' => 9, 
+			'languageId' => 2,
+			'text' => 'Mapa de la vigorosidad de la vegetación',
+			'name' => 'Global NDVI',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 35,
+			'mapProviderId' => 9, 
+			'languageId' => 3,
+			'text' => 'Cartographie de le vigueur végétative',
+			'name' => 'Global NDVI',
+			'creatorId' => 1,
+			'created_at' => new DateTime,   
+			'updated_at' => new DateTime
+		));
+
+		DB::table('MapProviderTexts')->insert(array(
+			'id'  => 36,
+			'mapProviderId' => 8, 
+			'languageId' => 4,
+			'text' => 'Live green vegetation density map',
+			'name' => 'Global NDVI',
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime
@@ -923,37 +1061,6 @@ class IASImagesTextTableSeeder extends Seeder {
 
 }
 
-class IASRelatedDBsTableSeeder extends Seeder {
- 
-	public function run()
-	{
-	
-		DB::table('IASRelatedDBs')->insert(array(
-			'id'  => 1,
-			'repoId' => 1,
-			'IASId' => 1,
-			'URL' => 'http://relatedDB.url',
-			'name' => 'related1',
-			'creatorId' => 1,
-			'created_at' => new DateTime,
-			'updated_at' => new DateTime
-		));
-
-		DB::table('IASRelatedDBs')->insert(array(
-			'id'  => 2,
-			'repoId' => 1,
-			'IASId' => 1,
-			'URL' => 'http://relatedDB2.url',
-			'name' => 'related2',
-			'creatorId' => 1,
-			'created_at' => new DateTime,
-			'updated_at' => new DateTime
-		));
-
-	}
-
-}
-
 class IASTaxonsTableSeeder extends Seeder {
  
 	public function run()
@@ -961,8 +1068,6 @@ class IASTaxonsTableSeeder extends Seeder {
 	
 		DB::table('IASTaxons')->insert(array(
 			'id'  => 0,
-			'languageId' => 1,
-			'name' => 'Flora',
 			'appInnerColor' => 'rgba(0,255,153,0.5)',
 			'appOuterColor' => 'rgba(153,255,51,0.7)',
 			'creatorId' => 1,
@@ -972,8 +1077,6 @@ class IASTaxonsTableSeeder extends Seeder {
 
 		DB::table('IASTaxons')->insert(array(
 			'id'  => 1,
-			'languageId' => 1,
-			'name' => 'Animals',
 			'appInnerColor' => '#ED1C24',
 			'appOuterColor' => '#F15A24',
 			'creatorId' => 1,
@@ -983,8 +1086,6 @@ class IASTaxonsTableSeeder extends Seeder {
 
 		DB::table('IASTaxons')->insert(array(
 			'id'  => 2,
-			'languageId' => 1,
-			'name' => 'Invertebrats no artròpodes',
 			'appInnerColor' => 'rgba(41,171,226,0.5)',
 			'appOuterColor' => 'rgba(0,255,255,0.7)',
 			'parentTaxonId' => 1,
@@ -995,8 +1096,6 @@ class IASTaxonsTableSeeder extends Seeder {
 
 		DB::table('IASTaxons')->insert(array(
 			'id'  => 3,
-			'languageId' => 1,
-			'name' => 'Artròpodes no crustacis',
 			'appInnerColor' => 'rgba(237,28,36,0.5)',
 			'appOuterColor' => 'rgba(241,90,36,0.7)',
 			'parentTaxonId' => 1,
@@ -1007,8 +1106,6 @@ class IASTaxonsTableSeeder extends Seeder {
 
 		DB::table('IASTaxons')->insert(array(
 			'id'  => 4,
-			'languageId' => 1,
-			'name' => 'Crustacis',
 			'appInnerColor' => 'rgba(51,51,255,0.5)',
 			'appOuterColor' => 'rgba(0,153,255,0.7)',
 			'parentTaxonId' => 1,
@@ -1019,8 +1116,6 @@ class IASTaxonsTableSeeder extends Seeder {
 
 		DB::table('IASTaxons')->insert(array(
 			'id'  => 5,
-			'languageId' => 1,
-			'name' => 'Rèptils',
 			'appInnerColor' => 'rgba(255,153,102,0.5)',
 			'appOuterColor' => 'rgba(255,255,51,0.7)',
 			'parentTaxonId' => 1,
@@ -1031,8 +1126,6 @@ class IASTaxonsTableSeeder extends Seeder {
 
 		DB::table('IASTaxons')->insert(array(
 			'id'  => 6,
-			'languageId' => 1,
-			'name' => 'Aus',
 			'appInnerColor' => 'rgba(153,102,255,0.5)',
 			'appOuterColor' => 'rgba(153,153,255,0.7)',
 			'parentTaxonId' => 1,
@@ -1043,8 +1136,6 @@ class IASTaxonsTableSeeder extends Seeder {
 
 		DB::table('IASTaxons')->insert(array(
 			'id'  => 7,
-			'languageId' => 1,
-			'name' => 'Mamífers',
 			'appInnerColor' => 'rgba(117,76,36,0.5)',
 			'appOuterColor' => 'rgba(198,156,109,0.7)',
 			'parentTaxonId' => 1,
@@ -1057,17 +1148,296 @@ class IASTaxonsTableSeeder extends Seeder {
 
 }
 
-class RepositoriesTableSeeder extends Seeder {
+class IASTaxonNamesTableSeeder extends Seeder {
  
 	public function run()
 	{
 	
-		DB::table('Repositories')->insert(array(
-			'id'  => 1,
-			'name' => 'Repo1',
-			'URL' => 'repo1URL',
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 0,
+			'languageId' => 1,
+			'name' => 'Flora',
 			'creatorId' => 1,
-			'created_at' => new DateTime,   
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 1,
+			'languageId' => 1,
+			'name' => 'Animals',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 2,
+			'languageId' => 1,
+			'name' => 'Invertebrats no artròpodes',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 3,
+			'languageId' => 1,
+			'name' => 'Artròpodes no crustacis',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 4,
+			'languageId' => 1,
+			'name' => 'Crustacis',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 5,
+			'languageId' => 1,
+			'name' => 'Rèptils',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 6,
+			'languageId' => 1,
+			'name' => 'Aus',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 7,
+			'languageId' => 1,
+			'name' => 'Mamífers',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 0,
+			'languageId' => 2,
+			'name' => 'Flora',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 1,
+			'languageId' => 2,
+			'name' => 'Animales',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 2,
+			'languageId' => 2,
+			'name' => 'Invertebrados no artrópodos',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 3,
+			'languageId' => 2,
+			'name' => 'Artrópodos no crustáceos',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 4,
+			'languageId' => 2,
+			'name' => 'Crustáceos',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 5,
+			'languageId' => 2,
+			'name' => 'Reptiles',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 6,
+			'languageId' => 2,
+			'name' => 'Aves',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 7,
+			'languageId' => 2,
+			'name' => 'Mamíferos',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 0,
+			'languageId' => 3,
+			'name' => 'Plantes',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 1,
+			'languageId' => 3,
+			'name' => 'Animals',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 2,
+			'languageId' => 3,
+			'name' => 'Invertébrés non-arthropodes',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 3,
+			'languageId' => 3,
+			'name' => 'Arthropodes non-crustacés',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 4,
+			'languageId' => 3,
+			'name' => 'Crustacés',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 5,
+			'languageId' => 3,
+			'name' => 'Reptiles',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 6,
+			'languageId' => 3,
+			'name' => 'Oiseaux',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 7,
+			'languageId' => 3,
+			'name' => 'Mammifères',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 0,
+			'languageId' => 4,
+			'name' => 'Plants',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 1,
+			'languageId' => 4,
+			'name' => 'Animals',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 2,
+			'languageId' => 4,
+			'name' => 'Non-arthropod invertebrates',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 3,
+			'languageId' => 4,
+			'name' => 'Bugs',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 4,
+			'languageId' => 4,
+			'name' => 'Crustaceans',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 5,
+			'languageId' => 4,
+			'name' => 'Reptiles',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 6,
+			'languageId' => 4,
+			'name' => 'Birds',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
+			'updated_at' => new DateTime
+		));
+
+		DB::table('IASTaxonNames')->insert(array(
+			'taxonId'  => 7,
+			'languageId' => 4,
+			'name' => 'Mammals',
+			'creatorId' => 1,
+			'created_at' => new DateTime,
 			'updated_at' => new DateTime
 		));
 
@@ -1098,7 +1468,7 @@ class StatusTableSeeder extends Seeder {
 
 		DB::table('Status')->insert(array(
 			'id'  => 3,
-			'icon' => 'fa fa-2x fa-cross',
+			'icon' => 'fa fa-2x fa-times',
 			'creatorId' => 1,
 			'created_at' => new DateTime,   
 			'updated_at' => new DateTime

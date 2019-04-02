@@ -11,8 +11,19 @@ class UserController extends RequestController {
 	protected function elements($first, $num)
 	{
 
-		$elements = $this->getElements($first, $num);
-		return Response::json($elements->toJson());
+		if(Auth::check() && Auth::user()->isAdmin)
+		{
+
+			$elements = $this->getElements($first, $num);
+			return Response::json($elements);
+
+		}
+		else
+		{
+
+			App::abort(403);
+
+		}
 
 	}
 
@@ -24,9 +35,6 @@ class UserController extends RequestController {
 	*/
 	protected function showListView($first, $num)
 	{
-
-		$elements = $this->getElements($first, $num);
-		return Response::view('adm/User/list', array('data' => $elements));
 
 	}
 
@@ -61,12 +69,12 @@ class UserController extends RequestController {
 
 		}
 
-		$validator = Validator::make($params, $paramAttribs);
+		$ValidatorUser = Validator::make($params, $paramAttribs);
 
-		if($validator->fails())
+		if($ValidatorUser->fails())
 		{
 
-			$dto->error = $validator->messages()->first();
+			$dto->error = $ValidatorUser->messages()->first();
 
 		}
 		else
@@ -88,7 +96,7 @@ class UserController extends RequestController {
 			$element->touch();
 			$element->save();
 
-			Mail::send('emails.welcome', array('token' => $token), function($message) use ($inMail)
+			Mail::send('emails.welcome', array('token' => $token, 'user' => $inMail), function($message) use ($inMail)
 			{
 
 				$message->to($inMail, '')->subject(Lang::get('email.welcomeSubject').'!');
@@ -203,20 +211,20 @@ class UserController extends RequestController {
 			&& Input::has('admin'))
 		{
 
-			$isValidator = Input::get('validator');
+			$isValidatorUser = Input::get('validator');
 			$element->isExpert = Input::get('expert');
 			$element->isAdmin = Input::get('admin');
 			$element->touch();
 			$element->save();
 
-			$val = IASValidator::userId($element->id)->first();
-			if("true" == $isValidator)
+			$val = ValidatorUser::userId($element->id)->first();
+			if("true" == $isValidatorUser)
 			{
 
 				if(null == $val)
 				{
 
-					$val = new IASValidator(array(
+					$val = new ValidatorUser(array(
 						'userId' => $element->id,
 						'organization' => Input::get('organization'),
 						'creatorId' => Auth::id(),
@@ -364,39 +372,51 @@ class UserController extends RequestController {
 		if(Input::has('imageURL'))
 		{
 
-			//Move the image
-			$originalName = explode("/", $image);
-			$originalName = $originalName[count($originalName) - 1];
-			$desinationFolder = '/users/';
-
-			$nameParts = explode(".", $originalName);
-			$ext = strtoupper($nameParts[count($nameParts)-1]);
-
-			$dbPhotoName = $desinationFolder.'u'.$element->id.'.'.$ext;
-
-			$thumbsPath = './img/thumbs/';
-			$photosPath = './img/fotos/';
-			$pathThumbDesti = $thumbsPath.$dbPhotoName;
-			$pathGranDesti = $photosPath.$dbPhotoName;
-
-			try 
+			if(false !== strpos($image, 'uploads'))
 			{
 
-				rename("./img/uploads/grans/".$originalName,$pathGranDesti);
-				rename("./img/uploads/thumbs/".$originalName,$pathThumbDesti);
+				//Move the image
+				$originalName = explode("/", $image);
+				$originalName = $originalName[count($originalName) - 1];
+				$desinationFolder = '/users/';
+
+				$nameParts = explode(".", $originalName);
+				$ext = strtoupper($nameParts[count($nameParts)-1]);
+
+				$dbPhotoName = $desinationFolder.'u'.$element->id.'.'.$ext;
+
+				$thumbsPath = './img/thumbs/';
+				$photosPath = './img/fotos/';
+				$pathThumbDesti = $thumbsPath.$dbPhotoName;
+				$pathGranDesti = $photosPath.$dbPhotoName;
+
+				try 
+				{
+
+					rename("./img/uploads/grans/".$originalName,$pathGranDesti);
+					rename("./img/uploads/thumbs/".$originalName,$pathThumbDesti);
+
+				}
+				catch(Exception $e)
+				{
+
+					$dbPhotoName = $e->getMessage(); //$element->photoURL;
+
+				}
 
 			}
-			catch(Exception $e)
+			else
 			{
 
-				$dbPhotoName = $e->getMessage();//$element->photoURL;
+				$dbPhotoName = $element->photoURL;
 
 			}
 
 		}
 
 		$element->fullName = $name;
-		$element->languageId = $language;
+		$lang = Language::locale($language)->first();
+		$element->languageId = $lang->id;
 		$element->amIExpert = $isExpert;
 		$element->photoURL = $dbPhotoName;
 		$element->lastConnection = new DateTime();
@@ -427,8 +447,66 @@ class UserController extends RequestController {
 	protected function getElements($first, $num)
 	{
 
-		return User::orderBy('username')
-			->skip($first)->take($num)->get();
+		$query = null;
+		$data = new stdClass();
+		if(Input::has('draw'))
+		{
+
+			try {
+
+				//Datatable request
+				$draw = Input::get('draw');
+				$search = Input::get('search');
+				$orders = Input::get('order');
+				$columns = Input::get('columns');
+				$data->recordsFiltered = count(User::withDataTableRequest($search, $orders, $columns)->get());
+				$users = User::withDataTableRequest($search, $orders, $columns)->skip($first)->take($num)->get();
+				$data->draw = intval($draw);
+				$data->recordsTotal = User::count();
+				for($i=0; $i<count($users); ++$i)
+				{
+
+					$current = $users[$i];
+					$current->DT_RowId = $current->id;
+					$current->photoURL = Config::get('app.urlImgThumbs').$current->photoURL;
+					if(Config::get('app.urlImgThumbs') == $current->photoURL)
+						$current->photoURL = Config::get('app.urlImgThumbs').'/users/user.png';
+					$current->observationNumber = $current->getObservationsNumber();
+					$current->validatedNumber = $current->getValidatedNumber();
+					$ValidatorUser = ValidatorUser::userId($current->id)->first();
+					$current->isValidator = false;
+					if(null != $ValidatorUser)
+					{
+
+						$current->isValidator = true;
+						$current->organization = $ValidatorUser->organization;
+
+					}
+
+					$users[$i] = $current;
+
+				}
+
+				$data->data = $users;
+
+			}
+			catch(Exception $e)
+			{
+
+				$data->error = $e->getMessage();
+
+			}
+
+		}
+		else
+		{
+
+			$data = User::orderBy('username')
+				->skip($first)->take($num)->get();
+
+		}
+
+		return $data;
 
 	}
 
@@ -463,6 +541,7 @@ class UserController extends RequestController {
 	{
 
 		$token = Input::get('token');
+		$lang = Input::get('lang');
 		$data = $this->getBasicData();
 
 		$user = User::activationKey($token)->first();
@@ -470,8 +549,14 @@ class UserController extends RequestController {
 		if ($user != NULL && !$user->isActive)
 		{
 
-			$lang = Language::find($user->languageId);
-			App::setLocale($lang->locale);
+			if('' == $lang)
+			{
+			
+				$lang = Language::find($user->languageId);
+				App::setLocale($lang->locale);
+
+			}
+			
 			return View::make("public/activate", array('data' => $data,
 				'token' => $token, 'userId' => $user->id));
 
@@ -502,7 +587,7 @@ class UserController extends RequestController {
 			$user->touch();
 			$user->save();
 
-			Mail::send('emails.auth.reminder', array('token' => $token), function($message) use ($email)
+			Mail::send('emails.auth.reminder', array('token' => $token, 'user' => $email), function($message) use ($email)
 			{
 
 				$message->to($email, '')->subject(Lang::get('email.passwordReminderSubject').'!');
@@ -550,7 +635,8 @@ class UserController extends RequestController {
 		{
 
 			$lang = Language::find($user->languageId);
-			App::setLocale($lang->locale);
+			if(!Input::has('lang'))
+				App::setLocale($lang->locale);
 			return View::make("public/reset", array('data' => $data,
 				'token' => $token, 'userId' => $user->id));
 
@@ -587,6 +673,8 @@ class UserController extends RequestController {
 			$obj->fullName = $user->fullName;
 			$obj->amIExpert = $user->amIExpert;
 			$user->appKey = $obj->token;
+			$lang = Language::find($user->languageId);
+			$obj->locale = $lang->locale;
 			$user->lastConnection = new DateTime();
 			$user->save();
 

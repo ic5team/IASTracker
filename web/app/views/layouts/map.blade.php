@@ -4,6 +4,8 @@
 	@parent
 	{{ HTML::style('css/lightbox.css'); }}
 	{{ HTML::style('css/leaflet.css'); }}
+	{{ HTML::style('css/MarkerCluster.Default.css'); }}
+	{{ HTML::style('css/MarkerCluster.css'); }}
 	{{ HTML::style('css/bootstrap-switch.min.css'); }}
 	{{ HTML::style('css/bootstrap-datetimepicker.min.css'); }}
 	<?php
@@ -18,6 +20,7 @@ if(property_exists($data, 'isComplete') && !$data->isComplete)
 
 @section('footer_includes')
 	@parent
+	{{ HTML::script('js/jquery.fileDownload.js'); }}
 	{{ HTML::script('js/lightbox.min.js'); }}
 	{{ HTML::script('js/leaflet.js'); }}
 	{{ HTML::script('js/proj4-compressed.js'); }}
@@ -30,7 +33,8 @@ if(property_exists($data, 'isComplete') && !$data->isComplete)
 	{{ HTML::script('js/bootstrap-datetimepicker.min.js'); }}
 	{{ HTML::script('js/catiline.js'); }}
 	{{ HTML::script('js/leaflet.shapefile.js'); }}
-	{{ HTML::script('js/leaflet.google.js'); }}
+	{{ HTML::script('js/leaflet.markercluster.js'); }}
+	{{ HTML::script('js/leaflet.OverlappingMarkerSpiderfier.js'); }}
 	{{ HTML::script('js/jcrop/js/jquery.Jcrop.min.js'); }}
 	{{ HTML::script('js/forms/completa-usuari.js'); }}
 	{{ HTML::script('js/completa-usuari.js'); }}
@@ -79,7 +83,7 @@ if(property_exists($data, 'isComplete') && !$data->isComplete)
 	{
 
 ?>
-	$('#loginModal').modal();
+		$('#loginModal').modal();
 
 <?php
 	}
@@ -173,9 +177,15 @@ if(property_exists($data, 'isComplete') && !$data->isComplete)
 								</div>
 							</div>
 						</div>
+						<div class="row alert alert-warning" id="filterError" style="display: none;">
+							<div class="col-md-12" id="filterErrorMsg">
+							</div>
+						</div>
 						<div class="row">
 							<div class="col-md-12">
 								<button role="button" class="btn btn-large btn-primary" type="button" onclick="filterObs()">{{Lang::get('ui.filter')}}</button>
+								<button role="button" class="btn btn-large btn-primary" type="button" onclick="cleanFilter()">{{Lang::get('ui.cleanFilter')}}</button>
+								<button role="button" class="btn btn-large btn-primary" type="button" data-toggle="modal" data-target="#downloadTypeModal"><i class="fa fa-download"></i></button>
 							</div>
 						</div>
 					</div>
@@ -197,13 +207,22 @@ if(property_exists($data, 'isComplete') && !$data->isComplete)
 				<div class="row">
 					<div class="col-md-12">
 						<input type="checkbox" id="observedCheckBox" class="IASCheck" onclick="showObservations" checked>
+						<span class="observedCircle"></span>
 						<span>{{Lang::get('ui.invasorObserved')}}</span>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-12">
 						<input type="checkbox" id="validatedCheckBox" class="IASCheck" onclick="showValidatedObservations" checked>
+						<span class="validatedCircle"></span>
 						<span>{{Lang::get('ui.observationValidated')}}</span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<input type="checkbox" id="discardedCheckBox" class="IASCheck" onclick="showDiscardedObservations" checked>
+						<span class="discardedCircle"></span>
+						<span>{{Lang::get('ui.observationDiscarded')}}</span>
 					</div>
 				</div>
 <?php
@@ -265,22 +284,13 @@ if(property_exists($data, 'isComplete') && !$data->isComplete)
 			</div>
 		</div>
 		@include('layouts.modals.base')
+		@include('layouts.modals.download')
 <?php
 	if(Auth::check())
 	{
 ?>
 		@include('layouts.modals.info')
 <?php
-	}
-	else
-	{
-
-?>
-		@include('layouts.modals.login')
-		@include('layouts.modals.signup')
-		@include('layouts.modals.remind')
-<?php
-
 	}
 ?>
 	</div>

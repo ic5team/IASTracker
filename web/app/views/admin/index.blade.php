@@ -4,6 +4,8 @@
 	@parent
 	{{ HTML::style('css/bootstrap-switch.min.css'); }}
 	{{ HTML::style('css/bootstrap-datetimepicker.min.css'); }}
+	{{ HTML::style('css/lightbox.css'); }}
+	{{ HTML::style('css/leaflet.css'); }}
 	{{ HTML::style('css/iastracker.admin.css'); }}
 @stop
 
@@ -21,7 +23,7 @@
 	{{ HTML::script('js/bootstrap-datetimepicker.min.js'); }}
 	{{ HTML::script('js/catiline.js'); }}
 	{{ HTML::script('js/leaflet.shapefile.js'); }}
-	{{ HTML::script('js/leaflet.google.js'); }}
+	{{ HTML::script('js/leaflet.OverlappingMarkerSpiderfier.js'); }}
 
 	<script>
 		$('.langButtons').each(function(index) {
@@ -32,18 +34,32 @@
 		});
 	</script>
 
-	{{ HTML::script('js/pages/admin.js'); }}
 @stop
 
 @section('main_wrapper')
 	<div class="container" style="margin-top: 50px;">
-		<div class="col-md-3 menu">
+		<div class="col-md-2 menu">
 			<div class="row">
-				<div class="col-md-12"><a href="{{Config::get('app.url')}}admin" >{{Lang::get('ui.users')}}</a></div>
-				<div class="col-md-12"><a href="{{Config::get('app.url')}}admin/observations" >{{Lang::get('ui.obs')}}</a></div>
+				<div class="col-md-12"><a href="{{Config::get('app.url')}}admin/observations?lang={{App::getLocale()}}" >{{Lang::get('ui.obs')}}</a></div>
 			</div>
+<?php
+	if($data->isAdmin)
+	{
+?>
+			<div class="row">
+				<div class="col-md-12"><a href="{{Config::get('app.url')}}admin/users?lang={{App::getLocale()}}" >{{Lang::get('ui.users')}}</a></div>
+			</div>
+			<div class="row">
+				<div class="col-md-12"><a href="{{Config::get('app.url')}}admin/ias?lang={{App::getLocale()}}" >{{Lang::get('ui.ias')}}</a></div>
+			</div>
+			<div class="row">
+				<div class="col-md-12"><a href="{{Config::get('app.url')}}admin/areas?lang={{App::getLocale()}}" >{{Lang::get('ui.areas')}}</a></div>
+			</div>
+<?php
+	}
+?>	
 		</div>
-		<div class="col-md-9 menu">
+		<div class="col-md-10 menu">
 			<div class="row">
 				<div class="col-md-12">
 					@yield('content')

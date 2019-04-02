@@ -38,6 +38,11 @@
 							<div class="help-block with-errors"></div>
 							<span id="error-nick" class="help-block hidden">Error.</span>
 						</div>
+						<div class="row alert alert-warning">
+							<div class="col-md-12">
+								<i class="fa fa-exclamation-triangle" style="margin-right: 10px;"></i>{{Lang::get('ui.nickPermanent')}}
+							</div>
+						</div>
 						<div class="form-group" id="form-password1">
 							<label for="input-password1">{{Lang::get('ui.password')}}*</label>
 							<input type="password" data-minlength="6" class="form-control" id="input-password1" placeholder="">

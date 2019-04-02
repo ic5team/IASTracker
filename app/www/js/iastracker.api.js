@@ -55,7 +55,7 @@ IASTracker.prototype.AJAXRequest = function(url, doneFunction, method, values)
 	console.log(url);
 	var asObject = this;
 	var xhr = $.ajax({
-			url: url, 
+			url: url + '?lang=' + currentLocale, 
 			type: method, 
 			data: values
 		})
@@ -81,6 +81,13 @@ IASTracker.prototype.AJAXRequest = function(url, doneFunction, method, values)
 
             var status = jqXHR.status;
             asObject.lastErrorMessage = status + ' : ' + errorThrown;
+
+            if(null != doneFunction)
+			{
+
+            	doneFunction({error: asObject.lastErrorMessage })
+
+            }
 
         });
 

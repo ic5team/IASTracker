@@ -1,6 +1,7 @@
-.menu {
-	background-color: #CCC;
-	padding: 20px;
-	border-radius: 6px;
-	overflow: hidden;
+td.details-control {
+    background: url('../images/details_open.png') no-repeat center center;
+    cursor: pointer;
+}
+tr.details td.details-control {
+    background: url('../images/details_close.png') no-repeat center center;
 }

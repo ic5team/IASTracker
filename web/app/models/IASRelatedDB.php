@@ -28,6 +28,13 @@ class IASRelatedDB extends Eloquent {
 		return $this->hasOne('Repository', 'id', 'repoId');
 	}
 
+	public function scopeLastUpdated($query)
+	{
+
+		return $query->orderBy('updated_at', 'DESC');
+
+	}
+
 }
 
 ?>

@@ -12,6 +12,9 @@ class IAS extends Eloquent {
 	 * @var string
 	 */
 	protected $table = 'IAS';
+	protected $softDelete = true;
+	protected $fillable = array('latinName','taxonId', 'creatorId');
+
 
 	/**
 	 * The attributes excluded from the model's JSON form.
@@ -24,6 +27,7 @@ class IAS extends Eloquent {
 	{
 
 		$obj = new stdClass();
+		$langs = Language::all();
 
 		if(null != $this->defaultImageId)
 		{
@@ -31,6 +35,7 @@ class IAS extends Eloquent {
 			$img = IASImage::find($this->defaultImageId);
 			$obj->url = $img->URL;
 			$obj->attribution = $img->attribution;
+			$obj->rotation = $img->rotation;
 			$imgText = IASImageText::withIASImageAndLanguageId(
 				$img->id, $languageId)->first();
 			if(null == $imgText)
@@ -45,6 +50,27 @@ class IAS extends Eloquent {
 				$obj->text = $imgText->text;
 			else
 				$obj->text = "";
+
+			$obj->texts = array();
+			for($i=0; $i<count($langs); ++$i)
+			{
+
+				$imgText = IASImageText::withIASImageAndLanguageId(
+					$img->id, $langs[$i]->id)->first();
+				if(null == $imgText)
+				{
+
+					$imgText = IASImageText::withIASImageAndLanguageId(
+						$img->id, $defaultLanguageId)->first();
+
+				}
+
+				if(null != $imgText)
+					$obj->texts[$langs[$i]->locale] = $imgText->text;
+				else
+					$obj->texts[$langs[$i]->locale] = "";
+
+			}
 
 		}
 
@@ -57,30 +83,59 @@ class IAS extends Eloquent {
 
 		$data = array();
 		$images = IASImage::withIASId($this->id)->get();
+		$langs = Language::all();
 
 		for($i=0; $i<count($images); ++$i)
 		{
 
 			$obj = new stdClass();
 			$img = $images[$i];
-			$obj->url = $img->URL;
-			$obj->attribution = $img->attribution;
-			$imgText = IASImageText::withIASImageAndLanguageId(
-				$img->id, $languageId)->first();
-			if(null == $imgText)
+
+			if($this->defaultImageId != $img->id)
 			{
 
+				$obj->url = $img->URL;
+				$obj->attribution = $img->attribution;
+				$obj->rotation = $img->rotation;
 				$imgText = IASImageText::withIASImageAndLanguageId(
-					$img->id, $defaultLanguageId)->first();
+					$img->id, $languageId)->first();
+				if(null == $imgText)
+				{
+
+					$imgText = IASImageText::withIASImageAndLanguageId(
+						$img->id, $defaultLanguageId)->first();
+
+				}
+
+				if(null != $imgText)
+					$obj->text = $imgText->text;
+				else
+					$obj->text = "";
+
+				$obj->texts = array();
+				for($j=0; $j<count($langs); ++$j)
+				{
+
+					$imgText = IASImageText::withIASImageAndLanguageId(
+						$img->id, $langs[$j]->id)->first();
+					if(null == $imgText)
+					{
+
+						$imgText = IASImageText::withIASImageAndLanguageId(
+							$img->id, $defaultLanguageId)->first();
+
+					}
+
+					if(null != $imgText)
+						$obj->texts[$langs[$j]->locale] = $imgText->text;
+					else
+						$obj->texts[$langs[$j]->locale] = "";
+
+				}
+
+				$data[] = $obj;
 
 			}
-
-			if(null != $imgText)
-				$obj->text = $imgText->text;
-			else
-				$obj->text = "";
-
-			$data[] = $obj;
 
 		}
 
@@ -114,17 +169,57 @@ class IAS extends Eloquent {
 
 	}
 
-	public function getTaxons()
+	public function getDescriptionsData($defaultLanguageId)
+	{
+
+		$langs = Language::all();
+		$descs = array();
+		for($i=0; $i<count($langs); ++$i)
+		{
+
+			$obj = new stdClass();
+			$languageId = $langs[$i]->id;
+
+			$iasDesc = IASDescription::withIASAndLanguageId(
+				$this->id, $languageId)->first();
+			if(null == $iasDesc)
+			{
+
+				$iasDesc = IASDescription::withIASAndLanguageId(
+					$this->id, $defaultLanguageId)->first();
+
+			}
+			$obj->name = $iasDesc->name;
+			$obj->shortDescription = $iasDesc->shortDescription;
+			$obj->sizeLongDescription = $iasDesc->sizeLongDescription;
+			$obj->infoLongDescription = $iasDesc->infoLongDescription;
+			$obj->habitatLongDescription = $iasDesc->habitatLongDescription;
+			$obj->confuseLongDescription = $iasDesc->confuseLongDescription;
+			$obj->longDescription = $iasDesc->sizeLongDescription.' '.$iasDesc->infoLongDescription.' '.$iasDesc->habitatLongDescription.' '.$iasDesc->confuseLongDescription;
+
+			$descs[$langs[$i]->locale] = $obj;
+
+		}
+
+		return $descs;
+
+	}
+
+	public function getTaxons($languageId, $defaultLanguageId)
 	{
 
 		$data = array();
 
 		$taxonId = $this->taxonId;
 
-		while(null != $taxonId)
+		while(null !== $taxonId)
 		{
 
 			$taxon = IASTaxon::find($taxonId);
+			$taxonName = IASTaxonName::withIASTaxonAndLanguageId($taxonId, $languageId)->first();
+			if(null == $taxonName)
+				$taxonName = IASTaxonName::withIASTaxonAndLanguageId($taxonId, $languageId)->first();
+			$taxon->name = $taxonName->name;
 			$taxonId = $taxon->parentTaxonId;
 
 			$data[] = $taxon;
@@ -148,6 +243,7 @@ class IAS extends Eloquent {
 			$repo = $relatedDB->repository;
 			$relatedDB->repoName = $repo->name;
 			$relatedDB->repoURL = $repo->URL;
+			$relatedDB->repoDesc = $repo->description;
 			$data[] = $relatedDB;
 
 		}
@@ -161,7 +257,7 @@ class IAS extends Eloquent {
 
 		return $query->join('observations', 'IAS.id', '=', 'observations.IASId')
 			->where('observations.userId', '=', $userId)
-			->select('IAS.*');
+			->select('IAS.*')->distinct();
 
 	}
 
@@ -183,6 +279,13 @@ class IAS extends Eloquent {
 	{
 
 		return $query->orderBy('latinName', 'ASC');
+
+	}
+
+	public function scopeWithDataTableRequest($query, $search, $orders, $columns)
+	{
+
+		return $query->whereRaw('lower("latinName") LIKE lower(\'%'.$search['value'].'%\')')->orderBy($columns[$orders[0]['column']]['data'], $orders[0]['dir']);
 
 	}
 

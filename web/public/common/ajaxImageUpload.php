@@ -11,7 +11,7 @@ $directory_self = str_replace(basename($_SERVER['PHP_SELF']), '', $_SERVER['PHP_
 
 $uploadsDirectoryThumbs = '../img/uploads/thumbs/';
 $uploadsDirectoryGrans = '../img/uploads/grans/';
-$uploadsURL = $_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT'].'/IASTracker/img/uploads/';
+$uploadsURL = $_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT'].'/img/uploads/';
 $fieldName = 'image'; 
 $thumbWidth = 450;
 $thumbHeight = 300;
@@ -68,14 +68,12 @@ if(isset($_FILES[$fieldName]))
 	      				imagecopyresized($tmpImg, $img, 0, 0, 0, 0, $newWidth, $newHeight, 
 	      					$width, $height);
 
+						$key = '';
+						$keys = array_merge(range(0, 9), range('a', 'z'));
 
-	    $key = '';
-	    $keys = array_merge(range(0, 9), range('a', 'z'));
-
-	    for ($i = 0; $i < 10; $i++) {
-	        $key .= $keys[array_rand($keys)];
-	    }
-
+						for ($i = 0; $i < 10; $i++) {
+							$key .= $keys[array_rand($keys)];
+						}
 
 	      				$imageName = $key.'.jpg';
 	      				imagejpeg($tmpImg, $uploadsDirectoryThumbs.$imageName, 75);

@@ -1,0 +1,113 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.4.4
+-- Dumped by pg_dump version 9.4.4
+-- Started on 2015-10-31 20:08:36
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 214 (class 1259 OID 456396)
+-- Name: IASTaxonNames; Type: TABLE; Schema: public; Owner: iastracker; Tablespace: 
+--
+
+CREATE TABLE "IASTaxonNames" (
+    "taxonId" integer NOT NULL,
+    "languageId" integer NOT NULL,
+    name character varying(255) NOT NULL,
+    "creatorId" integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE "IASTaxonNames" OWNER TO iastracker;
+
+--
+-- TOC entry 3378 (class 0 OID 456396)
+-- Dependencies: 214
+-- Data for Name: IASTaxonNames; Type: TABLE DATA; Schema: public; Owner: iastracker
+--
+
+COPY "IASTaxonNames" ("taxonId", "languageId", name, "creatorId", created_at, updated_at) FROM stdin;
+0	1	Flora	1	2015-10-31 19:37:49	2015-10-31 19:37:49
+1	1	Animals	1	2015-10-31 19:37:49	2015-10-31 19:37:49
+2	1	Invertebrats no artròpodes	1	2015-10-31 19:37:49	2015-10-31 19:37:49
+3	1	Artròpodes no crustacis	1	2015-10-31 19:37:49	2015-10-31 19:37:49
+4	1	Crustacis	1	2015-10-31 19:37:49	2015-10-31 19:37:49
+5	1	Rèptils	1	2015-10-31 19:37:49	2015-10-31 19:37:49
+6	1	Aus	1	2015-10-31 19:37:49	2015-10-31 19:37:49
+7	1	Mamífers	1	2015-10-31 19:37:49	2015-10-31 19:37:49
+0	2	Flora	1	2015-10-31 19:37:49	2015-10-31 19:37:49
+1	2	Animales	1	2015-10-31 19:37:49	2015-10-31 19:37:49
+2	2	Invertebrados no artrópodos	1	2015-10-31 19:37:49	2015-10-31 19:37:49
+3	2	Artrópodos no crustáceos	1	2015-10-31 19:37:49	2015-10-31 19:37:49
+4	2	Crustáceos	1	2015-10-31 19:37:49	2015-10-31 19:37:49
+5	2	Reptiles	1	2015-10-31 19:37:49	2015-10-31 19:37:49
+6	2	Aves	1	2015-10-31 19:37:49	2015-10-31 19:37:49
+7	2	Mamíferos	1	2015-10-31 19:37:49	2015-10-31 19:37:49
+0	3	Plantes	1	2015-10-31 19:37:49	2015-10-31 19:37:49
+1	3	Animals	1	2015-10-31 19:37:49	2015-10-31 19:37:49
+2	3	Invertébrés non-arthropodes	1	2015-10-31 19:37:49	2015-10-31 19:37:49
+3	3	Arthropodes non-crustacés	1	2015-10-31 19:37:49	2015-10-31 19:37:49
+4	3	Crustacés	1	2015-10-31 19:37:49	2015-10-31 19:37:49
+5	3	Reptiles	1	2015-10-31 19:37:49	2015-10-31 19:37:49
+6	3	Oiseaux	1	2015-10-31 19:37:49	2015-10-31 19:37:49
+7	3	Mammifères	1	2015-10-31 19:37:49	2015-10-31 19:37:49
+0	4	Plants	1	2015-10-31 19:37:49	2015-10-31 19:37:49
+1	4	Animals	1	2015-10-31 19:37:49	2015-10-31 19:37:49
+2	4	Non-arthropod invertebrates	1	2015-10-31 19:37:49	2015-10-31 19:37:49
+3	4	Bugs	1	2015-10-31 19:37:49	2015-10-31 19:37:49
+4	4	Crustaceans	1	2015-10-31 19:37:49	2015-10-31 19:37:49
+5	4	Reptiles	1	2015-10-31 19:37:49	2015-10-31 19:37:49
+6	4	Birds	1	2015-10-31 19:37:49	2015-10-31 19:37:49
+7	4	Mammals	1	2015-10-31 19:37:49	2015-10-31 19:37:49
+\.
+
+
+--
+-- TOC entry 3261 (class 2606 OID 457935)
+-- Name: iastaxonnames_creatorid_foreign; Type: FK CONSTRAINT; Schema: public; Owner: iastracker
+--
+
+ALTER TABLE ONLY "IASTaxonNames"
+    ADD CONSTRAINT iastaxonnames_creatorid_foreign FOREIGN KEY ("creatorId") REFERENCES "Users"(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 3260 (class 2606 OID 457930)
+-- Name: iastaxonnames_languageid_foreign; Type: FK CONSTRAINT; Schema: public; Owner: iastracker
+--
+
+ALTER TABLE ONLY "IASTaxonNames"
+    ADD CONSTRAINT iastaxonnames_languageid_foreign FOREIGN KEY ("languageId") REFERENCES "Languages"(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 3259 (class 2606 OID 457925)
+-- Name: iastaxonnames_taxonid_foreign; Type: FK CONSTRAINT; Schema: public; Owner: iastracker
+--
+
+ALTER TABLE ONLY "IASTaxonNames"
+    ADD CONSTRAINT iastaxonnames_taxonid_foreign FOREIGN KEY ("taxonId") REFERENCES "IASTaxons"(id) ON DELETE CASCADE;
+
+
+-- Completed on 2015-10-31 20:08:36
+
+--
+-- PostgreSQL database dump complete
+--
+

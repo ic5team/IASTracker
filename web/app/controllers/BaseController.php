@@ -15,6 +15,25 @@ class BaseController extends Controller {
 
 	}
 
+	/*!
+		Obté la instància de la classe BaseController
+		@return La única instància de la classe BaseController
+	*/
+	public static function getInstance()
+	{
+
+		static $inst = null;
+		if($inst === null)
+		{
+
+			$inst = new BaseController();
+
+		}
+
+		return $inst;
+
+	}
+
 	public function getBasicData()
 	{
 
@@ -31,6 +50,7 @@ class BaseController extends Controller {
 		$data = new stdClass();
 		$data->isLogged = false;
 		$data->isAdmin = false;
+		$data->isValidatorUser = false;
 
 		if(Auth::check())
 		{
@@ -52,6 +72,7 @@ class BaseController extends Controller {
 				$data->verifiedObservationsPC = 0;
 				$data->usrId = $user->id;
 				$data->isComplete = (null != $user->fullName);
+				$data->isValidatorUser = (null != ValidatorUser::userId($user->id)->first());
 
 			}
 			else

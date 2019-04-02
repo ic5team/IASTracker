@@ -48,6 +48,14 @@ Log::useFiles(storage_path().'/logs/laravel.log');
 
 App::error(function(Exception $exception, $code)
 {
+	if($code == 403){
+		$data = BaseController::getInstance()->getBasicData();
+		return View::make("public/general/403", array('data' => $data));
+	}
+	else if( $code == 404){
+		$data = BaseController::getInstance()->getBasicData();
+		return View::make("public/general/404", array('data' => $data));
+	}
 	Log::error($exception);
 });
 

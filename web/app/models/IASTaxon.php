@@ -19,7 +19,16 @@ class IASTaxon extends Eloquent {
 	public function scopeWithLanguageId($query, $languageId)
 	{
 
-		return $query->where('languageId', '=', $languageId);
+		return $query->join('IASTaxonNames', 'taxonId', '=', 'id')
+			->where('languageId', '=', $languageId);
+
+	}
+
+	public function scopeWithTaxonAndLanguageId($query, $taxonId, $languageId)
+	{
+
+		return $query->join('IASTaxonNames', 'taxonId', '=', 'id')
+			->where('languageId', '=', $languageId)->where('taxonId', '=', $taxonId);
 
 	}
 
@@ -69,6 +78,50 @@ class IASTaxon extends Eloquent {
 
 		}
 		return $ids;
+
+	}
+
+	public function getName($languageId, $defaultLanguageId)
+	{
+
+		$taxonName = IASTaxonName::withIASTaxonAndLanguageId(
+			$this->id, $languageId)->first();
+		if(null == $taxonName)
+		{
+
+			$taxonName = IASTaxonName::withIASTaxonAndLanguageId(
+				$this->id, $defaultLanguageId)->first();
+
+		}
+
+		return $taxonName->name;
+
+	}
+
+	public function getNames($defaultLanguageId)
+	{
+
+		$langs = Language::all();
+		$names = array();
+
+		for($i=0; $i<count($langs); ++$i)
+		{
+
+			$taxonName = IASTaxonName::withIASTaxonAndLanguageId(
+				$this->id, $langs[$i]->id)->first();
+			if(null == $taxonName)
+			{
+
+				$taxonName = IASTaxonName::withIASTaxonAndLanguageId(
+					$this->id, $defaultLanguageId)->first();
+
+			}
+
+			$names[$langs[$i]->locale] = $taxonName->name;
+
+		}
+
+		return $names;
 
 	}
 

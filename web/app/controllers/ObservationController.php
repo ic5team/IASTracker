@@ -17,6 +17,230 @@ class ObservationController extends RequestController {
 	protected function elements($first, $num)
 	{
 
+		$elements = null;
+
+		if(!Input::has('isDownload'))
+		{
+
+			if(Input::has('draw'))
+			{
+
+				$elements = $this->getDataTablesData($first, $num);
+
+			}
+			else
+			{
+
+				$elements = $this->getFilteredData($first, $num);
+
+			}
+
+			return Response::json($elements);
+		}
+		else
+		{
+
+			return $this->getFilteredData($first, $num);
+
+		}
+
+	}
+
+	protected function getDataTablesData($first, $num)
+	{
+
+		if(Auth::check())
+		{
+
+			try {
+
+				//Datatable request
+				$data = new stdClass();
+				$draw = Input::get('draw');
+				$search = Input::get('search');
+				$orders = Input::get('order');
+				$columns = Input::get('columns');
+				$viewValidated = 'true' == Input::get('viewValidated');
+				$viewDiscarded = 'true' == Input::get('viewDiscarded');
+				$viewDeleted = 'true' == Input::get('viewDeleted');
+				$viewPending = 'true' == Input::get('viewPending');
+				$viewOutOfBounds = 'true' == Input::get('viewOutOfBounds');
+
+				$obs = null;
+				$numTotals = Observation::count();
+				$bIsValidatorUser = false;
+
+				if(Auth::user()->isAdmin)
+				{
+
+					//Show all the observations
+					$query = Observation::withDataTableRequest($search, $orders, $columns)
+						->statuses($viewValidated, $viewDiscarded, $viewDeleted, $viewPending);
+					$numFiltered = count($query->get());
+
+					$ValidatorUser = ValidatorUser::userId(Auth::user()->id)->first();
+					if(null != $ValidatorUser)
+					{
+
+						$bIsValidatorUser = true;
+
+					}
+
+				}
+				else
+				{
+
+					$ValidatorUser = ValidatorUser::userId(Auth::user()->id)->first();
+					if(null != $ValidatorUser)
+					{
+
+						//Show the observations from areas the user can validate
+						$areas = AreaValidator::withValidatorId($ValidatorUser->userId)->get();
+						$areasIds = array();
+						for($i=0; $i<count($areas); ++$i)
+						{
+
+							$areasIds[] =$areas[$i]->areaId;
+
+						}
+
+						//Show the observations from IAS the user can validate
+						$ias = IASValidator::withValidatorId($ValidatorUser->userId)->get();
+						$ids = array();
+						for($i=0; $i<count($ias); ++$i)
+						{
+
+							$ids[] =$ias[$i]->IASId;
+
+						}
+
+						$query = Observation::withDataTableRequest($search, $orders, $columns)
+							->statuses($viewValidated, $viewDiscarded, $viewDeleted, $viewPending)
+							->ias($ids);
+
+						if(!$viewOutOfBounds && 0 != count($areas))
+						{
+
+							$query->areas($areasIds);
+							
+						}
+
+						$numFiltered = count($query->get());
+						$bIsValidatorUser = true;
+
+					}
+					else
+					{
+
+						//Get our observations
+						$query = Observation::withDataTableRequest($search, $orders, $columns)
+							->statuses($viewValidated, $viewDiscarded, $viewDeleted, $viewPending)
+							->withUserId(Auth::user()->id);
+						$numFiltered = count($query->get());
+
+					}
+
+				}
+
+				$obs = $query->skip($first)->take($num)->get();
+				$data->draw = intval($draw);
+				$data->recordsTotal = $numTotals;
+				$languageId = Language::locale(App::getLocale())->first()->id;
+				$configuration = Configuration::find(1);
+				$defaultLanguageId = $configuration->defaultLanguageId;
+				for($i=0; $i<count($obs); ++$i)
+				{
+
+					$current = $obs[$i];
+					$current->DT_RowId = $current->id;
+					$current->observations = new stdClass();
+					$current->observations->created_at = $current->created_at->format('Y-m-d H:i:s');
+					$current->ias = new stdClass();
+					$current->ias = IAS::find($current->IASId);
+					$current->ias->description = $current->ias->getDescriptionData($languageId, $defaultLanguageId);
+					$current->ias->image = $current->ias->getDefaultImageData($languageId, $defaultLanguageId);
+					$current->images = ObservationImage::withObservationId($current->id)->get();
+					$current->canBeValidated = $bIsValidatorUser;
+					$current->validateText = Lang::get('ui.validate');
+					$current->discardText = Lang::get('ui.discard');
+					$current->undoValidateText = Lang::get('ui.undoValidate');
+
+					if(null != $current->deleted_at)
+					{
+
+						$current->statusIcon = '';
+						$current->statusId = 4;
+
+					}
+					else
+					{
+
+						$current->statusIcon = $current->icon;
+
+					}
+					$user = User::find($current->userId);
+					if(null != $user)
+					{
+
+						$current->user = $user->username;
+
+					}
+					else
+					{
+
+						$current->user = Lang::get('ui.userUnknown');
+						
+					}
+
+					if(null != $current->validatorId)
+					{
+
+						$ValidatorUser = ValidatorUser::find($current->validatorId);
+						if(null != $ValidatorUser)
+						{
+
+							$user = User::withTrashed()->find($ValidatorUser->userId);
+							$current->validatorName = $user->fullName;
+							$current->validatorOrg = $ValidatorUser->organization;
+
+						}
+
+					}
+
+					$current->canDelete = ($current->userId == Auth::user()->id) || $bIsValidatorUser;
+					$current->canRotate = ($current->userId == Auth::user()->id) || $bIsValidatorUser;
+
+					$current->innerHtml = View::make('admin/innerObservation', array('current' => $current))->render();
+					$obs[$i] = $current;
+
+				}
+
+				$data->recordsFiltered = $numFiltered;
+				$data->data = $obs;
+
+			}
+			catch(Exception $e)
+			{
+
+				$data->error = $e->getMessage();
+
+			}
+
+		}
+		else
+		{
+
+			App::abort(403);
+
+		}
+
+		return $data;
+
+	}
+
+	protected function getFilteredData($first, $num)
+	{
+
 		$taxonomyId = Input::has('taxonomyId') ? Input::get('taxonomyId') : -1;
 		$fromDate = Input::has('fromDate') ? Input::get('fromDate') : '1970-01-01';
 		$toDate = Input::has('toDate') ? Input::get('toDate') : (new DateTime())->format('Y-m-d');
@@ -68,20 +292,26 @@ class ObservationController extends RequestController {
 				$areaIds[] = $areas[$i]->areaId;
 
 		}
-		else
-		{
-
-			$areas = Area::all();
-
-			for($i=0; $i<count($areas); ++$i)
-				$areaIds[] = $areas[$i]->id;
-
-		}
 
 		$elements = $this->getFilteredElements($first, $num, $taxonsId, $fromDate, 
 			$toDate, $areaIds);
 
-		return Response::json($elements->toJson());
+		if(Input::has('isDownload') && Input::get('isDownload'))
+		{
+
+			//Generate the kml file
+			if(Input::has('fileType') && ("csv" == Input::get('fileType')))
+				return $this->generateCSV($elements);
+			else
+				return $this->generateKML($elements);
+
+		}
+		else
+		{
+
+			return $elements->toJson();
+
+		}
 
 	}
 
@@ -94,8 +324,6 @@ class ObservationController extends RequestController {
 	protected function showListView($first, $num)
 	{
 
-		$elements = $this->getElements($first, $num);
-		return Response::view('adm/Obs/list', array('data' => $elements));
 
 	}
 
@@ -106,7 +334,6 @@ class ObservationController extends RequestController {
 	protected function showCreateForm()
 	{
 
-		return Response::view('adm/Obs/create');
 
 	}
 
@@ -145,6 +372,7 @@ class ObservationController extends RequestController {
 			$images = Input::get('observationImages');
 			$userId = null;
 			$languageId = null;
+			$user = null;
 
 			if(Input::has('token'))
 			{
@@ -173,11 +401,10 @@ class ObservationController extends RequestController {
 				'howMany' => Input::get('number')
 			));
 
-			if($user->isExpert)
+			if(null != $user && $user->isExpert)
 			{
 
-				$element->validatorId = $userId;
-				$element->validatorTS = new DateTime();
+				$element->isAutoValidated = true;
 				$element->statusId = 1;
 
 			}
@@ -240,26 +467,68 @@ class ObservationController extends RequestController {
 		if(NULL != $element)
 		{
 
-			$languageId = Language::locale(App::getLocale())->first()->id;
-			$configuration = Configuration::find(1);
-			$defaultLanguageId = $configuration->defaultLanguageId;
-
-			$data = $element;
-			$ias = $element->IAS;
-			$data->latinName = $ias->latinName;
-			$data->description = $ias->getDescriptionData($languageId, $defaultLanguageId);
-			$data->taxons = $ias->getTaxons();
-			$data->image = $ias->getDefaultImageData($languageId, $defaultLanguageId);
-			$data->user = $element->user;
-			$data->status = $element->getStatus($languageId, $defaultLanguageId);
-			$data->images = $element->observationImages;
-
-			$output = new stdClass();
-			$output->html = View::make('public/Obs/element', array('data' => $data))->render();
-
+			$output = $this->buildResource($element, false);
 			return json_encode($output);
 
 		}
+
+	}
+
+	protected function buildResource($element, $addData)
+	{
+
+		$languageId = Language::locale(App::getLocale())->first()->id;
+		$configuration = Configuration::find(1);
+		$defaultLanguageId = $configuration->defaultLanguageId;
+
+		$data = $element;
+		$ias = $element->IAS;
+		$data->latinName = $ias->latinName;
+		$data->description = $ias->getDescriptionData($languageId, $defaultLanguageId);
+		$data->taxons = $ias->getTaxons($languageId, $defaultLanguageId);
+		$data->image = $ias->getDefaultImageData($languageId, $defaultLanguageId);
+
+		if(null != $element->userId)
+		{
+
+			$user = User::find($element->userId);
+			if(null != $user)
+			{
+
+				$data->user = $user;
+				if('' == $user->photoURL)
+					$user->photoURL = '/users/user.png';
+
+			}
+
+		}
+
+		if(null != $element->validatorId)
+		{
+
+			$ValidatorUser = ValidatorUser::find($element->validatorId);
+			if(null != $ValidatorUser)
+			{
+
+				$user = User::withTrashed()->find($ValidatorUser->userId);
+				$data->validatorName = $user->fullName;
+				$data->validatorOrg = $ValidatorUser->organization;
+
+			}
+
+		}
+
+		$data->status = $element->getStatus($languageId, $defaultLanguageId);
+		$data->images = $element->observationImages;
+
+		$output = new stdClass();
+		$output->html = View::make('public/Obs/element', array('data' => $data))->render();
+
+		if($addData)
+			$output->data = $data;
+
+
+		return $output;
 
 	}
 
@@ -270,9 +539,6 @@ class ObservationController extends RequestController {
 	*/
 	protected function showResourceView($id)
 	{
-
-		$element = $this->getElements($id);
-		return Response::view('adm/Obs/element', array('data' => $element));
 
 	}
 
@@ -288,14 +554,35 @@ class ObservationController extends RequestController {
 		if(Input::has('status') && Auth::check())
 		{
 
-			$user = Auth::user();
-			$element->validatorId = $user->id;
-			$element->validatorTS = new DateTime();
-			$element->statusId = Input::get('status');
-			$element->touch();
-			$element->save();
+			$ValidatorUser = ValidatorUser::userId(Auth::user()->id)->first();
+			if(null != $ValidatorUser)
+			{
 
-			return json_encode($id);
+				$element->statusId = Input::get('status');
+				if(2 != Input::get('status'))
+				{
+
+					$user = Auth::user();
+					$element->validatorId = $user->id;
+					$element->validatorTS = new DateTime();
+					$element->validationText = Input::get('text');
+
+				}
+				else
+				{
+
+					$element->validatorId = null;
+					$element->validatorTS = null;
+					$element->validationText = null;
+
+				}
+
+				$element->touch();
+				$element->save();
+
+				return json_encode($id);
+
+			}
 
 		}
 
@@ -308,7 +595,72 @@ class ObservationController extends RequestController {
 	protected function deleteResource($id)
 	{
 
-		Observation::destroy($id);
+		if(Auth::check() && Auth::user()->isAdmin)
+		{
+
+			$obs = Observation::find($id);
+			$obs->delete();
+
+		}
+
+	}
+
+	public function updateImage($id, $imageId)
+	{
+
+		if(Input::has('angle') && Auth::check())
+		{
+
+			$ValidatorUser = ValidatorUser::userId(Auth::user()->id)->first();
+			if(null != $ValidatorUser || Auth::user()->isAdmin)
+			{
+
+				//We store the rotation on the database because imagecreatefromjpeg removes exif data
+				$image = ObservationImage::find($imageId);
+				$image->rotation = Input::get('angle');
+				$image->touch();
+				$image->save();
+
+				return Response::json(true);
+
+			}
+
+		}
+
+	}
+
+	public function destroyImage($id, $imageId)
+	{
+
+		if(Auth::check())
+		{
+
+			$obs = Observation::find($id);
+			$bIsValidatorUser = false;
+			$ValidatorUser = ValidatorUser::userId(Auth::user()->id)->first();
+			if(null != $ValidatorUser)
+			{
+
+				$bIsValidatorUser = true;
+
+			}
+
+			if($obs->userId == Auth::user()->id || $bIsValidatorUser)
+			{
+
+				$image = ObservationImage::find($imageId);
+				if($obs->id == $image->observationId)
+				{
+
+					unlink('./img/fotos/observations/'.$image->URL);
+					$image->delete();
+					return Response::json(true);
+
+				}
+
+			}
+
+		}
 
 	}
 
@@ -345,6 +697,185 @@ class ObservationController extends RequestController {
 			->skip($first)->take($num)->get();
 
 		return $values;
+
+	}
+
+	protected function generateKML($observations)
+	{
+
+		if(0 == count($observations))
+		{
+
+			$data = new stdClass();
+			$data->error = Lang::get('ui.noObservations');
+			return json_encode($data);
+
+		}
+		else
+		{
+
+			setcookie('fileDownload', 'true', 0 , '/');
+			$folders = array();
+
+			for($i=0; $i<count($observations); ++$i)
+			{
+
+				$currentFolder = null;
+				$current = $observations[$i];
+				$resource = $this->buildResource($current, true);
+
+				if(1 == $current->statusId)	//Only download the validated data
+				{
+
+					if(array_key_exists($resource->data->latinName, $folders))
+					{
+
+						$currentFolder = $folders[$resource->data->latinName];
+
+					}
+					else
+					{
+
+						$currentFolder = array();
+
+					}
+
+					$currentFolder[] = $resource;
+					$folders[$resource->data->latinName] = $currentFolder;
+
+				}
+
+			}
+
+			$kml = '<?xml version="1.0" encoding="UTF-8"?>
+					<kml xmlns="http://www.opengis.net/kml/2.2">
+	  					<Document>
+							<name>IASTracker Observations</name>
+							<open>1</open>
+							<description>Observations from IC5Team\'s IASTracker project at iastracker.ic5team.org</description>
+							<Folder>
+	  							<name>Validated Observations</name>
+							';
+
+			$keys = array_keys($folders);
+			for($i=0; $i<count($folders); ++$i)
+			{
+
+				$currentFolder = $folders[$keys[$i]];
+				$kml .= '		<Folder>
+									<name>'.$keys[$i].'</name>
+	  								';
+				for($j=0; $j<count($currentFolder); ++$j)
+				{
+
+					$current = $currentFolder[$j];
+					$kml .= '		<Placemark>
+										<name>'.(property_exists($current->data, 'user') ? $current->data->user->username : '').' '.$current->data->created_at.'</name>
+	        							<visibility>1</visibility>
+	        							<aux>234</aux>
+	        							<description><![CDATA[ <table width="800">'.$current->html.'</table>]]></description>
+										<Point>
+											<coordinates>'.$current->data->longitude.','.$current->data->latitude.',0</coordinates>
+										</Point>
+									</Placemark>
+						';
+
+				}
+
+				$kml .= '		</Folder>
+						';
+
+			}
+
+			$kml .= '		</Folder>
+						</Document>
+					</kml>';
+
+			$resp = Response::make($kml);
+			$resp->header('Content-Type', 'application/vnd.google-earth.kml+xml');
+
+			return $resp;
+
+		}
+
+	}
+
+	protected function generateCSV($observations)
+	{
+
+		if(0 == count($observations))
+		{
+
+			$data = new stdClass();
+			$data->error = Lang::get('ui.noObservations');
+			return json_encode($data);
+
+		}
+		else
+		{
+
+			setcookie('fileDownload', 'true', 0 , '/');
+			$folders = array();
+
+			for($i=0; $i<count($observations); ++$i)
+			{
+
+				$currentFolder = null;
+				$current = $observations[$i];
+				$resource = $this->buildResource($current, true);
+
+				if(1 == $current->statusId)	//Only download the validated data
+				{
+
+					if(array_key_exists($resource->data->latinName, $folders))
+					{
+
+						$currentFolder = $folders[$resource->data->latinName];
+
+					}
+					else
+					{
+
+						$currentFolder = array();
+
+					}
+
+					$currentFolder[] = $resource;
+					$folders[$resource->data->latinName] = $currentFolder;
+
+				}
+
+			}
+
+			$csv = '"Latin name","Common name","Latitude","Longitude","Title","Description"
+';
+
+			$keys = array_keys($folders);
+			for($i=0; $i<count($folders); ++$i)
+			{
+
+				$currentFolder = $folders[$keys[$i]];
+				for($j=0; $j<count($currentFolder); ++$j)
+				{
+
+					$current = $currentFolder[$j];
+					$csv .= '"'.$keys[$i].'","'.utf8_decode($current->data->description->name).'","'
+						.$current->data->latitude.'","'.$current->data->longitude.'","'
+						.(property_exists($current->data, 'user') ? $current->data->user->username : '').' '.$current->data->created_at.'","'
+						.utf8_decode(str_replace('"', '', $current->data->notes)).'"
+';
+
+				}
+
+			}
+
+			$resp = Response::make($csv);
+			$resp->header('Content-Type', 'text/csv');
+			$resp->header('Content-Disposition', 'attachment; filename="observations.csv"');
+
+			return $resp;
+
+		}
 
 	}
 

@@ -16,10 +16,24 @@ class AreaValidator extends Eloquent {
 	 */
 	protected $hidden = array();
 
-	public function scopeValidatorId($query, $id)
+	public function scopeWithValidatorId($query, $id)
 	{
 
-		return $query->orderBy('validatorId', $id);
+		return $query->where('validatorId', $id);
+
+	}
+
+	public function scopeWithAreaId($query, $id)
+	{
+
+		return $query->where('areaId', $id);
+
+	}
+
+	public function scopeWithAreaAndValidatorId($query, $areaId, $validatorId)
+	{
+
+		return $query->where('areaId', $areaId)->where('validatorId', $validatorId);
 
 	}
 

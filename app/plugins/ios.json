@@ -1,0 +1,42 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-battery-status": {
+            "PACKAGE_NAME": "com.ic5team.iastracker"
+        },
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "com.ic5team.iastracker"
+        },
+        "cordova-plugin-file-transfer": {
+            "PACKAGE_NAME": "com.ic5team.iastracker"
+        },
+        "cordova-plugin-geolocation": {
+            "PACKAGE_NAME": "com.ic5team.iastracker"
+        },
+        "cordova-plugin-globalization": {
+            "PACKAGE_NAME": "com.ic5team.iastracker"
+        },
+        "cordova-plugin-network-information": {
+            "PACKAGE_NAME": "com.ic5team.iastracker"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "com.ic5team.iastracker"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.ic5team.iastracker"
+        },
+        "com.synconset.imagepicker": {
+            "PACKAGE_NAME": "com.ic5team.iastracker"
+        },
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "com.ic5team.iastracker"
+        }
+    },
+    "dependent_plugins": {}
+}

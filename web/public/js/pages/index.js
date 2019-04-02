@@ -6,15 +6,19 @@ var loadingImage = null;
 var userMarkers = null;
 var userObservationsMarkers = null;
 var userValidatedMarkers = null;
+var userDiscardedMarkers = null;
 var otherUsersObservationsMarkers = null;
 var otherUsersValidatedMarkers = null;
+var otherUsersDiscardedMarkers = null;
 var shapeLayers = null;
 var activeTimeOut = null;
 
 $(document).ready(function () {
 
+	$().tooltip();
 	$("#observedCheckBox").attr("disabled", true);
 	$("#validatedCheckBox").attr("disabled", true);
+	$("#discardedCheckBox").attr("disabled", true);
 	$("#userObsCheckBox").attr("disabled", true);
 
 	$('#input-state').change(onStateChanged);
@@ -25,18 +29,9 @@ $(document).ready(function () {
 		format: 'DD/MM/YYYY'
 	});
 
-	$("#navbar-loguejat").on("mouseover", function () {
-        $('#panell-usuari').removeClass('hidden');
-    });
-
-    $("#navbar-loguejat").on("mouseleave", function () {
-        $('#panell-usuari').addClass('hidden');
-    });
-
 	api.getIASMapFilter(getIASMapFilterOK, "#iasContents");
 	loadingImage = $('#contentModalContents').html();
 	configureShapes();
-
 });
 
 function getIASMapFilterOK(data)
@@ -45,7 +40,7 @@ function getIASMapFilterOK(data)
 	iasList = data;
 	
 	configureSwitch(".IASCheck");
-	api.getObservations(addObservationMarkers);
+	api.getObservations({}, addObservationMarkers);
 	$('#taxonomyFilterSelect').change(onTaxonFilterChanged);
 
 	$('#searchIAS').keyup(function() {
@@ -196,8 +191,13 @@ function addObservationMarkers(data)
 	var numObservacions = data.length;
 	userObservationsMarkers = new Array();
 	userValidatedMarkers = new Array();
+	userDiscardedMarkers = new Array();
 	otherUsersObservationsMarkers = new Array();
 	otherUsersValidatedMarkers = new Array();
+	otherUsersDiscardedMarkers = new Array();
+
+	var greenIcon = constructValidatedIcon();
+	var greyIcon = constructDiscardedIcon();
 
 	for(var i=0; i<numObservacions; ++i)
 	{
@@ -207,9 +207,8 @@ function addObservationMarkers(data)
 		if(1 == current.statusId)
 		{
 
-			var greenIcon = constructValidatedIcon();
 			marker = mapHandler.createMarker(current.latitude, current.longitude, 
-				current.accuracy, 'red', '#f03', 0.5, {id : current.id, IASId: current.IASId}, onMarkerClick, greenIcon);
+				current.accuracy, '#8a6d3b', '#fcf8e3', 0.5, {id : current.id, IASId: current.IASId}, onMarkerClick, greenIcon);
 
 			if(current.userId != loggedUserId)
 				otherUsersValidatedMarkers.push(marker);
@@ -217,11 +216,11 @@ function addObservationMarkers(data)
 				userValidatedMarkers.push(marker);
 
 		}
-		else
+		else if(2 == current.statusId)
 		{
 
 			marker = mapHandler.createMarker(current.latitude, current.longitude, 
-				current.accuracy, 'red', '#f03', 0.5, {id : current.id, IASId: current.IASId}, onMarkerClick);
+				current.accuracy, '#8a6d3b', '#fcf8e3', 0.5, {id : current.id, IASId: current.IASId}, onMarkerClick);
 
 			if(current.userId != loggedUserId)
 				otherUsersObservationsMarkers.push(marker);
@@ -229,14 +228,28 @@ function addObservationMarkers(data)
 				userObservationsMarkers.push(marker);
 
 		}
+		else if(3 == current.statusId)
+		{
+
+			marker = mapHandler.createMarker(current.latitude, current.longitude, 
+				current.accuracy, '#8a6d3b', '#fcf8e3', 0.5, {id : current.id, IASId: current.IASId}, onMarkerClick, greyIcon);
+
+			if(current.userId != loggedUserId)
+				otherUsersDiscardedMarkers.push(marker);
+			else
+				userDiscardedMarkers.push(marker);
+
+		}
 
 	}
 
 	showObservations();
 	showValidatedObservations();
+	showDiscardedObservations();
 
 	$("#observedCheckBox").bootstrapSwitch('disabled', false);
 	$("#validatedCheckBox").bootstrapSwitch('disabled', false);
+	$("#discardedCheckBox").bootstrapSwitch('disabled', false);
 	$("#userObsCheckBox").bootstrapSwitch('disabled', false);
 
 	$('#overlay').hide();
@@ -273,6 +286,24 @@ function showIAS(id)
 
 }
 
+function toggleIAS()
+{
+
+	var allIAS = $('#IASCheckAll').is(':checked');
+
+	$('.IIASCheck').each(function(index) {
+
+		if($(this).is(':checked') != allIAS)
+		{
+
+			$(this).click();
+
+		}
+
+	});
+
+}
+
 function observationLoaded(data)
 {
 
@@ -299,6 +330,8 @@ function addIASMarkers(data)
 {
 
 	var numObservacions = data.length;
+	var greenIcon = constructValidatedIcon();
+	var greyIcon = constructDiscardedIcon();
 	for(var i=0; i<numObservacions; ++i)
 	{
 
@@ -307,16 +340,22 @@ function addIASMarkers(data)
 		if(1 == current.statusId)
 		{
 
-			var greenIcon = constructValidatedIcon();
 			marker = iasMapHandler.createMarker(current.latitude, current.longitude, 
-				current.accuracy, 'red', '#f03', 0.5, {id : current.id}, null, greenIcon);
+				current.accuracy, '#8a6d3b', '#fcf8e3', 0.5, {id : current.id}, null, greenIcon);
 
 		}
-		else
+		else if(2 == current.statusId)
 		{
 
 			marker = iasMapHandler.createMarker(current.latitude, current.longitude, 
-				current.accuracy, 'red', '#f03', 0.5, {id : current.id}, null);
+				current.accuracy, '#8a6d3b', '#fcf8e3', 0.5, {id : current.id}, null);
+
+		}
+		else if(3 == current.statusId)
+		{
+
+			marker = iasMapHandler.createMarker(current.latitude, current.longitude, 
+				current.accuracy, '#8a6d3b', '#fcf8e3', 0.5, {id : current.id}, null, greyIcon);
 
 		}
 
@@ -331,6 +370,8 @@ function addUserMarkers(data)
 
 	userMarkers = new Array();
 	var numObservacions = data.length;
+	var greenIcon = constructValidatedIcon();
+	var greyIcon = constructValidatedIcon();
 	for(var i=0; i<numObservacions; ++i)
 	{
 
@@ -339,16 +380,22 @@ function addUserMarkers(data)
 		if(1 == current.statusId)
 		{
 
-			var greenIcon = constructValidatedIcon();
 			marker = userMapHandler.createMarker(current.latitude, current.longitude, 
-				current.accuracy, 'red', '#f03', 0.5, {id : current.id, IASId: current.IASId}, onMarkerClick, greenIcon);
+				current.accuracy, '#8a6d3b', '#fcf8e3', 0.5, {id : current.id, IASId: current.IASId}, onMarkerClick, greenIcon);
 
 		}
-		else
+		else if(2 == current.statusId)
 		{
 
 			marker = userMapHandler.createMarker(current.latitude, current.longitude, 
-				current.accuracy, 'red', '#f03', 0.5, {id : current.id, IASId: current.IASId}, onMarkerClick);
+				current.accuracy, '#8a6d3b', '#fcf8e3', 0.5, {id : current.id, IASId: current.IASId}, onMarkerClick);
+
+		}
+		else if(3 == current.statusId)
+		{
+
+			marker = userMapHandler.createMarker(current.latitude, current.longitude, 
+				current.accuracy, '#8a6d3b', '#fcf8e3', 0.5, {id : current.id, IASId: current.IASId}, onMarkerClick, greyIcon);
 
 		}
 
@@ -364,6 +411,21 @@ function constructValidatedIcon()
 
 	return L.icon({
 	    iconUrl: 'js/images/greenMarker-icon.png',
+	    shadowUrl: 'js/images/marker-shadow.png',
+
+	    iconSize:     [25, 41], // size of the icon
+	    shadowSize:   [41, 41], // size of the shadow
+	    iconAnchor:   [13, 41], // point of the icon which will correspond to marker's location
+	    shadowAnchor: [12, 40]  // the same for the shadow
+	});
+
+}
+
+function constructDiscardedIcon()
+{
+
+	return L.icon({
+	    iconUrl: 'js/images/greyMarker-icon.png',
 	    shadowUrl: 'js/images/marker-shadow.png',
 
 	    iconSize:     [25, 41], // size of the icon
@@ -390,12 +452,21 @@ function showValidatedObservations()
 
 }
 
+function showDiscardedObservations()
+{
+
+	var onlyUserObs = (-1 != loggedUserId) && $('#userObsCheckBox').is(':checked');
+	showDiscardedAux(onlyUserObs);
+
+}
+
 function showOnlyUserObservations()
 {
 
 	var onlyUserObs = (-1 != loggedUserId) && $('#userObsCheckBox').is(':checked');
 	showObservationsAux(onlyUserObs);
 	showValidatedAux(onlyUserObs);
+	showDiscardedAux(onlyUserObs);
 
 }
 
@@ -427,6 +498,19 @@ function showObservationsAux( onlyUserObs )
 			}
 
 		}
+		else
+		{
+
+			for(var i=0; i<otherUsersObservationsMarkers.length; ++i)
+			{
+
+				var current = otherUsersObservationsMarkers[i];
+				if($('#IASCheck' + current.marker.options.IASId).is(':checked'))
+					mapHandler.removeMarker(otherUsersObservationsMarkers[i]);
+
+			}
+
+		}
 
 	}
 	else
@@ -441,17 +525,12 @@ function showObservationsAux( onlyUserObs )
 
 		}
 
-		if(!onlyUserObs)
+		for(var i=0; i<otherUsersObservationsMarkers.length; ++i)
 		{
 
-			for(var i=0; i<otherUsersObservationsMarkers.length; ++i)
-			{
-
-				var current = otherUsersObservationsMarkers[i];
-				if($('#IASCheck' + current.marker.options.IASId).is(':checked'))
-					mapHandler.removeMarker(otherUsersObservationsMarkers[i]);
-
-			}
+			var current = otherUsersObservationsMarkers[i];
+			if($('#IASCheck' + current.marker.options.IASId).is(':checked'))
+				mapHandler.removeMarker(otherUsersObservationsMarkers[i]);
 
 		}
 
@@ -487,6 +566,19 @@ function showValidatedAux( onlyUserObs )
 			}
 
 		}
+		else
+		{
+
+			for(var i=0; i<otherUsersValidatedMarkers.length; ++i)
+			{
+
+				var current = otherUsersValidatedMarkers[i];
+				if($('#IASCheck' + current.marker.options.IASId).is(':checked'))
+					mapHandler.removeMarker(otherUsersValidatedMarkers[i]);
+
+			}
+
+		}
 
 	}
 	else
@@ -501,17 +593,80 @@ function showValidatedAux( onlyUserObs )
 
 		}
 
+		for(var i=0; i<otherUsersValidatedMarkers.length; ++i)
+		{
+
+			var current = otherUsersValidatedMarkers[i];
+			if($('#IASCheck' + current.marker.options.IASId).is(':checked'))
+				mapHandler.removeMarker(otherUsersValidatedMarkers[i]);
+
+		}
+
+	}
+
+}
+
+function showDiscardedAux( onlyUserObs )
+{
+
+	if($('#discardedCheckBox').is(':checked'))
+	{
+
+		for(var i=0; i<userDiscardedMarkers.length; ++i)
+		{
+
+			var current = userDiscardedMarkers[i];
+			if($('#IASCheck' + current.marker.options.IASId).is(':checked'))
+				mapHandler.addMarker(userDiscardedMarkers[i]);
+
+		}
+
 		if(!onlyUserObs)
 		{
 
-			for(var i=0; i<otherUsersValidatedMarkers.length; ++i)
+			for(var i=0; i<otherUsersDiscardedMarkers.length; ++i)
 			{
 
-				var current = otherUsersValidatedMarkers[i];
+				var current = otherUsersDiscardedMarkers[i];
 				if($('#IASCheck' + current.marker.options.IASId).is(':checked'))
-					mapHandler.removeMarker(otherUsersValidatedMarkers[i]);
+					mapHandler.addMarker(otherUsersDiscardedMarkers[i]);
 
 			}
+
+		}
+		else
+		{
+
+			for(var i=0; i<otherUsersDiscardedMarkers.length; ++i)
+			{
+
+				var current = otherUsersDiscardedMarkers[i];
+				if($('#IASCheck' + current.marker.options.IASId).is(':checked'))
+					mapHandler.removeMarker(otherUsersDiscardedMarkers[i]);
+
+			}
+
+		}
+
+	}
+	else
+	{
+
+		for(var i=0; i<userDiscardedMarkers.length; ++i)
+		{
+
+			var current = userDiscardedMarkers[i];
+			if($('#IASCheck' + current.marker.options.IASId).is(':checked'))
+				mapHandler.removeMarker(userDiscardedMarkers[i]);
+
+		}
+
+		for(var i=0; i<otherUsersDiscardedMarkers.length; ++i)
+		{
+
+			var current = otherUsersDiscardedMarkers[i];
+			if($('#IASCheck' + current.marker.options.IASId).is(':checked'))
+				mapHandler.removeMarker(otherUsersDiscardedMarkers[i]);
 
 		}
 
@@ -546,6 +701,52 @@ function filterObs()
 
 }
 
+function downloadObs()
+{
+
+	$('#overlay').show();
+
+	var taxonomyId = $('#input-group').val();
+	var fromDate = $('#fromDate').val();
+	var toDate = $('#toDate').val();
+	var stateId = $('#input-state').val();
+	var regionId = $('#input-regions').val();
+	var areaId = $('#input-areas').val();
+	var fileType = $('#cbFileFormat').val();
+
+	api.downloadFilteredObservations( 
+		{
+			taxonomyId : taxonomyId,
+			fromDate : fromDate,
+			toDate : toDate,
+			stateId : stateId,
+			regionId : regionId,
+			areaId : areaId,
+			fileType : fileType
+		}
+		,fileDownloaded, fileNotDownloaded
+	);
+
+}
+
+function fileDownloaded()
+{
+
+	$('#filterError').hide();
+	$('#overlay').hide();
+
+}
+
+function fileNotDownloaded(response)
+{
+
+	var obj = JSON.parse(response);
+	$('#filterErrorMsg').html(obj.error);
+	$('#filterError').show();
+	$('#overlay').hide();
+
+}
+
 function clearObservations()
 {
 
@@ -574,6 +775,20 @@ function clearObservations()
 	{
 
 		mapHandler.removeMarker(otherUsersValidatedMarkers[i]);
+
+	}
+
+	for(var i=0; i<userDiscardedMarkers.length; ++i)
+	{
+
+		mapHandler.removeMarker(userDiscardedMarkers[i]);
+
+	}
+
+	for(var i=0; i<otherUsersDiscardedMarkers.length; ++i)
+	{
+
+		mapHandler.removeMarker(otherUsersDiscardedMarkers[i]);
 
 	}
 
@@ -614,6 +829,22 @@ function activeUserIAS(id)
 function activeIAS(id)
 {
 
+	var actius = $('.IIASCheck:checked').length;
+	var totals = $('.IIASCheck').length;
+
+	if(0 == actius)
+	{
+
+		$('#IASCheckAll').bootstrapSwitch('state', false);
+
+	}
+	else if(totals == actius)
+	{
+
+		$('#IASCheckAll').bootstrapSwitch('state', true);
+
+	}
+
 	if($('#IASCheck'+id).is(':checked'))
 	{
 
@@ -648,6 +879,20 @@ function activeIAS(id)
 
 			}
 
+			if($('#discardedCheckBox').is(':checked'))
+			{
+
+				for(var i=0; i<otherUsersDiscardedMarkers.length; ++i)
+				{
+
+					var current = otherUsersDiscardedMarkers[i];
+					if(current.marker.options.IASId == id)
+						mapHandler.addMarker(current);
+
+				}
+
+			}
+
 		}
 
 		if($('#validatedCheckBox').is(':checked'))
@@ -671,6 +916,20 @@ function activeIAS(id)
 			{
 
 				var current = userObservationsMarkers[i];
+				if(current.marker.options.IASId == id)
+					mapHandler.addMarker(current);
+
+			}
+
+		}
+
+		if($('#discardedCheckBox').is(':checked'))
+		{
+
+			for(var i=0; i<userDiscardedMarkers.length; ++i)
+			{
+
+				var current = userDiscardedMarkers[i];
 				if(current.marker.options.IASId == id)
 					mapHandler.addMarker(current);
 
@@ -713,6 +972,20 @@ function activeIAS(id)
 
 			}
 
+			if($('#discardedCheckBox').is(':checked'))
+			{
+
+				for(var i=0; i<otherUsersDiscardedMarkers.length; ++i)
+				{
+
+					var current = otherUsersDiscardedMarkers[i];
+					if(current.marker.options.IASId == id)
+						mapHandler.removeMarker(current);
+
+				}
+
+			}
+
 		}
 
 		if($('#validatedCheckBox').is(':checked'))
@@ -736,6 +1009,20 @@ function activeIAS(id)
 			{
 
 				var current = userObservationsMarkers[i];
+				if(current.marker.options.IASId == id)
+					mapHandler.removeMarker(current);
+
+			}
+
+		}
+
+		if($('#discardedCheckBox').is(':checked'))
+		{
+
+			for(var i=0; i<userDiscardedMarkers.length; ++i)
+			{
+
+				var current = userDiscardedMarkers[i];
 				if(current.marker.options.IASId == id)
 					mapHandler.removeMarker(current);
 
@@ -835,170 +1122,15 @@ function updateUserData()
 
 }
 
-function showLogInModal()
+function cleanFilter()
 {
 
-	$('#loginModal').modal();
-
-}
-
-function showLogIn()
-{
-
-	$('#loginModal').modal();
-	$('#signupModal').modal('hide');
-
-}
-
-function showSignUpModal()
-{
-
-	$('#signupDesc').show();
-	$('#signupPanel').show();
-	$('#signupDone').hide();
-	$('#input-signupEmail').val('');
-	$('#form-signupEmail').removeClass('has-error');
-	$('#error-usedEmail').addClass('hidden');
-	$('#error-invalidEmail').addClass('hidden');
-	$('#signupModal').modal();
-
-}
-
-function showSignUp()
-{
-
-	$('#loginModal').modal('hide');
-	$('#signupModal').modal();
-
-}
-
-function loginUsuari()
-{
-
-	$('#loginForm').submit();
-
-}
-
-function userSignUp()
-{
-
-	var val = $('#input-signupEmail').val();
-
-	$('#form-signupEmail').removeClass('has-error');
-	$('#error-usedEmail').addClass('hidden');
-	$('#error-invalidEmail').addClass('hidden');
-
-	if(isValidEmail(val))
-	{
-
-		$('#error-invalidEmail').addClass('hidden');
-		$('#signupPanel').hide();
-		$('#signupLoading').show();
-		api.addUser(val, userRegistered);
-
-	}
-	else
-	{
-
-		$('#signupPanel').show();
-		$('#signupLoading').hide();
-		$('#error-usedEmail').addClass('hidden');
-		$('#form-signupEmail').addClass('has-error');
-		$('#error-invalidEmail').removeClass('hidden');
-
-	}
-
-}
-
-function userRegistered(data)
-{
-
-	$('#signupLoading').hide();
-	if(data.hasOwnProperty('error'))
-	{
-
-		$('#signupPanel').show();
-		$('#form-signupEmail').addClass('has-error');
-		$('#error-usedEmail').removeClass('hidden');
-
-	}
-	else
-	{
-	
-		$('#signupDesc').hide();
-		$('#signupDone').show();
-
-	}
-
-}
-
-function showRememberPw()
-{
-
-	$('#signupModal').modal('hide');
-	$('#loginModal').modal('hide');
-
-	$('#remindPasswordDesc').show();
-	$('#remindPasswordPanel').show();
-	$('#remindPasswordDone').hide();
-	$('#input-reminderEmail').val('');
-	$('#form-reminderEmail').removeClass('has-error');
-	$('#error-notUsedEmail').addClass('hidden');
-	$('#error-invalidEmail').addClass('hidden');
-
-	$('#remindModal').modal();
-
-}
-
-function remindPassword()
-{
-
-	var val = $('#input-reminderEmail').val();
-
-	$('#form-reminderEmail').removeClass('has-error');
-	$('#error-notUsedEmail').addClass('hidden');
-	$('#error-invalidEmail').addClass('hidden');
-
-	if(isValidEmail(val))
-	{
-
-		$('#error-invalidEmail').addClass('hidden');
-		$('#remindPasswordPanel').hide();
-		$('#remindPasswordLoading').show();
-		api.remindUser(val, userReminded);
-
-	}
-	else
-	{
-
-		$('#remindPasswordPanel').show();
-		$('#remindPasswordLoading').hide();
-		$('#error-notUsedEmail').addClass('hidden');
-		$('#form-reminderEmail').addClass('has-error');
-		$('#error-invalidEmail').removeClass('hidden');
-
-	}
-
-}
-
-function userReminded(data)
-{
-
-	$('#remindPasswordLoading').hide();
-	if(data.hasOwnProperty('error'))
-	{
-
-		$('#remindPasswordPanel').show();
-		$('#form-reminderEmail').addClass('has-error');
-		$('#error-notUsedEmail').removeClass('hidden');
-
-	}
-	else
-	{
-	
-		$('#remindPasswordDesc').hide();
-		$('#remindPasswordDone').show();
-
-	}
+	$('#input-group').val(-1);
+	$('#fromDate').val('');
+	$('#toDate').val('');
+	$('#input-state').val(-1);
+	$('#regionAndAreaSelect').html('');
+	$('#filterSelectLoader').hide();
+	filterObs();
 
 }

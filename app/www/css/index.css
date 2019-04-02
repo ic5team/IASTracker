@@ -17,213 +17,350 @@
  * under the License.
  */
 * {
-    -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+	-webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
 }
 
 body {
-    -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
-    -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
-    -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
-    font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
-    font-size:12px;
-    height:100%;
-    margin:0px;
-    padding:0px;
-    text-transform: none;
-    width:100%;
+	-webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
+	-webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
+	-webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
+	font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
+	font-size:12px;
+	height:100%;
+	margin:0px;
+	padding:0px;
+	text-transform: none;
+	width:100%;
 
+}
+
+#taxonScreen {
+	padding: 0;
 }
 
 .fullscreen {
-    width: 100vw;
-    height: 100vh;
+	width: 100vw;
+	height: 100vh;
 }
 
 .almostFullscreen {
-    width: 100vw;
-    height: 90vh;
+	width: 100vw;
+	height: 90vh;
 }
 
 .splash {
-    background:url(../img/splash.png) no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+	background:url(../img/splash.png) no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
 }
 
 /* Portrait layout (default) */
 .app {
-    background:url(../img/logo.png) no-repeat center top; /* 170px x 200px */
-    position:absolute;             /* position in the center of the screen */
-    left:50%;
-    top:50%;
-    height:50px;                   /* text area height */
-    width:225px;                   /* text area width */
-    text-align:center;
-    padding:180px 0px 0px 0px;     /* image height is 200px (bottom 20px are overlapped with text) */
-    margin:-115px 0px 0px -112px;  /* offset vertical: half of image height and text area height */
-                                   /* offset horizontal: half of text area width */
+	background:url(../img/logo.png) no-repeat center top; /* 170px x 200px */
+	position:absolute;             /* position in the center of the screen */
+	left:50%;
+	top:50%;
+	height:50px;                   /* text area height */
+	width:225px;                   /* text area width */
+	text-align:center;
+	padding:180px 0px 0px 0px;     /* image height is 200px (bottom 20px are overlapped with text) */
+	margin:-115px 0px 0px -112px;  /* offset vertical: half of image height and text area height */
+								   /* offset horizontal: half of text area width */
 }
 
 /* Landscape layout (with min-width) */
 @media screen and (min-aspect-ratio: 1/1) and (min-width:400px) {
-    .app {
-        background-position:left center;
-        padding:75px 0px 75px 170px;  /* padding-top + padding-bottom + text area = image height */
-        margin:-90px 0px 0px -198px;  /* offset vertical: half of image height */
-                                      /* offset horizontal: half of image width and text area width */
-    }
+	.app {
+		background-position:left center;
+		padding:75px 0px 75px 170px;  /* padding-top + padding-bottom + text area = image height */
+		margin:-90px 0px 0px -198px;  /* offset vertical: half of image height */
+									  /* offset horizontal: half of image width and text area width */
+	}
 }
 
 h1 {
-    font-size:24px;
-    font-weight:normal;
-    margin:0px;
-    overflow:visible;
-    padding:0px;
-    text-align:center;
+	font-size:24px;
+	font-weight:normal;
+	margin:0px;
+	overflow:visible;
+	padding:0px;
+	text-align:center;
 }
 
 .event {
-    border-radius:4px;
-    -webkit-border-radius:4px;
-    color:#FFFFFF;
-    font-size:12px;
-    margin:0px 30px;
-    padding:2px 0px;
+	border-radius:4px;
+	-webkit-border-radius:4px;
+	color:#FFFFFF;
+	font-size:12px;
+	margin:0px 30px;
+	padding:2px 0px;
 }
 
 .event.listening {
-    background-color:#333333;
-    display:block;
+	background-color:#333333;
+	display:block;
 }
 
 .event.received {
-    background-color:#4B946A;
-    display:none;
+	background-color:#4B946A;
+	display:none;
 }
 
 @keyframes fade {
-    from { opacity: 1.0; }
-    50% { opacity: 0.4; }
-    to { opacity: 1.0; }
+	from { opacity: 1.0; }
+	50% { opacity: 0.4; }
+	to { opacity: 1.0; }
 }
  
 @-webkit-keyframes fade {
-    from { opacity: 1.0; }
-    50% { opacity: 0.4; }
-    to { opacity: 1.0; }
+	from { opacity: 1.0; }
+	50% { opacity: 0.4; }
+	to { opacity: 1.0; }
 }
  
 .blink {
-    animation:fade 3000ms infinite;
-    -webkit-animation:fade 3000ms infinite;
+	animation:fade 3000ms infinite;
+	-webkit-animation:fade 3000ms infinite;
 }
 
 .menuElement {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    border: 1px solid;
-
+	padding-top: 10px;
+	padding-bottom: 10px;
+	border: 1px solid;
+	margin-right: -12px;
 }
 
 #ldMsg {
-    position: absolute;
-    top: 88vh;
-    left: 30vw;
+	position: absolute;
+	top: 88vh;
+	left: 30vw;
 }
 
 #ldImg {
-    position: absolute;
-    top: 83vh;
-    width: 5vw;
-    left: 47.5vw;
+	position: absolute;
+	top: 83vh;
+	width: 5vw;
+	left: 47.5vw;
 }
 
 .background {
-    background:url(../img/background.png) no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+	background:url(../img/background.png) no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
 }
 
 .right {
-    float: right;
-    margin-right: 10px;
+	float: right;
+	margin-right: 10px;
 }
 
 .whitePanel {
-    background-color: #FFF;
+	background-color: #FFF;
 }
 
 input {
-    font-size: 18px;
+	font-size: 18px;
 }
 
 .iasImage {
-    max-height: 120px;
-    padding: 5px;
+	max-height: 100px;
+	padding: 5px;
 }
 
 .iasName {
-    font-size: 12px;
-    border-width: 0px;
+	font-size: 12px;
+	border-width: 0px;
 }
 
-#bigIASImage {
-    width: 90vw;
+.IASDatasheetImage {
+	width: 90vw;
 }
 
 #IASLatinName {
-    text-align: center;
+	text-align: center;
+	font-style: italic;
+	color: #555;
 }
 
 #LocateIASButton {
 
-    height: 30px;
-    text-align: center;
-    font-size: 20px;
-    margin-top: 20px;
-    margin-bottom: 20px;
+	height: 30px;
+	text-align: center;
+	font-size: 20px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	padding-top: 10px;
+	height: 40px;
 
 }
 
 #SendObservationButton {
-    height: 30px;
-    text-align: center;
-    font-size: 20px;
-    margin-top: 20px;
-    margin-bottom: 20px;
+	height: 30px;
+	text-align: center;
+	font-size: 20px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	padding-top: 10px;
+	height: 40px;
 }
 
 #IASObservationMap {
 
-    width: 90vw;
+	width: 90vw;
 
 }
 
 .map {
-    width: 90vw;
-    height: 50vh;
+	width: 90vw;
+	height: 50vh;
 }
 
 .obsButton {
-    display: inline-block;
-    width: 45%;
-    text-align: center;
-    font-size: 60px;
+	display: inline-block;
+	width: 45%;
+	text-align: center;
+	font-size: 60px;
 }
 
 .locationMessage {
-    margin-top: 20vh;
+	margin-top: 20vh;
 }
 
 .iasBlock {
-    min-height: 160px;
+	min-height: 160px;
 }
 
 .iasName {
-    height: 40px;
+	height: 40px;
+	font-weight: 600;
+}
+
+.ui-header {
+	text-shadow: 0 0px 0 white;
+}
+
+h1.ui-title {
+	font-size:1.5em !important;
+	font-weight: 800 !important;
+	background-color: white !important;
+	margin: 0 0% !important;
+	text-overflow: ellipsis !important;
+	padding-left: 70px !important;
+	padding-right: 15px !important;
+	min-height: 55px !important;
+	padding-top: 1.2em !important;
+}
+
+a.ui-link.ui-btn-left.ui-btn.ui-icon-bars.ui-btn-icon-notext.ui-shadow.ui-corner-all {
+	margin-top: 3px;
+	padding-left: 40px;
+	padding-right: 15px;
+}
+a.ui-link.ui-btn-left.ui-btn.ui-icon-arrow-l.ui-btn-icon-notext.ui-shadow.ui-corner-all {
+	margin-top: 3px;
+	padding-left: 40px;
+	padding-right: 15px;
+}
+
+@font-face {
+	font-family: "headerFont";
+	src: url("../fonts/Sisco-Medium.otf") format("opentype");
+}
+
+@font-face {
+	font-family: "iasFont";
+	src: url("../fonts/Sisco-Book.otf") format("opentype");
+}
+
+@font-face {
+	font-family: "taxonFont";
+	src: url("../fonts/Lobster1.4.otf") format("opentype");
+}
+
+.PageHeader {
+	font-family: "headerFont";
+	text-transform: uppercase;
+	font-style: italic;
+	font-weight: bold;
+	white-space: inherit !important;
+}
+
+.iasName {
+	font-family: "iasFont";
+}
+
+.sisco {
+	font-family: "iasFont";	
+}
+
+.uppercase {
+	text-transform: uppercase;
+}
+
+.bold {
+	font-weight: bold;
+}
+
+.italic {
+	font-style: italic;
+}
+
+.TaxonHeader {
+	font-family: "taxonFont";
+	font-size: 45px;
+	margin-bottom: 10px;
+	padding-top: 10px;
+}
+
+.menuItem {
+	font-family: "iasFont";
+	font-size: 15px;
+	color: black !important;
+	width: 100%;
+	display: block;
+}
+
+.innerMenu {
+
+	padding-top: 0px !important;
+	padding-bottom: 0px !important;
+
+}
+
+.ui-panel-inner {
+    position: absolute;
+    top: 1px;
+    left: 0;
+    right: 0;
+    bottom: 0px;
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
+}
+
+.topMargin {
+	margin-top: 10px !important;
+}
+
+.bottomMargin {
+	margin-bottom: 10px !important;
+}
+
+.iasTrackerButton {
+	text-transform: uppercase;
+    font-family: "iasFont";
+    font-weight: bold;
+    background-color: rgb(248,193,82) !important;
+    text-shadow: 0 0px 0 white !important;
+}
+
+#IASDescription {
+	font-size: 16px;
+}
+
+.LocalizedText.PageHeader.helpLabel {
+	padding-left: 0px !important;
 }

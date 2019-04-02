@@ -26,6 +26,7 @@ class Inicial extends Migration {
 			$table->decimal('NEBoundLon','9','6')->nullable();
 			$table->integer('minZoom')->unsigned()->nullable();
 			$table->integer('maxZoom')->unsigned()->nullable();
+			$table->boolean('tms')->default(false);
 			$table->boolean('isOverlay');
 			$table->integer('creatorId')->unsigned()->nullable();
 			$table->timestamps();
@@ -237,11 +238,18 @@ class Inicial extends Migration {
 		Schema::create('IASTaxons', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->integer('languageId')->unsigned();
-			$table->string('name', 255);
 			$table->string('appInnerColor', 25)->nullable();
 			$table->string('appOuterColor', 25)->nullable();
 			$table->integer('parentTaxonId')->unsigned()->nullable();
+			$table->integer('creatorId')->unsigned()->nullable();
+			$table->timestamps();
+		});
+
+		Schema::create('IASTaxonNames', function(Blueprint $table)
+		{
+			$table->integer('taxonId')->unsigned();
+			$table->integer('languageId')->unsigned();
+			$table->string('name', 255);
 			$table->integer('creatorId')->unsigned()->nullable();
 			$table->timestamps();
 		});
@@ -253,7 +261,9 @@ class Inicial extends Migration {
 			$table->integer('userId')->unsigned()->nullable();
 			$table->integer('languageId')->unsigned()->nullable();
 			$table->integer('validatorId')->unsigned()->nullable();
+			$table->text('validationText')->unsigned()->nullable();
 			$table->integer('statusId')->unsigned();
+			$table->boolean('isAutoValidated')->nullable();
 			$table->text('notes')->nullable();
 			$table->timestamp('validatorTS')->nullable();
 			$table->decimal('latitude', 9, 6);
@@ -262,7 +272,18 @@ class Inicial extends Migration {
 			$table->decimal('accuracy', 6, 2)->nullable();
 			$table->integer('howMany')->unsigned();
 			$table->timestamps();
+			$table->softDeletes();
 
+		});
+
+		Schema::create('IASValidators', function(Blueprint $table)
+		{
+			$table->increments('id');
+			$table->integer('IASId')->unsigned();
+			$table->integer('validatorId')->unsigned();
+			$table->boolean('outOfAreas')->default(false);
+			$table->integer('creatorId')->unsigned()->nullable();
+			$table->timestamps();
 		});
 
 		Schema::create('AreasValidators', function(Blueprint $table)
@@ -287,6 +308,7 @@ class Inicial extends Migration {
 			$table->increments('id');
 			$table->integer('observationId')->unsigned();
 			$table->string('URL', 255);
+			$table->integer('rotation')->default(0);
 			$table->timestamps();
 		});
 
@@ -348,7 +370,6 @@ class Inicial extends Migration {
 		});
 
 		DB::statement('CREATE EXTENSION postgis');
-		DB::statement("SELECT AddGeometryColumn ('observations','geom',4326,'POINT',2)");
 		DB::statement("SELECT AddGeometryColumn ('regions','geom',4326,'MULTIPOLYGON',2)");
 		DB::statement("SELECT AddGeometryColumn ('Areas','geom',4326,'MULTIPOLYGON',2)");
 		DB::statement("SELECT AddGeometryColumn ('States','geom',4326,'MULTIPOLYGON',2)");
@@ -384,8 +405,10 @@ class Inicial extends Migration {
 		Schema::drop('States');
 		Schema::drop('StateAreas');
 		Schema::drop('IASTaxons');
+		Schema::drop('IASTaxonNames');
 		Schema::drop('observations');
-		Schema::drop('IASAreasValidators');
+		Schema::drop('IASValidators');
+		Schema::drop('AreasValidators');
 		Schema::drop('ObservationAreas');
 		Schema::drop('ObservationImages');
 		Schema::drop('Status');

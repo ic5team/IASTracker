@@ -9,13 +9,13 @@ Retorna un DTO amb els següents camps:
 
 $directory_self = str_replace(basename($_SERVER['PHP_SELF']), '', $_SERVER['PHP_SELF']);
 
-$uploadsDirectoryGrans = '../img/';
-$uploadsURL = $_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT'].'/IASTracker/img/';
+$uploadsDirectoryGrans = '../img/fotos/observations/';
+$uploadsURL = $_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT'].'/img/';
 $fieldName = 'image'; 
 $maxWidth = 2580;
 $maxHeight = 2048;
 
-$max_file_size = 10*1024*1024;	//5MB
+$max_file_size = 10*1024*1024;	//10MB
 $errors = array(1 => 'Ep! La imatge és massa gran', 
                 2 => 'Ep! La imatge és massa gran', 
                 3 => 'file upload was only partial', 
@@ -36,6 +36,13 @@ if(isset($_FILES[$fieldName]))
 					$name = $_FILES[$fieldName]["name"];
 					$partsNom = explode(".", $name);
 					$ext = strtoupper($partsNom[count($partsNom)-1]);
+					$posInt = strpos($ext, '?');
+					if(FALSE !== $posInt)
+					{
+
+						$ext = substr($ext, 0, $posInt);
+
+					}
 
 					if('JPG' == $ext || 'JPEG' == $ext)
 					{
